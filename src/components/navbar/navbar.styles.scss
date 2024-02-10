@@ -1,0 +1,183 @@
+.navbar{
+    font-family: "Work Sans", sans-serif;
+    .web{
+    .appbar {
+        background-color: #a36e29;
+        //overflow: hidden;
+    
+        .toolbar {
+          position: relative;
+          margin: auto;
+          height: 100px;
+          width: 90vw;
+    
+          .logo {
+            height: 80px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            cursor: pointer;
+          }
+
+          .menu-items {
+            margin-left: 20px;
+            display: flex;
+            //background-color:#a36e29;
+            align-items: center;
+    
+            .menu-item {
+              height: 100px;
+              position: relative;
+              color: #fff;
+              text-decoration: none;
+              margin-right: 20px;
+              transition: color 0.3s;
+    
+              &:hover {
+                color: #ffc107; /* or any other hover color you prefer */
+              }
+
+              .sub-categories {
+                position: absolute;
+                width: 50vw;
+                //margin-top: 3vh;
+                //top: 100%;
+                left: 0;
+                display: none;
+                flex-direction: column;
+                background-color: #fff; /* or any other background color you prefer */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                z-index: 1;
+                column-count: 2;
+                
+                .sub-category-column {
+                  display: flex;
+                  flex-direction: column;
+                  margin-right: 20px;
+
+                .sub-category {
+                  color: #333;
+                  text-decoration: none;
+                  padding: 5px 0;
+                  break-inside: avoid;
+                  transition: color 0.3s;
+          
+                  &:hover {
+                    color: #a36e29; /* or any other hover color you prefer */
+                  }
+                }
+              }
+              }
+          
+              &:hover .sub-categories {
+                display: flex;
+              }
+            }
+            // .menu-item:hover .sub-categories {
+            //   display: flex;
+            // }
+          }
+
+          .icons {
+            color: #fff;
+            .MuiButtonBase-root {
+              margin-left: 20px;
+            }
+          }
+
+          .search {
+            margin-left: auto;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            border: 2px solid #fff;
+            border-radius: 32px;
+            padding: 5px;
+    
+            .search-icon {
+              padding: 8px;
+              color: #fff;
+            }
+    
+            .input-root {
+              color: inherit;
+              width: 200px;
+            }
+    
+            .input-input {
+              padding: 10px;
+              color: #fff;
+            }
+          }
+    
+        }
+      }
+      
+    }
+    .mobile{
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .web {
+        display: none;
+      }
+  
+      .mobile {
+        display: block;
+        .appbar{
+          background-color: #a36e29;
+          
+          .toolbar{
+          position: relative;
+          margin: auto;
+          height: 100px;
+          width: 90vw;
+
+          .logo {
+            height: 60px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            cursor: pointer;
+          }
+          .search {
+            margin-left: auto;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            border: 2px solid #fff;
+            border-radius: 32px;
+            padding: 5px;
+    
+            .search-icon {
+              padding: 8px;
+              color: #fff;
+            }
+    
+            .input-root {
+              color: inherit;
+              width: 150px;
+            }
+    
+            .input-input {
+              padding: 10px;
+              color: #fff;
+            }
+          }
+          .menu-icon {
+            margin-left: 5px;
+            color: white;
+            opacity: 0.75;
+          }
+          }
+        }
+      }
+    }
+}
+
+
+
+    
+        
+
+ 

@@ -1,0 +1,89 @@
+.product-page {
+    font-family: "Work Sans", sans-serif;
+    .block-with-background {
+      background-color: #fffbc8;
+      padding: 20px;
+      text-align: center;
+
+      .page-heading {
+        margin-left: 5vw;
+        margin-top: 20px;
+        text-align: start;
+        font-weight: bold;
+        color: #a36e29;
+      }
+
+      .breadcrumbs-container {
+        margin-left: 5vw;
+        background-color: #fffbc8;
+        padding: 10px 0;
+      }
+    
+      .breadcrumb-link {
+        text-decoration: none;
+        color: black;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  
+    .product-container{
+        width: 90vw;
+        margin: 0 auto; 
+
+        .filter{
+            background-color: #f5fcff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
+            //padding: 20px;
+
+            .heading{
+                margin-left: 30px;
+                margin-top: 20px;
+                text-align: center;
+                color: #a36e29;
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+            .MuiDivider-root {
+                height: 10px;
+                width: 30vw; 
+              }
+
+        }
+
+        .products{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
+
+            .heading{
+              margin-left: 30px;
+              margin-top: 20px;
+                text-align: center;
+                color: #a36e29;
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 30px;
+            }
+
+            .product-card{
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              flex-wrap: wrap;
+              padding: 10px 30px;
+            }
+        }
+        
+    }
+  }
+  
