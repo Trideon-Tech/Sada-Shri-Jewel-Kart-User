@@ -3,9 +3,9 @@ import "./jwellerycard.styles.scss"; // Ensure this is the path to your SCSS fil
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const JwelleryCard = ({ image, name, price }) => {
+const JwelleryCard = ({ image, name, price, onClick }) => {
   return (
-    <div className="jwellery-card">
+    <div className="jwellery-card" onClick={onClick}>
       <div className="card-image-container">
         <img
           src={encodeURI(`https://api.sadashrijewelkart.com/assets/${image}`)}

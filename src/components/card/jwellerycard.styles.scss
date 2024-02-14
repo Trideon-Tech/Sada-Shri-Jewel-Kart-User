@@ -1,16 +1,23 @@
 // jwelleryCard.styles.scss
 
 .jwellery-card {
+  cursor: pointer;
   width: 300px; // Increased width
   min-height: 380px; // Adjusted for better content fit
   background: #FFFFFF;
-  box-shadow: 0px 4px 24px rgba(93, 62, 188, 0.04);
+  box-shadow: 0px 4px 24px rgba(93, 62, 188, 0.10);
   border-radius: 16px;
   overflow: hidden;
   font-family: "Work Sans", sans-serif;
   margin: 10px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover{
+    transform: scale(1.05); 
+    box-shadow: 0px 8px 28px rgba(93, 62, 188, 0.20);
+  }
 
   .card-image-container {
     background: #F8F8F8;

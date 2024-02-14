@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Divider, Grid, CircularProgress, Typography } from "@mui/material";
@@ -17,6 +17,15 @@ function Productpage() {
   const [jwellery, setJwellery] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const navigate = useNavigate();
+  
+
+  const handleCardClick = (productId, productName) => {
+    // Use navigate to go to product detail page, passing the necessary state
+    navigate(`/jwellery/${menuItemName}/${productName}`, {
+      state: { categoryName:menuItemName, menuItemId: productId, menuItemName: productName },
+    });
+  };
 
   const handleFilterChange = (selectedRangeLabel) => {
     // Check if the range is already selected, if so remove it, if not add it
@@ -130,6 +139,7 @@ function Productpage() {
                     image={item.images[0].file}
                     name={item.name}
                     price={item.price}
+                    onClick={() => handleCardClick(item.id, item.name)}
                   />
                 ))
               )}
