@@ -1,5 +1,6 @@
 .product-page {
     font-family: "Work Sans", sans-serif;
+    .web{
     .block-with-background {
       background-color: #fffbc8;
       padding: 20px;
@@ -86,4 +87,75 @@
         
     }
   }
+  .mobile{
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .web {
+      display: none;
+    }
+
+    .mobile {
+      display: block;
+      .block-with-background{
+      background-color: #fffbc8;
+      padding: 5px;
+      text-align: center;
+
+      .page-heading {
+        margin-left: 5vw;
+        margin-top: 20px;
+        text-align: start;
+        font-size: medium;
+        font-weight: bold;
+        color: #a36e29;
+      }
+
+      .breadcrumbs-container {
+      
+        margin-left: 5vw;
+        background-color: #fffbc8;
+        padding: 10px 0;
+      }
+    
+      .breadcrumb-link {
+        font-size: small;
+        text-decoration: none;
+        color: black;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .product-container{
+      width: 100%; // Ensure it uses the full available width
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box; 
+  padding: 0 10px;
+      
+      .heading{
+        margin-left: 20px;
+              margin-top: 10px;
+                text-align: start;
+                color: #a36e29;
+                font-size: 1.2rem;
+                font-weight: 800;
+                margin-bottom: 10px;
+      }
+      .product-card{
+        display: flex;
+    flex-direction: row;
+    justify-content: center; // Align items to the start for better spacing
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px; // Adjust padding to be consistent all around
+    gap: 20px;
+      }
+    }
+  }
+  }
+  }
+  
   

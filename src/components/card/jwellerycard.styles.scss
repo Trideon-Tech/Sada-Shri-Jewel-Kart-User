@@ -1,15 +1,16 @@
 // jwelleryCard.styles.scss
 
 .jwellery-card {
-  cursor: pointer;
-  width: 300px; // Increased width
-  min-height: 380px; // Adjusted for better content fit
+  .web{
+  cursor: pointer; 
+  width: 300px;
+  min-height: 380px; 
+  margin-right: 20px;
   background: #FFFFFF;
   box-shadow: 0px 4px 24px rgba(93, 62, 188, 0.10);
   border-radius: 16px;
   overflow: hidden;
   font-family: "Work Sans", sans-serif;
-  margin: 10px;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -74,6 +75,88 @@
       margin-bottom: 5px;
     }
   }
+  }
+  .mobile{
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .web{
+      display: none;
+    }
+    .mobile{
+      box-sizing: border-box;
+      cursor: pointer; 
+  width: auto;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 24px rgba(93, 62, 188, 0.10);
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: "Work Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover{
+    transform: scale(1.05); 
+    box-shadow: 0px 8px 28px rgba(93, 62, 188, 0.20);
+  }
+
+  .card-image-container {
+    background: #F8F8F8;
+    text-align: center;
+    //padding: px;
+    flex-grow: 1;
+
+    .card-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .card-content {
+    padding: 16px;
+    text-align: center;
+
+    .card-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; 
+      -webkit-box-orient: vertical;
+      line-height: 1.2em; // Adjust line height to ensure two lines are displayed
+      height: 2.1em; // Based on the line-height * number of lines you want to show
+      //margin-bottom: 4px;
+      color: #333;
+    }
+
+    .card-price {
+      color: #a36e29;
+      font-weight: bold;
+      font-size: 16px; // Adjusted font size for better visibility
+      margin-bottom: 16px;
+    }
+
+    .add-to-cart-button {
+      width: 100%;
+      background-color: #a36e29;
+      color: #FFF;
+      text-transform: uppercase;
+      font-size: 10px;
+      padding: 8px 0;
+      margin-bottom: 8px;
+    }
+
+    .check-delivery {
+      font-size: 10px;
+      color: #333;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 5px;
+    }
+  }
+  }
 }
-
-
+}

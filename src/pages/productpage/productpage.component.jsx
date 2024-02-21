@@ -2,10 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { Divider, Grid, CircularProgress, Typography } from "@mui/material";
+import {
+  Button,
+  Drawer,
+  Divider,
+  BottomNavigation,
+  BottomNavigationAction,
+  Grid,
+  Paper,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import FilterListIcon from "@mui/icons-material/FilterList";
+import SortIcon from "@mui/icons-material/Sort";
 import "./productpage.styles.scss";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import PriceFilter from "./productFilter.component";
@@ -17,18 +28,31 @@ function Productpage() {
   const [jwellery, setJwellery] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [value, setValue] = useState(0);
   const navigate = useNavigate();
-  
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setIsDrawerOpen(open);
+  };
 
   const handleCardClick = (productId, productName) => {
-    // Use navigate to go to product detail page, passing the necessary state
     navigate(`/jwellery/${menuItemName}/${productName}`, {
-      state: { categoryName:menuItemName, menuItemId: productId, menuItemName: productName },
+      state: {
+        categoryName: menuItemName,
+        menuItemId: productId,
+        menuItemName: productName,
+      },
     });
   };
 
   const handleFilterChange = (selectedRangeLabel) => {
-    // Check if the range is already selected, if so remove it, if not add it
     setSelectedPriceRanges((prevSelectedRanges) => {
       if (prevSelectedRanges.includes(selectedRangeLabel)) {
         return prevSelectedRanges.filter(
@@ -43,7 +67,7 @@ function Productpage() {
   const isProductInRange = (product) => {
     // Convert product price to a number by removing currency symbol and commas
     const price = Number(product.price.replace(/[₹,]/g, ""));
-  
+
     return selectedPriceRanges.some((rangeLabel) => {
       if (rangeLabel.startsWith("Over")) {
         // Extract the number after "Over ₹", remove commas and convert to Number
@@ -51,7 +75,7 @@ function Productpage() {
         return price > overPrice;
       } else {
         // Extract the lower and upper bounds of the price range
-        const [lowStr, highStr] = rangeLabel.split(' - ');
+        const [lowStr, highStr] = rangeLabel.split(" - ");
         const low = Number(lowStr.replace(/[₹,]/g, ""));
         const high = Number(highStr.replace(/[₹,]/g, ""));
         return price >= low && price <= high;
@@ -96,56 +120,168 @@ function Productpage() {
   return (
     <div className="product-page">
       <Navbar />
-      <div className="block-with-background">
-        <Typography variant="h4" className="page-heading">
-          {menuItemName}
-        </Typography>
+      <div className="web">
+        <div className="block-with-background">
+          <Typography variant="h4" className="page-heading">
+            {menuItemName}
+          </Typography>
 
-        <div className="breadcrumbs-container">
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link to="/" className="breadcrumb-link">
-              Home
-            </Link>
-            <Typography className="breadcrumb-link" color="textPrimary">
-              Jwellery
-            </Typography>
-            <Typography className="breadcrumb-link" color="textPrimary">
-              {menuItemName}
-            </Typography>
-          </Breadcrumbs>
+          <div className="breadcrumbs-container">
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link to="/" className="breadcrumb-link">
+                Home
+              </Link>
+              <Typography className="breadcrumb-link" color="textPrimary">
+                Jwellery
+              </Typography>
+              <Typography className="breadcrumb-link" color="textPrimary">
+                {menuItemName}
+              </Typography>
+            </Breadcrumbs>
+          </div>
+        </div>
+        <div className="product-container">
+          <Grid container spacing={0}>
+            <Grid item xs={4} className="filter">
+              <div className="heading">Filters</div>
+              <Divider />
+              <PriceFilter
+                selectedPriceRanges={selectedPriceRanges}
+                onFilterChange={handleFilterChange}
+              />
+            </Grid>
+            <Grid item xs={8} className="products">
+              <div className="heading">Products</div>
+              <div className="product-card">
+                {productsLoaded === false ? (
+                  <CircularProgress
+                    style={{ margin: "auto", display: "flex", height: "100%" }}
+                  />
+                ) : (
+                  filteredJwellery.map((item, index) => (
+                    <JwelleryCard
+                      key={item.id}
+                      image={item.images[0].file}
+                      name={item.name}
+                      price={item.price}
+                      onClick={() => handleCardClick(item.id, item.name)}
+                    />
+                  ))
+                )}
+              </div>
+            </Grid>
+          </Grid>
         </div>
       </div>
-      <div className="product-container">
-        <Grid container spacing={0}>
-          <Grid item xs={4} className="filter">
-            <div className="heading">Filters</div>
-            <Divider />
-            <PriceFilter
-              selectedPriceRanges={selectedPriceRanges}
-              onFilterChange={handleFilterChange}
-            />
-          </Grid>
-          <Grid item xs={8} className="products">
-            <div className="heading">Products</div>
-            <div className="product-card">
-              {productsLoaded === false ? (
-                <CircularProgress
-                  style={{ margin: "auto", display: "flex", height: "100%" }}
-                />
-              ) : (
-                filteredJwellery.map((item, index) => (
+      <div className="mobile">
+        <div className="block-with-background">
+          <Typography variant="h4" className="page-heading">
+            {menuItemName}
+          </Typography>
+
+          <div className="breadcrumbs-container">
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link to="/" className="breadcrumb-link">
+                Home
+              </Link>
+              <Typography className="breadcrumb-link" color="textPrimary">
+                Jwellery
+              </Typography>
+              <Typography className="breadcrumb-link" color="textPrimary">
+                {menuItemName}
+              </Typography>
+            </Breadcrumbs>
+          </div>
+        </div>
+        <div className="product-container">
+          <div className="heading">Products</div>
+          <Grid container spacing={2}>
+            {productsLoaded === false ? (
+              <CircularProgress
+                style={{ margin: "auto", display: "flex", height: "100%" }}
+              />
+            ) : (
+              filteredJwellery.map((item, index) => (
+                <Grid item xs={6} sm={4} md={3} key={item.id}>
                   <JwelleryCard
-                    key={item.id}
                     image={item.images[0].file}
                     name={item.name}
                     price={item.price}
                     onClick={() => handleCardClick(item.id, item.name)}
                   />
-                ))
-              )}
-            </div>
+                </Grid>
+              ))
+            )}
           </Grid>
-        </Grid>
+          <div className="bottom-navigation">
+            <Paper
+              sx={{
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                boxShadow: "0 -2px 10px -2px rgba(0,0,0,0.2)",
+              }}
+              elevation={3}
+            >
+              <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+              >
+                <BottomNavigationAction
+                  label={
+                    <span style={{ display: "flex", alignItems: "center" }}>
+                      Filter
+                      <FilterListIcon style={{ marginLeft: "5px" }} />
+                    </span>
+                  }
+                  onClick={toggleDrawer(true)}
+                />
+                <BottomNavigationAction
+                  label={
+                    <span style={{ display: "flex", alignItems: "center" }}>
+                      Sort
+                      <SortIcon style={{ marginLeft: "5px" }} />
+                    </span>
+                  }
+                />
+              </BottomNavigation>
+            </Paper>
+          </div>
+
+          <Drawer
+            anchor="right"
+            open={isDrawerOpen}
+            onClose={toggleDrawer(false)}
+          >
+            {/* Contents of the drawer */}
+            <div style={{ width: 250 }}>
+              <div
+                className="heading"
+                style={{
+                  marginLeft: "20px",
+                  marginTop: "10px",
+                  textAlign: "start",
+                  color: "#a36e29",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  marginBottom: "10px",
+                }}
+              >
+                Filters
+              </div>
+
+              <Divider />
+              <PriceFilter
+                selectedPriceRanges={selectedPriceRanges}
+                onFilterChange={handleFilterChange}
+              />
+            </div>
+          </Drawer>
+        </div>
       </div>
     </div>
   );
