@@ -245,16 +245,13 @@ const Navbar = () => {
             />
             <div className="search">
               <div className="search-icon">
-                <SearchIcon />
+                <IconButton color="inherit" component={Link} to="/search">
+                  <SearchIcon />
+                </IconButton>
+                <IconButton color="inherit" component={Link} to="/wishlist">
+                  <FavoriteIcon />
+                </IconButton>
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: "input-root",
-                  input: "input-input",
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
             </div>
             <Menu className="menu-icon" onClick={() => setOpenDrawer(true)} />
           </Toolbar>

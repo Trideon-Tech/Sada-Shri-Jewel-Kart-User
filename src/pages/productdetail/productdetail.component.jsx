@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/navbar.component";
 import {
   Breadcrumbs,
@@ -6,34 +6,26 @@ import {
   Typography,
   Button,
   Drawer,
-  Chip,
-  List,
-  ListItem,
-  ListItemText,
   OutlinedInput,
   createTheme,
   ThemeProvider,
-  Select,
   Card,
   Box,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Grid,
 } from "@mui/material";
 import "./productdetail.styles.scss";
 import ImageVideoCarousel from "./carousal.component";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
 import {
   LocalShippingOutlined,
-  LocationCity,
   LocationOnOutlined,
-  ShoppingBasket,
   ShoppingCart,
 } from "@mui/icons-material";
+import axios from "axios";
+import JwelleryCard from "../../components/card/jwellerycard.component";
 
 const theme = createTheme({
   palette: {
@@ -60,32 +52,100 @@ const customization = [
   { label: "3", metal: "24KT Gold", availability: "Made to Order" },
 ];
 
+const diamondType = [
+  { label: "1", type: "IJ - SI", availability: "Made to Order" },
+  { label: "2", type: "GH - SI", availability: "Made to Order" },
+  { label: "3", type: "EF - VVS", availability: "Made to Order" },
+];
+
 function ProductDetail() {
+  const navigate = useNavigate();
+  const [images, setImages] = useState([]);
+  const [video, setVideo] = useState("");
   const location = useLocation();
   const { state } = location;
-  const { categoryName, menuItemId, menuItemName } = state;
+  const { categoryName, menuItemId, menuItemName, hashId } = state;
+  const [productDetail, setProductDetail] = useState({images: [], recommended: [] });
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedMetal, setSelectedMetal] = useState("");
+const [selectedDiamondType, setSelectedDiamondType] = useState("");
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
+  
   const [selectedCustomization, setSelectedCustomization] = useState("");
+
+  const handleCustomizationSelect = (metal) => {
+    setSelectedMetal(metal);
+    setDrawerOpen(false);
+  };
+  
+  const handleDiamondTypeSelect = (diamondType) => {
+    setSelectedDiamondType(diamondType);
+    setDrawerOpen(false);
+  };
+
+  const getJwelleryDetail = () => {
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}`
+      )
+      .then((response) => {
+        const detail = response.data.response;
+        // console.log(detail);
+
+        const fetchedImages = detail.images
+          .filter((item) => item.type === "img")
+          .map(
+            (item) => `https://api.sadashrijewelkart.com/assets/${item.file}`
+          );
+        setImages(fetchedImages);
+
+        const fetchedVideo = detail.images.find((item) => item.type === "video")
+          ? `https://api.sadashrijewelkart.com/assets/${
+              detail.images.find((item) => item.type === "video").file
+            }`
+          : "";
+        setVideo(fetchedVideo);
+        setProductDetail(detail);
+        console.log(productDetail);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getJwelleryDetail();
+  }, []);
 
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
     setDrawerOpen(false); // Close the drawer
   };
 
-  const handleCustomizationSelect = (customization) => {
-    setSelectedCustomization(customization);
-    setDrawerOpen(false); // Close the drawer
+  // const handleCustomizationSelect = (customization) => {
+  //   setSelectedCustomization(customization);
+  //   setDrawerOpen(false); // Close the drawer
+  // };
+  const handleCardClick = (productId, productName, hash) => {
+    console.log(hash);
+    navigate(`/jwellery/${menuItemName}/${productName}`, {
+      state: {
+        categoryName: menuItemName,
+        menuItemId: productId,
+        menuItemName: productName,
+        hashId: hash,
+      },
+    });
   };
 
   const handleMobileDrawerOpen = () => {
-    setMobileDrawerOpen(true)
-  }
+    setMobileDrawerOpen(true);
+  };
 
   const handleMobileDrawerClose = () => {
-    setMobileDrawerOpen(false)
-  }
+    setMobileDrawerOpen(false);
+  };
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -96,12 +156,6 @@ function ProductDetail() {
   };
 
   const [pincode, setPincode] = useState();
-  const images = [
-    `${process.env.PUBLIC_URL + "/assets/fav.png"}`,
-    `${process.env.PUBLIC_URL + "/assets/logoNew.png"}`,
-  ];
-  const videos =
-    "https://cdn.caratlane.com/media/catalog/product/U/R/UR00660-1Y0000_16_video.mp4";
 
   return (
     <div className="product-detail">
@@ -122,7 +176,7 @@ function ProductDetail() {
           <div className="product-content">
             <div className="product-image-section">
               {/* Placeholder for product images */}
-              <ImageVideoCarousel images={images} video={videos} />
+              <ImageVideoCarousel images={images} video={video} />
             </div>
             <div className="product-detail-section">
               <div className="title">
@@ -150,6 +204,9 @@ function ProductDetail() {
                         fullWidth
                         sx={{
                           textAlign: "left",
+                          paddingTop: 2,
+                          paddingBottom: 2,
+                          color:"#a36e29",
                           paddingLeft: 1,
                           border: 1,
                           borderColor: "divider",
@@ -181,7 +238,10 @@ function ProductDetail() {
                         fullWidth
                         sx={{
                           textAlign: "left",
+                          paddingTop: 2,
+                          paddingBottom: 2,
                           paddingLeft: 1,
+                          color:"#a36e29",
                           border: 1,
                           borderColor: "divider",
                           borderRadius: 1,
@@ -193,7 +253,7 @@ function ProductDetail() {
                           },
                         }}
                       >
-                        {selectedCustomization || "Select Customization"}
+                        {selectedMetal || "Choice of Metal"} - {selectedDiamondType || "Diamond Type"}
                       </Button>
                     </Box>
                     <Drawer
@@ -207,10 +267,56 @@ function ProductDetail() {
                           width: 500,
                         }}
                       >
-                        <Typography variant="h6">Choice of Metal</Typography>
+                        <Typography variant="h6" >Choice of Metal</Typography>
                         {/* Add Buttons or another component to select metal choice */}
                         <Grid container>
                           {customization.map((size, index) => (
+                            <Grid item xs={4} key={index}>
+                              <Button
+                                variant="outlined"
+                                sx={{
+                                  margin: 1,
+                                  padding: 2,
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  textAlign: "center",
+                                  border: 1,
+                                  borderColor: "divider",
+                                  borderRadius: 1,
+                                  boxShadow: 1,
+                                  "&.selected": {
+                                    backgroundColor: "primary.main",
+                                    color: "primary.contrastText",
+                                    "&:hover": {
+                                      backgroundColor: "#a36e29",
+                                    },
+                                  },
+                                }}
+                                onClick={() =>
+                                  handleCustomizationSelect(size.metal)
+                                }
+                                className={
+                                  selectedSize === size.label ? "selected" : ""
+                                }
+                              >
+                                <Typography variant="body1" sx={{color:"#a36e29"}}>
+                                  {size.label}
+                                </Typography>
+                                <Typography variant="caption" sx={{color:"#a36e29"}}>
+                                  {size.metal}
+                                </Typography>
+                                <Typography variant="caption" sx={{color:"#a36e29"}}>
+                                  {size.availability}
+                                </Typography>
+                              </Button>
+                            </Grid>
+                          ))}
+                        </Grid>
+
+                        <Typography variant="h6" sx={{ marginTop: 2 }}>Diamond Type</Typography>
+                        {/* Add Buttons or another component to select metal choice */}
+                        <Grid container>
+                          {diamondType.map((size, index) => (
                             <Grid item xs={4} key={index}>
                               <Button
                                 variant="outlined"
@@ -233,19 +339,19 @@ function ProductDetail() {
                                   },
                                 }}
                                 onClick={() =>
-                                  handleCustomizationSelect(size.metal)
+                                  handleDiamondTypeSelect(size.type)
                                 }
                                 className={
                                   selectedSize === size.label ? "selected" : ""
                                 }
                               >
-                                <Typography variant="body1">
+                                <Typography variant="body1" sx={{color:"#a36e29"}}>
                                   {size.label}
                                 </Typography>
-                                <Typography variant="caption">
-                                  {size.metal}
+                                <Typography variant="caption" sx={{color:"#a36e29"}}>
+                                  {size.type}
                                 </Typography>
-                                <Typography variant="caption">
+                                <Typography variant="caption" sx={{color:"#a36e29"}}>
                                   {size.availability}
                                 </Typography>
                               </Button>
@@ -284,13 +390,13 @@ function ProductDetail() {
                                   selectedSize === size.label ? "selected" : ""
                                 }
                               >
-                                <Typography variant="body1">
+                                <Typography variant="body1" sx={{color:"#a36e29"}}>
                                   {size.label}
                                 </Typography>
-                                <Typography variant="caption">
+                                <Typography variant="caption" sx={{color:"#a36e29"}}>
                                   {size.detail}
                                 </Typography>
-                                <Typography variant="caption">
+                                <Typography variant="caption" sx={{color:"#a36e29"}}>
                                   {size.availability}
                                 </Typography>
                               </Button>
@@ -320,7 +426,7 @@ function ProductDetail() {
 
                   <div className="price-section">
                     <Typography variant="h4" component="p" className="price">
-                      ₹7,604
+                      ₹{productDetail.price}
                     </Typography>
                     <Typography variant="body1" className="original-price">
                       ₹9,010
@@ -357,35 +463,22 @@ function ProductDetail() {
                 <Grid item xs={12} className="detail-grid">
                   <Card className="card">
                     <Typography variant="subtitle2" className="sku">
-                      SKU UR00660-1Y0000
+                    {productDetail.hash}
                     </Typography>
                     <Typography variant="h6" className="title">
                       Product Details
                     </Typography>
                     <Typography variant="body1" className="desc">
-                      Set in 14 KT Yellow Gold (1.390 g)
+                    {productDetail.description}
                     </Typography>
 
                     <Grid container spacing={0} justifyContent="center">
-                      <Grid item xs={4} className="detail">
-                        <DimensionsIcon className="icon" />
-                        <Typography className="text">
-                          Dimensions
-                          <br />
-                          Width - 2.1 mm
-                          <br />
-                          Height - 1.6 mm
-                          <br />
-                          Size - 12 (51.8 mm)
-                        </Typography>
-                      </Grid>
-
                       <Grid item xs={4} className="detail">
                         <WeightIcon className="icon" />
                         <Typography className="text">
                           Weight
                           <br />
-                          Gross 1.390 g
+                          {productDetail.weight} g
                         </Typography>
                       </Grid>
 
@@ -394,13 +487,41 @@ function ProductDetail() {
                         <Typography className="text">
                           Purity
                           <br />
-                          14 KT
+                          {productDetail.purity} KT
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6} className="detail">
+                        <DimensionsIcon className="icon" />
+                        <Typography className="text">
+                          Dimensions
+                          <br />
+                          Width - {productDetail.width} mm
+                          <br />
+                          Height - {productDetail.height} mm
+                          <br />
+                          Size - 12 (51.8 mm)
                         </Typography>
                       </Grid>
                     </Grid>
                   </Card>
                 </Grid>
               </Grid>
+            </div>
+          </div>
+        </div>
+        <div className="container-similar">
+          <div className="similar-product-section">
+            <h2 className="title">Similar Products</h2>
+            <div className="products-scroll-container">
+              {productDetail.recommended.map((product) => (
+                <JwelleryCard
+                  key={product.id}
+                  image={product.images[0].file} 
+                  name={product.name}
+                  price={product.price}
+                  onClick={() => handleCardClick(product.id, product.name, product.hash)} 
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -423,7 +544,7 @@ function ProductDetail() {
               <Grid item xs={12} className="product-image-grid">
                 <div className="product-image-section">
                   {/* Placeholder for product images */}
-                  <ImageVideoCarousel images={images} video={videos} />
+                  <ImageVideoCarousel images={images} video={video} />
                 </div>
               </Grid>
               <Grid item xs={12} className="product-detail-grid">
@@ -439,7 +560,7 @@ function ProductDetail() {
               <Grid item xs={12} className="product-detail-grid">
                 <div className="price-section">
                   <Typography variant="h4" component="p" className="price">
-                    ₹7,604
+                    ₹{productDetail.price}
                   </Typography>
                   <Typography variant="body1" className="original-price">
                     ₹9,010
@@ -474,6 +595,9 @@ function ProductDetail() {
                       fullWidth
                       sx={{
                         textAlign: "left",
+                        paddingTop: 2,
+                          paddingBottom: 2,
+                          color:"#a36e29",
                         paddingLeft: 1,
                         border: 1,
                         borderColor: "divider",
@@ -505,7 +629,10 @@ function ProductDetail() {
                       fullWidth
                       sx={{
                         textAlign: "left",
-                        paddingLeft: 1,
+                        paddingTop: 2,
+                          paddingBottom: 2,
+                          paddingLeft: 1,
+                          color:"#a36e29",
                         border: 1,
                         borderColor: "divider",
                         borderRadius: 1,
@@ -517,7 +644,7 @@ function ProductDetail() {
                         },
                       }}
                     >
-                      {selectedCustomization || "Select Customization"}
+                      {selectedMetal || "Choice of Metal"} - {selectedDiamondType || "Diamond Type"}
                     </Button>
                   </Box>
                   <Drawer
@@ -563,13 +690,77 @@ function ProductDetail() {
                                 selectedSize === size.label ? "selected" : ""
                               }
                             >
-                              <Typography variant="body1" sx={{fontSize:"small"}}>
+                              <Typography
+                                variant="body1"
+                                sx={{ fontSize: "small", color:"#a36e29" }}
+                              >
                                 {size.label}
                               </Typography>
-                              <Typography variant="body2" sx={{fontSize:"small"}}>
+                              <Typography
+                                variant="body2"
+                                sx={{ fontSize: "small", color:"#a36e29" }}
+                              >
                                 {size.metal}
                               </Typography>
-                              <Typography variant="body2" sx={{fontSize:"small"}}>
+                              <Typography
+                                variant="body2"
+                                sx={{ fontSize: "small", color:"#a36e29" }}
+                              >
+                                {size.availability}
+                              </Typography>
+                            </Button>
+                          </Grid>
+                        ))}
+                      </Grid>
+
+                      <Typography variant="h6">Diamond Type</Typography>
+                      {/* Add Buttons or another component to select metal choice */}
+                      <Grid container>
+                        {diamondType.map((size, index) => (
+                          <Grid item xs={4} key={index}>
+                            <Button
+                              variant="outlined"
+                              sx={{
+                                margin: 1,
+                                padding: 2,
+                                display: "flex",
+                                flexDirection: "column",
+                                textAlign: "center",
+                                border: 1,
+                                borderColor: "divider",
+                                borderRadius: 1,
+                                boxShadow: 1,
+                                "&.selected": {
+                                  backgroundColor: "primary.main",
+                                  color: "primary.contrastText",
+                                  "&:hover": {
+                                    backgroundColor: "primary.dark",
+                                  },
+                                },
+                              }}
+                              onClick={() =>
+                                handleDiamondTypeSelect(size.type)
+                              }
+                              className={
+                                selectedSize === size.label ? "selected" : ""
+                              }
+                            >
+                              <Typography
+                                sx={{ fontSize: "small", color:"#a36e29" }}
+                                variant="body1"
+                              >
+                                {size.label}
+                              </Typography>
+                              <Typography
+                                sx={{ fontSize: "small", color:"#a36e29" }}
+                                variant="body2"
+                              >
+                                {size.type}
+                              </Typography>
+                              <Typography
+                                sx={{ fontSize: "small", color:"#a36e29" }}
+                                variant="body2"
+                              >
                                 {size.availability}
                               </Typography>
                             </Button>
@@ -608,13 +799,13 @@ function ProductDetail() {
                                 selectedSize === size.label ? "selected" : ""
                               }
                             >
-                              <Typography variant="body1">
+                              <Typography variant="body1" sx={{color:"#a36e29"}}>
                                 {size.label}
                               </Typography>
-                              <Typography variant="caption">
+                              <Typography variant="caption" sx={{color:"#a36e29"}}>
                                 {size.detail}
                               </Typography>
-                              <Typography variant="caption">
+                              <Typography variant="caption" sx={{color:"#a36e29"}}>
                                 {size.availability}
                               </Typography>
                             </Button>
@@ -663,13 +854,13 @@ function ProductDetail() {
               <Grid item xs={12} className="product-detail-grid">
                 <Card className="card">
                   <Typography variant="subtitle2" className="sku">
-                    SKU UR00660-1Y0000
+                    {productDetail.hash}
                   </Typography>
                   <Typography variant="h6" className="title">
                     Product Details
                   </Typography>
                   <Typography variant="body1" className="desc">
-                    Set in 14 KT Yellow Gold (1.390 g)
+                    {productDetail.description}
                   </Typography>
 
                   <Grid container spacing={0} justifyContent="center">
@@ -678,7 +869,7 @@ function ProductDetail() {
                       <Typography className="text">
                         <strong>Weight</strong>
                         <br />
-                        Gross 1.390 g
+                        {productDetail.weight} g
                       </Typography>
                     </Grid>
 
@@ -687,7 +878,7 @@ function ProductDetail() {
                       <Typography className="text">
                         <strong>Purity</strong>
                         <br />
-                        14 KT
+                        {productDetail.purity} KT
                       </Typography>
                     </Grid>
                     <Grid item xs={8} className="detail">
@@ -695,9 +886,9 @@ function ProductDetail() {
                       <Typography className="text">
                         <strong>Dimensions</strong>
                         <br />
-                        Width - 2.1 mm
+                        Width - {productDetail.width} mm
                         <br />
-                        Height - 1.6 mm
+                        Height - {productDetail.height} mm
                         <br />
                         Size - 12 (51.8 mm)
                       </Typography>
@@ -706,6 +897,22 @@ function ProductDetail() {
                 </Card>
               </Grid>
             </Grid>
+          </div>
+        </div>
+        <div className="container-similar">
+          <div className="similar-product-section">
+            <h2 className="title">Similar Products</h2>
+            <div className="products-scroll-container">
+              {productDetail.recommended?.map((product) => (
+                <JwelleryCard
+                  key={product.id}
+                  image={product.images[0].file}
+                  name={product.name}
+                  price={product.price}
+                  onClick={handleCardClick(product.id, product.name, product.hash)}
+                />
+              )) || null}
+            </div>
           </div>
         </div>
       </div>

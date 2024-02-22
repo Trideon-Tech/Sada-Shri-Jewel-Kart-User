@@ -42,12 +42,14 @@ function Productpage() {
     setIsDrawerOpen(open);
   };
 
-  const handleCardClick = (productId, productName) => {
+  const handleCardClick = (productId, productName, hash) => {
+    console.log(hash);
     navigate(`/jwellery/${menuItemName}/${productName}`, {
       state: {
         categoryName: menuItemName,
         menuItemId: productId,
         menuItemName: productName,
+        hashId: hash,
       },
     });
   };
@@ -164,7 +166,7 @@ function Productpage() {
                       image={item.images[0].file}
                       name={item.name}
                       price={item.price}
-                      onClick={() => handleCardClick(item.id, item.name)}
+                      onClick={() => handleCardClick(item.id, item.name, item.hash)}
                     />
                   ))
                 )}
@@ -207,7 +209,7 @@ function Productpage() {
                     image={item.images[0].file}
                     name={item.name}
                     price={item.price}
-                    onClick={() => handleCardClick(item.id, item.name)}
+                    onClick={() => handleCardClick(item.id, item.name, item.hash)}
                   />
                 </Grid>
               ))

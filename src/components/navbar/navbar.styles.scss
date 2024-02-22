@@ -142,27 +142,15 @@
           }
           .search {
             margin-left: auto;
-            margin-right: 10px;
+            margin-right: 0px;
             display: flex;
             align-items: center;
-            border: 2px solid #fff;
-            border-radius: 32px;
-            padding: 5px;
     
             .search-icon {
-              padding: 8px;
+              padding: 5px;
               color: #fff;
             }
     
-            .input-root {
-              color: inherit;
-              width: 150px;
-            }
-    
-            .input-input {
-              padding: 10px;
-              color: #fff;
-            }
           }
           .menu-icon {
             margin-left: 5px;
