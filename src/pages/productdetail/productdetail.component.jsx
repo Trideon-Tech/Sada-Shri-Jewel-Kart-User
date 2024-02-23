@@ -38,26 +38,6 @@ const theme = createTheme({
   },
 });
 
-const sizes = [
-  { label: "1", detail: "44.8 mm", availability: "Made to Order" },
-  { label: "2", detail: "44.8 mm", availability: "Made to Order" },
-  { label: "3", detail: "44.8 mm", availability: "Made to Order" },
-  { label: "4", detail: "44.8 mm", availability: "Made to Order" },
-  { label: "5", detail: "44.8 mm", availability: "Made to Order" },
-];
-
-const customization = [
-  { label: "1", metal: "14KT Gold", availability: "Made to Order" },
-  { label: "2", metal: "18KT Gold", availability: "Made to Order" },
-  { label: "3", metal: "24KT Gold", availability: "Made to Order" },
-];
-
-const diamondType = [
-  { label: "1", type: "IJ - SI", availability: "Made to Order" },
-  { label: "2", type: "GH - SI", availability: "Made to Order" },
-  { label: "3", type: "EF - VVS", availability: "Made to Order" },
-];
-
 function ProductDetail() {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
@@ -65,24 +45,62 @@ function ProductDetail() {
   const location = useLocation();
   const { state } = location;
   const { categoryName, menuItemId, menuItemName, hashId } = state;
-  const [productDetail, setProductDetail] = useState({images: [], recommended: [] });
+  const [customizationOptions, setCustomizationOptions] = useState({
+    metal: [],
+    diamondQuality: [],
+    size: [],
+  });
+  const [productDetail, setProductDetail] = useState({
+    images: [],
+    recommended: [],
+  });
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedMetal, setSelectedMetal] = useState("");
-const [selectedDiamondType, setSelectedDiamondType] = useState("");
+  const [selectedDiamondType, setSelectedDiamondType] = useState("");
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
-  
-  const [selectedCustomization, setSelectedCustomization] = useState("");
+  const [variants, setVariants] = useState([]); //for variant
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState(""); //for variant price
+
+  const updateSelectedVariantPrice = () => {
+    const selectedOptions = [selectedMetal, selectedDiamondType, selectedSize];
+    console.log(selectedOptions);
+
+    const matchingVariant = variants.find((variant) =>
+      selectedOptions.every(
+        (option, index) => variant.for_customization_options[index] === option
+      )
+    );
+
+    console.log(matchingVariant);
+
+
+    if (matchingVariant) {
+      setSelectedVariantPrice(matchingVariant.price);
+    } else {
+      setSelectedVariantPrice("Unavailable");
+    }
+  };
 
   const handleCustomizationSelect = (metal) => {
     setSelectedMetal(metal);
     setDrawerOpen(false);
   };
-  
+
   const handleDiamondTypeSelect = (diamondType) => {
     setSelectedDiamondType(diamondType);
     setDrawerOpen(false);
   };
+
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    setDrawerOpen(false); // Close the drawer
+  };
+
+  useEffect(() => {
+    updateSelectedVariantPrice();
+  }, [selectedMetal, selectedDiamondType, selectedSize]);
+  
 
   const getJwelleryDetail = () => {
     axios
@@ -100,14 +118,21 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
           );
         setImages(fetchedImages);
 
-        const fetchedVideo = detail.images.find((item) => item.type === "video")
-          ? `https://api.sadashrijewelkart.com/assets/${
-              detail.images.find((item) => item.type === "video").file
-            }`
+        const fetchedVideo = detail.video
+          ? `https://api.sadashrijewelkart.com/assets/${detail.video}`
           : "";
         setVideo(fetchedVideo);
+
+        setCustomizationOptions({
+          metal:
+            detail.customizations.options_per_field["Choice Of Metal"] || [],
+          diamondQuality:
+            detail.customizations.options_per_field["Diamond Quality"] || [],
+          size: detail.customizations.options_per_field["Select Size"] || [],
+        });
+
+        setVariants(detail.customizations.variants.options);
         setProductDetail(detail);
-        console.log(productDetail);
       })
       .catch((error) => {
         console.log(error);
@@ -116,17 +141,14 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
 
   useEffect(() => {
     getJwelleryDetail();
+    // setSelectedMetal("");
+    // setSelectedDiamondType("");
+    // setSelectedSize("");
+    // setSelectedVariantPrice("");
   }, []);
 
-  const handleSizeSelect = (size) => {
-    setSelectedSize(size);
-    setDrawerOpen(false); // Close the drawer
-  };
 
-  // const handleCustomizationSelect = (customization) => {
-  //   setSelectedCustomization(customization);
-  //   setDrawerOpen(false); // Close the drawer
-  // };
+
   const handleCardClick = (productId, productName, hash) => {
     console.log(hash);
     navigate(`/jwellery/${menuItemName}/${productName}`, {
@@ -206,7 +228,7 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                           textAlign: "left",
                           paddingTop: 2,
                           paddingBottom: 2,
-                          color:"#a36e29",
+                          color: "#a36e29",
                           paddingLeft: 1,
                           border: 1,
                           borderColor: "divider",
@@ -241,7 +263,7 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                           paddingTop: 2,
                           paddingBottom: 2,
                           paddingLeft: 1,
-                          color:"#a36e29",
+                          color: "#a36e29",
                           border: 1,
                           borderColor: "divider",
                           borderRadius: 1,
@@ -253,7 +275,8 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                           },
                         }}
                       >
-                        {selectedMetal || "Choice of Metal"} - {selectedDiamondType || "Diamond Type"}
+                        {selectedMetal || "Choice of Metal"} -{" "}
+                        {selectedDiamondType || "Diamond Type"}
                       </Button>
                     </Box>
                     <Drawer
@@ -267,103 +290,119 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                           width: 500,
                         }}
                       >
-                        <Typography variant="h6" >Choice of Metal</Typography>
+                        <Typography variant="h6">Choice of Metal</Typography>
                         {/* Add Buttons or another component to select metal choice */}
                         <Grid container>
-                          {customization.map((size, index) => (
-                            <Grid item xs={4} key={index}>
-                              <Button
-                                variant="outlined"
-                                sx={{
-                                  margin: 1,
-                                  padding: 2,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  textAlign: "center",
-                                  border: 1,
-                                  borderColor: "divider",
-                                  borderRadius: 1,
-                                  boxShadow: 1,
-                                  "&.selected": {
-                                    backgroundColor: "primary.main",
-                                    color: "primary.contrastText",
-                                    "&:hover": {
-                                      backgroundColor: "#a36e29",
+                          {customizationOptions.metal.map(
+                            (metalOption, index) => (
+                              <Grid item xs={4} key={index}>
+                                <Button
+                                  variant="outlined"
+                                  sx={{
+                                    margin: 1,
+                                    padding: 2,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    textAlign: "center",
+                                    border: 1,
+                                    borderColor: "divider",
+                                    borderRadius: 1,
+                                    boxShadow: 1,
+                                    "&.selected": {
+                                      backgroundColor: "primary.main",
+                                      color: "primary.contrastText",
+                                      "&:hover": {
+                                        backgroundColor: "#a36e29",
+                                      },
                                     },
-                                  },
-                                }}
-                                onClick={() =>
-                                  handleCustomizationSelect(size.metal)
-                                }
-                                className={
-                                  selectedSize === size.label ? "selected" : ""
-                                }
-                              >
-                                <Typography variant="body1" sx={{color:"#a36e29"}}>
-                                  {size.label}
-                                </Typography>
-                                <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                  {size.metal}
-                                </Typography>
-                                <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                  {size.availability}
-                                </Typography>
-                              </Button>
-                            </Grid>
-                          ))}
+                                  }}
+                                  onClick={() =>
+                                    handleCustomizationSelect(metalOption)
+                                  }
+                                  className={
+                                    selectedSize === metalOption
+                                      ? "selected"
+                                      : ""
+                                  }
+                                >
+                                  <Typography
+                                    variant="caption"
+                                    sx={{ color: "#a36e29" }}
+                                  >
+                                    {metalOption}
+                                  </Typography>
+                                  <Typography
+                                    variant="caption"
+                                    sx={{ color: "#a36e29" }}
+                                  >
+                                    Made on Order
+                                  </Typography>
+                                </Button>
+                              </Grid>
+                            )
+                          )}
                         </Grid>
 
-                        <Typography variant="h6" sx={{ marginTop: 2 }}>Diamond Type</Typography>
+                        <Typography variant="h6" sx={{ marginTop: 2 }}>
+                          Diamond Type
+                        </Typography>
                         {/* Add Buttons or another component to select metal choice */}
                         <Grid container>
-                          {diamondType.map((size, index) => (
-                            <Grid item xs={4} key={index}>
-                              <Button
-                                variant="outlined"
-                                sx={{
-                                  margin: 1,
-                                  padding: 2,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  textAlign: "center",
-                                  border: 1,
-                                  borderColor: "divider",
-                                  borderRadius: 1,
-                                  boxShadow: 1,
-                                  "&.selected": {
-                                    backgroundColor: "primary.main",
-                                    color: "primary.contrastText",
-                                    "&:hover": {
-                                      backgroundColor: "primary.dark",
+                          {customizationOptions.diamondQuality.map(
+                            (diamondOption, index) => (
+                              <Grid item xs={4} key={index}>
+                                <Button
+                                  variant="outlined"
+                                  sx={{
+                                    margin: 1,
+                                    padding: 2,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    textAlign: "center",
+                                    border: 1,
+                                    borderColor: "divider",
+                                    borderRadius: 1,
+                                    boxShadow: 1,
+                                    "&.selected": {
+                                      backgroundColor: "primary.main",
+                                      color: "primary.contrastText",
+                                      "&:hover": {
+                                        backgroundColor: "primary.dark",
+                                      },
                                     },
-                                  },
-                                }}
-                                onClick={() =>
-                                  handleDiamondTypeSelect(size.type)
-                                }
-                                className={
-                                  selectedSize === size.label ? "selected" : ""
-                                }
-                              >
-                                <Typography variant="body1" sx={{color:"#a36e29"}}>
-                                  {size.label}
-                                </Typography>
-                                <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                  {size.type}
-                                </Typography>
-                                <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                  {size.availability}
-                                </Typography>
-                              </Button>
-                            </Grid>
-                          ))}
+                                  }}
+                                  onClick={() =>
+                                    handleDiamondTypeSelect(diamondOption)
+                                  }
+                                  className={
+                                    selectedSize === diamondOption
+                                      ? "selected"
+                                      : ""
+                                  }
+                                >
+                                  <Typography
+                                    variant="caption"
+                                    sx={{ color: "#a36e29" }}
+                                  >
+                                    {diamondOption}
+                                  </Typography>
+                                  <Typography
+                                    variant="caption"
+                                    sx={{ color: "#a36e29" }}
+                                  >
+                                    Made on Order
+                                  </Typography>
+                                </Button>
+                              </Grid>
+                            )
+                          )}
                         </Grid>
 
                         <Typography variant="h6" sx={{ marginTop: 2 }}>
                           Select Size
                         </Typography>
                         <Grid container>
-                          {sizes.map((size, index) => (
+                          {customizationOptions.size.map((size, index) => (
                             <Grid item xs={4} key={index}>
                               <Button
                                 variant="outlined"
@@ -377,27 +416,30 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                                   borderColor: "divider",
                                   borderRadius: 1,
                                   boxShadow: 1,
-                                  "&.selected": {
-                                    backgroundColor: "primary.main",
-                                    color: "primary.contrastText",
-                                    "&:hover": {
-                                      backgroundColor: "primary.dark",
-                                    },
-                                  },
+                                  // "&.selected": {
+                                  //   backgroundColor: "primary.main",
+                                  //   color: "primary.contrastText",
+                                  //   "&:hover": {
+                                  //     backgroundColor: "primary.dark",
+                                  //   },
+                                  // },
                                 }}
-                                onClick={() => handleSizeSelect(size.detail)}
+                                onClick={() => handleSizeSelect(size)}
                                 className={
-                                  selectedSize === size.label ? "selected" : ""
+                                  selectedSize === size ? "selected" : ""
                                 }
                               >
-                                <Typography variant="body1" sx={{color:"#a36e29"}}>
-                                  {size.label}
+                                <Typography
+                                  variant="caption"
+                                  sx={{ color: "#a36e29" }}
+                                >
+                                  {size}
                                 </Typography>
-                                <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                  {size.detail}
-                                </Typography>
-                                <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                  {size.availability}
+                                <Typography
+                                  variant="caption"
+                                  sx={{ color: "#a36e29" }}
+                                >
+                                  Made On Order
                                 </Typography>
                               </Button>
                             </Grid>
@@ -426,7 +468,7 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
 
                   <div className="price-section">
                     <Typography variant="h4" component="p" className="price">
-                      ₹{productDetail.price}
+                      ₹{selectedVariantPrice || productDetail.price}
                     </Typography>
                     <Typography variant="body1" className="original-price">
                       ₹9,010
@@ -463,13 +505,13 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                 <Grid item xs={12} className="detail-grid">
                   <Card className="card">
                     <Typography variant="subtitle2" className="sku">
-                    {productDetail.hash}
+                      {productDetail.hash}
                     </Typography>
                     <Typography variant="h6" className="title">
                       Product Details
                     </Typography>
                     <Typography variant="body1" className="desc">
-                    {productDetail.description}
+                      {productDetail.description}
                     </Typography>
 
                     <Grid container spacing={0} justifyContent="center">
@@ -516,10 +558,12 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
               {productDetail.recommended.map((product) => (
                 <JwelleryCard
                   key={product.id}
-                  image={product.images[0].file} 
+                  image={product.images[0].file}
                   name={product.name}
                   price={product.price}
-                  onClick={() => handleCardClick(product.id, product.name, product.hash)} 
+                  onClick={() =>
+                    handleCardClick(product.id, product.name, product.hash)
+                  }
                 />
               ))}
             </div>
@@ -596,8 +640,8 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                       sx={{
                         textAlign: "left",
                         paddingTop: 2,
-                          paddingBottom: 2,
-                          color:"#a36e29",
+                        paddingBottom: 2,
+                        color: "#a36e29",
                         paddingLeft: 1,
                         border: 1,
                         borderColor: "divider",
@@ -630,9 +674,9 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                       sx={{
                         textAlign: "left",
                         paddingTop: 2,
-                          paddingBottom: 2,
-                          paddingLeft: 1,
-                          color:"#a36e29",
+                        paddingBottom: 2,
+                        paddingLeft: 1,
+                        color: "#a36e29",
                         border: 1,
                         borderColor: "divider",
                         borderRadius: 1,
@@ -644,7 +688,8 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                         },
                       }}
                     >
-                      {selectedMetal || "Choice of Metal"} - {selectedDiamondType || "Diamond Type"}
+                      {selectedMetal || "Choice of Metal"} -{" "}
+                      {selectedDiamondType || "Diamond Type"}
                     </Button>
                   </Box>
                   <Drawer
@@ -661,118 +706,112 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                       <Typography variant="h6">Choice of Metal</Typography>
                       {/* Add Buttons or another component to select metal choice */}
                       <Grid container>
-                        {customization.map((size, index) => (
-                          <Grid item xs={4} key={index}>
-                            <Button
-                              variant="outlined"
-                              sx={{
-                                margin: 1,
-                                padding: 2,
-                                display: "flex",
-                                flexDirection: "column",
-                                textAlign: "center",
-                                border: 1,
-                                borderColor: "divider",
-                                borderRadius: 1,
-                                boxShadow: 1,
-                                "&.selected": {
-                                  backgroundColor: "primary.main",
-                                  color: "primary.contrastText",
-                                  "&:hover": {
-                                    backgroundColor: "primary.dark",
+                        {customizationOptions.metal.map(
+                          (metalOption, index) => (
+                            <Grid item xs={4} key={index}>
+                              <Button
+                                variant="outlined"
+                                sx={{
+                                  margin: 1,
+                                  padding: 2,
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  textAlign: "center",
+                                  border: 1,
+                                  borderColor: "divider",
+                                  borderRadius: 1,
+                                  boxShadow: 1,
+                                  "&.selected": {
+                                    backgroundColor: "primary.main",
+                                    color: "primary.contrastText",
+                                    "&:hover": {
+                                      backgroundColor: "primary.dark",
+                                    },
                                   },
-                                },
-                              }}
-                              onClick={() =>
-                                handleCustomizationSelect(size.metal)
-                              }
-                              className={
-                                selectedSize === size.label ? "selected" : ""
-                              }
-                            >
-                              <Typography
-                                variant="body1"
-                                sx={{ fontSize: "small", color:"#a36e29" }}
+                                }}
+                                onClick={() =>
+                                  handleCustomizationSelect(metalOption)
+                                }
+                                className={
+                                  selectedSize === metalOption ? "selected" : ""
+                                }
                               >
-                                {size.label}
-                              </Typography>
-                              <Typography
-                                variant="body2"
-                                sx={{ fontSize: "small", color:"#a36e29" }}
-                              >
-                                {size.metal}
-                              </Typography>
-                              <Typography
-                                variant="body2"
-                                sx={{ fontSize: "small", color:"#a36e29" }}
-                              >
-                                {size.availability}
-                              </Typography>
-                            </Button>
-                          </Grid>
-                        ))}
+                                <Typography
+                                  variant="body2"
+                                  sx={{ fontSize: "small", color: "#a36e29" }}
+                                >
+                                  {metalOption}
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  sx={{ fontSize: "small", color: "#a36e29" }}
+                                >
+                                  Made on Order
+                                </Typography>
+                              </Button>
+                            </Grid>
+                          )
+                        )}
                       </Grid>
 
                       <Typography variant="h6">Diamond Type</Typography>
                       {/* Add Buttons or another component to select metal choice */}
                       <Grid container>
-                        {diamondType.map((size, index) => (
-                          <Grid item xs={4} key={index}>
-                            <Button
-                              variant="outlined"
-                              sx={{
-                                margin: 1,
-                                padding: 2,
-                                display: "flex",
-                                flexDirection: "column",
-                                textAlign: "center",
-                                border: 1,
-                                borderColor: "divider",
-                                borderRadius: 1,
-                                boxShadow: 1,
-                                "&.selected": {
-                                  backgroundColor: "primary.main",
-                                  color: "primary.contrastText",
-                                  "&:hover": {
-                                    backgroundColor: "primary.dark",
+                        {customizationOptions.diamondQuality.map(
+                          (diamondOption, index) => (
+                            <Grid item xs={4} key={index}>
+                              <Button
+                                variant="outlined"
+                                sx={{
+                                  margin: 1,
+                                  padding: 2,
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  textAlign: "center",
+                                  border: 1,
+                                  borderColor: "divider",
+                                  borderRadius: 1,
+                                  boxShadow: 1,
+                                  "&.selected": {
+                                    backgroundColor: "primary.main",
+                                    color: "primary.contrastText",
+                                    "&:hover": {
+                                      backgroundColor: "primary.dark",
+                                    },
                                   },
-                                },
-                              }}
-                              onClick={() =>
-                                handleDiamondTypeSelect(size.type)
-                              }
-                              className={
-                                selectedSize === size.label ? "selected" : ""
-                              }
-                            >
-                              <Typography
-                                sx={{ fontSize: "small", color:"#a36e29" }}
-                                variant="body1"
+                                }}
+                                onClick={() =>
+                                  handleDiamondTypeSelect(diamondOption)
+                                }
+                                className={
+                                  selectedSize === diamondOption
+                                    ? "selected"
+                                    : ""
+                                }
                               >
-                                {size.label}
-                              </Typography>
-                              <Typography
-                                sx={{ fontSize: "small", color:"#a36e29" }}
-                                variant="body2"
-                              >
-                                {size.type}
-                              </Typography>
-                              <Typography
-                                sx={{ fontSize: "small", color:"#a36e29" }}
-                                variant="body2"
-                              >
-                                {size.availability}
-                              </Typography>
-                            </Button>
-                          </Grid>
-                        ))}
+                                <Typography
+                                  sx={{ fontSize: "small", color: "#a36e29" }}
+                                  variant="body2"
+                                >
+                                  {diamondOption}
+                                </Typography>
+                                <Typography
+                                  sx={{ fontSize: "small", color: "#a36e29" }}
+                                  variant="body2"
+                                >
+                                  Made on Order
+                                </Typography>
+                              </Button>
+                            </Grid>
+                          )
+                        )}
                       </Grid>
 
                       <Typography variant="h6" sx={{ marginTop: 2 }}>
                         Select Size
                       </Typography>
                       <Grid container>
-                        {sizes.map((size, index) => (
+                        {customizationOptions.size.map((size, index) => (
                           <Grid item xs={4} key={index}>
                             <Button
                               variant="outlined"
@@ -794,19 +833,22 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                                   },
                                 },
                               }}
-                              onClick={() => handleSizeSelect(size.detail)}
+                              onClick={() => handleSizeSelect(size)}
                               className={
-                                selectedSize === size.label ? "selected" : ""
+                                selectedSize === size ? "selected" : ""
                               }
                             >
-                              <Typography variant="body1" sx={{color:"#a36e29"}}>
-                                {size.label}
+                              <Typography
+                                variant="caption"
+                                sx={{ color: "#a36e29" }}
+                              >
+                                {size}
                               </Typography>
-                              <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                {size.detail}
-                              </Typography>
-                              <Typography variant="caption" sx={{color:"#a36e29"}}>
-                                {size.availability}
+                              <Typography
+                                variant="caption"
+                                sx={{ color: "#a36e29" }}
+                              >
+                                Made on Order
                               </Typography>
                             </Button>
                           </Grid>
@@ -909,7 +951,11 @@ const [selectedDiamondType, setSelectedDiamondType] = useState("");
                   image={product.images[0].file}
                   name={product.name}
                   price={product.price}
-                  onClick={handleCardClick(product.id, product.name, product.hash)}
+                  onClick={handleCardClick(
+                    product.id,
+                    product.name,
+                    product.hash
+                  )}
                 />
               )) || null}
             </div>
