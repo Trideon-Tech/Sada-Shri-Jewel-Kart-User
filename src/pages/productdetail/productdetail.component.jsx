@@ -78,7 +78,7 @@ function ProductDetail() {
     if (matchingVariant) {
       setSelectedVariantPrice(matchingVariant.price);
     } else {
-      setSelectedVariantPrice("Unavailable");
+      setSelectedVariantPrice(productDetail.price);
     }
   };
 
@@ -141,10 +141,6 @@ function ProductDetail() {
 
   useEffect(() => {
     getJwelleryDetail();
-    // setSelectedMetal("");
-    // setSelectedDiamondType("");
-    // setSelectedSize("");
-    // setSelectedVariantPrice("");
   }, []);
 
 
