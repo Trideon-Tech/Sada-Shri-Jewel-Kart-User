@@ -2,7 +2,7 @@
     font-family: "Work Sans", sans-serif;
     .web{
     .block-with-background {
-      background-color: #fffbc8;
+      background-color: #F0F0F0;
       padding: 20px;
       text-align: center;
 
@@ -16,7 +16,7 @@
 
       .breadcrumbs-container {
         margin-left: 5vw;
-        background-color: #fffbc8;
+        background-color: #F0F0F0;
         padding: 10px 0;
       }
     
@@ -34,7 +34,7 @@
         margin: 0 auto; 
 
         .filter{
-            background-color: #f5fcff;
+            background-color: #fff;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -49,7 +49,7 @@
                 color: #a36e29;
                 font-size: 1.4rem;
                 font-weight: 600;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
             .MuiDivider-root {
                 height: 10px;
@@ -99,7 +99,7 @@
     .mobile {
       display: block;
       .block-with-background{
-      background-color: #fffbc8;
+      background-color: #F0F0F0;
       padding: 5px;
       text-align: center;
 
@@ -115,7 +115,7 @@
       .breadcrumbs-container {
       
         margin-left: 5vw;
-        background-color: #fffbc8;
+        background-color: #F0F0F0;
         padding: 10px 0;
       }
     

@@ -33,8 +33,8 @@
           position: relative;
   
           &:checked {
-            background-color: #2196F3;
-            border-color: #2196F3;
+            background-color: #a36e29;
+            border-color: #a36e29;
           }
   
           &:checked:after {
@@ -61,7 +61,7 @@
     .show-more {
       margin-top: 15px;
       cursor: pointer;
-      color: #0056b3;
+      color: #a36e29;
       font-size: 0.9rem;
       text-decoration: underline;
       text-align: left;

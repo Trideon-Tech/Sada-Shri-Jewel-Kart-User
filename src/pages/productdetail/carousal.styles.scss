@@ -12,13 +12,13 @@
       img {
         width: 100%;
         height: auto;
-        border: 3px solid #ccc; // or any styling you want for the active item
+        //border: 3px solid #ccc; // or any styling you want for the active item
       }
   
       video {
         width: 100%;
         height: auto;
-        border: 3px solid #ccc; // consistent with the image styling
+        //border: 3px solid #ccc; // consistent with the image styling
       }
     }
   
@@ -69,10 +69,10 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: transparent;
       z-index: 10;
       &:hover {
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: transparent;
       }
   
       &.prev {

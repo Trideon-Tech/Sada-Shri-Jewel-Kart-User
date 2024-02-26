@@ -44,13 +44,13 @@ function Productpage() {
 
   const handleCardClick = (productId, productName, hash) => {
     console.log(hash);
-    navigate(`/jwellery/${menuItemName}/${productName}`, {
-      state: {
-        categoryName: menuItemName,
-        menuItemId: productId,
-        menuItemName: productName,
-        hashId: hash,
-      },
+    navigate(`/jwellery/${menuItemName}/${productName}-${hash}`, {
+      // state: {
+      //   categoryName: menuItemName,
+      //   menuItemId: productId,
+      //   menuItemName: productName,
+      //   hashId: hash,
+      // },
     });
   };
 

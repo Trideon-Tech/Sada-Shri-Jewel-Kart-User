@@ -75,21 +75,13 @@ const Navbar = () => {
             <img
               alt="logo"
               className="logo"
-              src={process.env.PUBLIC_URL + "/assets/fav.png"}
+              src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
             />
             <div className="menu-items">
               {menuItems.map((category) => (
                 <div key={category.id} className="menu-item">
                   <Button
-                    // component={Link}
-                    // to={`/jwellery/${category.name}`}
                     className="menu-item-btn"
-                    style={{
-                      color: "#fff",
-                      fontWeight: "400",
-                      fontSize: "14px",
-                      height: "100%",
-                    }}
                     onClick={() => handleMenuItemClick(category)}
                   >
                     {category.name}
@@ -241,7 +233,7 @@ const Navbar = () => {
             <img
               alt="logo"
               className="logo"
-              src={process.env.PUBLIC_URL + "/assets/fav.png"}
+              src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
             />
             <div className="search">
               <div className="search-icon">

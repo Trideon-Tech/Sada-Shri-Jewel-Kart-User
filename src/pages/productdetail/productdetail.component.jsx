@@ -13,9 +13,10 @@ import {
   Box,
   Grid,
 } from "@mui/material";
+import Parser from 'html-react-parser';
 import "./productdetail.styles.scss";
 import ImageVideoCarousel from "./carousal.component";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
@@ -42,9 +43,11 @@ function ProductDetail() {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState("");
-  const location = useLocation();
-  const { state } = location;
-  const { categoryName, menuItemId, menuItemName, hashId } = state;
+  const {product} = useParams();
+  const [menuItemName, hashId] = product.split("-");
+  //const location = useLocation();
+  //const { state } = location;
+  //const { categoryName, menuItemId, menuItemName, hashId } = state;
   const [customizationOptions, setCustomizationOptions] = useState({
     metal: [],
     diamondQuality: [],
@@ -74,7 +77,6 @@ function ProductDetail() {
 
     console.log(matchingVariant);
 
-
     if (matchingVariant) {
       setSelectedVariantPrice(matchingVariant.price);
     } else {
@@ -100,9 +102,9 @@ function ProductDetail() {
   useEffect(() => {
     updateSelectedVariantPrice();
   }, [selectedMetal, selectedDiamondType, selectedSize]);
-  
 
   const getJwelleryDetail = () => {
+    console.log(product);
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}`
@@ -119,7 +121,7 @@ function ProductDetail() {
         setImages(fetchedImages);
 
         const fetchedVideo = detail.video
-          ? `https://api.sadashrijewelkart.com/assets/${detail.video}`
+          ? `https://api.sadashrijewelkart.com/assets/${detail.video.file}`
           : "";
         setVideo(fetchedVideo);
 
@@ -142,8 +144,6 @@ function ProductDetail() {
   useEffect(() => {
     getJwelleryDetail();
   }, []);
-
-
 
   const handleCardClick = (productId, productName, hash) => {
     console.log(hash);
@@ -179,17 +179,6 @@ function ProductDetail() {
     <div className="product-detail">
       <Navbar />
       <div className="web">
-        <div className="breadcrumbs-container">
-          <Breadcrumbs aria-label="breadcrumb" style={{ marginLeft: "5vw" }}>
-            <Link underline="hover" color="inherit" href="/">
-              Home
-            </Link>
-            <Link underline="hover" color="inherit" href="/jwellery/rings">
-              {categoryName}
-            </Link>
-            <Typography color="text.primary">{menuItemName}</Typography>
-          </Breadcrumbs>
-        </div>
         <div className="container">
           <div className="product-content">
             <div className="product-image-section">
@@ -205,263 +194,268 @@ function ProductDetail() {
               <div className="rating-reviews">4.9 ★ 45</div>
               <Grid container spacing={0}>
                 <Grid item xs={6} className="customization-grid">
-                  <Box>
-                    <Box sx={{ marginBottom: 2 }}>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          display: "flex",
-                          alignItems: "start",
-                          color: "#666",
-                        }}
-                      >
-                        Select Size
-                      </Typography>
-                      <Button
-                        onClick={handleDrawerOpen}
-                        fullWidth
-                        sx={{
-                          textAlign: "left",
-                          paddingTop: 2,
-                          paddingBottom: 2,
-                          color: "#a36e29",
-                          paddingLeft: 1,
-                          border: 1,
-                          borderColor: "divider",
-                          borderRadius: 1,
-                          backgroundColor: "background.paper",
-                          "::after": {
-                            content: '"▼"',
-                            float: "right",
-                            paddingRight: 1,
-                          },
-                        }}
-                      >
-                        {selectedSize || "Select Size"}
-                      </Button>
-                    </Box>
-                    <Box sx={{ marginBottom: 2 }}>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          display: "flex",
-                          alignItems: "start",
-                          color: "#666",
-                        }}
-                      >
-                        Select Customization
-                      </Typography>
-                      <Button
-                        onClick={handleDrawerOpen}
-                        fullWidth
-                        sx={{
-                          textAlign: "left",
-                          paddingTop: 2,
-                          paddingBottom: 2,
-                          paddingLeft: 1,
-                          color: "#a36e29",
-                          border: 1,
-                          borderColor: "divider",
-                          borderRadius: 1,
-                          backgroundColor: "background.paper",
-                          "::after": {
-                            content: '"▼"',
-                            float: "right",
-                            paddingRight: 1,
-                          },
-                        }}
-                      >
-                        {selectedMetal || "Choice of Metal"} -{" "}
-                        {selectedDiamondType || "Diamond Type"}
-                      </Button>
-                    </Box>
-                    <Drawer
-                      anchor="right"
-                      open={drawerOpen}
-                      onClose={handleDrawerClose}
-                    >
-                      <Box
-                        sx={{
-                          padding: 2,
-                          width: 500,
-                        }}
-                      >
-                        <Typography variant="h6">Choice of Metal</Typography>
-                        {/* Add Buttons or another component to select metal choice */}
-                        <Grid container>
-                          {customizationOptions.metal.map(
-                            (metalOption, index) => (
-                              <Grid item xs={4} key={index}>
-                                <Button
-                                  variant="outlined"
-                                  sx={{
-                                    margin: 1,
-                                    padding: 2,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    textAlign: "center",
-                                    border: 1,
-                                    borderColor: "divider",
-                                    borderRadius: 1,
-                                    boxShadow: 1,
-                                    "&.selected": {
-                                      backgroundColor: "primary.main",
-                                      color: "primary.contrastText",
-                                      "&:hover": {
-                                        backgroundColor: "#a36e29",
-                                      },
-                                    },
-                                  }}
-                                  onClick={() =>
-                                    handleCustomizationSelect(metalOption)
-                                  }
-                                  className={
-                                    selectedSize === metalOption
-                                      ? "selected"
-                                      : ""
-                                  }
-                                >
-                                  <Typography
-                                    variant="caption"
-                                    sx={{ color: "#a36e29" }}
-                                  >
-                                    {metalOption}
-                                  </Typography>
-                                  <Typography
-                                    variant="caption"
-                                    sx={{ color: "#a36e29" }}
-                                  >
-                                    Made on Order
-                                  </Typography>
-                                </Button>
-                              </Grid>
-                            )
-                          )}
-                        </Grid>
-
-                        <Typography variant="h6" sx={{ marginTop: 2 }}>
-                          Diamond Type
-                        </Typography>
-                        {/* Add Buttons or another component to select metal choice */}
-                        <Grid container>
-                          {customizationOptions.diamondQuality.map(
-                            (diamondOption, index) => (
-                              <Grid item xs={4} key={index}>
-                                <Button
-                                  variant="outlined"
-                                  sx={{
-                                    margin: 1,
-                                    padding: 2,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    textAlign: "center",
-                                    border: 1,
-                                    borderColor: "divider",
-                                    borderRadius: 1,
-                                    boxShadow: 1,
-                                    "&.selected": {
-                                      backgroundColor: "primary.main",
-                                      color: "primary.contrastText",
-                                      "&:hover": {
-                                        backgroundColor: "primary.dark",
-                                      },
-                                    },
-                                  }}
-                                  onClick={() =>
-                                    handleDiamondTypeSelect(diamondOption)
-                                  }
-                                  className={
-                                    selectedSize === diamondOption
-                                      ? "selected"
-                                      : ""
-                                  }
-                                >
-                                  <Typography
-                                    variant="caption"
-                                    sx={{ color: "#a36e29" }}
-                                  >
-                                    {diamondOption}
-                                  </Typography>
-                                  <Typography
-                                    variant="caption"
-                                    sx={{ color: "#a36e29" }}
-                                  >
-                                    Made on Order
-                                  </Typography>
-                                </Button>
-                              </Grid>
-                            )
-                          )}
-                        </Grid>
-
-                        <Typography variant="h6" sx={{ marginTop: 2 }}>
-                          Select Size
-                        </Typography>
-                        <Grid container>
-                          {customizationOptions.size.map((size, index) => (
-                            <Grid item xs={4} key={index}>
-                              <Button
-                                variant="outlined"
-                                sx={{
-                                  margin: 1,
-                                  padding: 2,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  textAlign: "center",
-                                  border: 1,
-                                  borderColor: "divider",
-                                  borderRadius: 1,
-                                  boxShadow: 1,
-                                  // "&.selected": {
-                                  //   backgroundColor: "primary.main",
-                                  //   color: "primary.contrastText",
-                                  //   "&:hover": {
-                                  //     backgroundColor: "primary.dark",
-                                  //   },
-                                  // },
-                                }}
-                                onClick={() => handleSizeSelect(size)}
-                                className={
-                                  selectedSize === size ? "selected" : ""
-                                }
-                              >
-                                <Typography
-                                  variant="caption"
-                                  sx={{ color: "#a36e29" }}
-                                >
-                                  {size}
-                                </Typography>
-                                <Typography
-                                  variant="caption"
-                                  sx={{ color: "#a36e29" }}
-                                >
-                                  Made On Order
-                                </Typography>
-                              </Button>
-                            </Grid>
-                          ))}
-                        </Grid>
-
-                        <Button
-                          sx={{
-                            marginTop: 2,
-                            height: "60px",
-                            width: "100%",
-                            backgroundColor: "#a36e29",
-                            color: "primary.contrastText",
-                            "&:hover": {
-                              backgroundColor: "primary.dark",
-                            },
-                          }}
-                          onClick={handleDrawerClose}
+                  {customizationOptions.metal.length > 0 &&
+                    customizationOptions.diamondQuality.length > 0 &&
+                    customizationOptions.size.length > 0 && (
+                      <Box>
+                        <Box sx={{ marginBottom: 2 }}>
+                          <Typography
+                            variant="subtitle1"
+                            sx={{
+                              display: "flex",
+                              alignItems: "start",
+                              color: "#666",
+                            }}
+                          >
+                            Select Size
+                          </Typography>
+                          <Button
+                            onClick={handleDrawerOpen}
+                            fullWidth
+                            sx={{
+                              textAlign: "left",
+                              paddingTop: 2,
+                              paddingBottom: 2,
+                              color: "#a36e29",
+                              paddingLeft: 1,
+                              border: 1,
+                              borderColor: "divider",
+                              borderRadius: 1,
+                              backgroundColor: "background.paper",
+                              "::after": {
+                                content: '"▼"',
+                                float: "right",
+                                paddingRight: 1,
+                              },
+                            }}
+                          >
+                            {selectedSize || "Select Size"}
+                          </Button>
+                        </Box>
+                        <Box sx={{ marginBottom: 2 }}>
+                          <Typography
+                            variant="subtitle1"
+                            sx={{
+                              display: "flex",
+                              alignItems: "start",
+                              color: "#666",
+                            }}
+                          >
+                            Select Customization
+                          </Typography>
+                          <Button
+                            onClick={handleDrawerOpen}
+                            fullWidth
+                            sx={{
+                              textAlign: "left",
+                              paddingTop: 2,
+                              paddingBottom: 2,
+                              paddingLeft: 1,
+                              color: "#a36e29",
+                              border: 1,
+                              borderColor: "divider",
+                              borderRadius: 1,
+                              backgroundColor: "background.paper",
+                              "::after": {
+                                content: '"▼"',
+                                float: "right",
+                                paddingRight: 1,
+                              },
+                            }}
+                          >
+                            {selectedMetal || "Choice of Metal"} -{" "}
+                            {selectedDiamondType || "Diamond Type"}
+                          </Button>
+                        </Box>
+                        <Drawer
+                          anchor="right"
+                          open={drawerOpen}
+                          onClose={handleDrawerClose}
                         >
-                          Confirm Customization
-                        </Button>
-                      </Box>
-                    </Drawer>
-                    {/* Additional code for customization drawer will be similar to size drawer */}
-                  </Box>
+                          <Box
+                            sx={{
+                              padding: 2,
+                              width: 500,
+                            }}
+                          >
+                            <Typography variant="h6">
+                              Choice of Metal
+                            </Typography>
+                            {/* Add Buttons or another component to select metal choice */}
+                            <Grid container>
+                              {customizationOptions.metal.map(
+                                (metalOption, index) => (
+                                  <Grid item xs={4} key={index}>
+                                    <Button
+                                      variant="outlined"
+                                      sx={{
+                                        margin: 1,
+                                        padding: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        textAlign: "center",
+                                        border: 1,
+                                        borderColor: "divider",
+                                        borderRadius: 1,
+                                        boxShadow: 1,
+                                        "&.selected": {
+                                          backgroundColor: "primary.main",
+                                          color: "primary.contrastText",
+                                          "&:hover": {
+                                            backgroundColor: "#a36e29",
+                                          },
+                                        },
+                                      }}
+                                      onClick={() =>
+                                        handleCustomizationSelect(metalOption)
+                                      }
+                                      className={
+                                        selectedSize === metalOption
+                                          ? "selected"
+                                          : ""
+                                      }
+                                    >
+                                      <Typography
+                                        variant="caption"
+                                        sx={{ color: "#a36e29" }}
+                                      >
+                                        {metalOption}
+                                      </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        sx={{ color: "#a36e29" }}
+                                      >
+                                        Made on Order
+                                      </Typography>
+                                    </Button>
+                                  </Grid>
+                                )
+                              )}
+                            </Grid>
 
+                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                              Diamond Type
+                            </Typography>
+                            {/* Add Buttons or another component to select metal choice */}
+                            <Grid container>
+                              {customizationOptions.diamondQuality.map(
+                                (diamondOption, index) => (
+                                  <Grid item xs={4} key={index}>
+                                    <Button
+                                      variant="outlined"
+                                      sx={{
+                                        margin: 1,
+                                        padding: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        textAlign: "center",
+                                        border: 1,
+                                        borderColor: "divider",
+                                        borderRadius: 1,
+                                        boxShadow: 1,
+                                        "&.selected": {
+                                          backgroundColor: "primary.main",
+                                          color: "primary.contrastText",
+                                          "&:hover": {
+                                            backgroundColor: "primary.dark",
+                                          },
+                                        },
+                                      }}
+                                      onClick={() =>
+                                        handleDiamondTypeSelect(diamondOption)
+                                      }
+                                      className={
+                                        selectedSize === diamondOption
+                                          ? "selected"
+                                          : ""
+                                      }
+                                    >
+                                      <Typography
+                                        variant="caption"
+                                        sx={{ color: "#a36e29" }}
+                                      >
+                                        {diamondOption}
+                                      </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        sx={{ color: "#a36e29" }}
+                                      >
+                                        Made on Order
+                                      </Typography>
+                                    </Button>
+                                  </Grid>
+                                )
+                              )}
+                            </Grid>
+
+                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                              Select Size
+                            </Typography>
+                            <Grid container>
+                              {customizationOptions.size.map((size, index) => (
+                                <Grid item xs={4} key={index}>
+                                  <Button
+                                    variant="outlined"
+                                    sx={{
+                                      margin: 1,
+                                      padding: 2,
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      textAlign: "center",
+                                      border: 1,
+                                      borderColor: "divider",
+                                      borderRadius: 1,
+                                      boxShadow: 1,
+                                      // "&.selected": {
+                                      //   backgroundColor: "primary.main",
+                                      //   color: "primary.contrastText",
+                                      //   "&:hover": {
+                                      //     backgroundColor: "primary.dark",
+                                      //   },
+                                      // },
+                                    }}
+                                    onClick={() => handleSizeSelect(size)}
+                                    className={
+                                      selectedSize === size ? "selected" : ""
+                                    }
+                                  >
+                                    <Typography
+                                      variant="caption"
+                                      sx={{ color: "#a36e29" }}
+                                    >
+                                      {size}
+                                    </Typography>
+                                    <Typography
+                                      variant="caption"
+                                      sx={{ color: "#a36e29" }}
+                                    >
+                                      Made On Order
+                                    </Typography>
+                                  </Button>
+                                </Grid>
+                              ))}
+                            </Grid>
+
+                            <Button
+                              sx={{
+                                marginTop: 2,
+                                height: "60px",
+                                width: "100%",
+                                backgroundColor: "#a36e29",
+                                color: "primary.contrastText",
+                                "&:hover": {
+                                  backgroundColor: "primary.dark",
+                                },
+                              }}
+                              onClick={handleDrawerClose}
+                            >
+                              Confirm Customization
+                            </Button>
+                          </Box>
+                        </Drawer>
+                        {/* Additional code for customization drawer will be similar to size drawer */}
+                      </Box>
+                    )}
                   <div className="price-section">
                     <Typography variant="h4" component="p" className="price">
                       ₹{selectedVariantPrice || productDetail.price}
@@ -480,6 +474,7 @@ function ProductDetail() {
                     </Button>
                   </div>
                 </Grid>
+
                 <Grid item xs={6} className="location-grid">
                   <div className="label">Pincode</div>
                   <ThemeProvider theme={theme}>
@@ -507,6 +502,7 @@ function ProductDetail() {
                       Product Details
                     </Typography>
                     <Typography variant="body1" className="desc">
+                      {/* <td>{Parser(productDetail.description)}</td> */}
                       {productDetail.description}
                     </Typography>
 
@@ -547,37 +543,28 @@ function ProductDetail() {
             </div>
           </div>
         </div>
-        <div className="container-similar">
-          <div className="similar-product-section">
-            <h2 className="title">Similar Products</h2>
-            <div className="products-scroll-container">
-              {productDetail.recommended.map((product) => (
-                <JwelleryCard
-                  key={product.id}
-                  image={product.images[0].file}
-                  name={product.name}
-                  price={product.price}
-                  onClick={() =>
-                    handleCardClick(product.id, product.name, product.hash)
-                  }
-                />
-              ))}
+        {productDetail.recommended && productDetail.recommended.length > 0 && (
+          <div className="container-similar">
+            <div className="similar-product-section">
+              <h2 className="title">Similar Products</h2>
+              <div className="products-scroll-container">
+                {productDetail.recommended.map((product) => (
+                  <JwelleryCard
+                    key={product.id}
+                    image={product.images[0].file}
+                    name={product.name}
+                    price={product.price}
+                    onClick={() =>
+                      handleCardClick(product.id, product.name, product.hash)
+                    }
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="mobile">
-        <div className="breadcrumbs-container">
-          <Breadcrumbs aria-label="breadcrumb" style={{ marginLeft: "5vw" }}>
-            <Link underline="hover" color="inherit" href="/">
-              Home
-            </Link>
-            <Link underline="hover" color="inherit" href="/jwellery/rings">
-              {categoryName}
-            </Link>
-            <Typography color="text.primary">{menuItemName}</Typography>
-          </Breadcrumbs>
-        </div>
         <div className="container">
           <div className="product-content">
             <Grid container spacing={0}>
