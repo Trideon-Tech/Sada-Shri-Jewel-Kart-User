@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar/navbar.component";
-import {
-  Breadcrumbs,
-  Link,
-  Typography,
-  Button,
-  Drawer,
-  OutlinedInput,
-  createTheme,
-  ThemeProvider,
-  Card,
-  Box,
-  Grid,
-} from "@mui/material";
-import Parser from 'html-react-parser';
-import "./productdetail.styles.scss";
-import ImageVideoCarousel from "./carousal.component";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import DimensionsIcon from "@mui/icons-material/AspectRatio";
-import WeightIcon from "@mui/icons-material/ScaleOutlined";
-import PurityIcon from "@mui/icons-material/CheckCircleOutline";
 import {
   LocalShippingOutlined,
   LocationOnOutlined,
   ShoppingCart,
 } from "@mui/icons-material";
+import DimensionsIcon from "@mui/icons-material/AspectRatio";
+import PurityIcon from "@mui/icons-material/CheckCircleOutline";
+import WeightIcon from "@mui/icons-material/ScaleOutlined";
+import {
+  Box,
+  Button,
+  Card,
+  Drawer,
+  Grid,
+  OutlinedInput,
+  ThemeProvider,
+  Typography,
+  createTheme,
+} from "@mui/material";
 import axios from "axios";
+import parse from "html-react-parser";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import "./productdetail.styles.scss";
+
 import JwelleryCard from "../../components/card/jwellerycard.component";
+import Navbar from "../../components/navbar/navbar.component";
+import ImageVideoCarousel from "./carousal.component";
 
 const theme = createTheme({
   palette: {
@@ -40,23 +40,22 @@ const theme = createTheme({
 });
 
 function ProductDetail() {
-  const navigate = useNavigate();
   const [images, setImages] = useState([]);
-  const [video, setVideo] = useState("");
-  const {product} = useParams();
+  const [video, setVideo] = useState(null);
+  const { product } = useParams();
   const [menuItemName, hashId] = product.split("-");
-  //const location = useLocation();
-  //const { state } = location;
-  //const { categoryName, menuItemId, menuItemName, hashId } = state;
+
   const [customizationOptions, setCustomizationOptions] = useState({
     metal: [],
     diamondQuality: [],
     size: [],
   });
+
   const [productDetail, setProductDetail] = useState({
     images: [],
     recommended: [],
   });
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedMetal, setSelectedMetal] = useState("");
   const [selectedDiamondType, setSelectedDiamondType] = useState("");
@@ -64,18 +63,16 @@ function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState("");
   const [variants, setVariants] = useState([]); //for variant
   const [selectedVariantPrice, setSelectedVariantPrice] = useState(""); //for variant price
+  const [pincode, setPincode] = useState();
 
   const updateSelectedVariantPrice = () => {
     const selectedOptions = [selectedMetal, selectedDiamondType, selectedSize];
-    console.log(selectedOptions);
 
     const matchingVariant = variants.find((variant) =>
       selectedOptions.every(
         (option, index) => variant.for_customization_options[index] === option
       )
     );
-
-    console.log(matchingVariant);
 
     if (matchingVariant) {
       setSelectedVariantPrice(matchingVariant.price);
@@ -104,14 +101,12 @@ function ProductDetail() {
   }, [selectedMetal, selectedDiamondType, selectedSize]);
 
   const getJwelleryDetail = () => {
-    console.log(product);
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}`
       )
       .then((response) => {
         const detail = response.data.response;
-        // console.log(detail);
 
         const fetchedImages = detail.images
           .filter((item) => item.type === "img")
@@ -120,11 +115,14 @@ function ProductDetail() {
           );
         setImages(fetchedImages);
 
-        const fetchedVideo = detail.video
-          ? `https://api.sadashrijewelkart.com/assets/${detail.video.file}`
-          : "";
-        setVideo(fetchedVideo);
+        if (detail.video !== "Product Infographics doesn't exist.") {
+          const fetchedVideo = detail.video
+            ? `https://api.sadashrijewelkart.com/assets/${detail.video.file}`
+            : "";
+          setVideo(fetchedVideo);
+        }
 
+        setProductDetail(detail);
         setCustomizationOptions({
           metal:
             detail.customizations.options_per_field["Choice Of Metal"] || [],
@@ -134,7 +132,6 @@ function ProductDetail() {
         });
 
         setVariants(detail.customizations.variants.options);
-        setProductDetail(detail);
       })
       .catch((error) => {
         console.log(error);
@@ -144,18 +141,6 @@ function ProductDetail() {
   useEffect(() => {
     getJwelleryDetail();
   }, []);
-
-  const handleCardClick = (productId, productName, hash) => {
-    console.log(hash);
-    navigate(`/jwellery/${menuItemName}/${productName}`, {
-      state: {
-        categoryName: menuItemName,
-        menuItemId: productId,
-        menuItemName: productName,
-        hashId: hash,
-      },
-    });
-  };
 
   const handleMobileDrawerOpen = () => {
     setMobileDrawerOpen(true);
@@ -172,8 +157,6 @@ function ProductDetail() {
   const handleDrawerClose = () => {
     setDrawerOpen(false);
   };
-
-  const [pincode, setPincode] = useState();
 
   return (
     <div className="product-detail">
@@ -502,8 +485,9 @@ function ProductDetail() {
                       Product Details
                     </Typography>
                     <Typography variant="body1" className="desc">
-                      {/* <td>{Parser(productDetail.description)}</td> */}
-                      {productDetail.description}
+                      {typeof productDetail.description !== "undefined"
+                        ? parse(productDetail.description)
+                        : ""}
                     </Typography>
 
                     <Grid container spacing={0} justifyContent="center">
@@ -554,9 +538,6 @@ function ProductDetail() {
                     image={product.images[0].file}
                     name={product.name}
                     price={product.price}
-                    onClick={() =>
-                      handleCardClick(product.id, product.name, product.hash)
-                    }
                   />
                 ))}
               </div>
@@ -934,11 +915,6 @@ function ProductDetail() {
                   image={product.images[0].file}
                   name={product.name}
                   price={product.price}
-                  onClick={handleCardClick(
-                    product.id,
-                    product.name,
-                    product.hash
-                  )}
                 />
               )) || null}
             </div>

@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/navbar.component";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import {
-  Button,
-  Drawer,
-  Divider,
-  BottomNavigation,
-  BottomNavigationAction,
-  Grid,
-  Paper,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SortIcon from "@mui/icons-material/Sort";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  CircularProgress,
+  Divider,
+  Drawer,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import "./productpage.styles.scss";
+
 import JwelleryCard from "../../components/card/jwellerycard.component";
+import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
 
 function Productpage() {
@@ -42,16 +42,10 @@ function Productpage() {
     setIsDrawerOpen(open);
   };
 
-  const handleCardClick = (productId, productName, hash) => {
+  const handleCardClick = (productName, hash) => {
     console.log(hash);
-    navigate(`/jwellery/${menuItemName}/${productName}-${hash}`, {
-      // state: {
-      //   categoryName: menuItemName,
-      //   menuItemId: productId,
-      //   menuItemName: productName,
-      //   hashId: hash,
-      // },
-    });
+    console.log(`/item/${menuItemName}/${productName}-${hash}`);
+    navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 
   const handleFilterChange = (selectedRangeLabel) => {
@@ -166,7 +160,7 @@ function Productpage() {
                       image={item.images[0].file}
                       name={item.name}
                       price={item.price}
-                      onClick={() => handleCardClick(item.id, item.name, item.hash)}
+                      onClick={() => handleCardClick(item.name, item.hash)}
                     />
                   ))
                 )}
@@ -209,7 +203,7 @@ function Productpage() {
                     image={item.images[0].file}
                     name={item.name}
                     price={item.price}
-                    onClick={() => handleCardClick(item.id, item.name, item.hash)}
+                    onClick={() => handleCardClick(item.name, item.hash)}
                   />
                 </Grid>
               ))

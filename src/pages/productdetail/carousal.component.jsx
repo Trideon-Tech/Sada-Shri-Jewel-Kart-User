@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { IconButton } from "@mui/material";
+import { PlayCircle } from "@mui/icons-material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { IconButton } from "@mui/material";
+import React, { useState } from "react";
 import "./carousal.styles.scss";
-import { PlayCircle } from "@mui/icons-material";
 
 const ImageVideoCarousel = ({ images, video }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const goToPrev = () => {
-    const maxIndex = video ? images.length : images.length - 1;
+    const maxIndex = video !== null ? images.length : images.length - 1;
     setSelectedIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : maxIndex));
   };
 
   const goToNext = () => {
-    const maxIndex = video ? images.length : images.length - 1;
+    const maxIndex = video !== null ? images.length : images.length - 1;
     setSelectedIndex((prevIndex) => (prevIndex < maxIndex ? prevIndex + 1 : 0));
   };
 
@@ -28,7 +28,7 @@ const ImageVideoCarousel = ({ images, video }) => {
         <ArrowBackIosIcon />
       </IconButton>
       <div className="selected-item">
-        {selectedIndex === images.length && video ? (
+        {selectedIndex === images.length && video !== null ? (
           <video controls>
             <source src={video} type="video/mp4" />
           </video>
@@ -49,7 +49,7 @@ const ImageVideoCarousel = ({ images, video }) => {
             className={selectedIndex === index ? "selected" : ""}
           />
         ))}
-        {video && (
+        {video !== null && (
           <div
             className={`thumbnail ${
               selectedIndex === images.length ? "selected" : ""
