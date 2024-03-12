@@ -1,0 +1,118 @@
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  
+    .selected-item {
+        position: relative;
+      width: 100%; // or a fixed width depending on your layout
+      margin: 20px 0;
+  
+      img {
+        width: 100%;
+        height: auto;
+        //border: 3px solid #ccc; // or any styling you want for the active item
+      }
+  
+      video {
+        width: 100%;
+        height: auto;
+        //border: 3px solid #ccc; // consistent with the image styling
+      }
+    }
+  
+    .item-thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 10px; // space between thumbnails
+  
+      img {
+        width: 60px; // or any other size for thumbnails
+        height: auto;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.3s ease, border 0.3s ease;
+  
+        &:hover {
+          opacity: 1;
+        }
+  
+        &.selected {
+          opacity: 1;
+          border: 2px solid #666; // highlight the selected thumbnail
+        }
+      }
+  
+      .thumbnail {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px; // match the image thumbnail size
+        height: 60px; // match the image thumbnail size
+        cursor: pointer;
+        background-color: #eee; // a background for the video thumbnail
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #ddd; // darken on hover
+        }
+  
+        &.selected {
+          background-color: #ccc; // highlight the selected thumbnail
+        }
+      }
+    }
+  
+    // Navigation arrows styling
+    .MuiIconButton-root {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent;
+      z-index: 10;
+      &:hover {
+        background-color: transparent;
+      }
+  
+      &.prev {
+        left: 10px;
+      }
+  
+      &.next {
+        right: 10px;
+      }
+    }
+  }
+  
+  // Media query for responsiveness
+  @media (max-width: 768px) {
+    .carousel-container {
+      .selected-item {
+        width: 90%; // smaller width on mobile devices
+      }
+  
+      .item-thumbnails {
+        img {
+          width: 50px; // smaller thumbnails on mobile devices
+          height: auto;
+        }
+  
+        .thumbnail {
+          width: 50px; // match the image thumbnail size on mobile devices
+          height: 50px; // match the image thumbnail size on mobile devices
+        }
+      }
+  
+      .MuiIconButton-root {
+        &.prev {
+          left: 10px; // closer to the edge on mobile
+        }
+  
+        &.next {
+          right: 10px; // closer to the edge on mobile
+        }
+      }
+    }
+  }
+  

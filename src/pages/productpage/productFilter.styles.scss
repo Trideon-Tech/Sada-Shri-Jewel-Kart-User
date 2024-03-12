@@ -1,0 +1,74 @@
+// priceFilter.styles.scss
+
+.price-filter {
+    padding: 30px;
+    .filter-heading {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+  
+    .price-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+  
+      label {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: pointer;
+        position: relative;
+  
+        input[type="checkbox"] {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          height: 20px;
+          width: 20px;
+          border: 2px solid #000;
+          border-radius: 4px;
+          margin-right: 10px;
+          position: relative;
+  
+          &:checked {
+            background-color: #a36e29;
+            border-color: #a36e29;
+          }
+  
+          &:checked:after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 9px;
+            width: 6px;
+            height: 11px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(40deg);
+          }
+        }
+  
+        .count {
+          font-size: 0.8rem;
+          color: #757575;
+          margin-left: auto;
+        }
+      }
+    }
+  
+    .show-more {
+      margin-top: 15px;
+      cursor: pointer;
+      color: #a36e29;
+      font-size: 0.9rem;
+      text-decoration: underline;
+      text-align: left;
+  
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  

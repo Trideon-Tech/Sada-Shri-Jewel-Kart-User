@@ -1,0 +1,44 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background-color: #f4f4f4; // Assuming a grey background
+  
+    .login-form {
+      max-width: 400px;
+      padding: 20px;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      background: #fff;
+      border-radius: 4px;
+      text-align: center;
+  
+      h2 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+  
+      p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+  
+      .MuiTextField-root {
+        margin-bottom: 20px;
+      }
+  
+      .login-button {
+        background-color: #a36e29;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+  
+      .google-button, .facebook-button {
+        margin: 5px;
+      }
+  
+      
+    }
+  }
