@@ -6,6 +6,7 @@ import Productpage from "./pages/productpage/productpage.component";
 import Login from "./pages/login/login.component";
 import Register from "./pages/signup/register.component";
 import Cart from "./pages/cart/cart.component";
+import Checkout from "./pages/cart/checkout/checkout.component";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/item/:category/:product" element={<ProductDetail />} />
         </Routes>
       </BrowserRouter>

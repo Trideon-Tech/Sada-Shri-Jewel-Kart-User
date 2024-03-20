@@ -20,7 +20,7 @@ import {
 import axios from "axios";
 import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./productdetail.styles.scss";
 
@@ -40,6 +40,7 @@ const theme = createTheme({
 });
 
 function ProductDetail() {
+  let navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState(null);
   const { product } = useParams();
@@ -73,9 +74,12 @@ function ProductDetail() {
       ...selectedVariant,
       id: productDetail.id, 
       name: productDetail.name,
-      price: selectedVariant.price || productDetail.price, 
+      price: selectedVariantPrice || productDetail.price,
+      images: productDetail.images[0].file, 
       quantity: 1,
     };
+
+    console.log(cartProduct);
 
     if (!isLoggedIn()) {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -87,6 +91,7 @@ function ProductDetail() {
         cart.push(cartProduct); 
       }
       localStorage.setItem("cart", JSON.stringify(cart));
+      navigate("/cart");
     } else {
       const token = localStorage.getItem("token");
       axios
@@ -103,6 +108,8 @@ function ProductDetail() {
         .catch((error) => {
           console.error("Error adding product to cart", error);
         });
+
+        navigate("/cart");
     }
   };
 

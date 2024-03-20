@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
 import { Divider, Grid, IconButton, TextField, Button } from "@mui/material";
 import { Facebook, Google } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./register.styles.scss";
 import axios from "axios";
 
@@ -12,12 +12,39 @@ const Register = () => {
   const [email, setemail] = useState();
   const [firstName, setfirstName] = useState();
   const [lastName, setLastName] = useState();
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItems(items);
+  }, []);
+
+  const sendCartToAPI = () => {
+    const token = localStorage.getItem("token");
+    cartItems.forEach((item) => {
+      axios
+        .put(
+          "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+          { product: item.id },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then(() => {
+          console.log(`Product with ID ${item.id} sent to API`);
+        })
+        .catch((error) => {
+          console.error(
+            `Error sending product with ID ${item.id} to API`,
+            error
+          );
+        });
+    });
+
+    localStorage.removeItem("cart");
+  };
 
   const handleRegister = () => {
-    console.log(mobile);
-    console.log(email);
-    console.log(firstName);
-    console.log(lastName);
     let name = `${firstName} ${lastName}`;
     console.log(name);
     const formData = new FormData();
@@ -25,7 +52,6 @@ const Register = () => {
     formData.append("mobile", mobile);
     formData.append("email", email);
     formData.append("name", name);
-    console.log("register");
 
     axios
       .post(
@@ -38,6 +64,8 @@ const Register = () => {
         }
       )
       .then((response) => {
+        console.log("User registered successfully:", response.data);
+        sendCartToAPI();
         navigate("/");
       })
       .catch((error) => {

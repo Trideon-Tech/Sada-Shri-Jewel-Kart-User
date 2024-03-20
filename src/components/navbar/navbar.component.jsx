@@ -190,31 +190,13 @@ const Navbar = () => {
               />
             </div>
             <div className="icons">
-              {userName.name ? (
-                <div>
-                  <IconButton
-                    color="inherit"
-                    onClick={() => {
-                      navigate("/login");
-                    }}
-                  >
-                    <AccountCircleIcon />
-                  </IconButton>
-                  {userName.name}
-                </div>
-              ) : (
-                <IconButton
-                  color="inherit"
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  <AccountCircleIcon />
-                </IconButton>
-              )}
-
-              <IconButton color="inherit" component={Link} to="/wishlist">
-                <FavoriteIcon />
+              <IconButton
+                color="inherit"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                <AccountCircleIcon />
               </IconButton>
               <IconButton color="inherit" onClick={handleLogout}>
                 <Logout />

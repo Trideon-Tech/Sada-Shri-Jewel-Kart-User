@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Typography, IconButton, Card, Box } from "@mui/material";
 import axios from "axios";
-import { Close as CloseIcon } from '@mui/icons-material';
+import { Close as CloseIcon } from "@mui/icons-material";
 import Navbar from "../../components/navbar/navbar.component";
 import "./cart.styles.scss";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  let navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const isLoggedIn = () => Boolean(localStorage.getItem("token"));
 
@@ -40,7 +42,11 @@ const Cart = () => {
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === id) {
         const updatedQuantity = item.quantity + amount;
-        return { ...item, quantity: updatedQuantity > 0 ? updatedQuantity : 1 };
+        return {
+          ...item,
+          quantity: updatedQuantity > 0 ? updatedQuantity : 1,
+          price: item.price * updatedQuantity, // Update price based on quantity
+        };
       }
       return item;
     });
@@ -48,64 +54,89 @@ const Cart = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
 
+  const calculateSubtotal = () => {
+    const subtotal = cartItems.reduce((total, item) => {
+      let itemPrice = 0;
+      if (typeof item.price === "string") {
+        itemPrice = Number(item.price.replace(/,/g, "")) || 0; // Remove commas using regex
+      } else {
+        itemPrice = Number(item.price) || 0; // Convert to number, default to 0 if NaN
+      }
+      const itemQuantity = item.quantity || 1; // Default to 1 if quantity is not provided
+      const itemTotal = itemPrice * itemQuantity;
+      return total + itemTotal;
+    }, 0);
+
+    return subtotal.toLocaleString("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 0,
+    });
+  };
+
   return (
-    <div>
+    <div className="cart">
       <Navbar />
       <div className="cart-container">
-        {cartItems.length > 0 ? (
-          cartItems.map((item) => (
-            <Box key={item.id} className="cart-item-box">
-              <Card className="cart-item-card">
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="cart-item-image"
-                />
-                <div className="cart-item-details">
-                  <Typography variant="h5" className="cart-item-name">
-                    {item.name}
-                  </Typography>
-                  <Typography className="cart-item-meta">{`Size:${item.size} - Quantity:${item.quantity}`}</Typography>
-                  <Typography className="cart-item-price">
-                    ₹{item.price}
-                  </Typography>
-                  <Typography className="cart-item-save">{`Save ₹${item.discount}`}</Typography>
-                  <Typography className="cart-item-delivery">{`Delivery by - ${item.deliveryDate}`}</Typography>
+        <div className="cart-items">
+          {cartItems.length > 0 ? (
+            cartItems.map((item) => (
+              <Box key={item.id} className="cart-item-box">
+                <Card className="cart-item-card">
+                  <div className="cart-item-image-div">
+                    <img
+                      src={`https://api.sadashrijewelkart.com/assets/${item.images}`}
+                      alt={item.name}
+                      className="cart-item-image"
+                    />
+                  </div>
+                  <div className="cart-item-details">
+                    <Typography variant="h5" className="cart-item-name">
+                      {item.name}
+                    </Typography>
+                    <Typography className="cart-item-meta">{`Size: ${item.size} - Quantity :${item.quantity}`}</Typography>
+                    <Typography className="cart-item-price">
+                      Price: ₹
+                      <strong>{item.price.toLocaleString("en-IN")}</strong>
+                    </Typography>
+                    <Typography className="cart-item-save">{`Save ₹${item.discount}`}</Typography>
+                    <Typography className="cart-item-delivery">{`Delivery by - ${item.deliveryDate}`}</Typography>
+                  </div>
                   <IconButton
                     onClick={() => handleRemoveItem(item.id)}
                     className="cart-item-remove"
                   >
                     <CloseIcon />
                   </IconButton>
-                </div>
-              </Card>
-            </Box>
-          ))
-        ) : (
-          <Typography className="empty-cart-message">
-            Your cart is empty
-          </Typography>
-        )}
+                </Card>
+              </Box>
+            ))
+          ) : (
+            <Typography className="empty-cart-message">
+              Your cart is empty
+            </Typography>
+          )}
+        </div>
         <Box className="cart-summary">
           <Typography variant="h6" className="summary-title">
             Order Summary
           </Typography>
           <div className="summary-details">
             <Typography>Subtotal</Typography>
-            <Typography>₹ 13000</Typography>
+            <Typography>{calculateSubtotal()}</Typography>
           </div>
           <div className="summary-details">
             <Typography>You Saved</Typography>
-            <Typography>₹ 1000</Typography>
+            <Typography>₹0</Typography>
           </div>
           <div className="summary-details">
             <Typography>Total Cost</Typography>
-            <Typography>₹ 12000</Typography> 
+            <Typography>{calculateSubtotal()}</Typography>
           </div>
           <Button
             variant="contained"
             className="place-order-btn"
-            //onClick={handleCheckout}
+            onClick={()=>{navigate("/checkout")}}
           >
             Place Order
           </Button>
@@ -116,19 +147,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-//{calculateTotal()}
-//{calculateSavings()}
-//{calculateSubtotal()}
-
-function calculateSubtotal() {
-    // Calculation based on cart items
-  }
-  
-  function calculateSavings() {
-    // Calculation based on cart items
-  }
-  
-  function calculateTotal() {
-    // Calculation based on cart items
-  }
