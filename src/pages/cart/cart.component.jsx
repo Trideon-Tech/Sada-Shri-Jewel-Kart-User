@@ -85,7 +85,7 @@ const Cart = () => {
                 <Card className="cart-item-card">
                   <div className="cart-item-image-div">
                     <img
-                      src={`https://api.sadashrijewelkart.com/assets/${item.images}`}
+                      src={`https://api.sadashrijewelkart.com/assets/${item.images[0].file}`}
                       alt={item.name}
                       className="cart-item-image"
                     />

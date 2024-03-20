@@ -63,7 +63,7 @@ const Checkout = () => {
         )
         .then((response) => {
           setCartItems(response.data.response);
-          console.log(cartItems);
+          console.log(response);
         })
         .catch((error) => console.error("Error fetching cart items:", error));
     } else {
@@ -75,7 +75,7 @@ const Checkout = () => {
     const subtotal = cartItems.reduce((total, item) => {
       let itemPrice = 0;
       if (typeof item.price === "string") {
-        itemPrice = Number(item.price.replace(/,/g, "")) || 0; // Remove commas using regex
+        itemPrice = Number(item.price.replace(/,/g, "")) || 0; 
       } else {
         itemPrice = Number(item.price) || 0; // Convert to number, default to 0 if NaN
       }
@@ -250,7 +250,7 @@ const Checkout = () => {
                   <Card className="cart-item-card">
                     <div className="cart-item-image-div">
                       <img
-                        src={`https://api.sadashrijewelkart.com/assets/${item.images}`}
+                        src={`https://api.sadashrijewelkart.com/assets/${item.images[0].file}`}
                         alt={item.name}
                         className="cart-item-image"
                       />
