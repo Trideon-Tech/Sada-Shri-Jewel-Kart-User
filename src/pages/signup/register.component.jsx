@@ -19,15 +19,20 @@ const Register = () => {
     setCartItems(items);
   }, []);
 
-  const sendCartToAPI = () => {
-    const token = localStorage.getItem("token");
+  const sendCartToAPI = (token) => {
+    console.log(token);
     cartItems.forEach((item) => {
       axios
         .put(
           "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
-          { product: item.id },
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            data: {
+              product: item.id, customization: -1 
+            },
           }
         )
         .then(() => {
@@ -64,8 +69,13 @@ const Register = () => {
         }
       )
       .then((response) => {
-        console.log("User registered successfully:", response.data);
-        sendCartToAPI();
+        console.log(
+          "User registered successfully:",
+          response.data.response.token
+        );
+        const token = response.data.response.token;
+        localStorage.setItem("token", token);
+        sendCartToAPI(token);
         navigate("/");
       })
       .catch((error) => {

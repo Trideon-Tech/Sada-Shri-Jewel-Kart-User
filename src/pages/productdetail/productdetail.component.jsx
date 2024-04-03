@@ -65,17 +65,20 @@ function ProductDetail() {
   const [variants, setVariants] = useState([]); //for variant
   const [selectedVariant, setSelectedVariant] = useState({});
   const [selectedVariantPrice, setSelectedVariantPrice] = useState(""); //for variant price
+  const [selectedVariantId, setSelectedVariantId] = useState(-1);
   const [pincode, setPincode] = useState();
 
   const isLoggedIn = () => Boolean(localStorage.getItem("token"));
 
   const addToCart = () => {
+    console.log(selectedVariantId);
     const cartProduct = {
       ...selectedVariant,
-      id: productDetail.id, 
+      id: productDetail.id,
       name: productDetail.name,
       price: selectedVariantPrice || productDetail.price,
-      images: productDetail.images[0].file, 
+      images: productDetail.images[0].file,
+      customizationId: selectedVariantId,
       quantity: 1,
     };
 
@@ -86,18 +89,19 @@ function ProductDetail() {
       const productIndex = cart.findIndex((item) => item.id === cartProduct.id);
 
       if (productIndex !== -1) {
-        cart[productIndex].quantity += 1; 
+        cart[productIndex].quantity += 1;
       } else {
-        cart.push(cartProduct); 
+        cart.push(cartProduct);
       }
       localStorage.setItem("cart", JSON.stringify(cart));
       navigate("/cart");
     } else {
       const token = localStorage.getItem("token");
+      console.log(cartProduct.id);
       axios
         .put(
           "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
-          { product: cartProduct.id },
+          { product: cartProduct.id, customization: cartProduct.customizationId },
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -109,7 +113,7 @@ function ProductDetail() {
           console.error("Error adding product to cart", error);
         });
 
-        navigate("/cart");
+      navigate("/cart");
     }
   };
 
@@ -124,6 +128,7 @@ function ProductDetail() {
 
     if (matchingVariant) {
       setSelectedVariantPrice(matchingVariant.price);
+      setSelectedVariantId(matchingVariant.id);
     } else {
       setSelectedVariantPrice(productDetail.price);
     }

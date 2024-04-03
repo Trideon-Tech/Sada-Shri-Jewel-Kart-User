@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -21,6 +21,37 @@ const Login = () => {
   const [sendOTPAdornment, activateSendOTPAdornment] = useState(false);
   const [verifyOTPAdornment, activateVerifyOTPAdornment] = useState(false);
   const [nextStepLoading, activateNextStepLoading] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItems(items);
+  }, []);
+
+  const sendCartToAPI = () => {
+    const token = localStorage.getItem("token");
+    cartItems.forEach((item) => {
+      axios
+        .put(
+          "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+          { product: item.id },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then(() => {
+          console.log(`Product with ID ${item.id} sent to API`);
+        })
+        .catch((error) => {
+          console.error(
+            `Error sending product with ID ${item.id} to API`,
+            error
+          );
+        });
+    });
+
+    localStorage.removeItem("cart");
+  };
 
   const sendOTP = () => {
     // API to send OTP
@@ -55,9 +86,9 @@ const Login = () => {
       .then((response) => {
         const token = response.data.response.token;
         const loginUser = response.data.response;
-        console.log("login successful");
         localStorage.setItem("loginUser", JSON.stringify(loginUser)); //
         localStorage.setItem("token", token);
+        sendCartToAPI();
         navigate("/");
       })
       .catch((error) => {

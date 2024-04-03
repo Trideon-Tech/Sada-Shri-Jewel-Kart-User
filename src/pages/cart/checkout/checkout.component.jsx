@@ -17,37 +17,90 @@ import {
   Divider,
   Grid,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useNavigate } from "react-router-dom";
 import CheckoutProgressBar from "../../../components/progressbar/progressbar.component";
+import Close from "@mui/icons-material/Close";
+import { Edit } from "@mui/icons-material";
 
 const Checkout = () => {
   let navigate = useNavigate();
   const [activeStep, setActiveStep] = React.useState(1);
   const [cartItems, setCartItems] = useState([]);
   const isLoggedIn = () => Boolean(localStorage.getItem("token"));
-  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
-  const [addressType, setAddressType] = useState("Home");
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [add1, setAdd1] = useState("");
+  const [add2, setAdd2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [country, setCountry] = useState("");
+  const [showAddAddressForm, setShowAddAddressForm] = useState(false);
 
-  const addAddress = (newAddress) => {
-    setAddresses([...addresses, newAddress]);
+  const toggleAddAddressForm = () => {
+    setShowAddAddressForm((prevShowAddAddressForm) => !prevShowAddAddressForm);
   };
 
-  const handleSubmitNewAddress = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const newAddress = {
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-    };
-    addAddress(newAddress);
-    handleCloseAddressModal();
+  const handleAddressSubmit = () => {
+    let name = `${firstName} ${lastName}`;
+    console.log(name);
+    const formData = new FormData();
+
+    formData.append("key", "address");
+    formData.append("mobile", mobile);
+    formData.append("add_line_1", add1);
+    formData.append("add_line_2", add2);
+    formData.append("name", name);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("pincode", pincode);
+
+    axios
+      .post("https://api.sadashrijewelkart.com/v1.0.0/user/add.php", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("address added successfully");
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
-  const handleSelectAddress = (address) => {
-    setSelectedAddress(address);
+  useEffect(() => {
+    if (isLoggedIn()) {
+      axios
+        .get(
+          "https://api.sadashrijewelkart.com/v1.0.0/user/details.php?key=address",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("addresses fetched successfully");
+          console.log(response);
+          setAddresses(response.data.response);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      navigate("/login");
+    }
+  });
+
+  const handleSelectAddress = (addressId) => {
+    setSelectedAddress(addressId);
   };
 
   useEffect(() => {
@@ -75,7 +128,7 @@ const Checkout = () => {
     const subtotal = cartItems.reduce((total, item) => {
       let itemPrice = 0;
       if (typeof item.price === "string") {
-        itemPrice = Number(item.price.replace(/,/g, "")) || 0; 
+        itemPrice = Number(item.price.replace(/,/g, "")) || 0;
       } else {
         itemPrice = Number(item.price) || 0; // Convert to number, default to 0 if NaN
       }
@@ -95,14 +148,6 @@ const Checkout = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleCloseAddressModal = () => {
-    setIsAddressModalOpen(false);
-  };
-
-  const handleAddressTypeChange = (event) => {
-    setAddressType(event.target.value);
-  };
-
   return (
     <div className="checkout">
       <Navbar />
@@ -119,8 +164,46 @@ const Checkout = () => {
               paddingTop: "20px",
             }}
           >
-            <h2 style={{ marginBottom: "20px" }}>Add Shipping Address</h2>
-            <form onSubmit={handleSubmitNewAddress}>
+            <h2 style={{ marginBottom: "20px" }}>Shipping Addresses</h2>
+            <Grid container spacing={2}>
+              {addresses.map((address) => (
+                <Grid item xs={12} sm={6} key={address.id}>
+                  <Card
+                    key={address.id}
+                    className={`address-card ${
+                      selectedAddress === address.id ? "selected" : ""
+                    }`}
+                    onClick={() => handleSelectAddress(address.id)}
+                  >
+                    <div
+                      className="address-content"
+                      style={{ textAlign: "left" }}
+                    >
+                      <p>
+                        <strong>{address.name}</strong>
+                      </p>
+                      <p>{address.add_line_1}</p>
+                      <p>{address.add_line_2}</p>
+                      <p>{`${address.city}, ${address.state} - ${address.pincode}`}</p>
+                      <p>
+                        <strong>Phone:</strong> {address.mobile}
+                      </p>
+                    </div>
+                    <IconButton className="delete-icon">
+                      <Close />
+                    </IconButton>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <Button
+              startIcon={<AddCircleOutlineIcon />}
+              onClick={toggleAddAddressForm}
+              style={{ margin: "20px 0" }}
+            >
+              Add New Shipping Address
+            </Button>
+            {showAddAddressForm && (
               <Grid container className="modal-grid" spacing={2}>
                 <Grid item xs={6}>
                   <TextField
@@ -128,6 +211,10 @@ const Checkout = () => {
                     label="First Name"
                     fullWidth
                     margin="normal"
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -136,6 +223,10 @@ const Checkout = () => {
                     label="Last Name"
                     fullWidth
                     margin="normal"
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -144,6 +235,10 @@ const Checkout = () => {
                     label="Street & House Number"
                     fullWidth
                     margin="normal"
+                    value={add1}
+                    onChange={(e) => {
+                      setAdd1(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -152,6 +247,10 @@ const Checkout = () => {
                     label="Additional Information"
                     fullWidth
                     margin="normal"
+                    value={add2}
+                    onChange={(e) => {
+                      setAdd2(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -160,32 +259,35 @@ const Checkout = () => {
                     label="Pincode"
                     fullWidth
                     margin="normal"
+                    value={pincode}
+                    onChange={(e) => {
+                      setPincode(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField required label="City" fullWidth margin="normal" />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel id="address-type-label">
-                      Select Address Type
-                    </InputLabel>
-                    <Select
-                      labelId="address-type-label"
-                      id="address-type"
-                      value={addressType}
-                      label="Address Type"
-                      onChange={handleAddressTypeChange}
-                    >
-                      <MenuItem value="Home">Home (7am-10pm delivery)</MenuItem>
-                      <MenuItem value="Office">
-                        Office (10am-7pm delivery)
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    required
+                    label="City"
+                    fullWidth
+                    margin="normal"
+                    value={city}
+                    onChange={(e) => {
+                      setCity(e.target.value);
+                    }}
+                  />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField required label="State" fullWidth margin="normal" />
+                  <TextField
+                    required
+                    label="State"
+                    fullWidth
+                    margin="normal"
+                    value={state}
+                    onChange={(e) => {
+                      setState(e.target.value);
+                    }}
+                  />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
@@ -193,6 +295,10 @@ const Checkout = () => {
                     label="Country"
                     fullWidth
                     margin="normal"
+                    value={country}
+                    onChange={(e) => {
+                      setCountry(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -201,44 +307,47 @@ const Checkout = () => {
                     label="Mobile Number"
                     fullWidth
                     margin="normal"
+                    value={mobile}
+                    onChange={(e) => {
+                      setMobile(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <Button
-                    onClick={handleCloseAddressModal}
-                    style={{ color: "#a36e29", padding:"20px",textAlign:"center", fontWeight:"bold", borderColor:"#a36e29" }}
+                    fullWidth
+                    onClick={(e) => {
+                      navigate("/cart");
+                    }}
+                    style={{
+                      color: "#a36e29",
+                      padding: "20px",
+                      textAlign: "center",
+                      fontWeight: "bold",
+                      borderColor: "#a36e29",
+                    }}
                     variant="outlined"
                   >
                     Cancel
                   </Button>
-                  </Grid>
-                  <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
                   <Button
-                    type="submit"
+                    onClick={handleAddressSubmit}
                     variant="contained"
-                    style={{ backgroundColor: "#a36e29", padding:"20px", textAlign:"center", fontWeight:"bold" }}
+                    fullWidth
+                    style={{
+                      backgroundColor: "#a36e29",
+                      padding: "20px",
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    }}
                   >
                     Save
                   </Button>
                 </Grid>
               </Grid>
-            </form>
-            {/* <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={handleOpenAddressModal}
-            >
-              Add a New Address
-            </Button> */}
-
-            {/* <Modal
-              open={isAddressModalOpen}
-              onClose={handleCloseAddressModal}
-              aria-labelledby="add-new-address-title"
-              aria-describedby="add-new-address-description"
-            >
-              {addressModalBody}
-            </Modal> */}
+            )}
           </div>
         </div>
         <div className="checkout-right">
@@ -267,12 +376,6 @@ const Checkout = () => {
                       <Typography className="cart-item-save">{`Save ₹${item.discount}`}</Typography>
                       <Typography className="cart-item-delivery">{`Delivery by - ${item.deliveryDate}`}</Typography>
                     </div>
-                    {/* <IconButton
-                      onClick={() => handleRemoveItem(item.id)}
-                      className="cart-item-remove"
-                    >
-                      <CloseIcon />
-                    </IconButton> */}
                   </Card>
                 </Box>
               ))
@@ -328,22 +431,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-
-// {addresses.map((address, index) => (
-//     <Card key={index} className="address-card">
-//       <div className="address-content">
-//         {/* Display address fields here */}
-//         <Typography>{`${address.firstName} ${address.lastName}`}</Typography>
-//         {/* ... display other fields ... */}
-//       </div>
-//       <Button
-//         variant={
-//           selectedAddress === address ? "contained" : "outlined"
-//         }
-//         color="primary"
-//         onClick={() => handleSelectAddress(address)}
-//       >
-//         {selectedAddress === address ? "Selected" : "Select"}
-//       </Button>
-//     </Card>
-//   ))}

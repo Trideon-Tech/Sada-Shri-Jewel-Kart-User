@@ -9,9 +9,8 @@
         display: flex;
         flex: 1;
         max-width: 100%; /* Ensure the maximum width is not more than the viewport */
-  margin: auto; /* Center the main container */
-  //padding: 20px;
-  box-sizing: border-box;
+        margin: auto; /* Center the main container */
+        box-sizing: border-box;
       }
       
       .checkout-left {
@@ -27,32 +26,65 @@
             border-radius: 8px;
             padding: 20px;
             margin-top: 10px;
+            position: relative;
+            box-sizing: border-box;
+          width: 100%; // Set width to 100% to allow Grid to manage the width
+          margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+
+            .delete-icon {
+              position: absolute;
+              top: 0;
+              right: 0;
+              z-index: 10; // Ensure it's above other elements
+              margin-right: 4px; // Give some space from the corners
+              margin-top: 4px;
+              // Add styling for the icon itself if necessary
+              color: #a36e29; // Example color, change as needed
+            }
+
+            &:hover {
+              box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+            }
+
+            &.selected {
+              border-color: #a36e29; // Indicating selection
+              background-color: #f7f6f3; // A light background for the selected card
+            }
   
             &:not(:last-child) {
               margin-bottom: 10px;
+            }
+
+            .add-address-button {
+              margin-top: 20px;
+              display: block;
+              width: 100%;
+              text-align: center;
             }
   
             .address-content {
               // Styling for the address details
               p {
                 margin: 0;
-                line-height: 1.5;
+                line-height: 1.8;
+                color: #333;
               }
             }
   
             button {
               margin-left: 10px;
+              background: none;
+              border: none;
+              color: #a36e29;
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
             }
-          }
-  
-          button {
-            display: block;
-            width: 100%;
-            text-align: left;
-            margin-top: 10px;
           }
         }
       }
