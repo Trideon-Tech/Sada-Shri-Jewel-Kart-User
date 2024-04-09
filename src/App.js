@@ -4,6 +4,9 @@ import LandingPage from "./pages/landingpage/landingpage.component";
 import ProductDetail from "./pages/productdetail/productdetail.component";
 import Productpage from "./pages/productpage/productpage.component";
 import Cart from "./pages/cart/cart.component";
+import MyOrders from "./pages/my-orders/myOrders.component";
+import TrackOrder from "./pages/track-order/trackOrder.component";
+import Checkout from "./pages/checkout/checkout.component";
 function App() {
   return (
     <div className="App">
@@ -13,6 +16,9 @@ function App() {
           <Route path="/jwellery/:category" element={<Productpage />} />
           <Route path="/item/:category/:product" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/my-orders" element={<MyOrders />} />
+          <Route path="/track-order" element={<TrackOrder />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </div>

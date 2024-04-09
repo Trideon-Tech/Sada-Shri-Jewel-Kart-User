@@ -138,33 +138,40 @@ function Productpage() {
         </div>
         <div className="product-container">
           <Grid container spacing={0}>
-            <Grid item xs={4} className="filter">
+            <Grid item xs={3} className="filter">
               <div className="heading">Filters</div>
-              <Divider />
+              <Divider style={{ width: "100%" }} />
               <PriceFilter
                 selectedPriceRanges={selectedPriceRanges}
                 onFilterChange={handleFilterChange}
               />
             </Grid>
-            <Grid item xs={8} className="products">
+
+            <Grid item xs={9} className="products">
               <div className="heading">Products</div>
-              <div className="product-card">
+              <Grid container spacing={0}>
                 {productsLoaded === false ? (
                   <CircularProgress
-                    style={{ margin: "auto", display: "flex", height: "100%" }}
+                    style={{
+                      margin: "auto",
+                      display: "flex",
+                      height: "100%",
+                    }}
                   />
                 ) : (
                   filteredJwellery.map((item, index) => (
-                    <JwelleryCard
-                      key={item.id}
-                      image={item.images[0].file}
-                      name={item.name}
-                      price={item.price}
-                      onClick={() => handleCardClick(item.name, item.hash)}
-                    />
+                    <Grid item xs={4} className="product-card">
+                      <JwelleryCard
+                        key={item.id}
+                        image={item.images[0].file}
+                        name={item.name}
+                        price={item.price}
+                        onClick={() => handleCardClick(item.name, item.hash)}
+                      />
+                    </Grid>
                   ))
                 )}
-              </div>
+              </Grid>
             </Grid>
           </Grid>
         </div>

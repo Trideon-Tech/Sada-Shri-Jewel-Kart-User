@@ -26,8 +26,9 @@ export default function CartItem({ itemName, price, weight }) {
     <Card
       sx={{
         display: "flex",
-        marginTop: "40px",
+        width: "100%",
         height: "300px",
+        marginBottom: "5%",
         justifyContent: "space-evenly",
         alignItems: "center",
       }}

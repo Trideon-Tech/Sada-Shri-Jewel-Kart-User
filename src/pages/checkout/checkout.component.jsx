@@ -1,9 +1,8 @@
-import React from "react";
-import "./cart.styles.scss";
+import { Box, Grid, Typography } from "@mui/material";
 import Navbar from "../../components/navbar/navbar.component";
-import { Grid, Box, Divider } from "@mui/material";
-import CartItem from "./cartItem.component";
-import CartTotal from "./cartTotal.component";
+import CartItem from "../cart/cartItem.component";
+import CartTotal from "../cart/cartTotal.component";
+import CheckoutForm from "./checkoutForm.component";
 const mockData = [
   {
     id: "1",
@@ -823,40 +822,51 @@ const mockData = [
     },
   },
 ];
-
-const Cart = () => {
+const Checkout = () => {
   return (
-    <div className="landing-page">
+    <Box
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: "#ececec",
+      }}
+    >
       <Navbar />
-      <Box
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "space-around",
-        }}
-      >
-        <Box style={{ width: "90%" }}>
-          <Grid container spacing={5}>
-            <Grid item xs={8}>
-              <Box style={{ height: "90vh" }}>
-                {mockData.map((item) => (
-                  <CartItem
-                    itemName={item.name}
-                    weight={item.weight}
-                    price={item.price}
-                  />
-                ))}
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <CartTotal />
-            </Grid>
+      <Box style={{ width: "90%" }}>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <CheckoutForm />
           </Grid>
-        </Box>
+          <Grid item xs={6}>
+            <Box style={{ height: "max-content" }}>
+              <Typography
+                variant="h4"
+                style={{
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  color: "#a36e29",
+                  marginTop: "10%",
+                  marginBottom: "3%",
+                }}
+              >
+                Order Summary
+              </Typography>
+              {mockData.map((item) => (
+                <CartItem
+                  itemName={item.name}
+                  weight={item.weight}
+                  price={item.price}
+                />
+              ))}
+            </Box>
+            <CartTotal />
+          </Grid>
+        </Grid>
       </Box>
-    </div>
+    </Box>
   );
 };
-
-export default Cart;
+export default Checkout;

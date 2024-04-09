@@ -26,12 +26,11 @@ export default function CartTotal() {
   return (
     <Card
       sx={{
-        position: "fixed",
         display: "flex",
         flexDirection: "column",
         marginTop: "40px",
         height: "60vh",
-        width: "28vw",
+        width: "100%",
         alignItems: "center",
       }}
       elevation={4}

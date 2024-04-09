@@ -826,20 +826,21 @@ const mockData = [
 
 const Cart = () => {
   return (
-    <div className="landing-page">
+    <div>
       <Navbar />
       <Box
         style={{
           width: "100%",
-          height: "100%",
+          height: "max-content",
           display: "flex",
           justifyContent: "space-around",
+          backgroundColor: "#f5f5f5",
         }}
       >
         <Box style={{ width: "90%" }}>
           <Grid container spacing={5}>
             <Grid item xs={8}>
-              <Box style={{ height: "90vh" }}>
+              <Box style={{ height: "100%" }}>
                 {mockData.map((item) => (
                   <CartItem
                     itemName={item.name}
@@ -850,7 +851,9 @@ const Cart = () => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <CartTotal />
+              <Box style={{ width: "30%", position: "fixed" }}>
+                <CartTotal />
+              </Box>
             </Grid>
           </Grid>
         </Box>

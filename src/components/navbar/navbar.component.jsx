@@ -70,7 +70,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="web">
-        <AppBar elevation={0} position="static" className="appbar">
+        <AppBar elevation={2} className="appbar">
           <Toolbar variant="dense" className="toolbar">
             <img
               alt="logo"
