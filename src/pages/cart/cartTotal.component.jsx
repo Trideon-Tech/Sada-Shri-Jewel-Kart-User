@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import RemoveIcon from "@mui/icons-material/Remove";
 import React, { useEffect, useState } from "react";
 import BalanceIcon from "@mui/icons-material/Balance";
-
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Divider, CardContent } from "@mui/material";
 
 export default function CartTotal() {
@@ -107,6 +107,8 @@ export default function CartTotal() {
           marginBottom: "5%",
           backgroundColor: "#a36e29",
         }}
+        component={Link}
+        to="/checkout"
       >
         Continue
       </Button>

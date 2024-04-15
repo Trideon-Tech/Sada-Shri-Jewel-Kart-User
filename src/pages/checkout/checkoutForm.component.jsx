@@ -20,8 +20,11 @@ import Step from "@mui/joy/Step";
 import StepButton from "@mui/joy/StepButton";
 import StepIndicator from "@mui/joy/StepIndicator";
 import Check from "@mui/icons-material/Check";
+import Input from "@mui/joy/Input";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
-const steps = ["Shipping", "Summary", "Payment"];
+const steps = ["Login", "Shipping", "Payment"];
 
 const addresses = [
   {
@@ -70,8 +73,23 @@ const addresses = [
   },
 ];
 const CheckoutForm = () => {
+  const [editing, setEditing] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState(addresses[0]);
   const [activeStep, setActiveStep] = React.useState(1);
+  const addNewAddress = () => {
+    setSelectedAddress({
+      id: 0,
+      firstName: "",
+      lastName: "",
+      addressLine1: "",
+      addressLine2: "",
+      pin: 0,
+      city: "",
+      state: "",
+      mobile: 0,
+    });
+    setEditing(true);
+  };
   return (
     <Paper
       elevation={3}
@@ -210,10 +228,10 @@ const CheckoutForm = () => {
             marginTop: "3%",
             minWidth: 240,
           }}
-          onChange={(event, value) => {
+          onChange={(event, newValue) => {
             console.log(event);
-            console.log(value);
-            setSelectedAddress(event?.target.value);
+            console.log(newValue);
+            setSelectedAddress(newValue);
           }}
         >
           {addresses.map((data, index) => (
@@ -239,6 +257,7 @@ const CheckoutForm = () => {
           size="sm"
           variant="soft"
           style={{
+            border: "2px solid #a36e29",
             marginTop: "3%",
             marginBottom: "5%",
             display: "flex",
@@ -246,26 +265,163 @@ const CheckoutForm = () => {
             alignItems: "flex-start",
           }}
         >
-          <Typography level="body-lg">{`${selectedAddress.state} ${selectedAddress.pin}`}</Typography>
-          <Typography level="title-lg">
-            {selectedAddress.addressLine1}
-          </Typography>
-          <Typography level="title-lg">
-            {selectedAddress.addressLine2}
-          </Typography>
-          <Typography level="body-sm">{selectedAddress.city}</Typography>
-          <Typography level="body-md">{selectedAddress.mobile}</Typography>
-          <Typography level="body-md">{`${selectedAddress.firstName}  ${selectedAddress.lastName}`}</Typography>
-
-          <Button
-            variant="solid"
-            size="md"
-            color="primary"
-            aria-label="Explore Bahamas Islands"
-            sx={{ ml: "auto", alignSelf: "center", fontWeight: 600 }}
-          >
-            Edit
-          </Button>
+          {!editing ? (
+            <>
+              <Typography level="body-lg">{`${selectedAddress.state} ${selectedAddress.pin}`}</Typography>
+              <Typography level="title-lg">
+                {selectedAddress.addressLine1}
+              </Typography>
+              <Typography level="title-lg">
+                {selectedAddress.addressLine2}
+              </Typography>
+              <Typography level="body-sm">{selectedAddress.city}</Typography>
+              <Typography level="body-md">{selectedAddress.mobile}</Typography>
+              <Typography level="body-md">{`${selectedAddress.firstName}  ${selectedAddress.lastName}`}</Typography>
+              <Box
+                style={{
+                  width: "100%",
+                  height: "5%",
+                  display: "flex",
+                  justifyContent: "space-around",
+                }}
+              >
+                <Button
+                  variant="solid"
+                  size="md"
+                  color="primary"
+                  sx={{
+                    alignSelf: "center",
+                    fontWeight: 600,
+                    backgroundColor: "#a36e29",
+                  }}
+                  onClick={() => setEditing(true)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="md"
+                  color="primary"
+                  aria-label="Explore Bahamas Islands"
+                  sx={{
+                    alignSelf: "center",
+                    fontWeight: 600,
+                    color: "#a36e29",
+                  }}
+                  onClick={addNewAddress}
+                >
+                  Add Address
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <Grid container spacing={3} style={{ marginTop: "2%" }}>
+              <Grid item xs={6}>
+                <TextField
+                  label="First Name"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.firstName}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Last Name"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.lastName}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Address Line 1"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.addressLine1}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ width: "100%" }}
+                  label="Address Line 2"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.addressLine2}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="City"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.city}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="State"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.state}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Pincode"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.pin}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Phone"
+                  id="standard-size-small"
+                  defaultValue={selectedAddress.mobile}
+                  size="small"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  variant="solid"
+                  size="md"
+                  sx={{
+                    ml: "auto",
+                    alignSelf: "center",
+                    fontWeight: 600,
+                    backgroundColor: "#a36e29",
+                  }}
+                  onClick={() => setEditing(true)}
+                >
+                  Save
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  variant="outlined"
+                  size="md"
+                  sx={{
+                    ml: "auto",
+                    alignSelf: "center",
+                    fontWeight: 600,
+                    color: "#a36e29",
+                  }}
+                  onClick={() => setEditing(false)}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
+          )}
         </Card>
       </Box>
     </Paper>

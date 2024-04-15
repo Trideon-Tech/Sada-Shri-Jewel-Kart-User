@@ -7,6 +7,9 @@ import Cart from "./pages/cart/cart.component";
 import MyOrders from "./pages/my-orders/myOrders.component";
 import TrackOrder from "./pages/track-order/trackOrder.component";
 import Checkout from "./pages/checkout/checkout.component";
+import Wishlist from "./pages/wishlist/wishList.component";
+import Profile from "./pages/profile/profile.component";
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +22,8 @@ function App() {
           <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

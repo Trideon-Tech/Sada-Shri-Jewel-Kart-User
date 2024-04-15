@@ -1,10 +1,73 @@
-import { Box, Grid, Typography } from "@mui/material";
+import React from "react";
+import Typography from "@mui/material/Typography";
 import Navbar from "../../components/navbar/navbar.component";
-import CartItem from "../cart/cartItem.component";
-import CartTotal from "../cart/cartTotal.component";
-import CheckoutForm from "./checkoutForm.component";
-import { useState } from "react";
+import { Grid, Box, Divider } from "@mui/material";
+import JwelleryCard from "../../components/card/jwellerycard.component";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const mockData = [
+  {
+    id: "1",
+    created_at: "2024-02-01 15:02:58",
+    updated_at: "2024-02-21 12:20:20",
+    company: {
+      id: "1",
+      created_at: "2023-12-27 15:33:52",
+      updated_at: "2024-01-18 10:30:04",
+      gstin: "123456789012345",
+      gstin_verified: "1",
+      name: "NewJwellers",
+      logo: "company/NewJwellers/logo.png",
+      cover_image: "company/NewJwellers/cover_image.webp",
+      contact_email: "rishavk1102.work@gmail.com",
+      addresses: "1",
+      banks: "1",
+      admin_verified: "1",
+      admin: "1",
+    },
+    seller: "1",
+    name: "Faria Diamond Band",
+    hash: "AB2F9C",
+    description:
+      '<p><span style="color: rgb(79, 50, 103);">Set in 18 KT Rose Gold(3.630 g) with diamonds (0.200 ct ,GH-SI)</span></p>',
+    category: "Rings",
+    sub_category: "Engagement",
+    weight: "3.670",
+    height: "3.4",
+    width: "7.9",
+    purity: "18",
+    price: "47,908",
+    admin_verified: "1",
+    admin: "1",
+    images: [
+      {
+        id: "1",
+        created_at: "2024-02-01 15:02:58",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Faria Diamond Band-1706799778.webp",
+      },
+      {
+        id: "2",
+        created_at: "2024-02-01 15:02:58",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Faria Diamond Band-1706799778.webp",
+      },
+      {
+        id: "3",
+        created_at: "2024-02-01 15:03:00",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "vid",
+        file: "company/NewJwellers/products/Faria Diamond Band-1706799780.mp4",
+      },
+    ],
+  },
   {
     id: "1",
     created_at: "2024-02-01 15:02:58",
@@ -823,52 +886,60 @@ const mockData = [
     },
   },
 ];
-const Checkout = () => {
-  const [editing, setEditing] = useState(false);
+
+const Wishlist = () => {
+  const navigate = useNavigate();
+  const handleCardClick = (productName, hash, menuItemName) => {
+    console.log(hash);
+    console.log(`/item/${menuItemName}/${productName}-${hash}`);
+    navigate(`/item/${menuItemName}/${productName}-${hash}`);
+  };
   return (
-    <Box
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        backgroundColor: "#ececec",
-      }}
-    >
+    <div>
       <Navbar />
-      <Box style={{ width: "90%" }}>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <CheckoutForm />
-          </Grid>
-          <Grid item xs={6}>
-            <Box style={{ height: "max-content" }}>
-              <Typography
-                variant="h4"
-                style={{
-                  textAlign: "left",
-                  fontWeight: "bold",
-                  color: "#a36e29",
-                  marginTop: "10%",
-                  marginBottom: "3%",
-                }}
-              >
-                Order Summary
-              </Typography>
-              {mockData.map((item) => (
-                <CartItem
-                  itemName={item.name}
-                  weight={item.weight}
+      <Box
+        style={{
+          width: "100%",
+          paddingTop: "5%",
+          paddingBottom: "5%",
+          height: "max-content",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "space-around",
+          backgroundColor: "#f5f5f5",
+        }}
+      >
+        <Box style={{ width: "90%" }}>
+          <Typography
+            variant="h4"
+            style={{
+              color: "#a36e29",
+              textAlign: "start",
+              fontWeight: "bold",
+              marginBottom: "2%",
+            }}
+          >
+            Wishlist
+          </Typography>
+          <Grid container spacing={5}>
+            {mockData.map((item) => (
+              <Grid item xs={3}>
+                <JwelleryCard
+                  key={item.id}
+                  image={item.images[0].file}
+                  name={item.name}
                   price={item.price}
+                  onClick={() =>
+                    handleCardClick(item.name, item.hash, item.category)
+                  }
                 />
-              ))}
-            </Box>
-            <CartTotal />
+              </Grid>
+            ))}
           </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
-export default Checkout;
+
+export default Wishlist;
