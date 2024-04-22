@@ -9,6 +9,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import React, { useEffect, useState } from "react";
 import BalanceIcon from "@mui/icons-material/Balance";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
+import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded";
 
 export default function CartItem({ itemName, price, weight }) {
   const [quantity, setQuantity] = useState(1);
@@ -27,7 +28,7 @@ export default function CartItem({ itemName, price, weight }) {
       sx={{
         display: "flex",
         width: "100%",
-        height: "300px",
+        aspectRatio: "3/1",
         marginBottom: "5%",
         justifyContent: "space-evenly",
         alignItems: "center",
@@ -36,29 +37,35 @@ export default function CartItem({ itemName, price, weight }) {
     >
       <Box
         style={{
-          border: "2px solid #909090",
+          border: "2px solid #f7f7f7",
           borderRadius: "5px",
-          height: "80%",
-          marginLeft: "5%",
+          height: "50%",
+          aspectRatio: "1/1",
+          marginLeft: "10%",
           overflow: "hidden",
         }}
       >
         <img
           src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
-          style={{ height: "100%", width: "100%", objectFit: "contain" }}
+          style={{ height: "80%", width: "80%", objectFit: "contain" }}
         />
       </Box>
       <Box
         style={{
           height: "80%",
           display: "flex",
-          marginLeft: "5%",
+          marginLeft: "10%",
           marginRight: "auto",
           flexDirection: "column",
           alignItems: "flex-start",
         }}
       >
-        <Typography variant="h6" gutterBottom color="#505050">
+        <Typography
+          variant="h6"
+          gutterBottom
+          color="#505050"
+          style={{ textAlign: "left" }}
+        >
           {itemName}
         </Typography>
         <Typography
@@ -138,7 +145,7 @@ export default function CartItem({ itemName, price, weight }) {
           marginRight: "5%",
         }}
       >
-        <DisabledByDefaultRoundedIcon
+        <IndeterminateCheckBoxRoundedIcon
           fontSize="large"
           style={{
             marginBottom: "auto",

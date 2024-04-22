@@ -838,7 +838,7 @@ const Checkout = () => {
     >
       <Navbar />
       <Box style={{ width: "90%" }}>
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           <Grid item xs={6}>
             <CheckoutForm />
           </Grid>

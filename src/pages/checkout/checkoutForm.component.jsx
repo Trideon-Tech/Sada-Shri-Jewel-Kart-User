@@ -75,6 +75,7 @@ const addresses = [
 const CheckoutForm = () => {
   const [editing, setEditing] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState(addresses[0]);
+  console.log("a", selectedAddress);
   const [activeStep, setActiveStep] = React.useState(1);
   const addNewAddress = () => {
     setSelectedAddress({
@@ -110,6 +111,11 @@ const CheckoutForm = () => {
               key={step}
               indicator={
                 <StepIndicator
+                  style={{
+                    "& .MuiStepIndicator-root": {
+                      backgroundColor: "green",
+                    },
+                  }}
                   variant={activeStep <= index ? "soft" : "solid"}
                   color={activeStep < index ? "neutral" : "primary"}
                 >
@@ -282,7 +288,8 @@ const CheckoutForm = () => {
                   width: "100%",
                   height: "5%",
                   display: "flex",
-                  justifyContent: "space-around",
+
+                  justifyContent: "space-evenly",
                 }}
               >
                 <Button
@@ -290,7 +297,7 @@ const CheckoutForm = () => {
                   size="md"
                   color="primary"
                   sx={{
-                    alignSelf: "center",
+                    marginLeft: "20%",
                     fontWeight: 600,
                     backgroundColor: "#a36e29",
                   }}
@@ -304,7 +311,7 @@ const CheckoutForm = () => {
                   color="primary"
                   aria-label="Explore Bahamas Islands"
                   sx={{
-                    alignSelf: "center",
+                    marginRight: "20%",
                     fontWeight: 600,
                     color: "#a36e29",
                   }}
@@ -395,8 +402,7 @@ const CheckoutForm = () => {
                   variant="solid"
                   size="md"
                   sx={{
-                    ml: "auto",
-                    alignSelf: "center",
+                    marginLeft: "20%",
                     fontWeight: 600,
                     backgroundColor: "#a36e29",
                   }}
@@ -410,8 +416,7 @@ const CheckoutForm = () => {
                   variant="outlined"
                   size="md"
                   sx={{
-                    ml: "auto",
-                    alignSelf: "center",
+                    marginRight: "20%",
                     fontWeight: 600,
                     color: "#a36e29",
                   }}

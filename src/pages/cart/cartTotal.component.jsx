@@ -28,7 +28,7 @@ export default function CartTotal() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        marginTop: "40px",
+        marginTop: "10%",
         height: "60vh",
         width: "100%",
         alignItems: "center",

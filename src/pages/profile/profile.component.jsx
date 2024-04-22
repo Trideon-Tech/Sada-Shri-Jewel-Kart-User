@@ -6,7 +6,7 @@ import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
 import { Grid, Box, Divider } from "@mui/material";
 import Account from "./account.component";
-
+import Orders from "./orders.component";
 export default function Profile() {
   return (
     <div
@@ -42,7 +42,7 @@ export default function Profile() {
               <Account />
             </TabPanel>
             <TabPanel value={1}>
-              <b>first</b> tab panel
+              <Orders />
             </TabPanel>
             <TabPanel value={2}>
               <b>second</b> tab panel

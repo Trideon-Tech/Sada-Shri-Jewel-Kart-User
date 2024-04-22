@@ -837,10 +837,10 @@ const Cart = () => {
           backgroundColor: "#f5f5f5",
         }}
       >
-        <Box style={{ width: "90%" }}>
-          <Grid container spacing={5}>
+        <Box style={{ width: "70%" }}>
+          <Grid container spacing={6}>
             <Grid item xs={8}>
-              <Box style={{ height: "100%" }}>
+              <Box style={{ height: "60%", marginTop: "6.8%" }}>
                 {mockData.map((item) => (
                   <CartItem
                     itemName={item.name}

@@ -9,6 +9,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import "./carousel.styles.scss";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -97,11 +98,18 @@ function CarouselPanel() {
         }}
       >
         <MobileStepper
+          variant="dots"
           style={{
             position: "absolute",
             zIndex: 9,
+            borderRadius: "20px",
             top: "70vh",
-            backgroundColor: "rgba(0,0,0,0)",
+            color: "white",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            "& .MuiMobileStepper-dotActive": {
+              color: "white",
+              backgroundColor: "white",
+            },
           }}
           steps={maxSteps}
           position="static"
@@ -113,9 +121,9 @@ function CarouselPanel() {
               disabled={activeStep === maxSteps - 1}
             >
               {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
+                <KeyboardArrowLeft style={{ color: "white" }} />
               ) : (
-                <KeyboardArrowRight />
+                <KeyboardArrowRight style={{ color: "white" }} />
               )}
             </Button>
           }
@@ -126,9 +134,9 @@ function CarouselPanel() {
               disabled={activeStep === 0}
             >
               {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
+                <KeyboardArrowRight style={{ color: "white" }} />
               ) : (
-                <KeyboardArrowLeft />
+                <KeyboardArrowLeft style={{ color: "white" }} />
               )}
             </Button>
           }
