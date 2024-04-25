@@ -4,7 +4,7 @@ import TabList from "@mui/joy/TabList";
 import Navbar from "../../components/navbar/navbar.component";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
-import { Grid, Box, Divider } from "@mui/material";
+import { Grid, Box, Divider, Typography } from "@mui/material";
 import Account from "./account.component";
 import Orders from "./orders.component";
 export default function Profile() {
@@ -39,9 +39,19 @@ export default function Profile() {
               <Tab>Offers</Tab>
             </TabList>
             <TabPanel value={0}>
+              <div style={{ marginBottom: "2%", marginTop: "5%" }}>
+
+                <Typography variant="h4" style={{ textAlign: "left", color: "#a36e29", fontWeight: "bold" }}>My Profile</Typography>
+              </div>
+              <Divider style={{ marginBottom: "5%" }} />
               <Account />
             </TabPanel>
             <TabPanel value={1}>
+              <div style={{ marginBottom: "2%", marginTop: "5%" }}>
+
+                <Typography variant="h4" style={{ textAlign: "left", color: "#a36e29", fontWeight: "bold" }}>My Orders</Typography>
+              </div>
+              <Divider style={{ marginBottom: "5%" }} />
               <Orders />
             </TabPanel>
             <TabPanel value={2}>

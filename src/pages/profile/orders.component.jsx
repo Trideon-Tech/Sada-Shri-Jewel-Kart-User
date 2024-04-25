@@ -41,9 +41,9 @@ const Orders = () => {
         alignItems: "center",
       }}
     >
-      {orders.map((order) => {
-        <OrderCard orderData={order} />;
-      })}
+      {orders.map((order) => 
+        <OrderCard orderData={order} />
+      )}
     </div>
   );
 };

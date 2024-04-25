@@ -17,7 +17,7 @@ const OrderCard = ({ orderData }) => {
         display: "flex",
         width: "40vw",
         flexDirection: "column",
-        marginBottom: 2,
+        marginBottom: 5,
         minHeight: "30vh",
       }}
     >
@@ -29,17 +29,19 @@ const OrderCard = ({ orderData }) => {
           paddingLeft: "3%",
           alignItems: "flex-start",
           justifyContent: "space-evenly",
-          height: "10vh",
+          height: "max-content",
+          paddingTop:"1%",
+          paddingBottom:"1%",
           marginBottom: "2%",
           backgroundColor: "#fcdaac",
           borderBottom: "1px solid #a36e29",
         }}
       >
         <Typography style={{ color: "#404040" }} variant="h6">
-          Order Id : {"1230-A-3S"}
+          Order Id | {"1230-A-3S"}
         </Typography>
         <Typography style={{ color: "#707070" }} variant="body">
-          Ordered On : 12th july 2023
+          Ordered On | 12th july 2023
         </Typography>
       </Box>
       <Box
@@ -54,7 +56,7 @@ const OrderCard = ({ orderData }) => {
         <CardActionArea
           style={{ width: "30%" }}
           component={Link}
-          to={`/track-order/`}
+          to={`/order-details/`}
         >
           {/* Link to specific track order page */}
           <img src={orderData.imageUrl} title={orderData.name} />
@@ -63,7 +65,7 @@ const OrderCard = ({ orderData }) => {
           sx={{ padding: 2 }}
           style={{
             textAlign: "left",
-            width: "30%",
+            width: "40%",
             display: "flex",
             flexDirection: "column",
           }}
@@ -90,9 +92,9 @@ const OrderCard = ({ orderData }) => {
               style={{ backgroundColor: "#a36e29" }}
               size="small"
               component={Link}
-              to={`/track-order/`}
+              to={`/order-details/`}
             >
-              Track Order
+               Order Details
             </Button>
             <Button variant="outlined" color="error" size="small">
               Cancel Order
