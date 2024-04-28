@@ -11,7 +11,7 @@ import BalanceIcon from "@mui/icons-material/Balance";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
 import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded";
 
-export default function CartItem({ itemName, price, weight }) {
+export default function CartItem({ item, removeHandler }) {
   const [quantity, setQuantity] = useState(1);
   const theme = useTheme();
 
@@ -46,7 +46,8 @@ export default function CartItem({ itemName, price, weight }) {
         }}
       >
         <img
-          src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
+          src={`https://api.sadashrijewelkart.com/assets/${item.images[0].file}`}
+          // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
           style={{ height: "80%", width: "80%", objectFit: "contain" }}
         />
       </Box>
@@ -66,14 +67,14 @@ export default function CartItem({ itemName, price, weight }) {
           color="#505050"
           style={{ textAlign: "left" }}
         >
-          {itemName}
+          {item.name}
         </Typography>
         <Typography
           variant="subtitle2"
           style={{ fontWeight: "bold" }}
           gutterBottom
         >
-          ${price}
+          ${item.price}
         </Typography>
         <Box
           style={{
@@ -86,7 +87,7 @@ export default function CartItem({ itemName, price, weight }) {
           <Typography
             style={{ marginLeft: "10px", fontWeight: "bold", color: "#505050" }}
           >
-            {weight} g
+            {item.weight} g
           </Typography>
         </Box>
         <Box
@@ -145,17 +146,19 @@ export default function CartItem({ itemName, price, weight }) {
           marginRight: "5%",
         }}
       >
-        <IndeterminateCheckBoxRoundedIcon
-          fontSize="large"
-          style={{
-            marginBottom: "auto",
-            marginTop: "5%",
-            color: "#f06954",
-            "&:hover": {
-              color: "#ed2a0c",
-            },
-          }}
-        />
+        <Button onClick={() => removeHandler(item.cart_id)}>
+          <IndeterminateCheckBoxRoundedIcon
+            fontSize="large"
+            style={{
+              marginBottom: "auto",
+              marginTop: "5%",
+              color: "#f06954",
+              "&:hover": {
+                color: "#ed2a0c",
+              },
+            }}
+          />
+        </Button>
       </Box>
     </Card>
   );

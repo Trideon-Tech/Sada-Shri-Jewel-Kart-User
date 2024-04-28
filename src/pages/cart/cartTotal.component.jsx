@@ -11,18 +11,7 @@ import BalanceIcon from "@mui/icons-material/Balance";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Divider, CardContent } from "@mui/material";
 
-export default function CartTotal() {
-  const [quantity, setQuantity] = useState(1);
-  const theme = useTheme();
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  };
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
+export default function CartTotal({ items }) {
   return (
     <Card
       sx={{
@@ -72,7 +61,16 @@ export default function CartTotal() {
             alignItems: "flex-start",
           }}
         >
-          <Typography style={{ lineHeight: "40px" }}>$89,209</Typography>
+          <Typography style={{ lineHeight: "40px" }}>
+            $
+            {items?.reduce((prev, item) => {
+              console.log("piggy", prev, item);
+              return (
+                parseFloat((prev + "" || "0").replace(/,/g, "")) +
+                parseFloat(item.price.replace(/,/g, ""))
+              );
+            }, 0)}
+          </Typography>
           <Typography style={{ lineHeight: "40px" }}>$9,209</Typography>
           <Typography style={{ lineHeight: "40px" }}>$80,000</Typography>
         </Box>
@@ -82,7 +80,7 @@ export default function CartTotal() {
           width: "80%",
           marginTop: "auto",
           marginBottom: "5%",
-          backgroundColor: "#fcbd6a",
+          backgroundColor: "#f0f0f0",
         }}
       >
         <CardContent>

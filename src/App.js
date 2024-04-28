@@ -11,6 +11,8 @@ import Checkout from "./pages/checkout/checkout.component";
 import Wishlist from "./pages/wishlist/wishList.component";
 import Profile from "./pages/profile/profile.component";
 import Register from "./pages/signup/register.component"
+import SignIn from "./pages/signin/signin.component"
+import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/user-details" element={<UserDetailsForm />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -8,10 +8,10 @@ import FormLabel from "@mui/joy/FormLabel";
 import FormHelperText from "@mui/joy/FormHelperText";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
-import "./register.styles.scss";
+import "./signin.styles.scss";
 import axios from "axios";
 
-const Register = () => {
+const SignIn = () => {
   let navigate = useNavigate();
   const [mobile, setMobile] = useState();
   const [otp, setOTP] = useState();
@@ -54,35 +54,38 @@ const Register = () => {
   };
 
   const handleRegister = () => {
+    console.log("hello");
     const formData = new FormData();
+
+    formData.append("type", "login");
     formData.append("mobile", mobile);
     localStorage.setItem("mobile", mobile);
-    navigate("/user-details");
+    navigate("/");
 
     //call API for OTP verification
-    // axios
-    // .post(
-    //   "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
-    //   formData,
-    //   {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   }
-    // )
-    // .then((response) => {
-    //   console.log(
-    //     "User registered successfully:",
-    //     response.data.response.token
-    //   );
-    //   const token = response.data.response.token;
-    //   localStorage.setItem("token", token);
-    //   sendCartToAPI(token);
-    //   navigate("/");
-    // })
-    // .catch((error) => {
-    //   console.error("Error:", error);
-    // });
+    axios
+      .post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(
+          "User registered successfully:",
+          response.data.response.token
+        );
+        const token = response.data.response.token;
+        localStorage.setItem("token", token);
+        sendCartToAPI(token);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -91,7 +94,7 @@ const Register = () => {
       <div className="register-container">
         <div className="register-form">
           <h2>
-            Signup to <br />
+            SignIn to <br />
             Sada Shri Jewel Kart
           </h2>
           <p>
@@ -187,7 +190,7 @@ const Register = () => {
                 <Button
                   fullWidth
                   variant="solid"
-                  color="primary"
+                  color="neutral"
                   size="lg"
                   onClick={handleRegister}
                   disabled={true}
@@ -198,14 +201,14 @@ const Register = () => {
             </Grid>
           </Grid>
           <p className="signup-text">
-            Already Have a account?{" "}
+            Don't Have an account?{" "}
             <p
               style={{ color: "#a36e29", textDecoration: "underline" }}
               onClick={() => {
-                navigate("/signin");
+                navigate("/signup");
               }}
             >
-              Signin
+              SignUp
             </p>
           </p>
         </div>
@@ -214,4 +217,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignIn;

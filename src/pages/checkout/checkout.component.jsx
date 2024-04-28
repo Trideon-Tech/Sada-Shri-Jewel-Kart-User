@@ -3,7 +3,8 @@ import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "../cart/cartItem.component";
 import CartTotal from "../cart/cartTotal.component";
 import CheckoutForm from "./checkoutForm.component";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 const mockData = [
   {
     id: "1",
@@ -825,6 +826,23 @@ const mockData = [
 ];
 const Checkout = () => {
   const [editing, setEditing] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [refreshCart, setRefreshCart] = useState(1);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setCartItems(response.data.response);
+      })
+      .catch((error) => console.log("Error while fetching card items", error));
+  }, [refreshCart]);
+
   return (
     <Box
       style={{
@@ -840,7 +858,7 @@ const Checkout = () => {
       <Box style={{ width: "90%" }}>
         <Grid container spacing={6}>
           <Grid item xs={6}>
-            <CheckoutForm />
+            <CheckoutForm cartItems={cartItems} />
           </Grid>
           <Grid item xs={6}>
             <Box style={{ height: "max-content" }}>
@@ -856,15 +874,17 @@ const Checkout = () => {
               >
                 Order Summary
               </Typography>
-              {mockData.map((item) => (
+              {cartItems.map((item) => (
                 <CartItem
+                  key={item.cart_id}
+                  item={item}
                   itemName={item.name}
                   weight={item.weight}
                   price={item.price}
                 />
               ))}
             </Box>
-            <CartTotal />
+            <CartTotal items={cartItems} />
           </Grid>
         </Grid>
       </Box>

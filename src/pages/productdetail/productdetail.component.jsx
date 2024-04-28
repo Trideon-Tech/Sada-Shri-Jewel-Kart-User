@@ -6,6 +6,8 @@ import {
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
+import Snackbar from "@mui/joy/Snackbar";
+
 import {
   Box,
   Button,
@@ -40,6 +42,7 @@ const theme = createTheme({
 });
 
 function ProductDetail() {
+  const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState(null);
   const { product } = useParams();
@@ -56,6 +59,47 @@ function ProductDetail() {
     recommended: [],
   });
 
+  const addToCartHandler = () => {
+    const token = localStorage.getItem("token");
+
+    console.log(token);
+    axios
+      .put(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        {
+          product: productDetail.id,
+          customization: -1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log(`Product with ID ${productDetail.id} sent to API`);
+        setOpen(true);
+      })
+      .catch((error) => {
+        console.error(
+          `Error sending product with ID ${productDetail.id} to API`,
+          error
+        );
+      });
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        sessionStorage.setItem("cart", response.data.response.length);
+        setOpen(true);
+      })
+      .catch((error) => console.log("Error while fetching card items", error));
+  };
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedMetal, setSelectedMetal] = useState("");
   const [selectedDiamondType, setSelectedDiamondType] = useState("");
@@ -161,6 +205,35 @@ function ProductDetail() {
   return (
     <div className="product-detail">
       <Navbar />
+      <Snackbar
+        autoHideDuration={5000}
+        variant="outlined"
+        color="primary"
+        size="lg"
+        open={open}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        sx={(theme) => ({
+          backgroundColor: "#fff2e0",
+          maxWidth: 360,
+        })}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "max-content",
+            padding: "2%",
+          }}
+        >
+          <Typography
+            variant="body"
+            style={{ color: "gray", fontWeight: "bold" }}
+          >
+            Product Added To Cart
+          </Typography>
+        </div>
+      </Snackbar>
       <div className="web">
         <div className="container">
           <div className="product-content">
@@ -451,7 +524,12 @@ function ProductDetail() {
                     Flat 50% off on Making Charges
                   </Typography>
                   <div className="actions">
-                    <Button variant="contained" className="button" fullWidth>
+                    <Button
+                      variant="contained"
+                      className="button"
+                      fullWidth
+                      onClick={addToCartHandler}
+                    >
                       Add to Cart
                       <ShoppingCart className="button-icon" />
                     </Button>

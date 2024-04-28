@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Dropdown from "@mui/joy/Dropdown";
+import Menu from "@mui/joy/Menu";
+import MenuButton from "@mui/joy/MenuButton";
+import MenuItem from "@mui/joy/MenuItem";
+import Badge from "@mui/joy/Badge";
+import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
 import {
   AppBar,
   Toolbar,
@@ -12,14 +18,17 @@ import {
   ListItemText,
   List,
   ListItemAvatar,
+  Typography,
 } from "@mui/material";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Menu } from "@mui/icons-material";
+// import { Menu as MenuIcon } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
+import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
+import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import axios from "axios";
 import "./navbar.styles.scss";
 
@@ -31,12 +40,32 @@ const Navbar = () => {
   const { category } = useParams();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    // if (!sessionStorage.getItem("cart")) {
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.data.response.length);
+        sessionStorage.setItem("cart", response.data.response.length);
+      })
+      .catch((error) => console.log("Error while fetching card items", error));
+    // }
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
       .then((response) => setMenuItems(response.data.response.categories))
       .catch((error) => console.error("Error fetching menu items:", error));
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   const handleMenuItemClick = (menuItem) => {
     setOpenDrawer(false);
 
@@ -183,14 +212,62 @@ const Navbar = () => {
               />
             </div>
             <div className="icons">
-              <IconButton color="inherit" component={Link} to="/profile">
-                <AccountCircleIcon />
-              </IconButton>
+              <Dropdown>
+                <MenuButton
+                  slots={{ root: IconButton }}
+                  slotProps={{ root: { variant: "plain", color: "neutral" } }}
+                  sx={{ borderRadius: 40 }}
+                >
+                  <AccountCircleIcon style={{ color: "#a36e29" }} />
+                </MenuButton>
+                <Menu
+                  style={{
+                    width: "15vw",
+                    height: "10%",
+                    marginTop: "200px",
+                    paddingTop: "100px  ",
+                  }}
+                >
+                  {localStorage.getItem("token") ? (
+                    <MenuItem component={Link} to="/profile">
+                      <AccountCircleIcon style={{ color: "#a36e29" }} />
+                      <Typography>My Account</Typography>
+                    </MenuItem>
+                  ) : (
+                    <MenuItem component={Link} to="/signup">
+                      <HowToRegRoundedIcon style={{ color: "#a36e29" }} />
+                      <Typography>Register</Typography>
+                    </MenuItem>
+                  )}
+                  {localStorage.getItem("token") ? (
+                    <MenuItem onClick={handleLogout}>
+                      <ExitToAppRoundedIcon style={{ color: "#a36e29" }} />
+                      <Typography>Logout</Typography>
+                    </MenuItem>
+                  ) : (
+                    <MenuItem component={Link} to="/signin">
+                      <LoginRoundedIcon style={{ color: "#a36e29" }} />
+                      <Typography>SignIn</Typography>
+                    </MenuItem>
+                  )}
+                </Menu>
+              </Dropdown>
+
               <IconButton color="inherit" component={Link} to="/wishlist">
-                <FavoriteIcon />
+                <Badge
+                  badgeContent={4}
+                  sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
+                >
+                  <FavoriteIcon />
+                </Badge>
               </IconButton>
               <IconButton color="inherit" component={Link} to="/cart">
-                <ShoppingCartIcon />
+                <Badge
+                  badgeContent={sessionStorage.getItem("cart") || 0}
+                  sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
+                >
+                  <ShoppingCartIcon />
+                </Badge>
               </IconButton>
             </div>
           </Toolbar>
@@ -245,7 +322,7 @@ const Navbar = () => {
                 </IconButton>
               </div>
             </div>
-            <Menu className="menu-icon" onClick={() => setOpenDrawer(true)} />
+            {/* <Menu className="menu-icon" onClick={() => setOpenDrawer(true)} /> */}
           </Toolbar>
         </AppBar>
       </div>

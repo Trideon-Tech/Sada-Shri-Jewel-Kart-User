@@ -23,6 +23,8 @@ import Check from "@mui/icons-material/Check";
 import Input from "@mui/joy/Input";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
+import AddressPanel from "./addressPanel.component";
 
 const steps = ["Login", "Shipping", "Payment"];
 
@@ -72,10 +74,11 @@ const addresses = [
     mobile: 9078675638,
   },
 ];
-const CheckoutForm = () => {
+const CheckoutForm = ({ cartItems }) => {
   const [editing, setEditing] = React.useState(false);
-  const [selectedAddress, setSelectedAddress] = React.useState(addresses[0]);
-  console.log("a", selectedAddress);
+  const [selectedAddress, setSelectedAddress] = React.useState(
+    addresses[0] || {}
+  );
   const [activeStep, setActiveStep] = React.useState(1);
   const addNewAddress = () => {
     setSelectedAddress({
@@ -91,6 +94,49 @@ const CheckoutForm = () => {
     });
     setEditing(true);
   };
+
+  const createOrderHandler = () => {
+    const formData = new FormData();
+    formData.append("type", "order_request");
+    formData.append("currency", `INR`);
+    formData.append("receipt", "22344$");
+    formData.append("user_id", localStorage.getItem("user_id"));
+    formData.append("user_address_id", selectedAddress.id);
+    formData.append("payment_status", "pending");
+    const orderList = cartItems.map((item) => {
+      return {
+        product_id: item.id,
+        customization_id: -1,
+        quantity: 1,
+      };
+    });
+    console.log(JSON.stringify(orderList));
+    formData.append("ordered_products", JSON.stringify(orderList));
+
+    const token = localStorage.getItem("token");
+    axios
+      .post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+          token,
+        }
+      )
+      .then((response) => {
+        console.log("order created", response);
+        if (response.data.success === 1) {
+          console.log("address Added successfully");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <Paper
       elevation={3}
@@ -137,297 +183,37 @@ const CheckoutForm = () => {
         </Stepper>
       </Box>
       <Divider style={{ width: "100%" }} />
-      <Box style={{ width: "80%", marginTop: "5%", height: "max-content" }}>
+      <Box
+        style={{
+          width: "80%",
+          marginTop: "5%",
+          height: "max-content",
+          marginBottom: "5%",
+        }}
+      >
         <Typography
           variant="h6"
-          style={{ color: "#a36e29", fontWeight: "bold" }}
-        >
-          Delivery Type
-        </Typography>
-        <Divider />
-        <RadioGroup
-          aria-label="platform"
-          defaultValue="Website"
-          overlay
-          name="platform"
-          sx={{
-            marginTop: "3%",
-            flexDirection: "row",
-            gap: 2,
-            [`& .${radioClasses.checked}`]: {
-              [`& .${radioClasses.action}`]: {
-                inset: -1,
-                border: "3px solid",
-                borderColor: "#a36e29",
-              },
-            },
-            [`& .${radioClasses.radio}`]: {
-              display: "contents",
-              "& > svg": {
-                zIndex: 2,
-                position: "absolute",
-                top: "-8px",
-                right: "-8px",
-                bgcolor: "background.surface",
-                borderRadius: "50%",
-              },
-            },
+          style={{
+            color: "#a36e29",
+            fontWeight: "bold",
+            marginTop: "5%",
+            marginBottom: "3%",
           }}
-        >
-          {[
-            {
-              type: "Home Delivery",
-              description: "Earliest Delivery dates selected for your Pincode",
-            },
-            {
-              type: "In Store Pick Up",
-              description:
-                "Buy now, pick up from our store at your convenience",
-            },
-          ].map((value) => (
-            <Sheet
-              key={value.type}
-              variant="outlined"
-              sx={{
-                borderRadius: "md",
-                boxShadow: "sm",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 1.5,
-                p: 2,
-                minWidth: 120,
-              }}
-            >
-              <Radio
-                id={value.type}
-                value={value.type}
-                checkedIcon={
-                  <CheckCircleRoundedIcon style={{ color: "#a36e29" }} />
-                }
-              />
-              <Typography variant="body" style={{ fontWeight: "bold" }}>
-                {value.type}
-              </Typography>
-              <Typography variant="subtitle">{value.description}</Typography>
-            </Sheet>
-          ))}
-        </RadioGroup>
-        <Typography
-          variant="h6"
-          style={{ color: "#a36e29", fontWeight: "bold", marginTop: "5%" }}
         >
           Shipping Address
         </Typography>
 
         <Divider />
-        <Select
-          defaultValue={addresses[0]}
-          slotProps={{
-            listbox: {
-              sx: {
-                "--ListItemDecorator-size": "100px",
-              },
-            },
-          }}
-          sx={{
-            marginTop: "3%",
-            minWidth: 240,
-          }}
-          onChange={(event, newValue) => {
-            console.log(event);
-            console.log(newValue);
-            setSelectedAddress(newValue);
-          }}
+        <AddressPanel
+          selectedAddress={setSelectedAddress}
+          setSelectedAddress={setSelectedAddress}
+        />
+        <Button
+          style={{ backgroundColor: "#a36e29" }}
+          onClick={createOrderHandler}
         >
-          {addresses.map((data, index) => (
-            <Option
-              style={{ height: "100px" }}
-              key={data.id}
-              value={data}
-              label={data.addressLine1}
-            >
-              <Box component="span" sx={{ display: "block" }}>
-                <Typography component="span" level="title-sm">
-                  {data.addressLine1}
-                </Typography>
-                <Typography level="body-xs">{data.addressLine2}</Typography>
-                <Typography level="subtitle">{data.city}</Typography>
-                <Typography level="subtitle">{`${data.state} - ${data.pin}`}</Typography>
-              </Box>
-            </Option>
-          ))}
-        </Select>
-        <Card
-          orientation="Verticle"
-          size="sm"
-          variant="soft"
-          style={{
-            border: "2px solid #a36e29",
-            marginTop: "3%",
-            marginBottom: "5%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          {!editing ? (
-            <>
-              <Typography level="body-lg">{`${selectedAddress.state} ${selectedAddress.pin}`}</Typography>
-              <Typography level="title-lg">
-                {selectedAddress.addressLine1}
-              </Typography>
-              <Typography level="title-lg">
-                {selectedAddress.addressLine2}
-              </Typography>
-              <Typography level="body-sm">{selectedAddress.city}</Typography>
-              <Typography level="body-md">{selectedAddress.mobile}</Typography>
-              <Typography level="body-md">{`${selectedAddress.firstName}  ${selectedAddress.lastName}`}</Typography>
-              <Box
-                style={{
-                  width: "100%",
-                  height: "5%",
-                  display: "flex",
-
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Button
-                  variant="solid"
-                  size="md"
-                  color="primary"
-                  sx={{
-                    marginLeft: "20%",
-                    fontWeight: 600,
-                    backgroundColor: "#a36e29",
-                  }}
-                  onClick={() => setEditing(true)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="md"
-                  color="primary"
-                  aria-label="Explore Bahamas Islands"
-                  sx={{
-                    marginRight: "20%",
-                    fontWeight: 600,
-                    color: "#a36e29",
-                  }}
-                  onClick={addNewAddress}
-                >
-                  Add Address
-                </Button>
-              </Box>
-            </>
-          ) : (
-            <Grid container spacing={3} style={{ marginTop: "2%" }}>
-              <Grid item xs={6}>
-                <TextField
-                  label="First Name"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.firstName}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Last Name"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.lastName}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  style={{ width: "100%" }}
-                  label="Address Line 1"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.addressLine1}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  style={{ width: "100%" }}
-                  label="Address Line 2"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.addressLine2}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="City"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.city}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="State"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.state}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Pincode"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.pin}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Phone"
-                  id="standard-size-small"
-                  defaultValue={selectedAddress.mobile}
-                  size="small"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  variant="solid"
-                  size="md"
-                  sx={{
-                    marginLeft: "20%",
-                    fontWeight: 600,
-                    backgroundColor: "#a36e29",
-                  }}
-                  onClick={() => setEditing(true)}
-                >
-                  Save
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  variant="outlined"
-                  size="md"
-                  sx={{
-                    marginRight: "20%",
-                    fontWeight: 600,
-                    color: "#a36e29",
-                  }}
-                  onClick={() => setEditing(false)}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-            </Grid>
-          )}
-        </Card>
+          Proceed
+        </Button>
       </Box>
     </Paper>
   );
