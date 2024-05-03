@@ -10,7 +10,9 @@ import React, { useEffect, useState } from "react";
 import BalanceIcon from "@mui/icons-material/Balance";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
 import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded";
-
+import Select from "@mui/joy/Select";
+import CloseIcon from "@mui/icons-material/Close";
+import Option from "@mui/joy/Option";
 export default function CartItem({ item, removeHandler }) {
   const [quantity, setQuantity] = useState(1);
   const theme = useTheme();
@@ -26,37 +28,39 @@ export default function CartItem({ item, removeHandler }) {
   return (
     <Card
       sx={{
+        borderRadius: "20px",
         display: "flex",
-        width: "100%",
-        aspectRatio: "3/1",
+        padding: "3%",
+        width: "93%",
+        aspectRatio: "4/1",
         marginBottom: "5%",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         alignItems: "center",
       }}
       elevation={4}
     >
       <Box
         style={{
-          border: "2px solid #f7f7f7",
-          borderRadius: "5px",
-          height: "50%",
+          border: "2px solid #e7e7e7",
+          borderRadius: "10px",
+          height: "100%",
           aspectRatio: "1/1",
-          marginLeft: "10%",
           overflow: "hidden",
         }}
       >
         <img
           src={`https://api.sadashrijewelkart.com/assets/${item.images[0].file}`}
           // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
-          style={{ height: "80%", width: "80%", objectFit: "contain" }}
+          style={{ height: "100%", width: "100%", objectFit: "contain" }}
         />
       </Box>
       <Box
         style={{
-          height: "80%",
+          height: "100%",
+          width: "70%",
+          padding: "10px",
           display: "flex",
-          marginLeft: "10%",
-          marginRight: "auto",
+
           flexDirection: "column",
           alignItems: "flex-start",
         }}
@@ -65,97 +69,108 @@ export default function CartItem({ item, removeHandler }) {
           variant="h6"
           gutterBottom
           color="#505050"
-          style={{ textAlign: "left" }}
+          style={{ textAlign: "left", fontWeight: "bold" }}
         >
           {item.name}
         </Typography>
+        <Box
+          style={{
+            width: "100%",
+            marginTop: "5%",
+            height: "max-content",
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            style={{
+              display: "flex",
+              width: "max-content",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="subtitle2"
+              style={{ color: "gray", fontSize: "1rem" }}
+              gutterBottom
+            >
+              Size :
+            </Typography>
+            <Select
+              placeholder="Select size"
+              required
+              sx={{ width: 150, border: 0 }}
+            >
+              <Option value="dog">Dog</Option>
+              <Option value="cat">Cat</Option>
+              <Option value="fish">Fish</Option>
+              <Option value="bird">Bird</Option>
+            </Select>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              marginLeft: "10%",
+              marginRight: "auto",
+              width: "max-content",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="subtitle2"
+              style={{ color: "gray", fontSize: "1rem" }}
+              gutterBottom
+            >
+              Quantity :
+            </Typography>
+            <Select
+              value={quantity}
+              defaultValue={1}
+              onChange={(newValue) => setQuantity(newValue)}
+              required
+              sx={{ width: 150, border: 0 }}
+            >
+              <Option value={1}>1</Option>
+              <Option value={2}>2</Option>
+              <Option value={3}>3</Option>
+              <Option value={4}>4</Option>
+            </Select>
+          </Box>
+        </Box>
         <Typography
           variant="subtitle2"
-          style={{ fontWeight: "bold" }}
+          style={{ marginTop: "2%", fontSize: "1rem", fontWeight: "bold" }}
           gutterBottom
         >
-          ${item.price}
+          <span style={{ fontWeight: "normal" }}>Price:</span> ${item.price}
         </Typography>
-        <Box
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
+        <Typography
+          variant="subtitle2"
+          style={{ marginTop: "2%", color: "gray", fontSize: "1rem" }}
+          gutterBottom
         >
-          <BalanceIcon fontSize="small" style={{ color: "#a36e29" }} />
-          <Typography
-            style={{ marginLeft: "10px", fontWeight: "bold", color: "#505050" }}
-          >
-            {item.weight} g
-          </Typography>
-        </Box>
-        <Box
-          style={{
-            marginTop: "auto",
-            display: "flex",
-            alignItems: "end",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            style={{ fontWeight: "bold", color: "#505050" }}
-            gutterBottom
-          >
-            Quantity :
-          </Typography>
-          <input
-            value={quantity}
-            style={{
-              width: "30px",
-              height: "30px",
-              marginLeft: "5px",
-              fontSize: "15px",
-              textAlign: "center",
-            }}
-            onChange={(event) => setQuantity(event.target.value)}
-          />
-        </Box>
-        <ButtonGroup
-          disableElevation
-          variant="contained"
-          aria-label="Disabled button group"
-          style={{ marginTop: "10px" }}
-        >
-          <Button
-            style={{ backgroundColor: "#a36e29" }}
-            onClick={decreaseQuantity}
-          >
-            {" "}
-            <RemoveIcon fontSize="medium" />
-          </Button>
-          <Button
-            style={{ backgroundColor: "#a36e29" }}
-            onClick={increaseQuantity}
-          >
-            <AddIcon fontSize="medium" />
-          </Button>
-        </ButtonGroup>
+          Deliver By : 3rd September, 2024
+        </Typography>
       </Box>
       <Box
         style={{
           display: "flex",
           flexDirection: "column",
-          height: "80%",
-          marginRight: "5%",
+          height: "100%",
         }}
       >
-        <Button onClick={() => removeHandler(item.cart_id)}>
-          <IndeterminateCheckBoxRoundedIcon
+        <Button
+          onClick={() => removeHandler(item.cart_id)}
+          style={{ padding: 0 }}
+        >
+          <CloseIcon
             fontSize="large"
             style={{
               marginBottom: "auto",
-              marginTop: "5%",
-              color: "#f06954",
-              "&:hover": {
-                color: "#ed2a0c",
-              },
+              color: "#A36E29",
             }}
           />
         </Button>

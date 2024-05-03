@@ -19,77 +19,13 @@ export default function CartTotal({ items }) {
     <Box
       style={{
         width: "100%",
-        height: "30vh",
+        height: "50vh",
         display: "flex",
         flexDirection: "column",
         marginTop: "10%",
         justifyContent: "space-between",
       }}
     >
-      <Card
-        style={{
-          width: "90%",
-
-          minHeight: 65,
-          height: "7vh",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "5%",
-        }}
-        elevation={4}
-      >
-        <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
-        <Typography style={{ marginLeft: "2%", fontWeight: "bold" }}>
-          Delivering to : 834001
-        </Typography>
-        <Button
-          variant="outlined"
-          style={{
-            border: 0,
-            fontSize: "0.7rem",
-            color: "#A36E29",
-            fontWeight: "bold",
-            marginRight: 0,
-          }}
-        >
-          Change Pincode
-        </Button>
-      </Card>
-      <Card
-        style={{
-          width: "90%",
-          minHeight: 65,
-          height: "7vh",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "5%",
-          textAlign: "left",
-        }}
-        elevation={4}
-      >
-        <LocalOfferIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
-        <Typography
-          style={{ marginLeft: "5%", marginRight: "auto", fontWeight: "bold" }}
-        >
-          Apply Coupon
-        </Typography>
-        <Button
-          variant="outlined"
-          style={{ border: 0, color: "#A36E29", fontWeight: "bold" }}
-        >
-          <ArrowForwardIosIcon />
-        </Button>
-      </Card>
       <Card
         style={{
           width: "90%",
@@ -154,7 +90,7 @@ export default function CartTotal({ items }) {
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>Discount:</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>Dicount:</Typography>
           <Typography style={{ fontSize: "1.1rem" }}>$ 12</Typography>
         </Box>
         <Box
@@ -174,24 +110,6 @@ export default function CartTotal({ items }) {
           </Typography>
         </Box>
       </Card>
-      <Button
-        variant="contained"
-        style={{
-          marginBottom: "5%",
-
-          minHeight: 65,
-          backgroundColor: "#a36e29",
-          height: "10%",
-          borderRadius: "10px",
-          background:
-            "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
-        }}
-        component={Link}
-        to="/checkout"
-        fullWidth
-      >
-        Checkout
-      </Button>
     </Box>
   );
 }

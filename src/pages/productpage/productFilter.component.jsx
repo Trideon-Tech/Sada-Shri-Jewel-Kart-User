@@ -1,5 +1,6 @@
 import React from "react";
 import "./productFilter.styles.scss";
+import Checkbox from "@mui/joy/Checkbox";
 
 const PriceFilter = ({ selectedPriceRanges, onFilterChange }) => {
   const priceRanges = [
@@ -21,16 +22,22 @@ const PriceFilter = ({ selectedPriceRanges, onFilterChange }) => {
 
   return (
     <div className="price-filter">
-      <div className="filter-heading">Price</div>
+      <div className="filter-heading" style={{ textAlign: "left" }}>
+        Price
+      </div>
       {priceRanges.map((range) => (
         <div key={range.id} className="price-option">
           <label>
-            <input
-              type="checkbox"
+            <Checkbox
               checked={selectedPriceRanges.includes(range.label)}
               onChange={() => handleCheckboxChange(range.label)}
+              color="warning"
             />
-            <span className="label-text">{range.label}</span>
+
+            <span className="label-text" style={{ marginLeft: "30px" }}>
+              {" "}
+              {range.label}
+            </span>
             <span className="count">({range.count})</span>
           </label>
         </div>

@@ -25,6 +25,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import AddressPanel from "./addressPanel.component";
+import CheckoutProgressBar from "../../components/checkoutProgress/checkoutProgress.component";
 
 const steps = ["Login", "Shipping", "Payment"];
 
@@ -138,63 +139,34 @@ const CheckoutForm = ({ cartItems }) => {
   };
 
   return (
-    <Paper
+    <Box
       elevation={3}
       style={{
+        backgroundColor: "white",
         width: "100%",
         height: "max-content",
-        marginTop: "10%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-around",
         alignItems: "center",
       }}
     >
-      <Box style={{ width: "80%", marginTop: "5%", height: "max-content" }}>
-        <Stepper sx={{ width: "100%", marginBottom: "3%" }}>
-          {steps.map((step, index) => (
-            <Step
-              key={step}
-              indicator={
-                <StepIndicator
-                  style={{
-                    "& .MuiStepIndicator-root": {
-                      backgroundColor: "green",
-                    },
-                  }}
-                  variant={activeStep <= index ? "soft" : "solid"}
-                  color={activeStep < index ? "neutral" : "primary"}
-                >
-                  {activeStep <= index ? index + 1 : <Check />}
-                </StepIndicator>
-              }
-              sx={{
-                "&::after": {
-                  ...(activeStep > index &&
-                    index !== 2 && { bgcolor: "primary.solidBg" }),
-                },
-              }}
-            >
-              <StepButton onClick={() => setActiveStep(index)}>
-                {step}
-              </StepButton>
-            </Step>
-          ))}
-        </Stepper>
+      <Box style={{ width: "60%", marginTop: "5%", height: "max-content" }}>
+        <CheckoutProgressBar activeStep={activeStep} />
       </Box>
-      <Divider style={{ width: "100%" }} />
       <Box
         style={{
-          width: "80%",
+          width: "60%",
           marginTop: "5%",
           height: "max-content",
           marginBottom: "5%",
         }}
       >
         <Typography
-          variant="h6"
+          variant="h5"
           style={{
-            color: "#a36e29",
+            fontSize: "1.5rem",
+            color: "#505050",
             fontWeight: "bold",
             marginTop: "5%",
             marginBottom: "3%",
@@ -203,7 +175,6 @@ const CheckoutForm = ({ cartItems }) => {
           Shipping Address
         </Typography>
 
-        <Divider />
         <AddressPanel
           selectedAddress={setSelectedAddress}
           setSelectedAddress={setSelectedAddress}
@@ -215,7 +186,7 @@ const CheckoutForm = ({ cartItems }) => {
           Proceed
         </Button>
       </Box>
-    </Paper>
+    </Box>
   );
 };
 export default CheckoutForm;

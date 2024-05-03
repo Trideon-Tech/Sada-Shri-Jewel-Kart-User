@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "../cart/cartItem.component";
 import CartTotal from "../cart/cartTotal.component";
@@ -851,17 +851,24 @@ const Checkout = () => {
         flexDirection: "column",
         justifyContent: "space-around",
         alignItems: "center",
-        backgroundColor: "#ececec",
+        backgroundColor: "white",
       }}
     >
       <Navbar />
       <Box style={{ width: "90%" }}>
-        <Grid container spacing={6}>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
             <CheckoutForm cartItems={cartItems} />
           </Grid>
           <Grid item xs={6}>
-            <Box style={{ height: "max-content" }}>
+            <Box
+              style={{
+                width: "90%",
+                padding: "3%",
+                height: "max-content",
+                backgroundColor: "#ececec",
+              }}
+            >
               <Typography
                 variant="h4"
                 style={{
@@ -883,8 +890,9 @@ const Checkout = () => {
                   price={item.price}
                 />
               ))}
+              <Divider />
+              <CartTotal items={cartItems} />
             </Box>
-            <CartTotal items={cartItems} />
           </Grid>
         </Grid>
       </Box>

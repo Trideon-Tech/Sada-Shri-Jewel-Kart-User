@@ -22,9 +22,12 @@ import StepIndicator from "@mui/joy/StepIndicator";
 import Check from "@mui/icons-material/Check";
 import Input from "@mui/joy/Input";
 import Grid from "@mui/material/Grid";
+import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { useState } from "react";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 const AddressPanel = () => {
   const [editing, setEditing] = useState(false);
@@ -41,6 +44,7 @@ const AddressPanel = () => {
   const [pincode, setPincode] = useState("");
   const [mobile, setMobile] = useState("");
   const [refreshAddresses, setRefreshAddresses] = useState(1);
+  const [addingNew, setAddingNew] = useState(false);
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -71,7 +75,7 @@ const AddressPanel = () => {
     setEditing(true);
   };
 
-  const addNewAddress = (editMode = false) => {
+  const addNewAddress = () => {
     const formData = new FormData();
     formData.append("key", "address");
     formData.append("name", `${firstName} ${lastName}`);
@@ -103,143 +107,7 @@ const AddressPanel = () => {
   };
   return (
     <Box>
-      {!addresses ? (
-        <Box>
-          <Box>
-            <Card
-              orientation="Verticle"
-              size="sm"
-              variant="soft"
-              style={{
-                border: "2px solid #a36e29",
-                marginTop: "3%",
-                marginBottom: "5%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}
-            >
-              <Grid container spacing={3} style={{ marginTop: "2%" }}>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="First Name"
-                    id="standard-size-small"
-                    defaultValue={editAddress.firstName}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Last Name"
-                    id="standard-size-small"
-                    defaultValue={editAddress.lastName}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Address Line 1"
-                    id="standard-size-small"
-                    defaultValue={editAddress.addressLine1}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setAdd_line1(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Address Line 2"
-                    id="standard-size-small"
-                    defaultValue={editAddress.addressLine2}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setAdd_line2(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="City"
-                    id="standard-size-small"
-                    defaultValue={editAddress.city}
-                    size="large"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="State"
-                    id="standard-size-small"
-                    defaultValue={editAddress.state}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setState(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Pincode"
-                    id="standard-size-small"
-                    defaultValue={editAddress.pin}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setPincode(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Phone"
-                    id="standard-size-small"
-                    defaultValue={editAddress.mobile}
-                    size="large"
-                    variant="outlined"
-                    onChange={(e) => setMobile(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    variant="solid"
-                    size="md"
-                    sx={{
-                      marginLeft: "20%",
-                      fontWeight: 600,
-                      backgroundColor: "#a36e29",
-                    }}
-                    onClick={addNewAddress}
-                  >
-                    Save
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    variant="outlined"
-                    size="md"
-                    sx={{
-                      marginRight: "20%",
-                      fontWeight: 600,
-                      color: "#a36e29",
-                    }}
-                    onClick={() => setEditing(false)}
-                  >
-                    Cancel
-                  </Button>
-                </Grid>
-              </Grid>
-            </Card>
-          </Box>
-        </Box>
-      ) : (
+      {!addresses ? null : (
         <Box>
           <Select
             defaultValue={addresses[0]}
@@ -252,6 +120,8 @@ const AddressPanel = () => {
             }}
             sx={{
               marginTop: "3%",
+              minHeight: 60,
+              boxShadow: "0 2px 3px 0px #666666",
               minWidth: 240,
             }}
             onChange={(event, newValue) => {
@@ -283,8 +153,10 @@ const AddressPanel = () => {
             size="sm"
             variant="soft"
             style={{
-              border: "2px solid #a36e29",
-              marginTop: "3%",
+              padding: "30px",
+              backgroundColor: "white",
+              boxShadow: "0 0 3px 0 #555555",
+              marginTop: "5%",
               marginBottom: "5%",
               display: "flex",
               flexDirection: "column",
@@ -293,65 +165,64 @@ const AddressPanel = () => {
           >
             {!editing ? (
               <>
-                <Typography level="body-lg">{`${selectedAddress?.state} ${selectedAddress?.pincode}`}</Typography>
-                <Typography level="title-lg">
-                  {selectedAddress?.add_line_1}
-                </Typography>
-                <Typography level="title-lg">
-                  {selectedAddress?.add_line_2}
-                </Typography>
-                <Typography level="body-sm">{selectedAddress?.city}</Typography>
-                <Typography level="body-md">
-                  {selectedAddress?.mobile}
-                </Typography>
-                <Typography level="body-md">{`${selectedAddress?.name}`}</Typography>
                 <Box
                   style={{
                     width: "100%",
-                    height: "5%",
                     display: "flex",
-
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  <Button
-                    variant="solid"
-                    size="md"
-                    color="primary"
-                    sx={{
-                      marginLeft: "20%",
-                      fontWeight: 600,
-                      backgroundColor: "#a36e29",
-                    }}
+                  <Typography
+                    level="body-lg"
+                    style={{ fontWeight: "bold" }}
+                  >{`${selectedAddress?.name}`}</Typography>
+                  <EditIcon
+                    style={{ marginLeft: "auto", marginRight: "2%" }}
                     onClick={() => handleEditCreateAddress(true)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="md"
-                    color="primary"
-                    aria-label="Explore Bahamas Islands"
-                    sx={{
-                      marginRight: "20%",
-                      fontWeight: 600,
-                      color: "#a36e29",
-                    }}
-                    onClick={() => handleEditCreateAddress(false)}
-                  >
-                    Add Address
-                  </Button>
+                  />
+                  <CloseIcon />
                 </Box>
+                <Typography level="body-lg">
+                  {selectedAddress?.add_line_1}
+                </Typography>
+                <Typography level="body-lg">
+                  {selectedAddress?.add_line_2}
+                </Typography>
+                <Typography level="body-lg">{`${selectedAddress?.city} ,${selectedAddress?.state}`}</Typography>
+                <Typography level="body-lg">
+                  Pincode : {`${selectedAddress?.pincode}`}
+                </Typography>
+
+                <Typography level="body-lg">
+                  {" "}
+                  Phone :{selectedAddress?.mobile}
+                </Typography>
               </>
             ) : (
               <Grid container spacing={3} style={{ marginTop: "2%" }}>
+                <Box
+                  style={{
+                    width: "100%",
+                    height: "max-content",
+                    display: "flex",
+                    marginLeft: "30px",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="body" style={{ fontWeight: "bold" }}>
+                    Edit Address
+                  </Typography>
+                  <CloseIcon onClick={() => setEditing(false)} />
+                </Box>
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="First Name"
                     id="standard-size-small"
                     defaultValue={editAddress.name}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setFirstName(e.target.value)}
                   />
@@ -362,7 +233,7 @@ const AddressPanel = () => {
                     label="Last Name"
                     id="standard-size-small"
                     defaultValue={editAddress.lastName}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setLastName(e.target.value)}
                   />
@@ -374,7 +245,7 @@ const AddressPanel = () => {
                     label="Address Line 1"
                     id="standard-size-small"
                     defaultValue={editAddress.add_line_1}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setAdd_line1(e.target.value)}
                   />
@@ -386,7 +257,7 @@ const AddressPanel = () => {
                     label="Address Line 2"
                     id="standard-size-small"
                     defaultValue={editAddress.add_line_2}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setAdd_line2(e.target.value)}
                   />
@@ -397,7 +268,7 @@ const AddressPanel = () => {
                     label="City"
                     id="standard-size-small"
                     defaultValue={editAddress.city}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setCity(e.target.value)}
                   />
@@ -408,7 +279,7 @@ const AddressPanel = () => {
                     label="State"
                     id="standard-size-small"
                     defaultValue={editAddress.state}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setState(e.target.value)}
                   />
@@ -419,7 +290,7 @@ const AddressPanel = () => {
                     label="Pincode"
                     id="standard-size-small"
                     defaultValue={editAddress.pincode}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setPincode(e.target.value)}
                   />
@@ -430,7 +301,7 @@ const AddressPanel = () => {
                     label="Mobile"
                     id="standard-size-small"
                     defaultValue={editAddress.mobile}
-                    size="small"
+                    size="large"
                     variant="outlined"
                     onChange={(e) => setMobile(e.target.value)}
                   />
@@ -467,6 +338,168 @@ const AddressPanel = () => {
             )}
           </Card>
         </Box>
+      )}
+      {addingNew ? (
+        <Card
+          orientation="Verticle"
+          size="sm"
+          variant="soft"
+          style={{
+            marginTop: "3%",
+            padding: "30px",
+            marginBottom: "5%",
+            boxShadow: "0 0 3px 0 #555555",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <Box
+            style={{
+              width: "100%",
+              height: "max-content",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="body" style={{ fontWeight: "bold" }}>
+              Add New Address
+            </Typography>
+            <CloseIcon onClick={() => setAddingNew(false)} />
+          </Box>
+          <Grid container spacing={3} style={{ marginTop: "2%" }}>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="First Name"
+                id="standard-size-small"
+                defaultValue={editAddress.firstName}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Last Name"
+                id="standard-size-small"
+                defaultValue={editAddress.lastName}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Address Line 1"
+                id="standard-size-small"
+                defaultValue={editAddress.addressLine1}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setAdd_line1(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Address Line 2"
+                id="standard-size-small"
+                defaultValue={editAddress.addressLine2}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setAdd_line2(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="City"
+                id="standard-size-small"
+                defaultValue={editAddress.city}
+                size="large"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="State"
+                id="standard-size-small"
+                defaultValue={editAddress.state}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setState(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Pincode"
+                id="standard-size-small"
+                defaultValue={editAddress.pin}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setPincode(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Phone"
+                id="standard-size-small"
+                defaultValue={editAddress.mobile}
+                size="large"
+                variant="outlined"
+                onChange={(e) => setMobile(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                variant="solid"
+                size="md"
+                sx={{
+                  fontWeight: 600,
+                  minHeight: 50,
+                  background:
+                    "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                }}
+                onClick={addNewAddress}
+                fullWidth
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+        </Card>
+      ) : (
+        <Card
+          variant="soft"
+          style={{
+            display: "flex",
+            minHeight: 30,
+            paddingLeft: "30px",
+            paddingRight: "30px",
+            marginTop: "3%",
+            marginBottom: "5%",
+            flexDirection: "row",
+            boxShadow: "0 0 3px 0 #555555",
+            backgroundColor: "white",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="body" style={{ fontWeight: "bold" }}>
+            Add New Address
+          </Typography>
+          <ControlPointIcon
+            onClick={() => setAddingNew(true)}
+            style={{ fontSize: "1.7rem", marginLeft: "auto", color: "#A36E29" }}
+          />
+        </Card>
       )}
     </Box>
   );

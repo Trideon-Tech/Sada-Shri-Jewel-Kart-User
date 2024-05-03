@@ -72,9 +72,7 @@ const Cart = () => {
                 </Box>
               </Grid>
               <Grid item xs={4}>
-                <Box style={{ width: "30%", position: "fixed" }}>
-                  <CartTotal items={cartItems} />
-                </Box>
+                <CartTotal items={cartItems} />
               </Grid>
             </Grid>
           </Box>

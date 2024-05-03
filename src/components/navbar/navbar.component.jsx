@@ -97,7 +97,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar">
+    <div
+      className="navbar"
+      style={{ height: "max-content", marginBottom: "100px" }}
+    >
       <div className="web">
         <AppBar elevation={2} className="appbar">
           <Toolbar variant="dense" className="toolbar">
