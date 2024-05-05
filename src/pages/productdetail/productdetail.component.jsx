@@ -105,7 +105,7 @@ function ProductDetail() {
         sessionStorage.setItem("cart", response.data.response.length);
         setOpen(true);
       })
-      .catch((error) => console.log("Error while fetching card items", error));
+      .catch((error) => console.log("Error while fetching cart items", error));
   };
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedMetal, setSelectedMetal] = useState("");
@@ -456,7 +456,10 @@ function ProductDetail() {
                               width: 500,
                             }}
                           >
-                            <Typography variant="h6">
+                            <Typography
+                              variant="h6"
+                              style={{ fontWeight: "bold" }}
+                            >
                               Choice of Metal
                             </Typography>
                             {/* Add Buttons or another component to select metal choice */}
@@ -495,23 +498,37 @@ function ProductDetail() {
                                     >
                                       <Typography
                                         variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                        sx={{
+                                          fontWeight: "bold",
+                                          color: "black",
+                                        }}
                                       >
                                         {metalOption}
                                       </Typography>
-                                      <Typography
-                                        variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                      <Box
+                                        style={{
+                                          border: "3px solid brown",
+                                          padding: "2px",
+                                          borderRadius: "10px",
+                                        }}
                                       >
-                                        Made on Order
-                                      </Typography>
+                                        <Typography
+                                          variant="caption"
+                                          sx={{ color: "#a36e29" }}
+                                        >
+                                          Made on Order
+                                        </Typography>
+                                      </Box>
                                     </Button>
                                   </Grid>
                                 )
                               )}
                             </Grid>
 
-                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                            <Typography
+                              variant="h6"
+                              sx={{ marginTop: 2, fontWeight: "bold" }}
+                            >
                               Diamond Type
                             </Typography>
                             {/* Add Buttons or another component to select metal choice */}
@@ -550,23 +567,37 @@ function ProductDetail() {
                                     >
                                       <Typography
                                         variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                        sx={{
+                                          fontWeight: "bold",
+                                          color: "black",
+                                        }}
                                       >
                                         {diamondOption}
                                       </Typography>
-                                      <Typography
-                                        variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                      <Box
+                                        style={{
+                                          border: "3px solid brown",
+                                          padding: "2px",
+                                          borderRadius: "10px",
+                                        }}
                                       >
-                                        Made on Order
-                                      </Typography>
+                                        <Typography
+                                          variant="caption"
+                                          sx={{ color: "#a36e29" }}
+                                        >
+                                          Made on Order
+                                        </Typography>
+                                      </Box>
                                     </Button>
                                   </Grid>
                                 )
                               )}
                             </Grid>
 
-                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                            <Typography
+                              variant="h6"
+                              sx={{ marginTop: 2, fontWeight: "bold" }}
+                            >
                               Select Size
                             </Typography>
                             <Grid container>
@@ -599,36 +630,31 @@ function ProductDetail() {
                                   >
                                     <Typography
                                       variant="caption"
-                                      sx={{ color: "#a36e29" }}
+                                      sx={{
+                                        fontWeight: "bold",
+                                        color: "black",
+                                      }}
                                     >
                                       {size}
                                     </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      sx={{ color: "#a36e29" }}
+                                    <Box
+                                      style={{
+                                        border: "3px solid brown",
+                                        padding: "2px",
+                                        borderRadius: "10px",
+                                      }}
                                     >
-                                      Made On Order
-                                    </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        sx={{ color: "#a36e29" }}
+                                      >
+                                        Made On Order
+                                      </Typography>
+                                    </Box>
                                   </Button>
                                 </Grid>
                               ))}
                             </Grid>
-
-                            <Button
-                              sx={{
-                                marginTop: 2,
-                                height: "60px",
-                                width: "100%",
-                                backgroundColor: "#a36e29",
-                                color: "primary.contrastText",
-                                "&:hover": {
-                                  backgroundColor: "primary.dark",
-                                },
-                              }}
-                              onClick={handleDrawerClose}
-                            >
-                              Confirm Customization
-                            </Button>
                           </Box>
                         </Drawer>
                         {/* Additional code for customization drawer will be similar to size drawer */}
@@ -950,13 +976,14 @@ function ProductDetail() {
                     <Typography
                       variant="subtitle1"
                       sx={{
+                        fontWeight: "bold",
                         marginTop: "20px",
                         display: "flex",
                         alignItems: "start",
                         color: "#666",
                       }}
                     >
-                      Select Size
+                      Size
                     </Typography>
                     <Button
                       onClick={handleMobileDrawerOpen}
@@ -996,6 +1023,7 @@ function ProductDetail() {
                       onClick={handleMobileDrawerOpen}
                       fullWidth
                       sx={{
+                        fontWeight: "bold",
                         textAlign: "left",
                         paddingTop: 2,
                         paddingBottom: 2,

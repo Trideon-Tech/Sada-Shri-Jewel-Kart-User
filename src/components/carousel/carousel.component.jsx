@@ -10,7 +10,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import "./carousel.styles.scss";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
@@ -33,6 +33,7 @@ const images = [
 ];
 
 function CarouselPanel() {
+  const matches = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -55,7 +56,7 @@ function CarouselPanel() {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        height: "80vh",
+        height: matches ? "80vh" : "30vh",
         position: "relative",
       }}
     >
@@ -103,7 +104,7 @@ function CarouselPanel() {
             position: "absolute",
             zIndex: 9,
             borderRadius: "20px",
-            top: "70vh",
+            top: matches ? "70vh" : "20vh",
             color: "white",
             backgroundColor: "rgba(0,0,0,0.5)",
             "& .MuiMobileStepper-dotActive": {

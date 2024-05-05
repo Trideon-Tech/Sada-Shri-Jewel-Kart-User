@@ -29,10 +29,9 @@ import axios from "axios";
 import { useState } from "react";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
-const AddressPanel = () => {
+const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   const [editing, setEditing] = useState(false);
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState({});
   const [editAddress, setEditAddress] = useState({});
 
   const [add_line1, setAdd_line1] = useState("");
@@ -60,10 +59,11 @@ const AddressPanel = () => {
       )
       .then((response) => {
         console.log(response);
-        setSelectedAddress(response.data.response[0]);
+        console.log("SA", selectedAddress);
+        if (!selectedAddress) setSelectedAddress(response.data.response[0]);
         setAddresses(response.data.response);
       })
-      .catch((error) => console.log("Error while fetching card items", error));
+      .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshAddresses]);
 
   const handleEditCreateAddress = (editMode = false) => {
@@ -103,14 +103,16 @@ const AddressPanel = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    setEditing(false);
+    setAddingNew(false);
+    setRefreshAddresses(refreshAddresses + 1);
   };
   return (
     <Box>
       {!addresses ? null : (
         <Box>
           <Select
-            defaultValue={addresses[0]}
+            defaultValue={selectedAddress}
+            value={selectedAddress.add_line1}
             slotProps={{
               listbox: {
                 sx: {
@@ -124,10 +126,8 @@ const AddressPanel = () => {
               boxShadow: "0 2px 3px 0px #666666",
               minWidth: 240,
             }}
-            onChange={(event, newValue) => {
-              console.log(event);
-              console.log(newValue);
-              setSelectedAddress(newValue);
+            onChange={(e, newValue) => {
+              if (newValue) setSelectedAddress(newValue);
             }}
           >
             {addresses?.map((data, index) => (
@@ -135,7 +135,7 @@ const AddressPanel = () => {
                 style={{ height: "100px" }}
                 key={data.id}
                 value={data}
-                label={data.addressLine1}
+                label={data.add_line_1}
               >
                 <Box component="span" sx={{ display: "block" }}>
                   <Typography component="span" level="title-sm">
@@ -422,6 +422,7 @@ const AddressPanel = () => {
                 defaultValue={editAddress.city}
                 size="large"
                 variant="outlined"
+                onChange={(e) => setCity(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>

@@ -31,8 +31,10 @@ import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import axios from "axios";
 import "./navbar.styles.scss";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Navbar = () => {
+  const matches = useMediaQuery("(min-width:600px)");
   const [menuItems, setMenuItems] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
   let categoryName;
@@ -54,7 +56,7 @@ const Navbar = () => {
         console.log(response.data.response.length);
         sessionStorage.setItem("cart", response.data.response.length);
       })
-      .catch((error) => console.log("Error while fetching card items", error));
+      .catch((error) => console.log("Error while fetching cart items", error));
     // }
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
@@ -99,7 +101,10 @@ const Navbar = () => {
   return (
     <div
       className="navbar"
-      style={{ height: "max-content", marginBottom: "100px" }}
+      style={{
+        height: "max-content",
+        marginBottom: matches ? "100px" : "10px",
+      }}
     >
       <div className="web">
         <AppBar elevation={2} className="appbar">
@@ -280,7 +285,7 @@ const Navbar = () => {
         <Drawer
           className="drawer"
           anchor="right"
-          open={openDrawer}
+          open={false}
           onClose={() => setOpenDrawer(false)}
         >
           <List>

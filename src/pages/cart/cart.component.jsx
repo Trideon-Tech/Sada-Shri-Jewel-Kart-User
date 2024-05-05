@@ -21,7 +21,7 @@ const Cart = () => {
       .then((response) => {
         setCartItems(response.data.response);
       })
-      .catch((error) => console.log("Error while fetching card items", error));
+      .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshCart]);
 
   const removeCartItemHandler = (cartId) => {

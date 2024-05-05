@@ -2,8 +2,9 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 export default function PromotionImageList() {
+  const matches = useMediaQuery("(min-width:600px)");
   return (
     <Box
       style={{
@@ -15,7 +16,7 @@ export default function PromotionImageList() {
       }}
     >
       <Box sx={{ width: "90%", height: "100%" }}>
-        <ImageList variant="masonry" cols={3} gap={8}>
+        <ImageList variant="masonry" cols={matches ? 3 : 2} gap={8}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img

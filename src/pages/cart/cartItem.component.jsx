@@ -14,6 +14,7 @@ import Select from "@mui/joy/Select";
 import CloseIcon from "@mui/icons-material/Close";
 import Option from "@mui/joy/Option";
 export default function CartItem({ item, removeHandler }) {
+  console.log(item);
   const [quantity, setQuantity] = useState(1);
   const theme = useTheme();
 
@@ -159,6 +160,7 @@ export default function CartItem({ item, removeHandler }) {
         style={{
           display: "flex",
           flexDirection: "column",
+          width: "max-content",
           height: "100%",
         }}
       >

@@ -129,7 +129,7 @@ export default function CartTotal({ items }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>Subtotal:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>$ 12,1231</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>₹ 12,1231</Typography>
         </Box>
         <Box
           style={{
@@ -142,7 +142,7 @@ export default function CartTotal({ items }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>You Saved:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>$ 1500</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>₹ 1500</Typography>
         </Box>
         <Box
           style={{
@@ -155,7 +155,7 @@ export default function CartTotal({ items }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>Discount:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>$ 12</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>₹ 12</Typography>
         </Box>
         <Box
           style={{
@@ -170,7 +170,7 @@ export default function CartTotal({ items }) {
             Total:
           </Typography>
           <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            $ 12,313
+            ₹ 12,313
           </Typography>
         </Box>
       </Card>

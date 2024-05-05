@@ -26,93 +26,181 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import AddressPanel from "./addressPanel.component";
 import CheckoutProgressBar from "../../components/checkoutProgress/checkoutProgress.component";
+import PaymentMethod from "./paymentMethod.component";
 
 const steps = ["Login", "Shipping", "Payment"];
 
-const addresses = [
-  {
-    id: 1,
-    firstName: "Eric",
-    lastName: "Joon",
-    addressLine1: "3rd Cross Street, 4th Main Road",
-    addressLine2: "Neeladri Nagar, Electronic City",
-    pin: 560100,
-    city: "Bengaluru",
-    state: "karnataka",
-    mobile: 9078675638,
-  },
-  {
-    id: 2,
-    firstName: "Ken",
-    lastName: "Miles",
-    addressLine1: "HustleHub 1901, 19th Main Street",
-    addressLine2: "Near HSR BDA Complex",
-    pin: 560098,
-    city: "Bengaluru",
-    state: "karnataka",
-    mobile: 9078675638,
-  },
-  {
-    id: 3,
-    firstName: "lara",
-    lastName: "Croft",
-    addressLine1: "16rd Cross Street, 4th Main Road",
-    addressLine2: "Neeladri Nagar, Electronic City",
-    pin: 560100,
-    city: "Bengaluru",
-    state: "karnataka",
-    mobile: 9078675638,
-  },
-  {
-    id: 4,
-    firstName: "Captain",
-    lastName: "Price",
-    addressLine1: "14rd Cross Street, 4th Main Road",
-    addressLine2: "Gotigere Nagar, Electronic City",
-    pin: 560100,
-    city: "Bengaluru",
-    state: "karnataka",
-    mobile: 9078675638,
-  },
-];
+const SelectAddressStep = ({
+  setActiveStep,
+  activeStep,
+  selectedAddress,
+  setSelectedAddress,
+  createOrderHandler,
+}) => {
+  const handleCreateOrder = async () => {
+    await createOrderHandler();
+    console.log("order created");
+    setActiveStep(activeStep + 1);
+  };
+  return (
+    <Box
+      style={{
+        width: "60%",
+        marginTop: "5%",
+        height: "max-content",
+        marginBottom: "5%",
+      }}
+    >
+      <Typography
+        variant="h5"
+        style={{
+          fontSize: "1.5rem",
+          color: "#505050",
+          fontWeight: "bold",
+          marginTop: "5%",
+          marginBottom: "3%",
+        }}
+      >
+        Shipping Address
+      </Typography>
+
+      <AddressPanel
+        selectedAddress={selectedAddress}
+        setSelectedAddress={setSelectedAddress}
+      />
+      <Button
+        fullWidth
+        style={{
+          minHeight: 50,
+          background:
+            "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+        }}
+        onClick={handleCreateOrder}
+      >
+        Proceed
+      </Button>
+    </Box>
+  );
+};
+
+const SelectPaymentMethodStep = ({
+  setActiveStep,
+  activeStep,
+  selectedAddress,
+  setSelectedAddress,
+  paymentMethod,
+  setPaymentMethod,
+}) => {
+  return (
+    <Box
+      style={{
+        width: "60%",
+        marginTop: "5%",
+        height: "max-content",
+        marginBottom: "5%",
+      }}
+    >
+      <Typography
+        variant="h5"
+        style={{
+          fontSize: "1.5rem",
+          color: "#505050",
+          fontWeight: "bold",
+          marginTop: "5%",
+          marginBottom: "3%",
+        }}
+      >
+        Select Payment Method
+      </Typography>
+
+      <PaymentMethod
+        selectedAddress={selectedAddress}
+        setSelectedAddress={setSelectedAddress}
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
+      />
+      <Box
+        style={{
+          width: "100%",
+          height: "max-content",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          fullWidth
+          variant="outlined"
+          style={{
+            color: "black",
+            width: "47%",
+            minHeight: 50,
+            border: "2px solid rgba(163,110,41,1)",
+          }}
+          onClick={() => setActiveStep(activeStep - 1)}
+        >
+          Back
+        </Button>
+        <Button
+          fullWidth
+          style={{
+            width: "47%",
+            minHeight: 50,
+            background:
+              "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+          }}
+        >
+          Pay
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
 const CheckoutForm = ({ cartItems }) => {
   const [editing, setEditing] = React.useState(false);
-  const [selectedAddress, setSelectedAddress] = React.useState(
-    addresses[0] || {}
-  );
+  const [selectedAddress, setSelectedAddress] = React.useState({});
+  const [paymentMethod, setPaymentMethod] = React.useState("CREDIT_CARD");
   const [activeStep, setActiveStep] = React.useState(1);
-  const addNewAddress = () => {
-    setSelectedAddress({
-      id: 0,
-      firstName: "",
-      lastName: "",
-      addressLine1: "",
-      addressLine2: "",
-      pin: 0,
-      city: "",
-      state: "",
-      mobile: 0,
-    });
-    setEditing(true);
-  };
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(
+        "https://api.sadashrijewelkart.com//v1.0.0/user/details.php?key=address",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        setSelectedAddress(response.data.response[0]);
+        console.log("SAP", selectedAddress);
+      })
+      .catch((error) => console.log("Error while fetching cart items", error));
+  }, []);
 
   const createOrderHandler = () => {
     const formData = new FormData();
     formData.append("type", "order_request");
     formData.append("currency", `INR`);
-    formData.append("receipt", "22344$");
+    formData.append("receipt", "22344$" + parseInt(Math.random() * 100));
     formData.append("user_id", localStorage.getItem("user_id"));
     formData.append("user_address_id", selectedAddress.id);
     formData.append("payment_status", "pending");
+    formData.append("amount", "pending");
     const orderList = cartItems.map((item) => {
       return {
-        product_id: item.id,
-        customization_id: -1,
+        product_id: parseInt(item.id),
+        // customization_id: -1,
         quantity: 1,
       };
     });
     console.log(JSON.stringify(orderList));
-    formData.append("ordered_products", JSON.stringify(orderList));
+    formData.append("ordered_products", `"${JSON.stringify(orderList)}"`);
 
     const token = localStorage.getItem("token");
     axios
@@ -154,38 +242,24 @@ const CheckoutForm = ({ cartItems }) => {
       <Box style={{ width: "60%", marginTop: "5%", height: "max-content" }}>
         <CheckoutProgressBar activeStep={activeStep} />
       </Box>
-      <Box
-        style={{
-          width: "60%",
-          marginTop: "5%",
-          height: "max-content",
-          marginBottom: "5%",
-        }}
-      >
-        <Typography
-          variant="h5"
-          style={{
-            fontSize: "1.5rem",
-            color: "#505050",
-            fontWeight: "bold",
-            marginTop: "5%",
-            marginBottom: "3%",
-          }}
-        >
-          Shipping Address
-        </Typography>
-
-        <AddressPanel
-          selectedAddress={setSelectedAddress}
+      {activeStep === 1 ? (
+        <SelectAddressStep
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
           setSelectedAddress={setSelectedAddress}
+          selectedAddress={selectedAddress}
+          createOrderHandler={createOrderHandler}
         />
-        <Button
-          style={{ backgroundColor: "#a36e29" }}
-          onClick={createOrderHandler}
-        >
-          Proceed
-        </Button>
-      </Box>
+      ) : activeStep === 2 ? (
+        <SelectPaymentMethodStep
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          setSelectedAddress={setSelectedAddress}
+          selectedAddress={selectedAddress}
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+        />
+      ) : null}
     </Box>
   );
 };

@@ -1,7 +1,7 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "../cart/cartItem.component";
-import CartTotal from "../cart/cartTotal.component";
+import CartTotal from "./cartTotal.component";
 import CheckoutForm from "./checkoutForm.component";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -840,7 +840,7 @@ const Checkout = () => {
       .then((response) => {
         setCartItems(response.data.response);
       })
-      .catch((error) => console.log("Error while fetching card items", error));
+      .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshCart]);
 
   return (

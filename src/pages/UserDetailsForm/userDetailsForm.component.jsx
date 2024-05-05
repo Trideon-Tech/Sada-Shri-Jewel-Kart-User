@@ -28,6 +28,7 @@ const UserDetailsForm = () => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [cartItems, setCartItems] = useState([]);
+  const [wishlists, setWishlists] = useState([]);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cart")) || [];
@@ -65,7 +66,7 @@ const UserDetailsForm = () => {
     localStorage.removeItem("cart");
   };
 
-  const handleUserRegistration = () => {
+  const handleUserRegistration = async () => {
     const formData = new FormData();
     formData.append("type", "register");
     formData.append("mobile", localStorage.getItem("mobile"));
@@ -74,9 +75,8 @@ const UserDetailsForm = () => {
     formData.append("lastName", lastName);
     formData.append("gender", gender);
     formData.append("email", email);
-
-    axios
-      .post(
+    try {
+      const { data: userData } = await axios.post(
         "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
         formData,
         {
@@ -84,24 +84,77 @@ const UserDetailsForm = () => {
             "Content-Type": "multipart/form-data",
           },
         }
-      )
-      .then((response) => {
-        console.log(
-          "User logged in successfully:",
-          response.data.response.token
+      );
+      localStorage.setItem("token", userData.response.token);
+      localStorage.setItem("user_id", userData.response.id);
+      // sendCartToAPI(token);
+
+      // .then((response) => {
+      //   console.log(
+      //     "User logged in successfully:",
+      //     response.data.response.token
+      //   );
+      //   const token = response.data.response.token;
+      //   localStorage.setItem("token", token);
+      //   localStorage.setItem("user_id", response.data.response.id);
+      //   sendCartToAPI(token);
+      //   navigate("/");
+      // })
+      // .catch((error) => {
+      //   console.error("Error:", error);
+      //   console.log(error.response.data.message);
+      //   setOpen(true);
+      // });
+
+      console.log(userData);
+
+      const { data: wishListFound } = await axios.get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(wishListFound);
+      // .then((response) => {
+      //   setWishlists(response.data.response);
+      //   console.log("wishlists", response);
+      // })
+      // .catch((error) => {
+      //   setSnackBarMessage(error.response.data.message);
+      //   setOpen(true);
+      // });
+
+      if (
+        wishListFound.response === null ||
+        wishListFound.response.length === 0
+      ) {
+        const wishlistData = new FormData();
+        wishlistData.append("type", "create");
+        wishlistData.append("user_id", localStorage.getItem("user_id"));
+        wishlistData.append("wishlist_name", `default`);
+        wishlistData.append("wishlist_items", []);
+
+        const { data: createdWishList } = await axios.post(
+          "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+          wishlistData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
-        const token = response.data.response.token;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user_id", response.data.response.id);
-        sendCartToAPI(token);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        console.log(error.response.data.message);
-        setSnackBarMessage(error.response.data.message);
-        setOpen(true);
-      });
+        console.log(createdWishList);
+      }
+      navigate("/");
+    } catch (error) {
+      setSnackBarMessage(error.response.data.message);
+    }
   };
 
   return (
