@@ -10,7 +10,9 @@ import Snackbar from "@mui/joy/Snackbar";
 import Chip from "@mui/joy/Chip";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
+import { generalToastStyle } from "../../utils/toast.styles";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import {
@@ -36,6 +38,7 @@ import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import ImageVideoCarousel from "./carousal.component";
 import { Input } from "@mui/joy";
+import Reviews from "../../components/reviews/reviews.component";
 
 const theme = createTheme({
   palette: {
@@ -69,7 +72,6 @@ function ProductDetail() {
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
 
-    console.log(token);
     axios
       .put(
         "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
@@ -86,13 +88,14 @@ function ProductDetail() {
       )
       .then(() => {
         console.log(`Product with ID ${productDetail.id} sent to API`);
-        setOpen(true);
+        toast.info("Product Added to Cart", generalToastStyle);
       })
       .catch((error) => {
         console.error(
           `Error sending product with ID ${productDetail.id} to API`,
           error
         );
+        toast.error(error.response.data.message, generalToastStyle);
       });
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
@@ -103,7 +106,6 @@ function ProductDetail() {
       })
       .then((response) => {
         sessionStorage.setItem("cart", response.data.response.length);
-        setOpen(true);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   };
@@ -212,7 +214,9 @@ function ProductDetail() {
   return (
     <div className="product-detail">
       <Navbar />
-      <Snackbar
+      <ToastContainer />
+
+      {/* <Snackbar
         autoHideDuration={5000}
         variant="outlined"
         color="primary"
@@ -240,7 +244,7 @@ function ProductDetail() {
             Product Added To Cart
           </Typography>
         </div>
-      </Snackbar>
+      </Snackbar> */}
       <div className="web">
         <div className="container">
           <div className="product-content">
@@ -911,6 +915,11 @@ function ProductDetail() {
             </div>
           </div>
         )}
+        <div>
+          <div style={{ width: "100%", height: "100vh" }}>
+            <Reviews productDetails={productDetail} />
+          </div>
+        </div>
       </div>
       <div className="mobile">
         <div className="container">

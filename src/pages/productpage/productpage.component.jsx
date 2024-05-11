@@ -46,8 +46,6 @@ function Productpage() {
   };
 
   const handleCardClick = (productName, hash) => {
-    console.log(hash);
-    console.log(`/item/${menuItemName}/${productName}-${hash}`);
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 
@@ -115,7 +113,6 @@ function Productpage() {
     console.log("No state data found");
   }
 
-  console.log(menuItemId);
   return (
     <div className="product-page">
       <Navbar />

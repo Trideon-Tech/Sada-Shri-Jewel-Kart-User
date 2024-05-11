@@ -27,7 +27,9 @@ import axios from "axios";
 import AddressPanel from "./addressPanel.component";
 import CheckoutProgressBar from "../../components/checkoutProgress/checkoutProgress.component";
 import PaymentMethod from "./paymentMethod.component";
-
+import { generalToastStyle } from "../../utils/toast.styles";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const steps = ["Login", "Shipping", "Payment"];
 
 const SelectAddressStep = ({
@@ -90,6 +92,7 @@ const SelectPaymentMethodStep = ({
   setSelectedAddress,
   paymentMethod,
   setPaymentMethod,
+  handlePaymentRequest,
 }) => {
   return (
     <Box
@@ -149,6 +152,7 @@ const SelectPaymentMethodStep = ({
             background:
               "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
           }}
+          onClick={handlePaymentRequest}
         >
           Pay
         </Button>
@@ -162,6 +166,7 @@ const CheckoutForm = ({ cartItems }) => {
   const [selectedAddress, setSelectedAddress] = React.useState({});
   const [paymentMethod, setPaymentMethod] = React.useState("CREDIT_CARD");
   const [activeStep, setActiveStep] = React.useState(1);
+  const [orderCreatedData, setOrderCreatedData] = React.useState(null);
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
@@ -183,6 +188,87 @@ const CheckoutForm = ({ cartItems }) => {
       .catch((error) => console.log("Error while fetching cart items", error));
   }, []);
 
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePaymentRequest = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_u3HTPcwIbGNSAp", // Enter the Key ID generated from the Dashboard
+      amount: orderCreatedData.amount_due.toString(),
+      currency: orderCreatedData.currency,
+      name: "Sada Shri",
+      description: "Test Transaction",
+      image: {
+        logo: "https://source.unsplash.com/random/1280x720?jewellery&sig=1",
+      },
+      order_id: orderCreatedData.id,
+      handler: async function (response) {
+        const token = localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("type", "payment_success");
+        formData.append("razorpay_order_id", response.razorpay_order_id);
+        formData.append("razorpay_payment_id", response.razorpay_payment_id);
+        formData.append("razorpay_signature", response.razorpay_signature);
+        formData.append("order_id", orderCreatedData.order_id);
+        formData.append("payment_method", "UPI");
+        axios
+          .post(
+            "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+              token,
+            }
+          )
+          .then((response) => {
+            console.log("order created", response);
+            toast.info("Payment Verified", generalToastStyle);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            toast.error(error.response.data.message, generalToastStyle);
+          });
+      },
+      prefill: {
+        name: "Soumya Dey",
+        email: "SoumyaDey@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Soumya Dey Corporate Office",
+      },
+      theme: {
+        color: "#a36e29",
+      },
+    };
+
+    console.log("paymentOptions : ", options);
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
   const createOrderHandler = () => {
     const formData = new FormData();
     formData.append("type", "order_request");
@@ -200,7 +286,7 @@ const CheckoutForm = ({ cartItems }) => {
       };
     });
     console.log(JSON.stringify(orderList));
-    formData.append("ordered_products", `"${JSON.stringify(orderList)}"`);
+    formData.append("ordered_products", JSON.stringify(orderList));
 
     const token = localStorage.getItem("token");
     axios
@@ -217,9 +303,7 @@ const CheckoutForm = ({ cartItems }) => {
       )
       .then((response) => {
         console.log("order created", response);
-        if (response.data.success === 1) {
-          console.log("address Added successfully");
-        }
+        setOrderCreatedData(response.data.response);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -258,6 +342,7 @@ const CheckoutForm = ({ cartItems }) => {
           selectedAddress={selectedAddress}
           paymentMethod={paymentMethod}
           setPaymentMethod={setPaymentMethod}
+          handlePaymentRequest={handlePaymentRequest}
         />
       ) : null}
     </Box>

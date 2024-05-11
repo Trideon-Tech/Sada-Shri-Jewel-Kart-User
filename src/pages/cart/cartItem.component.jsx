@@ -13,8 +13,7 @@ import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateC
 import Select from "@mui/joy/Select";
 import CloseIcon from "@mui/icons-material/Close";
 import Option from "@mui/joy/Option";
-export default function CartItem({ item, removeHandler }) {
-  console.log(item);
+export default function CartItem({ item, removeHandler, readOnly }) {
   const [quantity, setQuantity] = useState(1);
   const theme = useTheme();
 
@@ -146,7 +145,8 @@ export default function CartItem({ item, removeHandler }) {
           style={{ marginTop: "2%", fontSize: "1rem", fontWeight: "bold" }}
           gutterBottom
         >
-          <span style={{ fontWeight: "normal" }}>Price:</span> ${item.price}
+          <span style={{ fontWeight: "normal" }}>Price:</span> ₹
+          {parseFloat(item.price).toLocaleString()}
         </Typography>
         <Typography
           variant="subtitle2"
@@ -156,27 +156,29 @@ export default function CartItem({ item, removeHandler }) {
           Deliver By : 3rd September, 2024
         </Typography>
       </Box>
-      <Box
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "max-content",
-          height: "100%",
-        }}
-      >
-        <Button
-          onClick={() => removeHandler(item.cart_id)}
-          style={{ padding: 0 }}
+      {!readOnly ? (
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "max-content",
+            height: "100%",
+          }}
         >
-          <CloseIcon
-            fontSize="large"
-            style={{
-              marginBottom: "auto",
-              color: "#A36E29",
-            }}
-          />
-        </Button>
-      </Box>
+          <Button
+            onClick={() => removeHandler(item.cart_id)}
+            style={{ padding: 0 }}
+          >
+            <CloseIcon
+              fontSize="large"
+              style={{
+                marginBottom: "auto",
+                color: "#A36E29",
+              }}
+            />
+          </Button>
+        </Box>
+      ) : null}
     </Card>
   );
 }

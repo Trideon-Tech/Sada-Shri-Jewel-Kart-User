@@ -15,6 +15,10 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export default function CartTotal({ items }) {
+  const totalPrice = items
+    .map((item) => parseInt(item.price))
+    .reduce((prev, curr) => prev + curr, 0);
+
   return (
     <Box
       style={{
@@ -65,7 +69,9 @@ export default function CartTotal({ items }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>Subtotal:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 12,1231</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>
+            ₹ {Number(totalPrice).toLocaleString()}
+          </Typography>
         </Box>
         <Box
           style={{
@@ -106,7 +112,7 @@ export default function CartTotal({ items }) {
             Total:
           </Typography>
           <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            ₹ 12,313
+            ₹ {Number(totalPrice).toLocaleString()}
           </Typography>
         </Box>
       </Card>

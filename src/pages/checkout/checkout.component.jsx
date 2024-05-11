@@ -888,6 +888,7 @@ const Checkout = () => {
                   itemName={item.name}
                   weight={item.weight}
                   price={item.price}
+                  readOnly={true}
                 />
               ))}
               <Divider />

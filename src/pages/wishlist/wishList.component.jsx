@@ -954,10 +954,10 @@ const Wishlist = () => {
           justifyContent: "space-around",
         }}
       >
-        <Box style={{ width: "100%" }}>
-          <Grid container spacing={6}>
+        <Box style={{ width: "90%" }}>
+          <Grid container spacing={5} style={{ width: "100%" }}>
             {mockData.map((item) => (
-              <Grid item xs={mediaQuery ? 2 : 6}>
+              <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard
                   key={item.id}
                   image={item.images[0].file}
