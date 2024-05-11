@@ -1,0 +1,979 @@
+import React from "react";
+import Typography from "@mui/material/Typography";
+import Navbar from "../../components/navbar/navbar.component";
+import { Grid, Box, Divider, Breadcrumbs } from "@mui/material";
+import JwelleryCard from "../../components/card/jwellerycard.component";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+const mockData = [
+  {
+    id: "1",
+    created_at: "2024-02-01 15:02:58",
+    updated_at: "2024-02-21 12:20:20",
+    company: {
+      id: "1",
+      created_at: "2023-12-27 15:33:52",
+      updated_at: "2024-01-18 10:30:04",
+      gstin: "123456789012345",
+      gstin_verified: "1",
+      name: "NewJwellers",
+      logo: "company/NewJwellers/logo.png",
+      cover_image: "company/NewJwellers/cover_image.webp",
+      contact_email: "rishavk1102.work@gmail.com",
+      addresses: "1",
+      banks: "1",
+      admin_verified: "1",
+      admin: "1",
+    },
+    seller: "1",
+    name: "Faria Diamond Band",
+    hash: "AB2F9C",
+    description:
+      '<p><span style="color: rgb(79, 50, 103);">Set in 18 KT Rose Gold(3.630 g) with diamonds (0.200 ct ,GH-SI)</span></p>',
+    category: "Rings",
+    sub_category: "Engagement",
+    weight: "3.670",
+    height: "3.4",
+    width: "7.9",
+    purity: "18",
+    price: "47,908",
+    admin_verified: "1",
+    admin: "1",
+    images: [
+      {
+        id: "1",
+        created_at: "2024-02-01 15:02:58",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Faria Diamond Band-1706799778.webp",
+      },
+      {
+        id: "2",
+        created_at: "2024-02-01 15:02:58",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Faria Diamond Band-1706799778.webp",
+      },
+      {
+        id: "3",
+        created_at: "2024-02-01 15:03:00",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "vid",
+        file: "company/NewJwellers/products/Faria Diamond Band-1706799780.mp4",
+      },
+    ],
+  },
+  {
+    id: "1",
+    created_at: "2024-02-01 15:02:58",
+    updated_at: "2024-02-21 12:20:20",
+    company: {
+      id: "1",
+      created_at: "2023-12-27 15:33:52",
+      updated_at: "2024-01-18 10:30:04",
+      gstin: "123456789012345",
+      gstin_verified: "1",
+      name: "NewJwellers",
+      logo: "company/NewJwellers/logo.png",
+      cover_image: "company/NewJwellers/cover_image.webp",
+      contact_email: "rishavk1102.work@gmail.com",
+      addresses: "1",
+      banks: "1",
+      admin_verified: "1",
+      admin: "1",
+    },
+    seller: "1",
+    name: "Faria Diamond Band",
+    hash: "AB2F9C",
+    description:
+      '<p><span style="color: rgb(79, 50, 103);">Set in 18 KT Rose Gold(3.630 g) with diamonds (0.200 ct ,GH-SI)</span></p>',
+    category: "Rings",
+    sub_category: "Engagement",
+    weight: "3.670",
+    height: "3.4",
+    width: "7.9",
+    purity: "18",
+    price: "47,908",
+    admin_verified: "1",
+    admin: "1",
+    images: [
+      {
+        id: "1",
+        created_at: "2024-02-01 15:02:58",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Faria Diamond Band-1706799778.webp",
+      },
+      {
+        id: "2",
+        created_at: "2024-02-01 15:02:58",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Faria Diamond Band-1706799778.webp",
+      },
+      {
+        id: "3",
+        created_at: "2024-02-01 15:03:00",
+        updated_at: "0000-00-00 00:00:00",
+        product: "1",
+        is_primary: "0",
+        type: "vid",
+        file: "company/NewJwellers/products/Faria Diamond Band-1706799780.mp4",
+      },
+    ],
+  },
+  {
+    id: "7",
+    created_at: "2024-02-04 06:17:00",
+    updated_at: "2024-02-21 12:21:03",
+    company: {
+      id: "1",
+      created_at: "2023-12-27 15:33:52",
+      updated_at: "2024-01-18 10:30:04",
+      gstin: "123456789012345",
+      gstin_verified: "1",
+      name: "NewJwellers",
+      logo: "company/NewJwellers/logo.png",
+      cover_image: "company/NewJwellers/cover_image.webp",
+      contact_email: "rishavk1102.work@gmail.com",
+      addresses: "1",
+      banks: "1",
+      admin_verified: "1",
+      admin: "1",
+    },
+    seller: "1",
+    name: "Margerit Splendid Diamond Band",
+    hash: "D2A3F7",
+    description:
+      '<p><span style="color: rgb(79, 50, 103);">Set in 14 KT Rose Gold(1.230 g) with diamonds (0.100 ct ,IJ-SI)</span></p>',
+    category: "Rings",
+    sub_category: "Engagement",
+    weight: "1.250",
+    height: "1.7",
+    width: "2.90",
+    purity: "14",
+    price: "16827",
+    admin_verified: "1",
+    admin: "1",
+    images: [
+      {
+        id: "19",
+        created_at: "2024-02-04 06:17:00",
+        updated_at: "0000-00-00 00:00:00",
+        product: "7",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Margerit Splendid Diamond Band-1707027420.webp",
+      },
+      {
+        id: "20",
+        created_at: "2024-02-04 06:17:00",
+        updated_at: "0000-00-00 00:00:00",
+        product: "7",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Margerit Splendid Diamond Band-1707027420.webp",
+      },
+      {
+        id: "21",
+        created_at: "2024-02-04 06:17:00",
+        updated_at: "0000-00-00 00:00:00",
+        product: "7",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Margerit Splendid Diamond Band-1707027420.webp",
+      },
+    ],
+    customizations: {
+      fields: ["Choice Of Metal", "Diamond Quality", "Select Size"],
+      variants: {
+        count: 14,
+        options: [
+          {
+            id: "1",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "5 / 44.8mm",
+            ],
+            price: "18266",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "2",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "6 / 45.9mm",
+            ],
+            price: "18333",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "3",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "7 / 47.1mm",
+            ],
+            price: "18400",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "4",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "8 / 48.1mm",
+            ],
+            price: "18465",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "5",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "9 / 49.0mm",
+            ],
+            price: "18565",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "6",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "10 / 50.0mm",
+            ],
+            price: "18632",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "7",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "GH-SI",
+              "11 / 50.9mm",
+            ],
+            price: "18732",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "8",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "5 / 44.8mm",
+            ],
+            price: "16296",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "9",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "6 / 45.9mm",
+            ],
+            price: "16363",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "10",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "7 / 47.1mm",
+            ],
+            price: "16429",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "11",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "8 / 48.1mm",
+            ],
+            price: "16494",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "12",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "9 / 49.0mm",
+            ],
+            price: "16594",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "13",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "10 / 50.0mm",
+            ],
+            price: "16661",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+          {
+            id: "14",
+            created_at: "2024-02-04 06:17:00",
+            updated_at: "0000-00-00 00:00:00",
+            product: "7",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "IJ - SI",
+              "11 / 50.9mm",
+            ],
+            price: "16827",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Diamond Quality",
+              "Select Size",
+            ],
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "8",
+    created_at: "2024-02-21 12:41:09",
+    updated_at: "2024-03-02 12:36:35",
+    company: {
+      id: "1",
+      created_at: "2023-12-27 15:33:52",
+      updated_at: "2024-01-18 10:30:04",
+      gstin: "123456789012345",
+      gstin_verified: "1",
+      name: "NewJwellers",
+      logo: "company/NewJwellers/logo.png",
+      cover_image: "company/NewJwellers/cover_image.webp",
+      contact_email: "rishavk1102.work@gmail.com",
+      addresses: "1",
+      banks: "1",
+      admin_verified: "1",
+      admin: "1",
+    },
+    seller: "1",
+    name: "Willie Diamond Platinum Band Ring",
+    hash: "24e89a",
+    description:
+      '<h3>Metal Details</h3><p><br></p><ul><li>Metal Name - Platinum</li><li>Purity - 950</li><li>Metal Weight - 5.93g</li></ul><p><br></p><h3><strong>Diamond Details</strong></h3><p><br></p><ul><li>Total No. of Diamonds - 4</li><li>Total Weight - 0.09 Ct</li><li>Clarity - SI IJ</li><li>Color - IJ</li><li>No of diamonds - 4</li><li>Setting Type - Prong</li><li>Shape - Round</li><li>Diamond Weight(Approx) - 0.088 Ct</li></ul><p><br></p><p><em style="color: rgb(0, 0, 0);"><u>*A differential amount will be applicable with the difference in weight if any.</u></em></p>',
+    category: "Rings",
+    sub_category: "Platinum",
+    weight: "5.95",
+    height: "00",
+    width: "00",
+    purity: "21",
+    price: "41994",
+    admin_verified: "1",
+    admin: "1",
+    images: [
+      {
+        id: "22",
+        created_at: "2024-02-21 12:41:09",
+        updated_at: "0000-00-00 00:00:00",
+        product: "8",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Willie Diamond Platinum Band Ring-1708519269.webp",
+      },
+      {
+        id: "23",
+        created_at: "2024-02-21 12:41:09",
+        updated_at: "0000-00-00 00:00:00",
+        product: "8",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Willie Diamond Platinum Band Ring-1708519269.webp",
+      },
+      {
+        id: "24",
+        created_at: "2024-02-21 12:41:09",
+        updated_at: "0000-00-00 00:00:00",
+        product: "8",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Willie Diamond Platinum Band Ring-1708519269.webp",
+      },
+      {
+        id: "25",
+        created_at: "2024-02-21 12:41:09",
+        updated_at: "0000-00-00 00:00:00",
+        product: "8",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Willie Diamond Platinum Band Ring-1708519269.webp",
+      },
+    ],
+  },
+  {
+    id: "9",
+    created_at: "2024-03-21 17:54:44",
+    updated_at: "2024-03-21 17:55:59",
+    company: {
+      id: "1",
+      created_at: "2023-12-27 15:33:52",
+      updated_at: "2024-01-18 10:30:04",
+      gstin: "123456789012345",
+      gstin_verified: "1",
+      name: "NewJwellers",
+      logo: "company/NewJwellers/logo.png",
+      cover_image: "company/NewJwellers/cover_image.webp",
+      contact_email: "rishavk1102.work@gmail.com",
+      addresses: "1",
+      banks: "1",
+      admin_verified: "1",
+      admin: "1",
+    },
+    seller: "1",
+    name: "Pushpo Diamond Bracelet",
+    hash: "f7d1a5",
+    description:
+      '<p><span style="color: rgb(79, 50, 103);">Set in </span><strong style="color: rgb(79, 50, 103);">14 KT Rose Gold(2.850 g) </strong><span style="color: rgb(79, 50, 103);">with </span><u style="color: rgb(79, 50, 103);">diamonds (0.100 ct ,IJ-SI)</u></p>',
+    category: "Rings",
+    sub_category: "Engagement",
+    weight: "100",
+    height: "100",
+    width: "100",
+    purity: "18",
+    price: "29,007",
+    admin_verified: "1",
+    admin: "1",
+    images: [
+      {
+        id: "26",
+        created_at: "2024-03-21 17:54:44",
+        updated_at: "0000-00-00 00:00:00",
+        product: "9",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Pushpo Diamond Bracelet-1711043684.webp",
+      },
+      {
+        id: "27",
+        created_at: "2024-03-21 17:54:45",
+        updated_at: "0000-00-00 00:00:00",
+        product: "9",
+        is_primary: "0",
+        type: "img",
+        file: "company/NewJwellers/products/webp/Pushpo Diamond Bracelet-1711043685.webp",
+      },
+      {
+        id: "28",
+        created_at: "2024-03-21 17:54:46",
+        updated_at: "0000-00-00 00:00:00",
+        product: "9",
+        is_primary: "0",
+        type: "vid",
+        file: "company/NewJwellers/products/Pushpo Diamond Bracelet-1711043685.mp4",
+      },
+    ],
+    customizations: {
+      fields: ["Choice Of Metal", "Select Size", "Platinum Quality"],
+      variants: {
+        count: 16,
+        options: [
+          {
+            id: "15",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "5 / 44.8mm",
+              "Best",
+            ],
+            price: "29008",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "16",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "5 / 44.8mm",
+              "Medium",
+            ],
+            price: "29066",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "17",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "6 / 45.9mm",
+              "Best",
+            ],
+            price: "29056",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "18",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "6 / 45.9mm",
+              "Medium",
+            ],
+            price: "29099",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "19",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "8 / 48.1mm",
+              "Best",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "20",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "8 / 48.1mm",
+              "Medium",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "21",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "9 / 49.0mm",
+              "Best",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "22",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "18 KT Rose Gold",
+              "9 / 49.0mm",
+              "Medium",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "23",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "5 / 44.8mm",
+              "Best",
+            ],
+            price: "290899",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "24",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "5 / 44.8mm",
+              "Medium",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "25",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "6 / 45.9mm",
+              "Best",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "26",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "6 / 45.9mm",
+              "Medium",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "27",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "8 / 48.1mm",
+              "Best",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "28",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "8 / 48.1mm",
+              "Medium",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "29",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "9 / 49.0mm",
+              "Best",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+          {
+            id: "30",
+            created_at: "2024-03-21 17:54:44",
+            updated_at: "0000-00-00 00:00:00",
+            product: "9",
+            for_customization_options: [
+              "14 KT Rose Gold",
+              "9 / 49.0mm",
+              "Medium",
+            ],
+            price: "29007",
+            made_on_order: "1",
+            for_customization_fields: [
+              "Choice Of Metal",
+              "Select Size",
+              "Platinum Quality",
+            ],
+          },
+        ],
+      },
+    },
+  },
+];
+
+const Wishlist = () => {
+  const navigate = useNavigate();
+  const mediaQuery = useMediaQuery("(min-width:600px)");
+  const handleCardClick = (productName, hash, menuItemName) => {
+    console.log(hash);
+    console.log(`/item/${menuItemName}/${productName}-${hash}`);
+    navigate(`/item/${menuItemName}/${productName}-${hash}`);
+  };
+  return (
+    <div>
+      <Navbar />
+      <Box
+        style={{
+          width: "100vw",
+
+          height: "max-content",
+        }}
+      >
+        <img
+          src={process.env.PUBLIC_URL + "/assets/productList bg.jpg"}
+          style={{ width: "100%" }}
+        />
+      </Box>
+      <div
+        style={{
+          width: "100%",
+          height: mediaQuery ? "20vh" : "10vh",
+          backgroundColor: "#ececec",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "flex-start",
+        }}
+      >
+        <Typography
+          variant="h4"
+          style={{ fontWeight: "bold", marginLeft: "100px" }}
+        >
+          Your Wishlist
+        </Typography>
+        <div
+          className="breadcrumbs-container"
+          style={{ marginLeft: mediaQuery ? "100px" : "10px" }}
+        >
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link to="/" className="breadcrumb-link">
+              Home
+            </Link>
+
+            <Typography className="breadcrumb-link" color="textPrimary">
+              Your Wishlist
+            </Typography>
+          </Breadcrumbs>
+        </div>
+      </div>
+      <Box
+        style={{
+          width: "100%",
+          paddingTop: "1%",
+          paddingBottom: "5%",
+          height: "max-content",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <Box style={{ width: "90%" }}>
+          <Grid container spacing={5} style={{ width: "100%" }}>
+            {mockData.map((item) => (
+              <Grid item xs={mediaQuery ? 12 / 5 : 6}>
+                <JwelleryCard
+                  key={item.id}
+                  image={item.images[0].file}
+                  name={item.name}
+                  price={item.price}
+                  onClick={() =>
+                    handleCardClick(item.name, item.hash, item.category)
+                  }
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Box>
+    </div>
+  );
+};
+
+export default Wishlist;

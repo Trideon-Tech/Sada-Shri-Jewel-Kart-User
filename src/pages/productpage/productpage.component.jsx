@@ -3,6 +3,7 @@ import SortIcon from "@mui/icons-material/Sort";
 import {
   BottomNavigation,
   BottomNavigationAction,
+  Box,
   CircularProgress,
   Divider,
   Drawer,
@@ -14,12 +15,14 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import Select from "@mui/joy/Select";
+import Option from "@mui/joy/Option";
 import "./productpage.styles.scss";
 
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
+import { Button } from "@mui/joy";
 
 function Productpage() {
   const location = useLocation();
@@ -43,8 +46,6 @@ function Productpage() {
   };
 
   const handleCardClick = (productName, hash) => {
-    console.log(hash);
-    console.log(`/item/${menuItemName}/${productName}-${hash}`);
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 
@@ -112,59 +113,117 @@ function Productpage() {
     console.log("No state data found");
   }
 
-  console.log(menuItemId);
   return (
     <div className="product-page">
       <Navbar />
       <div className="web">
-        <div className="block-with-background">
-          <Typography variant="h4" className="page-heading">
-            {menuItemName}
-          </Typography>
-
-          <div className="breadcrumbs-container">
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link to="/" className="breadcrumb-link">
-                Home
-              </Link>
-              <Typography className="breadcrumb-link" color="textPrimary">
-                Jwellery
-              </Typography>
-              <Typography className="breadcrumb-link" color="textPrimary">
-                {menuItemName}
-              </Typography>
-            </Breadcrumbs>
-          </div>
-        </div>
+        <Box
+          style={{
+            width: "100vw",
+            height: "max-content",
+          }}
+        >
+          <img
+            src={process.env.PUBLIC_URL + "/assets/productList bg.jpg"}
+            style={{ width: "100%" }}
+          />
+        </Box>
         <div className="product-container">
           <Grid container spacing={0}>
-            <Grid item xs={4} className="filter">
-              <div className="heading">Filters</div>
-              <Divider />
+            <Grid item xs={3} className="filter">
+              <Box
+                style={{
+                  width: "100%",
+                  height: "max-content",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div className="heading">Filters</div>
+                <Button
+                  style={{
+                    border: 0,
+                    marginRight: "6%",
+                    backgroundColor: "rgba(0,0,0,0)",
+                    color: "#A36E29",
+                    height: "max-content",
+                    marginTop: "auto",
+                  }}
+                >
+                  Clear All
+                </Button>
+              </Box>
+              <Divider style={{ width: "90%" }} />
               <PriceFilter
                 selectedPriceRanges={selectedPriceRanges}
                 onFilterChange={handleFilterChange}
               />
             </Grid>
-            <Grid item xs={8} className="products">
-              <div className="heading">Products</div>
-              <div className="product-card">
+
+            <Grid
+              item
+              xs={9}
+              className="products"
+              style={{ marginTop: "30px" }}
+            >
+              <Box
+                style={{
+                  width: "100%",
+                  height: "5%",
+                  marginBottom: "2%",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                }}
+              >
+                <Typography style={{ marginLeft: "auto", marginRight: "1%" }}>
+                  Sort by
+                </Typography>
+                <Select
+                  defaultValue={["dog"]}
+                  multiple
+                  onChange={() => {}}
+                  sx={{
+                    minWidth: "13rem",
+                  }}
+                  slotProps={{
+                    listbox: {
+                      sx: {
+                        width: "100%",
+                      },
+                    },
+                  }}
+                >
+                  <Option value="dog">Price: High - Low</Option>
+                  <Option value="cat">Price: Low - High</Option>
+                  <Option value="fish">Avg. Reviews</Option>
+                  <Option value="bird">Latest</Option>
+                </Select>
+              </Box>
+              <Grid container spacing={1}>
                 {productsLoaded === false ? (
                   <CircularProgress
-                    style={{ margin: "auto", display: "flex", height: "100%" }}
+                    style={{
+                      margin: "auto",
+                      display: "flex",
+                      height: "100%",
+                    }}
                   />
                 ) : (
                   filteredJwellery.map((item, index) => (
-                    <JwelleryCard
-                      key={item.id}
-                      image={item.images[0].file}
-                      name={item.name}
-                      price={item.price}
-                      onClick={() => handleCardClick(item.name, item.hash)}
-                    />
+                    <Grid item xs={3} className="product-card">
+                      <JwelleryCard
+                        key={item.id}
+                        image={item.images[0].file}
+                        name={item.name}
+                        price={item.price}
+                        onClick={() => handleCardClick(item.name, item.hash)}
+                      />
+                    </Grid>
                   ))
                 )}
-              </div>
+              </Grid>
             </Grid>
           </Grid>
         </div>

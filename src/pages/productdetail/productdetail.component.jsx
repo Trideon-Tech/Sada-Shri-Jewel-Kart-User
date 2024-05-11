@@ -6,6 +6,15 @@ import {
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
+import Snackbar from "@mui/joy/Snackbar";
+import Chip from "@mui/joy/Chip";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { generalToastStyle } from "../../utils/toast.styles";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Select from "@mui/joy/Select";
+import Option from "@mui/joy/Option";
 import {
   Box,
   Button,
@@ -21,12 +30,15 @@ import axios from "axios";
 import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 import "./productdetail.styles.scss";
 
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import ImageVideoCarousel from "./carousal.component";
+import { Input } from "@mui/joy";
+import Reviews from "../../components/reviews/reviews.component";
 
 const theme = createTheme({
   palette: {
@@ -40,6 +52,7 @@ const theme = createTheme({
 });
 
 function ProductDetail() {
+  const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState(null);
   const { product } = useParams();
@@ -56,6 +69,46 @@ function ProductDetail() {
     recommended: [],
   });
 
+  const addToCartHandler = () => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .put(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        {
+          product: productDetail.id,
+          customization: -1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log(`Product with ID ${productDetail.id} sent to API`);
+        toast.info("Product Added to Cart", generalToastStyle);
+      })
+      .catch((error) => {
+        console.error(
+          `Error sending product with ID ${productDetail.id} to API`,
+          error
+        );
+        toast.error(error.response.data.message, generalToastStyle);
+      });
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        sessionStorage.setItem("cart", response.data.response.length);
+      })
+      .catch((error) => console.log("Error while fetching cart items", error));
+  };
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedMetal, setSelectedMetal] = useState("");
   const [selectedDiamondType, setSelectedDiamondType] = useState("");
@@ -161,21 +214,104 @@ function ProductDetail() {
   return (
     <div className="product-detail">
       <Navbar />
+      <ToastContainer />
+
+      {/* <Snackbar
+        autoHideDuration={5000}
+        variant="outlined"
+        color="primary"
+        size="lg"
+        open={open}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        sx={(theme) => ({
+          backgroundColor: "#fff2e0",
+          maxWidth: 360,
+        })}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "max-content",
+            padding: "2%",
+          }}
+        >
+          <Typography
+            variant="body"
+            style={{ color: "gray", fontWeight: "bold" }}
+          >
+            Product Added To Cart
+          </Typography>
+        </div>
+      </Snackbar> */}
       <div className="web">
         <div className="container">
           <div className="product-content">
-            <div className="product-image-section">
+            <div
+              className="product-image-section"
+              style={{ position: "relative" }}
+            >
+              <Box
+                style={{
+                  position: "absolute",
+                  zIndex: 2,
+                  width: "100%",
+                  display: "flex",
+                }}
+              >
+                <FavoriteBorderOutlinedIcon
+                  style={{
+                    fontSize: "2.5rem",
+                    marginLeft: "auto",
+                    marginRight: "5%",
+                    marginTop: "5%",
+                    color: "#a36e29",
+                  }}
+                />
+              </Box>
               {/* Placeholder for product images */}
               <ImageVideoCarousel images={images} video={video} />
             </div>
             <div className="product-detail-section">
               <div className="title">
-                <Typography variant="h5" component="h1">
+                <Typography
+                  variant="h5"
+                  component="h1"
+                  style={{ marginTop: "2%", fontWeight: "bold" }}
+                >
                   {menuItemName}
                 </Typography>
               </div>
-              <div className="rating-reviews">4.9 ★ 45</div>
-              <Grid container spacing={0}>
+              <Box
+                style={{
+                  width: "100%",
+                  height: "5%",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <Box
+                  style={{
+                    backgroundColor: "white",
+                    color: "black",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    borderRadius: "100px",
+                    width: "20%",
+                    paddingLeft: "2%",
+                    paddingRight: "2%",
+                  }}
+                >
+                  <Typography>3.5</Typography>
+                  <StarBorderRoundedIcon
+                    style={{ fontSize: "1.5rem", color: "orange" }}
+                  />
+                  <Typography>(500 reviews)</Typography>
+                </Box>
+              </Box>
+              <Grid container spacing={3} style={{ marginTop: "2%" }}>
                 <Grid item xs={6} className="customization-grid">
                   {customizationOptions.metal.length > 0 &&
                     customizationOptions.diamondQuality.length > 0 &&
@@ -192,28 +328,50 @@ function ProductDetail() {
                           >
                             Select Size
                           </Typography>
-                          <Button
+
+                          <Box
                             onClick={handleDrawerOpen}
-                            fullWidth
-                            sx={{
-                              textAlign: "left",
-                              paddingTop: 2,
-                              paddingBottom: 2,
-                              color: "#a36e29",
-                              paddingLeft: 1,
-                              border: 1,
-                              borderColor: "divider",
-                              borderRadius: 1,
-                              backgroundColor: "background.paper",
-                              "::after": {
-                                content: '"▼"',
-                                float: "right",
-                                paddingRight: 1,
-                              },
+                            style={{
+                              width: "325px",
+                              height: "55px",
+                              backgroundColor: "white",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              paddingLeft: "10px",
+                              paddingRight: "10px",
+                              alignItems: "center",
+                              border: "2px solid #e1e1e1",
+                              borderRadius: "10px",
                             }}
                           >
-                            {selectedSize || "Select Size"}
-                          </Button>
+                            {selectedSize ? (
+                              <Box
+                                style={{
+                                  borderRadius: "10px",
+                                  width: "max-content",
+                                  paddingLeft: "10px",
+                                  paddingRight: "10px",
+                                  height: "35px",
+                                  backgroundColor: "#A36E29",
+                                  color: "white",
+                                  display: "flex",
+                                  justifyContent: "space-around",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Typography style={{ fontWeight: "bold" }}>
+                                  {selectedSize}
+                                </Typography>
+                              </Box>
+                            ) : null}
+                            <KeyboardArrowDownIcon
+                              style={{
+                                marginLeft: "auto",
+                                color: "darkgray",
+                                fontSize: "1.5rem",
+                              }}
+                            />
+                          </Box>
                         </Box>
                         <Box sx={{ marginBottom: 2 }}>
                           <Typography
@@ -226,29 +384,70 @@ function ProductDetail() {
                           >
                             Select Customization
                           </Typography>
-                          <Button
+                          <Box
                             onClick={handleDrawerOpen}
-                            fullWidth
-                            sx={{
-                              textAlign: "left",
-                              paddingTop: 2,
-                              paddingBottom: 2,
-                              paddingLeft: 1,
-                              color: "#a36e29",
-                              border: 1,
-                              borderColor: "divider",
-                              borderRadius: 1,
-                              backgroundColor: "background.paper",
-                              "::after": {
-                                content: '"▼"',
-                                float: "right",
-                                paddingRight: 1,
-                              },
+                            style={{
+                              width: "325px",
+                              height: "55px",
+                              backgroundColor: "white",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              paddingLeft: "10px",
+                              paddingRight: "10px",
+                              alignItems: "center",
+                              border: "2px solid #e1e1e1",
+                              borderRadius: "10px",
                             }}
                           >
-                            {selectedMetal || "Choice of Metal"} -{" "}
-                            {selectedDiamondType || "Diamond Type"}
-                          </Button>
+                            {selectedMetal ? (
+                              <Box
+                                style={{
+                                  borderRadius: "10px",
+                                  width: "max-content",
+                                  paddingLeft: "10px",
+                                  paddingRight: "10px",
+                                  marginRight: "10px",
+                                  height: "35px",
+                                  backgroundColor: "#A36E29",
+                                  color: "white",
+                                  display: "flex",
+                                  justifyContent: "space-around",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Typography style={{ fontWeight: "bold" }}>
+                                  {selectedMetal}
+                                </Typography>
+                              </Box>
+                            ) : null}
+                            {selectedDiamondType ? (
+                              <Box
+                                style={{
+                                  borderRadius: "10px",
+                                  width: "max-content",
+                                  paddingLeft: "10px",
+                                  paddingRight: "10px",
+                                  height: "35px",
+                                  backgroundColor: "#A36E29",
+                                  color: "white",
+                                  display: "flex",
+                                  justifyContent: "space-around",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <Typography style={{ fontWeight: "bold" }}>
+                                  {selectedDiamondType}
+                                </Typography>
+                              </Box>
+                            ) : null}
+                            <KeyboardArrowDownIcon
+                              style={{
+                                marginLeft: "auto",
+                                color: "darkgray",
+                                fontSize: "1.5rem",
+                              }}
+                            />
+                          </Box>
                         </Box>
                         <Drawer
                           anchor="right"
@@ -261,7 +460,10 @@ function ProductDetail() {
                               width: 500,
                             }}
                           >
-                            <Typography variant="h6">
+                            <Typography
+                              variant="h6"
+                              style={{ fontWeight: "bold" }}
+                            >
                               Choice of Metal
                             </Typography>
                             {/* Add Buttons or another component to select metal choice */}
@@ -300,23 +502,37 @@ function ProductDetail() {
                                     >
                                       <Typography
                                         variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                        sx={{
+                                          fontWeight: "bold",
+                                          color: "black",
+                                        }}
                                       >
                                         {metalOption}
                                       </Typography>
-                                      <Typography
-                                        variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                      <Box
+                                        style={{
+                                          border: "3px solid brown",
+                                          padding: "2px",
+                                          borderRadius: "10px",
+                                        }}
                                       >
-                                        Made on Order
-                                      </Typography>
+                                        <Typography
+                                          variant="caption"
+                                          sx={{ color: "#a36e29" }}
+                                        >
+                                          Made on Order
+                                        </Typography>
+                                      </Box>
                                     </Button>
                                   </Grid>
                                 )
                               )}
                             </Grid>
 
-                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                            <Typography
+                              variant="h6"
+                              sx={{ marginTop: 2, fontWeight: "bold" }}
+                            >
                               Diamond Type
                             </Typography>
                             {/* Add Buttons or another component to select metal choice */}
@@ -355,23 +571,37 @@ function ProductDetail() {
                                     >
                                       <Typography
                                         variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                        sx={{
+                                          fontWeight: "bold",
+                                          color: "black",
+                                        }}
                                       >
                                         {diamondOption}
                                       </Typography>
-                                      <Typography
-                                        variant="caption"
-                                        sx={{ color: "#a36e29" }}
+                                      <Box
+                                        style={{
+                                          border: "3px solid brown",
+                                          padding: "2px",
+                                          borderRadius: "10px",
+                                        }}
                                       >
-                                        Made on Order
-                                      </Typography>
+                                        <Typography
+                                          variant="caption"
+                                          sx={{ color: "#a36e29" }}
+                                        >
+                                          Made on Order
+                                        </Typography>
+                                      </Box>
                                     </Button>
                                   </Grid>
                                 )
                               )}
                             </Grid>
 
-                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                            <Typography
+                              variant="h6"
+                              sx={{ marginTop: 2, fontWeight: "bold" }}
+                            >
                               Select Size
                             </Typography>
                             <Grid container>
@@ -404,36 +634,31 @@ function ProductDetail() {
                                   >
                                     <Typography
                                       variant="caption"
-                                      sx={{ color: "#a36e29" }}
+                                      sx={{
+                                        fontWeight: "bold",
+                                        color: "black",
+                                      }}
                                     >
                                       {size}
                                     </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      sx={{ color: "#a36e29" }}
+                                    <Box
+                                      style={{
+                                        border: "3px solid brown",
+                                        padding: "2px",
+                                        borderRadius: "10px",
+                                      }}
                                     >
-                                      Made On Order
-                                    </Typography>
+                                      <Typography
+                                        variant="caption"
+                                        sx={{ color: "#a36e29" }}
+                                      >
+                                        Made On Order
+                                      </Typography>
+                                    </Box>
                                   </Button>
                                 </Grid>
                               ))}
                             </Grid>
-
-                            <Button
-                              sx={{
-                                marginTop: 2,
-                                height: "60px",
-                                width: "100%",
-                                backgroundColor: "#a36e29",
-                                color: "primary.contrastText",
-                                "&:hover": {
-                                  backgroundColor: "primary.dark",
-                                },
-                              }}
-                              onClick={handleDrawerClose}
-                            >
-                              Confirm Customization
-                            </Button>
                           </Box>
                         </Drawer>
                         {/* Additional code for customization drawer will be similar to size drawer */}
@@ -444,14 +669,30 @@ function ProductDetail() {
                       ₹{selectedVariantPrice || productDetail.price}
                     </Typography>
                     <Typography variant="body1" className="original-price">
-                      ₹9,010
+                      MRP ₹9,010
                     </Typography>
                   </div>
-                  <Typography variant="body1" className="discount">
+                  <Typography
+                    variant="body1"
+                    className="discount"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Flat 50% off on Making Charges
                   </Typography>
                   <div className="actions">
-                    <Button variant="contained" className="button" fullWidth>
+                    <Button
+                      variant="contained"
+                      className="button"
+                      style={{
+                        width: "325px",
+                        padding: "10px",
+                        fontWeight: "bold",
+                        background:
+                          "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                      }}
+                      fullWidth
+                      onClick={addToCartHandler}
+                    >
                       Add to Cart
                       <ShoppingCart className="button-icon" />
                     </Button>
@@ -459,29 +700,37 @@ function ProductDetail() {
                 </Grid>
 
                 <Grid item xs={6} className="location-grid">
-                  <div className="label">Pincode</div>
-                  <ThemeProvider theme={theme}>
-                    <OutlinedInput
-                      className="pincode"
-                      value={pincode}
-                      onChange={(e) => {
-                        setPincode(e.target.value);
-                      }}
-                      endAdornment={<LocationOnOutlined />}
-                      fullWidth
-                    />
-                  </ThemeProvider>
-                  <Typography variant="body2" className="delivery-info">
+                  <Typography style={{ color: "gray" }}>Pincode</Typography>
+                  <Input
+                    variant="solid"
+                    className="pincode"
+                    value={pincode}
+                    onChange={(e) => {
+                      setPincode(e.target.value);
+                    }}
+                    size="lg"
+                    style={{
+                      backgroundColor: "white",
+                      height: "55px",
+                      color: "black",
+                    }}
+                    endDecorator={<LocationOnOutlined />}
+                    fullWidth
+                  />
+                  <Typography variant="body" className="delivery-info">
                     <LocalShippingOutlined className="delivery-icon" /> Free
                     Delivery by 24th Feb
                   </Typography>
+                  <Typography variant="subtitle" style={{ color: "gray" }}>
+                    Order in 12hr : 20 mins
+                  </Typography>
                 </Grid>
                 <Grid item xs={12} className="detail-grid">
-                  <Card className="card">
+                  <Card className="card" style={{ backgroundColor: "white" }}>
                     <Typography variant="subtitle2" className="sku">
                       {productDetail.hash}
                     </Typography>
-                    <Typography variant="h6" className="title">
+                    <Typography variant="h5" className="title">
                       Product Details
                     </Typography>
                     <Typography variant="body1" className="desc">
@@ -491,34 +740,134 @@ function ProductDetail() {
                     </Typography>
 
                     <Grid container spacing={0} justifyContent="center">
-                      <Grid item xs={4} className="detail">
-                        <WeightIcon className="icon" />
-                        <Typography className="text">
-                          Weight
-                          <br />
-                          {productDetail.weight} g
-                        </Typography>
+                      <Grid item xs={4}>
+                        <Box
+                          style={{
+                            width: "90%",
+                            height: "15vh",
+                            backgroundColor: "#E0B872",
+                            borderRadius: "10px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            color: "white",
+                          }}
+                        >
+                          <Box
+                            style={{
+                              width: "100%",
+                              height: "10%",
+                              display: "flex",
+                              justifyContent: "center",
+                              color: "white",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Typography>Weight </Typography>
+                            <WeightIcon />
+                          </Box>
+                          <Box
+                            style={{
+                              width: "80%",
+                              textAlign: "left",
+                              height: "50%",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <Typography>
+                              Gross:
+                              {productDetail.weight} g
+                            </Typography>
+                          </Box>
+                        </Box>
                       </Grid>
-
-                      <Grid item xs={4} className="detail">
-                        <PurityIcon className="icon" />
-                        <Typography className="text">
-                          Purity
-                          <br />
-                          {productDetail.purity} KT
-                        </Typography>
+                      <Grid item xs={4}>
+                        <Box
+                          style={{
+                            width: "90%",
+                            height: "15vh",
+                            backgroundColor: "#E0B872",
+                            borderRadius: "10px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            color: "white",
+                          }}
+                        >
+                          <Box
+                            style={{
+                              width: "100%",
+                              height: "10%",
+                              display: "flex",
+                              justifyContent: "center",
+                              color: "white",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Typography>Purity </Typography>
+                            <PurityIcon />
+                          </Box>
+                          <Box
+                            style={{
+                              width: "80%",
+                              textAlign: "left",
+                              height: "50%",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <Typography>
+                              Purity:
+                              {productDetail.purity} KT
+                            </Typography>
+                          </Box>
+                        </Box>
                       </Grid>
-                      <Grid item xs={6} className="detail">
-                        <DimensionsIcon className="icon" />
-                        <Typography className="text">
-                          Dimensions
-                          <br />
-                          Width - {productDetail.width} mm
-                          <br />
-                          Height - {productDetail.height} mm
-                          <br />
-                          Size - 12 (51.8 mm)
-                        </Typography>
+                      <Grid item xs={4}>
+                        <Box
+                          style={{
+                            width: "90%",
+                            height: "15vh",
+                            backgroundColor: "#E0B872",
+                            borderRadius: "10px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            color: "white",
+                          }}
+                        >
+                          <Box
+                            style={{
+                              width: "100%",
+                              height: "10%",
+                              display: "flex",
+                              justifyContent: "center",
+                              color: "white",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Typography>Dimensions </Typography>
+                            <DimensionsIcon />
+                          </Box>
+                          <Box
+                            style={{
+                              width: "80%",
+                              textAlign: "left",
+                              height: "50%",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <Typography>
+                              Width : {productDetail.width} mm
+                            </Typography>
+                            <Typography>
+                              Height : {productDetail.height} mm
+                            </Typography>
+                            <Typography>Size : 12 (51.8 mm)</Typography>
+                          </Box>
+                        </Box>
                       </Grid>
                     </Grid>
                   </Card>
@@ -528,9 +877,31 @@ function ProductDetail() {
           </div>
         </div>
         {productDetail.recommended && productDetail.recommended.length > 0 && (
-          <div className="container-similar">
+          <div className="container-similar" style={{ marginTop: "10%" }}>
             <div className="similar-product-section">
-              <h2 className="title">Similar Products</h2>
+              <Typography
+                variant="h5"
+                style={{
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  marginTop: "2%",
+                }}
+              >
+                You May Also{" "}
+                <span style={{ color: "#A36E29" }}> {` Like `}</span> These
+                <Button
+                  variant="outlined"
+                  style={{
+                    marginLeft: "2%",
+                    color: "#A36E29",
+                    border: "2px solid #A36E29",
+                    borderRadius: "100px",
+                  }}
+                >
+                  View All
+                </Button>
+              </Typography>
+
               <div className="products-scroll-container">
                 {productDetail.recommended.map((product) => (
                   <JwelleryCard
@@ -544,6 +915,11 @@ function ProductDetail() {
             </div>
           </div>
         )}
+        <div>
+          <div style={{ width: "100%", height: "100vh" }}>
+            <Reviews productDetails={productDetail} />
+          </div>
+        </div>
       </div>
       <div className="mobile">
         <div className="container">
@@ -562,7 +938,26 @@ function ProductDetail() {
                       {menuItemName}
                     </Typography>
                   </div>
-                  <div className="rating-reviews">4.9 ★ 45</div>
+                  <Box
+                    style={{
+                      backgroundColor: "white",
+
+                      color: "black",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      borderRadius: "100px",
+                      width: "20%",
+                      paddingLeft: "2%",
+                      paddingRight: "2%",
+                    }}
+                  >
+                    <Typography>3.5</Typography>
+                    <StarBorderRoundedIcon
+                      style={{ fontSize: "1.5rem", color: "orange" }}
+                    />
+                    <Typography>(500 reviews)</Typography>
+                  </Box>
                 </div>
               </Grid>
               <Grid item xs={12} className="product-detail-grid">
@@ -590,13 +985,14 @@ function ProductDetail() {
                     <Typography
                       variant="subtitle1"
                       sx={{
+                        fontWeight: "bold",
                         marginTop: "20px",
                         display: "flex",
                         alignItems: "start",
                         color: "#666",
                       }}
                     >
-                      Select Size
+                      Size
                     </Typography>
                     <Button
                       onClick={handleMobileDrawerOpen}
@@ -636,6 +1032,7 @@ function ProductDetail() {
                       onClick={handleMobileDrawerOpen}
                       fullWidth
                       sx={{
+                        fontWeight: "bold",
                         textAlign: "left",
                         paddingTop: 2,
                         paddingBottom: 2,
@@ -907,7 +1304,17 @@ function ProductDetail() {
         </div>
         <div className="container-similar">
           <div className="similar-product-section">
-            <h2 className="title">Similar Products</h2>
+            <Typography
+              variant="h5"
+              style={{
+                textAlign: "left",
+                fontWeight: "bold",
+                marginTop: "2%",
+              }}
+            >
+              You May Also <span style={{ color: "#A36E29" }}> {` Like `}</span>{" "}
+              These
+            </Typography>
             <div className="products-scroll-container">
               {productDetail.recommended?.map((product) => (
                 <JwelleryCard

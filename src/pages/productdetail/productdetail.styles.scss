@@ -11,14 +11,17 @@
       .product-content {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
-        margin: 0px 20px;
+        justify-content: space-between;
+        margin: 0px auto;
       }
 
       .product-image-section {
         background-color: #fff;
         flex: 1;
         max-width: 40%;
+        height: inherit;
+        padding-top: 1%;
+        padding-bottom: 1%;
         .product-image {
           width: 100%;
           height: auto;
@@ -192,11 +195,13 @@
     }
     .container-similar {
       background-color: #fff;
+      width: 90vw;
+      margin: 0 auto;
+
       .similar-product-section {
-        max-width: 90vw;
+        max-width: 80vw;
         margin: 0 auto;
-        margin-top: 20px;
-        width: 100%;
+        width: 90%;
         overflow: hidden;
         .title {
           font-size: larger;
