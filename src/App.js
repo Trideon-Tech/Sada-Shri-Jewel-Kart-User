@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Outlet, Link } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./pages/landingpage/landingpage.component";
 import ProductDetail from "./pages/productdetail/productdetail.component";
@@ -9,10 +9,11 @@ import TrackOrder from "./pages/track-order/trackOrder.component";
 import OrderDetails from "./pages/order-details/orderDetails.component";
 import Checkout from "./pages/checkout/checkout.component";
 import Wishlist from "./pages/wishlist/wishList.component";
-import Profile from "./pages/profile/profile.component";
-import Register from "./pages/signup/register.component"
-import SignIn from "./pages/signin/signin.component"
+import MyAccount from "./pages/myAccount/myAccount.component";
+import Register from "./pages/signup/register.component";
+import SignIn from "./pages/signin/signin.component";
 import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
+import Orders from "./pages/orders/orders.component";
 
 function App() {
   return (
@@ -29,10 +30,14 @@ function App() {
           <Route path="/order-details" element={<OrderDetails />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/user-details" element={<UserDetailsForm />} />
+          <Route path="/my-account" element={<MyAccount />}>
+            <Route path="" element={<div>Profile</div>} />
+            <Route path="orders" index element={<Orders />} />
+            <Route path="address" element={<div>Orders</div>} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

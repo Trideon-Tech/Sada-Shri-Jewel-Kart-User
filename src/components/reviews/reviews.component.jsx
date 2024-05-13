@@ -9,6 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { generalToastStyle } from "../../utils/toast.styles";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import OverAllRating from "./subComponents/overAllRating.component";
 import { DeleteForever, Height, Remove } from "@mui/icons-material";
 import CustomerLikePills from "./subComponents/customerLikePills.component";
@@ -79,9 +82,11 @@ const Reviews = ({ productDetails }) => {
       .then((response) => {
         console.log("review created", response);
         setOpen(false);
+        toast.info("Review Added Successfully", generalToastStyle);
       })
       .catch((error) => {
         console.error("Error:", error);
+        toast.error(error.response.data.message, generalToastStyle);
       });
   };
   return (
@@ -97,6 +102,7 @@ const Reviews = ({ productDetails }) => {
         alignItems: "center",
       }}
     >
+      <ToastContainer />
       <Modal
         open={open}
         onClose={() => setOpen(false)}
