@@ -1,13 +1,18 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 
-const OrderItem = () => {
+const OrderItem = ({ titleColorType = "arriving" }) => {
+  const titleColors = {
+    arriving: "#a36e29",
+    delivered: "#33A329",
+    cancelled: "#f7333f",
+  };
   return (
     <Card
       style={{
         minWidth: "837px",
         minHeight: "331px",
         width: "95%",
-        height: "35%",
+        height: "10%",
         padding: "2.5%",
         borderRadius: "10px",
         marginBottom: "50px",
@@ -24,7 +29,11 @@ const OrderItem = () => {
         }}
       >
         <Typography
-          style={{ fontWeight: "bold", color: "#a36e29", fontSize: "1.4rem" }}
+          style={{
+            fontWeight: "bold",
+            color: titleColors[titleColorType],
+            fontSize: "1.4rem",
+          }}
         >
           Arriving Tomorrow
         </Typography>
@@ -204,7 +213,7 @@ const OrderItem = () => {
             color: "#a36e29",
           }}
         >
-          Cancel Order
+          {titleColorType === "arriving" ? "Cancel Order" : "Return Order"}
         </Button>
         <Button
           fullWidth

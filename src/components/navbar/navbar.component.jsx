@@ -237,7 +237,7 @@ const Navbar = () => {
                   }}
                 >
                   {localStorage.getItem("token") ? (
-                    <MenuItem component={Link} to="/profile">
+                    <MenuItem component={Link} to="/my-account">
                       <AccountCircleIcon style={{ color: "#a36e29" }} />
                       <Typography>My Account</Typography>
                     </MenuItem>

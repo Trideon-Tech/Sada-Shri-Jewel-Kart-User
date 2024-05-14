@@ -4,6 +4,7 @@ import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab, { tabClasses } from "@mui/joy/Tab";
 import OrderItem from "./orderItem.component";
+import { TabPanel } from "@mui/joy";
 const Orders = () => {
   return (
     <Box
@@ -35,6 +36,7 @@ const Orders = () => {
             p: 0,
             gap: 0,
             borderRadius: "5px",
+            width: "max-content",
             border: "1px solid #a7a7a7",
             bgcolor: "#f7f7f7",
             color: "#00000090",
@@ -53,11 +55,35 @@ const Orders = () => {
           <Tab disableIndicator>Completed</Tab>
           <Tab disableIndicator>Cancelled</Tab>
         </TabList>
+        <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
+          <Box style={{ width: "100%", height: "100%" }}>
+            <OrderItem />
+            <OrderItem />
+            <OrderItem />
+            <OrderItem />
+          </Box>
+        </TabPanel>
+        <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>
+          <Box style={{ width: "100%", height: "100%" }}>
+            <OrderItem titleColorType="delivered" />
+            <OrderItem titleColorType="delivered" />
+            <OrderItem titleColorType="delivered" />
+            <OrderItem titleColorType="delivered" />
+          </Box>
+        </TabPanel>
+        <TabPanel value={2} style={{ padding: 0, paddingTop: "20px" }}>
+          <Box style={{ width: "100%", height: "100%" }}>
+            <OrderItem titleColorType="cancelled" />
+            <OrderItem titleColorType="cancelled" />
+            <OrderItem titleColorType="cancelled" />
+            <OrderItem titleColorType="cancelled" />
+          </Box>
+        </TabPanel>
       </Tabs>
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
+      {/* <OrderItem />
+        <OrderItem />
+        <OrderItem />
+        <OrderItem /> */}
     </Box>
   );
 };

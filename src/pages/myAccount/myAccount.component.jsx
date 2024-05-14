@@ -82,26 +82,30 @@ export default function MyAccount() {
             <Divider
               style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
             />
-            <Button
-              style={{
-                fontWeight: "bold",
-                color: "#a36e29",
-                padding: 0,
-                marginTop: "5%",
-              }}
-            >
-              Orders and Returns
-            </Button>
-            <Button
-              style={{
-                fontWeight: "bold",
-                color: "#a36e29",
-                padding: 0,
-                marginTop: "5%",
-              }}
-            >
-              Saved Addresses
-            </Button>
+            <Link to={"/my-account/orders"}>
+              <Button
+                style={{
+                  fontWeight: "bold",
+                  color: "#a36e29",
+                  padding: 0,
+                  marginTop: "5%",
+                }}
+              >
+                Orders and Returns
+              </Button>
+            </Link>
+            <Link to={"/my-account/address"}>
+              <Button
+                style={{
+                  fontWeight: "bold",
+                  color: "#a36e29",
+                  padding: 0,
+                  marginTop: "5%",
+                }}
+              >
+                Saved Addresses
+              </Button>
+            </Link>
             <Divider
               style={{ width: "100%", marginTop: "auto", marginBottom: "10%" }}
             />

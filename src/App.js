@@ -14,6 +14,7 @@ import Register from "./pages/signup/register.component";
 import SignIn from "./pages/signin/signin.component";
 import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 import Orders from "./pages/orders/orders.component";
+import Address from "./pages/address/address.component";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
           <Route path="/my-account" element={<MyAccount />}>
             <Route path="" element={<div>Profile</div>} />
             <Route path="orders" index element={<Orders />} />
-            <Route path="address" element={<div>Orders</div>} />
+            <Route path="address" element={<Address />} />
           </Route>
         </Routes>
       </BrowserRouter>

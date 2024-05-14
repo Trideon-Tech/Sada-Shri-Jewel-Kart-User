@@ -223,13 +223,15 @@ const CheckoutForm = ({ cartItems }) => {
       },
       order_id: orderCreatedData.id,
       handler: async function (response) {
+        console.log(response);
         const token = localStorage.getItem("token");
         const formData = new FormData();
+        console.log("orderCreatedData::::", orderCreatedData);
         formData.append("type", "payment_success");
         formData.append("razorpay_order_id", response.razorpay_order_id);
         formData.append("razorpay_payment_id", response.razorpay_payment_id);
         formData.append("razorpay_signature", response.razorpay_signature);
-        formData.append("order_id", orderCreatedData.order_id);
+        formData.append("order_id", response.razorpay_order_id);
         formData.append("payment_method", "UPI");
         axios
           .post(
