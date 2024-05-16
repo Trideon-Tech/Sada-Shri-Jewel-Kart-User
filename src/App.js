@@ -36,10 +36,9 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/user-details" element={<UserDetailsForm />} />
           <Route path="/my-account" element={<MyAccount />}>
-            <Route path="" element={<div>Profile</div>} />
             <Route path="orders" index element={<Orders />} />
             <Route path="address" element={<Address />} />
-            <Route path="edit-profile" element={<EditProfile />} />
+            <Route path="" element={<EditProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

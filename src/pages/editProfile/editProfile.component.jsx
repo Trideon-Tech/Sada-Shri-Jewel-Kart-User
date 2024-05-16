@@ -3,10 +3,17 @@ import {
   Box,
   Button,
   Card,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Input,
   TextField,
   Typography,
 } from "@mui/material";
+import Slide from "@mui/material/Slide";
+import React, { useState } from "react";
 
 const EditProfile = () => {
   return (
@@ -21,7 +28,14 @@ const EditProfile = () => {
         alignItems: "flex-start",
       }}
     >
-      <Box style={{ width: "70%", margin: "auto", textAlign: "left" }}>
+      <Box
+        style={{
+          width: "70%",
+          margin: "auto",
+          textAlign: "left",
+          marginTop: "30px",
+        }}
+      >
         <Typography
           style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
         >

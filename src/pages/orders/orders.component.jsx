@@ -21,7 +21,14 @@ const Orders = () => {
         alignItems: "flex-start",
       }}
     >
-      <Box style={{ width: "70%", margin: "auto", textAlign: "left" }}>
+      <Box
+        style={{
+          width: "70%",
+          margin: "auto",
+          textAlign: "left",
+          marginTop: "30px",
+        }}
+      >
         <Typography
           style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
         >
@@ -32,7 +39,7 @@ const Orders = () => {
       <Tabs
         aria-label="tabs"
         defaultValue={0}
-        style={{ width: "70%", margin: "auto" }}
+        style={{ width: "70%", margin: "auto", marginTop: "20px" }}
         sx={{ marginTop: "2.5%", marginBottom: "5%", bgcolor: "transparent" }}
       >
         <TabList

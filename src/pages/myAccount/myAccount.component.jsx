@@ -4,11 +4,38 @@ import TabList from "@mui/joy/TabList";
 import Navbar from "../../components/navbar/navbar.component";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
-import { Grid, Box, Divider, Typography, Button } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Divider,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
+
+import Slide from "@mui/material/Slide";
 import Profile from "./profile.component";
 import Orders from "./orders.component";
 import { BrowserRouter, Route, Routes, Outlet, Link } from "react-router-dom";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export default function MyAccount() {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    console.log("trigereed");
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div
       style={{
@@ -18,6 +45,46 @@ export default function MyAccount() {
       }}
     >
       <Navbar />
+      <Dialog
+        open={open}
+        style={{ borderRadius: "20px" }}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            You want to delete you account. You will lose all your data, saved
+            addresses, gift coupons, etc.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="outlined"
+            style={{
+              border: "2px solid #a36e29",
+              color: "#a36e29",
+              width: "200px",
+            }}
+            onClick={handleClose}
+          >
+            Are You Sure?
+          </Button>
+          <Button
+            variant="contained"
+            style={{
+              border: "2px solid #a36e29",
+              backgroundColor: "#a36e29",
+              width: "200px",
+            }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box style={{ width: "100%", height: "100%", display: "flex" }}>
         <Box
           style={{
@@ -70,7 +137,7 @@ export default function MyAccount() {
               <u>+91 8102535095</u>
             </Typography>
 
-            <Link to={"/my-account/edit-profile"}>
+            <Link to={"/my-account"}>
               <Button
                 style={{
                   fontWeight: "bold",
@@ -132,6 +199,7 @@ export default function MyAccount() {
                 marginTop: "5%",
                 marginBottom: "20%",
               }}
+              onClick={() => handleClickOpen()}
             >
               Deactivate Account
             </Button>
