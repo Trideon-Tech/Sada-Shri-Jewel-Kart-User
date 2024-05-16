@@ -27,15 +27,15 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { useState } from "react";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-const AddressNew = ({ address }) => {
+const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [add_line_1, setAdd_line1] = useState(address.add_line_1);
-  const [add_line_2, setAdd_line2] = useState(address.add_line_2);
-  const [name, setName] = useState(address.name);
-  const [city, setCity] = useState(address.city);
-  const [state, setState] = useState(address.state);
-  const [pincode, setPincode] = useState(address.pincode);
-  const [mobile, setMobile] = useState(address.mobile);
+  const [add_line_1, setAdd_line1] = useState("");
+  const [add_line_2, setAdd_line2] = useState("");
+  const [name, setName] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [mobile, setMobile] = useState("");
   const addNewAddress = () => {
     const formData = new FormData();
     formData.append("key", "address");
@@ -58,6 +58,8 @@ const AddressNew = ({ address }) => {
       .then((response) => {
         if (response.data.success === 1) {
           console.log("address Added successfully");
+          setRefreshAddress(refreshAddress + 1);
+          setIsEditing(false);
         }
       })
       .catch((error) => {
@@ -68,15 +70,12 @@ const AddressNew = ({ address }) => {
     <Card
       elevation={3}
       style={{
-        width: "100%",
-        height: isEditing ? "80%" : "10%",
-        minWidth: "830px",
+        width: "96%",
+        height: isEditing ? "90%" : "25%",
+        minWidth: "700px",
         minHeight: "10px",
-        padding: "20px",
         backgroundColor: "white",
         boxShadow: "0 0 3px 0 #555555",
-        marginTop: "5%",
-        marginBottom: "5%",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",

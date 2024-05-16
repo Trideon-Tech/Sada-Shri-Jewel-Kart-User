@@ -69,16 +69,19 @@ export default function MyAccount() {
             >
               <u>+91 8102535095</u>
             </Typography>
-            <Button
-              style={{
-                fontWeight: "bold",
-                color: "#a36e29",
-                padding: 0,
-                marginTop: "5%",
-              }}
-            >
-              Edit Profile
-            </Button>
+
+            <Link to={"/my-account/edit-profile"}>
+              <Button
+                style={{
+                  fontWeight: "bold",
+                  color: "#a36e29",
+                  padding: 0,
+                  marginTop: "5%",
+                }}
+              >
+                Edit Profile
+              </Button>
+            </Link>
             <Divider
               style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
             />

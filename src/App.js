@@ -15,6 +15,7 @@ import SignIn from "./pages/signin/signin.component";
 import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 import Orders from "./pages/orders/orders.component";
 import Address from "./pages/address/address.component";
+import EditProfile from "./pages/editProfile/editProfile.component";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="" element={<div>Profile</div>} />
             <Route path="orders" index element={<Orders />} />
             <Route path="address" element={<Address />} />
+            <Route path="edit-profile" element={<EditProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

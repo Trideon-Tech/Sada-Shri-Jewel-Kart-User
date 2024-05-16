@@ -212,6 +212,7 @@ const CheckoutForm = ({ cartItems }) => {
       return;
     }
 
+    console.log(orderCreatedData);
     const options = {
       key: "rzp_test_u3HTPcwIbGNSAp", // Enter the Key ID generated from the Dashboard
       amount: orderCreatedData.amount_due.toString(),

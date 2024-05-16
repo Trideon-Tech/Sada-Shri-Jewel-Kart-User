@@ -68,15 +68,14 @@ const AddressTile = ({ address }) => {
     <Card
       elevation={3}
       style={{
-        width: "100%",
+        width: "96%",
         height: isEditing ? "80%" : "40%",
         minWidth: "830px",
         minHeight: "200px",
-        padding: "30px",
         backgroundColor: "white",
         boxShadow: "0 0 3px 0 #555555",
-        marginTop: "5%",
-        marginBottom: "5%",
+        marginTop: "2%",
+        marginBottom: "3%",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",

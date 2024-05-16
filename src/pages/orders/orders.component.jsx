@@ -9,7 +9,7 @@ const Orders = () => {
   return (
     <Box
       style={{
-        width: "78%",
+        width: "100%",
         padding: "1%",
         paddingRight: "14%",
         height: "100%",
@@ -21,14 +21,18 @@ const Orders = () => {
         alignItems: "flex-start",
       }}
     >
-      <Typography
-        style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
-      >
-        Orders and Returns
-      </Typography>
+      <Box style={{ width: "70%", margin: "auto", textAlign: "left" }}>
+        <Typography
+          style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
+        >
+          Orders and Returns
+        </Typography>
+      </Box>
+
       <Tabs
         aria-label="tabs"
         defaultValue={0}
+        style={{ width: "70%", margin: "auto" }}
         sx={{ marginTop: "2.5%", marginBottom: "5%", bgcolor: "transparent" }}
       >
         <TabList
