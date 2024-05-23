@@ -7,6 +7,9 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import { Box } from "@mui/material";
 
 const JwelleryCard = ({ image, name, price, onClick }) => {
+  const handleCreateWishList = () => {
+    console.log("hello");
+  };
   return (
     <div className="jwellery-card" onClick={onClick}>
       <div className="web">
@@ -20,15 +23,27 @@ const JwelleryCard = ({ image, name, price, onClick }) => {
               position: "absolute",
             }}
           >
-            <FavoriteBorderOutlinedIcon
+            <Button
               style={{
-                fontSize: "2.5rem",
+                width: "max-content",
+                height: "max-content",
                 marginLeft: "auto",
-                marginRight: "5%",
-                marginTop: "5%",
-                color: "#a36e29",
+                backgroundColor: "transparent",
               }}
-            />
+              onClick={() => {
+                handleCreateWishList();
+              }}
+            >
+              <FavoriteBorderOutlinedIcon
+                style={{
+                  fontSize: "2.5rem",
+                  marginLeft: "auto",
+                  marginRight: "5%",
+                  marginTop: "5%",
+                  color: "#a36e29",
+                }}
+              />
+            </Button>
           </div>
           <img
             src={encodeURI(`https://api.sadashrijewelkart.com/assets/${image}`)}

@@ -9,6 +9,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import { generalToastStyle } from "../../utils/toast.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,6 +48,7 @@ import {
 import axios from "axios";
 
 const Reviews = ({ productDetails }) => {
+  const matches = useMediaQuery("(min-width:600px)");
   console.log("produce Details ", productDetails);
   const [open, setOpen] = useState(false);
   const [reviewTitle, setReviewTitle] = useState("");
@@ -327,7 +330,7 @@ const Reviews = ({ productDetails }) => {
           />
           <ImageList
             sx={{
-              width: 500,
+              width: "70%",
               height: 200,
               backgroundColor: "#e7e7e7",
             }}
@@ -369,7 +372,7 @@ const Reviews = ({ productDetails }) => {
           </ImageList>
           <TextField
             fullWidth
-            style={{ width: "50%", marginTop: "2%" }}
+            style={{ width: matches ? "50%" : "100%", marginTop: "2%" }}
             id="outlined-controlled"
             label="Title"
             value={reviewTitle}
@@ -385,7 +388,7 @@ const Reviews = ({ productDetails }) => {
             autoFocus
             minRows={4}
             maxRows={4}
-            style={{ width: "50%", marginTop: "2%" }}
+            style={{ width: matches ? "50%" : "100%", marginTop: "2%" }}
           />
           <Button
             fullWidth
@@ -413,14 +416,27 @@ const Reviews = ({ productDetails }) => {
         style={{
           width: "100%",
           display: "flex",
+
+          flexDirection: matches ? "row" : "column",
           justifyContent: "space-between",
-          alignItems: "flex-start",
+          alignItems: matches ? "flex-start" : "center",
           marginTop: "5%",
         }}
       >
         <OverAllRating openModal={openModal} />
+        {!matches ? (
+          <Divider
+            style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
+          />
+        ) : null}
         <CustomerLikePills />
-        <RatingImages />
+        {!matches ? (
+          <Divider
+            style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
+          />
+        ) : null}
+
+        <RatingImages mobileView={!matches} />
       </Box>
       <Divider style={{ width: "100%" }} />
       <ReviewList />

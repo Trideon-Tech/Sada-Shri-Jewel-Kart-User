@@ -4,24 +4,30 @@ import {
   ShoppingCart,
 } from "@mui/icons-material";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
-import Snackbar from "@mui/joy/Snackbar";
-import Chip from "@mui/joy/Chip";
+import ShareIcon from "@mui/icons-material/Share";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { generalToastStyle } from "../../utils/toast.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
 import {
   Box,
   Button,
   Card,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Drawer,
   Grid,
   OutlinedInput,
+  Slide,
   ThemeProvider,
   Typography,
   createTheme,
@@ -37,7 +43,7 @@ import "./productdetail.styles.scss";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import ImageVideoCarousel from "./carousal.component";
-import { Input } from "@mui/joy";
+import { Input, Textarea } from "@mui/joy";
 import Reviews from "../../components/reviews/reviews.component";
 
 const theme = createTheme({
@@ -49,6 +55,10 @@ const theme = createTheme({
   typography: {
     fontFamily: '"Work Sans", sans-serif',
   },
+});
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function ProductDetail() {
@@ -211,10 +221,97 @@ function ProductDetail() {
     setDrawerOpen(false);
   };
 
+  const [openShareDialog, setOpenShareDialog] = React.useState(false);
+  const handleClickOpen = () => {
+    console.log("trigereed");
+    setOpenShareDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenShareDialog(false);
+  };
   return (
     <div className="product-detail">
       <Navbar />
       <ToastContainer />
+      <Dialog
+        open={openShareDialog}
+        maxWidth={200}
+        style={{
+          borderRadius: "20px",
+          margin: "auto",
+          width: "100%",
+        }}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>Share product</DialogTitle>
+        <DialogContent></DialogContent>
+        <DialogActions
+          style={{
+            display: "flex",
+            padding: "20px",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              width: "150px",
+              height: "100px",
+              border: "2px solid #a36e29",
+              borderRadius: "5px",
+              padding: "10px",
+            }}
+          >
+            <Typography style={{ color: "#707070" }}>
+              Share On WhatsApp
+            </Typography>
+            <Button
+              style={{
+                width: "50px",
+                height: "50px",
+                backgroundColor: "#e7e7e7",
+              }}
+            >
+              <WhatsAppIcon style={{ fontSize: "1.5rem", color: "#a36e29" }} />
+            </Button>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              width: "150px",
+              height: "100px",
+              border: "2px solid #a36e29",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            <Typography style={{ color: "#707070" }}>Click To Copy</Typography>
+            <Button
+              style={{
+                width: "50px",
+                height: "50px",
+                backgroundColor: "#e7e7e7",
+              }}
+              onClick={() => navigator.clipboard.writeText(window.location)}
+            >
+              <ContentCopyIcon
+                style={{ fontSize: "1.5rem", color: "#a36e29" }}
+              />
+            </Button>
+          </Box>
+        </DialogActions>
+      </Dialog>
 
       {/* <Snackbar
         autoHideDuration={5000}
@@ -309,6 +406,38 @@ function ProductDetail() {
                     style={{ fontSize: "1.5rem", color: "orange" }}
                   />
                   <Typography>(500 reviews)</Typography>
+                </Box>
+                <Box
+                  style={{
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginLeft: "auto",
+                    width: "30%",
+                    paddingLeft: "2%",
+                  }}
+                >
+                  <Box
+                    style={{
+                      marginLeft: "auto",
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "15px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingLeft: "2%",
+                      paddingRight: "2%",
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleClickOpen()}
+                  >
+                    <ShareIcon
+                      style={{ fontSize: "1.5rem", color: "#a36e29" }}
+                    />
+                  </Box>
                 </Box>
               </Box>
               <Grid container spacing={3} style={{ marginTop: "2%" }}>
@@ -958,6 +1087,21 @@ function ProductDetail() {
                     />
                     <Typography>(500 reviews)</Typography>
                   </Box>
+                  <Box
+                    style={{
+                      width: "20%",
+                      height: "20px",
+                      paddingLeft: "2%",
+                      paddingRight: "2%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <StarBorderRoundedIcon
+                      style={{ fontSize: "1.5rem", color: "orange" }}
+                    />
+                  </Box>
                 </div>
               </Grid>
               <Grid item xs={12} className="product-detail-grid">
@@ -1325,6 +1469,11 @@ function ProductDetail() {
                 />
               )) || null}
             </div>
+          </div>
+        </div>
+        <div>
+          <div style={{ width: "100%", height: "100vh" }}>
+            <Reviews productDetails={productDetail} />
           </div>
         </div>
       </div>

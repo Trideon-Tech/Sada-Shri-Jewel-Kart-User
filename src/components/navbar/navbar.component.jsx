@@ -5,6 +5,7 @@ import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import Badge from "@mui/joy/Badge";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Toolbar,
@@ -37,6 +38,7 @@ const Navbar = () => {
   const matches = useMediaQuery("(min-width:600px)");
   const [menuItems, setMenuItems] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   let categoryName;
   let navigate = useNavigate();
   const { category } = useParams();
@@ -63,6 +65,14 @@ const Navbar = () => {
       .then((response) => setMenuItems(response.data.response.categories))
       .catch((error) => console.error("Error fetching menu items:", error));
   }, []);
+
+  const handleFuzzySearch = (event) => {
+    if (event.key === "Enter") {
+      console.log(searchTerm);
+      if (searchTerm.length === 0) return;
+      navigate(`/jwellery/search?search=${searchTerm}`);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -217,6 +227,8 @@ const Navbar = () => {
                   input: "input-input",
                 }}
                 inputProps={{ "aria-label": "search" }}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                onKeyDown={(event) => handleFuzzySearch(event)}
               />
             </div>
             <div className="icons">
@@ -285,7 +297,7 @@ const Navbar = () => {
         <Drawer
           className="drawer"
           anchor="right"
-          open={false}
+          open={openDrawer}
           onClose={() => setOpenDrawer(false)}
         >
           <List>
@@ -322,15 +334,71 @@ const Navbar = () => {
             />
             <div className="search">
               <div className="search-icon">
-                <IconButton color="inherit" component={Link} to="/search">
-                  <SearchIcon />
-                </IconButton>
+                <Dropdown>
+                  <MenuButton
+                    slots={{ root: IconButton }}
+                    slotProps={{ root: { variant: "plain", color: "neutral" } }}
+                    sx={{ borderRadius: 40 }}
+                  >
+                    <AccountCircleIcon style={{ color: "#a36e29" }} />
+                  </MenuButton>
+                  <Menu
+                    style={{
+                      width: "15vw",
+                      height: "10%",
+                      marginTop: "200px",
+                      paddingTop: "100px  ",
+                    }}
+                  >
+                    {localStorage.getItem("token") ? (
+                      <MenuItem component={Link} to="/my-account">
+                        <AccountCircleIcon style={{ color: "#a36e29" }} />
+                        <Typography>My Account</Typography>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem component={Link} to="/signup">
+                        <HowToRegRoundedIcon style={{ color: "#a36e29" }} />
+                        <Typography>Register</Typography>
+                      </MenuItem>
+                    )}
+                    {localStorage.getItem("token") ? (
+                      <MenuItem onClick={handleLogout}>
+                        <ExitToAppRoundedIcon style={{ color: "#a36e29" }} />
+                        <Typography>Logout</Typography>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem component={Link} to="/signin">
+                        <LoginRoundedIcon style={{ color: "#a36e29" }} />
+                        <Typography>SignIn</Typography>
+                      </MenuItem>
+                    )}
+                  </Menu>
+                </Dropdown>
+
                 <IconButton color="inherit" component={Link} to="/wishlist">
-                  <FavoriteIcon />
+                  <Badge
+                    badgeContent={4}
+                    sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
+                  >
+                    <FavoriteIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton color="inherit" component={Link} to="/cart">
+                  <Badge
+                    badgeContent={sessionStorage.getItem("cart") || 0}
+                    sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
+                  >
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton>
+                  <MenuIcon
+                    style={{ fontSize: "2rem", color: "#a36e29" }}
+                    onClick={() => setOpenDrawer(true)}
+                  />
                 </IconButton>
               </div>
             </div>
-            {/* <Menu className="menu-icon" onClick={() => setOpenDrawer(true)} /> */}
           </Toolbar>
         </AppBar>
       </div>

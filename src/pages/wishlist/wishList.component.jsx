@@ -955,7 +955,11 @@ const Wishlist = () => {
         }}
       >
         <Box style={{ width: "90%" }}>
-          <Grid container spacing={5} style={{ width: "100%" }}>
+          <Grid
+            container
+            spacing={mediaQuery ? 5 : 1}
+            style={{ width: "100%" }}
+          >
             {mockData.map((item) => (
               <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard

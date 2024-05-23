@@ -15,7 +15,7 @@ function srcset(image, size, rows = 1, cols = 1) {
   };
 }
 
-const RatingImages = () => {
+const RatingImages = ({ mobileView }) => {
   return (
     <Box>
       <Box
@@ -24,7 +24,6 @@ const RatingImages = () => {
           height: "max-content",
           display: "flex",
           flexDirection: "column",
-          maxWidth: "500px",
         }}
       >
         <Box
@@ -50,7 +49,7 @@ const RatingImages = () => {
           }}
         >
           <ImageList
-            sx={{ width: 500, height: 200 }}
+            sx={{ width: mobileView ? 350 : 500, height: 200 }}
             variant="quilted"
             cols={4}
             rowHeight={121}

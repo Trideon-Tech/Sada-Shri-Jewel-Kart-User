@@ -16,6 +16,7 @@ import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 import Orders from "./pages/orders/orders.component";
 import Address from "./pages/address/address.component";
 import EditProfile from "./pages/editProfile/editProfile.component";
+import SearchProductpage from "./pages/searchProductPage/searchProductPage.component";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/" element={<LandingPage />} />
           <Route path="/jwellery/:category" element={<Productpage />} />
+          <Route path="/jwellery/search" element={<SearchProductpage />} />
           <Route path="/item/:category/:product" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/my-orders" element={<MyOrders />} />
