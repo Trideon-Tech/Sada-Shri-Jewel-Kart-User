@@ -87,28 +87,25 @@ const UserDetailsForm = () => {
       );
       localStorage.setItem("token", userData.response.token);
       localStorage.setItem("user_id", userData.response.id);
-      // sendCartToAPI(token);
 
-      // .then((response) => {
-      //   console.log(
-      //     "User logged in successfully:",
-      //     response.data.response.token
-      //   );
-      //   const token = response.data.response.token;
-      //   localStorage.setItem("token", token);
-      //   localStorage.setItem("user_id", response.data.response.id);
-      //   sendCartToAPI(token);
-      //   navigate("/");
-      // })
-      // .catch((error) => {
-      //   console.error("Error:", error);
-      //   console.log(error.response.data.message);
-      //   setOpen(true);
-      // });
+      const wishlistData = new FormData();
+      wishlistData.append("type", "create");
+      wishlistData.append("user_id", localStorage.getItem("user_id"));
+      wishlistData.append("wishlist_name", `default`);
+      wishlistData.append("wishlist_items", "[]");
 
-      console.log(userData);
+      await axios.post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        wishlistData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      const { data: wishListFound } = await axios.get(
+      const { data: defaultWishlists } = await axios.get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
           "user_id"
         )}`,
@@ -119,38 +116,10 @@ const UserDetailsForm = () => {
           },
         }
       );
-      console.log(wishListFound);
-      // .then((response) => {
-      //   setWishlists(response.data.response);
-      //   console.log("wishlists", response);
-      // })
-      // .catch((error) => {
-      //   setSnackBarMessage(error.response.data.message);
-      //   setOpen(true);
-      // });
-
-      if (
-        wishListFound.response === null ||
-        wishListFound.response.length === 0
-      ) {
-        const wishlistData = new FormData();
-        wishlistData.append("type", "create");
-        wishlistData.append("user_id", localStorage.getItem("user_id"));
-        wishlistData.append("wishlist_name", `default`);
-        wishlistData.append("wishlist_items", []);
-
-        const { data: createdWishList } = await axios.post(
-          "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
-          wishlistData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(createdWishList);
-      }
+      localStorage.setItem(
+        "default_wishlist",
+        defaultWishlists?.response[0]?.id
+      );
       navigate("/");
     } catch (error) {
       setSnackBarMessage(error.response.data.message);

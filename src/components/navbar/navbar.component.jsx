@@ -55,8 +55,8 @@ const Navbar = () => {
       })
       .then((response) => {
         console.log(response.data);
-        console.log(response.data.response.length);
-        sessionStorage.setItem("cart", response.data.response.length);
+        console.log(response.data?.response?.length);
+        sessionStorage.setItem("cart", response.data?.response?.length || 0);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
     // }
@@ -65,6 +65,26 @@ const Navbar = () => {
       .then((response) => setMenuItems(response.data.response.categories))
       .catch((error) => console.error("Error fetching menu items:", error));
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data: defaultWishlists } = await axios.get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      localStorage.setItem(
+        "default_wishlist",
+        defaultWishlists?.response[0]?.id
+      );
+    })();
+  });
 
   const handleFuzzySearch = (event) => {
     if (event.key === "Enter") {
@@ -283,7 +303,7 @@ const Navbar = () => {
               </IconButton>
               <IconButton color="inherit" component={Link} to="/cart">
                 <Badge
-                  badgeContent={sessionStorage.getItem("cart") || 0}
+                  badgeContent={sessionStorage.getItem("cart")}
                   sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
                 >
                   <ShoppingCartIcon />

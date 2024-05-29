@@ -24,6 +24,27 @@ const Cart = () => {
       .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshCart]);
 
+  const moveToWishlistHandler = async (productId, cartId) => {
+    const wishlistData = new FormData();
+    wishlistData.append("type", "add_item");
+    wishlistData.append(
+      "wishlist_id",
+      localStorage.getItem("default_wishlist")
+    );
+    wishlistData.append("product_id", productId);
+
+    await axios.post(
+      "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+      wishlistData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    removeCartItemHandler(cartId);
+  };
   const removeCartItemHandler = (cartId) => {
     const token = localStorage.getItem("token");
 
@@ -64,6 +85,7 @@ const Cart = () => {
                 <Box style={{ height: "60%", marginTop: "6.8%" }}>
                   {cartItems?.map((item) => (
                     <CartItem
+                      moveToWishlistHandler={moveToWishlistHandler}
                       key={item.cart_id}
                       item={item}
                       removeHandler={removeCartItemHandler}
