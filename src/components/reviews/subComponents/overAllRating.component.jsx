@@ -1,6 +1,10 @@
 import { Typography, Box, Button } from "@mui/material";
+
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Rating from "@mui/material/Rating";
 const OverAllRating = ({ openModal }) => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <Box>
       <Box

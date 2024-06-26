@@ -12,8 +12,14 @@ import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultR
 import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded";
 import Select from "@mui/joy/Select";
 import CloseIcon from "@mui/icons-material/Close";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Option from "@mui/joy/Option";
-export default function CartItem({ item, removeHandler, readOnly }) {
+export default function CartItem({
+  item,
+  removeHandler,
+  readOnly,
+  moveToWishlistHandler,
+}) {
   const [quantity, setQuantity] = useState(1);
   const theme = useTheme();
 
@@ -170,6 +176,18 @@ export default function CartItem({ item, removeHandler, readOnly }) {
             style={{ padding: 0 }}
           >
             <CloseIcon
+              fontSize="large"
+              style={{
+                marginBottom: "auto",
+                color: "#A36E29",
+              }}
+            />
+          </Button>
+          <Button
+            style={{ marginTop: "auto" }}
+            onClick={() => moveToWishlistHandler(item.id, item.cart_id)}
+          >
+            <FavoriteBorderIcon
               fontSize="large"
               style={{
                 marginBottom: "auto",

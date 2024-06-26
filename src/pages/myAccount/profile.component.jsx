@@ -11,7 +11,7 @@ import Input from "@mui/joy/Input";
 import ListItemDecorator from "@mui/joy/ListItemDecorator";
 import Box from "@mui/joy/Box";
 import { Button } from "@mui/joy";
-const Account = () => {
+const Profile = () => {
   const userData = {
     firstName: "Sushovan",
     lastName: "Paul",
@@ -193,4 +193,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Profile;

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Navbar from "../../components/navbar/navbar.component";
 import { Grid, Box, Divider, Breadcrumbs } from "@mui/material";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 const mockData = [
   {
     id: "1",
@@ -891,6 +892,21 @@ const mockData = [
 const Wishlist = () => {
   const navigate = useNavigate();
   const mediaQuery = useMediaQuery("(min-width:600px)");
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
+          "default_wishlist"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    })();
+  });
   const handleCardClick = (productName, hash, menuItemName) => {
     console.log(hash);
     console.log(`/item/${menuItemName}/${productName}-${hash}`);
@@ -955,7 +971,11 @@ const Wishlist = () => {
         }}
       >
         <Box style={{ width: "90%" }}>
-          <Grid container spacing={5} style={{ width: "100%" }}>
+          <Grid
+            container
+            spacing={mediaQuery ? 5 : 1}
+            style={{ width: "100%" }}
+          >
             {mockData.map((item) => (
               <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard
