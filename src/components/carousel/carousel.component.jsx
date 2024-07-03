@@ -16,19 +16,19 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
   {
     label: "San Francisco – Oakland Bay Bridge, United States",
-    imgPath: "https://source.unsplash.com/random/1280x720?jewellery&sig=1",
+    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
   },
   {
     label: "Bird",
-    imgPath: "https://source.unsplash.com/random/1280x720?jewellery&sig=2",
+    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
   },
   {
     label: "Bali, Indonesia",
-    imgPath: "https://source.unsplash.com/random/1280x720?jewellery&sig=3",
+    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
   },
   {
     label: "Goč, Serbia",
-    imgPath: "https://source.unsplash.com/random/1280x720?jewellery&sig=4",
+    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
   },
 ];
 

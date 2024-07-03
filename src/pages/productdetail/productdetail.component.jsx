@@ -35,7 +35,7 @@ import {
 import axios from "axios";
 import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 import "./productdetail.styles.scss";
@@ -66,6 +66,7 @@ function ProductDetail() {
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState(null);
   const { product } = useParams();
+  const navigate = useNavigate();
   const [menuItemName, hashId] = product.split("-");
 
   const [customizationOptions, setCustomizationOptions] = useState({
@@ -99,6 +100,7 @@ function ProductDetail() {
       .then(() => {
         console.log(`Product with ID ${productDetail.id} sent to API`);
         toast.info("Product Added to Cart", generalToastStyle);
+        navigate("/cart");
       })
       .catch((error) => {
         console.error(

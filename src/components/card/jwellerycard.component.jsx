@@ -5,13 +5,29 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Box } from "@mui/material";
+import axios from "axios";
 
-const JwelleryCard = ({ image, name, price, onClick }) => {
-  const handleCreateWishList = () => {
+const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
+  const handleCreateWishList = async () => {
+    const formData = new FormData();
+    formData.append("type", "add_item");
+    formData.append("wishlist_id", "11");
+    formData.append("product_id", "5");
+    const token = localStorage.getItem("token");
+    const a = await axios.post(
+      "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     console.log("hello");
   };
   return (
-    <div className="jwellery-card" onClick={onClick}>
+    <div className="jwellery-card">
       <div className="web">
         <div className="card-image-container" style={{ position: "relative" }}>
           <div
@@ -48,6 +64,7 @@ const JwelleryCard = ({ image, name, price, onClick }) => {
           <img
             src={encodeURI(`https://api.sadashrijewelkart.com/assets/${image}`)}
             alt={name}
+            onClick={() => clickHandler(name, hash)}
             className="card-image"
           />
         </div>

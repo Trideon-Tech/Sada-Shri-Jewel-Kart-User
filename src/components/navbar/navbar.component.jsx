@@ -45,6 +45,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) return;
     // if (!sessionStorage.getItem("cart")) {
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
@@ -68,21 +69,53 @@ const Navbar = () => {
 
   useEffect(() => {
     (async () => {
-      const { data: defaultWishlists } = await axios.get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
-          "user_id"
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
-          },
+      if (localStorage.getItem("user_id")) {
+        const token = localStorage.getItem("token");
+
+        if (!token) return;
+
+        //creating default wishlist
+
+        const formData = new FormData();
+        formData.append("type", "create");
+        formData.append("user_id", localStorage.getItem("user_id"));
+        formData.append(
+          "wishlist_name",
+          `${localStorage.getItem("user_id")}_default`
+        );
+        formData.append("wishlist_items", "[]");
+
+        try {
+          await axios.post(
+            `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+        } catch (err) {
+          console.log(err.message);
         }
-      );
-      localStorage.setItem(
-        "default_wishlist",
-        defaultWishlists?.response[0]?.id
-      );
+        //////////////////////////////////////////////////////
+        const { data: defaultWishlists } = await axios.get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+            "user_id"
+          )}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        localStorage.setItem(
+          "default_wishlist",
+          defaultWishlists?.response[0]?.id
+        );
+      }
     })();
   });
 
@@ -133,7 +166,7 @@ const Navbar = () => {
       className="navbar"
       style={{
         height: "max-content",
-        marginBottom: matches ? "100px" : "px",
+        marginBottom: matches ? "100px" : "0px",
       }}
     >
       <div className="web">
@@ -143,6 +176,7 @@ const Navbar = () => {
               alt="logo"
               className="logo"
               src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
+              onClick={() => navigate(`/`)}
             />
             <div className="menu-items">
               {menuItems.map((category) => (

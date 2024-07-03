@@ -20,8 +20,8 @@ export default function PromotionImageList() {
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img
-                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.img}?w=248&fit=crop&auto=format`}
+                srcSet={`${item.img}`}
+                src={`${item.img}`}
                 alt={item.title}
                 loading="lazy"
               />
@@ -35,51 +35,51 @@ export default function PromotionImageList() {
 
 const itemData = [
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=1",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Bed",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=2",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Books",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=3",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Sink",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=4",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Kitchen",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=5",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Blinds",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=6",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Chairs",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=7",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Laptop",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=8",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Doors",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=9",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Coffee",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=10",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Storage",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=11",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Candle",
   },
   {
-    img: "https://source.unsplash.com/random/?jewellery&sig=12",
+    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
     title: "Coffee table",
   },
 ];

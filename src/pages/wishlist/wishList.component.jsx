@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Navbar from "../../components/navbar/navbar.component";
 import { Grid, Box, Divider, Breadcrumbs } from "@mui/material";
@@ -892,8 +892,12 @@ const mockData = [
 const Wishlist = () => {
   const navigate = useNavigate();
   const mediaQuery = useMediaQuery("(min-width:600px)");
+  const [wishlistItems, setWishListItems] = useState([]);
+
   useEffect(() => {
     (async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
       const { data } = await axios.get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
@@ -905,6 +909,8 @@ const Wishlist = () => {
           },
         }
       );
+
+      console.log("wishlist", data);
     })();
   });
   const handleCardClick = (productName, hash, menuItemName) => {
@@ -976,7 +982,7 @@ const Wishlist = () => {
             spacing={mediaQuery ? 5 : 1}
             style={{ width: "100%" }}
           >
-            {mockData.map((item) => (
+            {wishlistItems.map((item) => (
               <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard
                   key={item.id}

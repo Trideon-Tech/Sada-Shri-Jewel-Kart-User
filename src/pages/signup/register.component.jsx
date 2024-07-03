@@ -15,6 +15,7 @@ const Register = () => {
   let navigate = useNavigate();
   const [mobile, setMobile] = useState();
   const [otp, setOTP] = useState();
+  const [optSent, setotpSent] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -85,6 +86,61 @@ const Register = () => {
     // });
   };
 
+  const sendOTPHandler = () => {
+    const formData = new FormData();
+    setotpSent(true);
+    formData.append("type", "generate_otp");
+    formData.append("mobile", mobile);
+    localStorage.setItem("mobile", mobile);
+
+    //call API for OTP verification
+    axios
+      .post("https://api.sadashrijewelkart.com/v1.0.0/user/otp.php", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.success === 1) {
+          setotpSent(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const verifyOTPHandler = () => {
+    const formData = new FormData();
+    setotpSent(true);
+    formData.append("type", "verify_otp");
+    formData.append("mobile", mobile);
+    formData.append("otp", otp);
+
+    //call API for OTP verification
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${mobile}`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.data.success === 1) {
+          if (response.data.response.type === "success") {
+            navigate("/user-details");
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div className="register">
       <Navbar />
@@ -125,13 +181,14 @@ const Register = () => {
                   mobile?.length > 9 ? (
                     <Button
                       variant="solid"
-                      // loading={data.status === "loading"}
+                      loading={optSent}
                       type="submit"
                       style={{
                         borderTopLeftRadius: 0,
                         borderBottomLeftRadius: 0,
                         backgroundColor: "#a36e29",
                       }}
+                      onClick={() => sendOTPHandler()}
                     >
                       Send OTP
                     </Button>
@@ -174,7 +231,7 @@ const Register = () => {
                   variant="solid"
                   color="primary"
                   size="lg"
-                  onClick={handleRegister}
+                  onClick={() => verifyOTPHandler()}
                   style={{
                     color: "white",
                     backgroundColor: "#a36e29",

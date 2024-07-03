@@ -214,11 +214,13 @@ function Productpage() {
                   filteredJwellery.map((item, index) => (
                     <Grid item xs={3} className="product-card">
                       <JwelleryCard
+                        id={item.id}
                         key={item.id}
                         image={item.images[0].file}
                         name={item.name}
+                        hash={item.hash}
                         price={item.price}
-                        onClick={() => handleCardClick(item.name, item.hash)}
+                        clickHandler={handleCardClick}
                       />
                     </Grid>
                   ))
