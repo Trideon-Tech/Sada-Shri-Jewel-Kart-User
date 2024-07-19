@@ -109,10 +109,10 @@ export default function CartItem({
               required
               sx={{ width: 150, border: 0 }}
             >
-              <Option value="dog">Dog</Option>
-              <Option value="cat">Cat</Option>
-              <Option value="fish">Fish</Option>
-              <Option value="bird">Bird</Option>
+              <Option value="15cm">15cm</Option>
+              <Option value="16cm">16cm</Option>
+              <Option value="17cm">17cm</Option>
+              <Option value="18cm">18cm</Option>
             </Select>
           </Box>
           <Box

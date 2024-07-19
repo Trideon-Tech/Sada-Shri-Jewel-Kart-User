@@ -5,7 +5,33 @@ import TabList from "@mui/joy/TabList";
 import Tab, { tabClasses } from "@mui/joy/Tab";
 import OrderItem from "./orderItem.component";
 import { TabPanel } from "@mui/joy";
+import { useEffect, useState } from "react";
+import axios from "axios";
 const Orders = () => {
+  const [orderList, setOrderList] = useState([]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    // if (!sessionStorage.getItem("cart")) {
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("orders", response.data.response);
+        setOrderList(response.data.response);
+      })
+      .catch((error) => console.log("Error while fetching cart items", error));
+  }, []);
+
   return (
     <Box
       style={{

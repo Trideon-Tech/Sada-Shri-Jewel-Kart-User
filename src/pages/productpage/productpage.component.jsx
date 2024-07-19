@@ -182,7 +182,6 @@ function Productpage() {
                 </Typography>
                 <Select
                   defaultValue={["dog"]}
-                  multiple
                   onChange={() => {}}
                   sx={{
                     minWidth: "13rem",

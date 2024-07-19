@@ -13,9 +13,43 @@ import {
   Typography,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
+import axios from "axios";
 import React, { useState } from "react";
 
 const EditProfile = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
+
+  const updateProfile = () => {
+    const formData = new FormData();
+    formData.append("type", "update");
+    formData.append("name", `${firstName} ${lastName}`);
+    formData.append("email", email);
+    formData.append("mobile", mobile);
+    formData.append("user_id", localStorage.getItem("user_id"));
+
+    const token = localStorage.getItem("token");
+    axios
+      .post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+          token,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   return (
     <Box
       style={{
@@ -96,17 +130,37 @@ const EditProfile = () => {
               label="First Name*"
               fullWidth
               style={{ width: "45%" }}
+              onChange={(event) => {
+                setFirstName(event.target.value);
+              }}
             />
             <TextField
               variant="outlined"
               label="Last Name*"
               fullWidth
               style={{ width: "45%" }}
+              onChange={(event) => {
+                setLastName(event.target.value);
+              }}
             />
           </Box>
 
-          <TextField variant="outlined" label="Enter Email Id" fullWidth />
-          <TextField variant="outlined" label="Phone*" fullWidth />
+          <TextField
+            variant="outlined"
+            label="Enter Email Id"
+            fullWidth
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+          />
+          <TextField
+            variant="outlined"
+            label="Phone*"
+            fullWidth
+            onChange={(event) => {
+              setMobile(event.target.value);
+            }}
+          />
           <TextField variant="outlined" label="Default Pincode*" fullWidth />
           <Box
             style={{
@@ -139,6 +193,7 @@ const EditProfile = () => {
                 background:
                   "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
               }}
+              onClick={() => updateProfile()}
             >
               Save Canges
             </Button>

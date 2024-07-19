@@ -12,9 +12,17 @@ import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { generalToastStyle } from "../../utils/toast.styles";
 import { toast, ToastContainer } from "react-toastify";
+import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import ModalDialog from "@mui/joy/ModalDialog";
+import ModalOverflow from "@mui/joy/ModalOverflow";
 import "react-toastify/dist/ReactToastify.css";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+
 import {
   Box,
   Button,
@@ -109,6 +117,7 @@ function ProductDetail() {
         );
         toast.error(error.response.data.message, generalToastStyle);
       });
+
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
         headers: {
@@ -129,6 +138,7 @@ function ProductDetail() {
   const [variants, setVariants] = useState([]); //for variant
   const [selectedVariantPrice, setSelectedVariantPrice] = useState(""); //for variant price
   const [pincode, setPincode] = useState();
+  const [locationModalOpen, setLocationModalOpen] = useState();
 
   const updateSelectedVariantPrice = () => {
     const selectedOptions = [selectedMetal, selectedDiamondType, selectedSize];
@@ -236,6 +246,135 @@ function ProductDetail() {
     <div className="product-detail">
       <Navbar />
       <ToastContainer />
+      <Modal
+        open={locationModalOpen}
+        onClose={() => {
+          setLocationModalOpen(false);
+        }}
+      >
+        <ModalOverflow>
+          <ModalDialog
+            aria-labelledby="modal-dialog-overflow"
+            style={{ width: "500px", height: "600px", padding: "30px" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "max-content",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <p style={{ fontSize: "1.5rem", fontWeight: 600, margin: 0 }}>
+                  Locate me now
+                </p>
+                <ModalClose />
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "30%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50px",
+                }}
+              >
+                <PinDropOutlinedIcon
+                  style={{ fontSize: "5rem", color: "#a36e29" }}
+                />
+                <p
+                  style={{
+                    fontSize: "1.5rem",
+                    textAlign: "center",
+                    width: "300px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Add your Pincode to Browse Better
+                </p>
+              </div>
+              <div style={{ width: "100%", height: "max-content" }}>
+                <Input
+                  sx={{
+                    width: "100%",
+                    height: "60px",
+                    backgroundColor: "#F9F5EC",
+                    border: 0,
+                  }}
+                  placeholder="Enter your Pincode"
+                  inputProps={{ "aria-label": "Enter your Pincode" }}
+                  startDecorator={<MyLocationIcon />}
+                  endDecorator={
+                    <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
+                  }
+                />
+                <div
+                  style={{
+                    width: "100%",
+                    height: "max-content",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    color: "#A36E29",
+                    fontWeight: 600,
+                    paddingLeft: "20px",
+                  }}
+                >
+                  <LocalShippingOutlinedIcon />
+                  <p>{"  "}Estimated delivery by 12 July</p>
+                </div>
+              </div>
+              <Card
+                elevation={4}
+                sx={{
+                  width: "calc(100% - 40px)",
+                  height: "60px",
+                  display: "flex",
+                  borderRadius: "10px",
+                  padding: "20px",
+                }}
+              >
+                <div style={{ width: "70%", height: "100%" }}>
+                  <h4
+                    style={{
+                      fontWeight: 600,
+                      margin: 0,
+                    }}
+                  >
+                    City Location
+                  </h4>
+                  <p style={{ margin: 0, color: "gray", fontWeight: 600 }}>
+                    Jamshedpur, Jharkhand
+                  </p>
+                </div>
+                <div
+                  style={{ marginLeft: "auto", width: "30%", height: "100%" }}
+                >
+                  <p
+                    style={{
+                      fontWeight: 600,
+                      color: "#A36E29",
+                      textAlign: "right ",
+                    }}
+                  >
+                    Submit
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </ModalDialog>
+        </ModalOverflow>
+      </Modal>
       <Dialog
         open={openShareDialog}
         maxWidth={200}
@@ -642,7 +781,7 @@ function ProductDetail() {
                                       </Typography>
                                       <Box
                                         style={{
-                                          border: "3px solid brown",
+                                          border: "3px solid #a36e29",
                                           padding: "2px",
                                           borderRadius: "10px",
                                         }}
@@ -711,7 +850,7 @@ function ProductDetail() {
                                       </Typography>
                                       <Box
                                         style={{
-                                          border: "3px solid brown",
+                                          border: "3px solid #a36e29",
                                           padding: "2px",
                                           borderRadius: "10px",
                                         }}
@@ -774,7 +913,7 @@ function ProductDetail() {
                                     </Typography>
                                     <Box
                                       style={{
-                                        border: "3px solid brown",
+                                        border: "3px solid #a36e29",
                                         padding: "2px",
                                         borderRadius: "10px",
                                       }}
@@ -845,7 +984,11 @@ function ProductDetail() {
                       height: "55px",
                       color: "black",
                     }}
-                    endDecorator={<LocationOnOutlined />}
+                    endDecorator={
+                      <LocationOnOutlined
+                        onClick={() => setLocationModalOpen(true)}
+                      />
+                    }
                     fullWidth
                   />
                   <Typography variant="body" className="delivery-info">

@@ -116,7 +116,7 @@ export default function MyAccount() {
             <Typography
               style={{ fontWeight: "bold", fontSize: "1rem", marginTop: "20%" }}
             >
-              Sushovan Paul
+              {localStorage.getItem("user_name")}
             </Typography>
             <Typography
               style={{
@@ -125,7 +125,7 @@ export default function MyAccount() {
                 color: "#00000090",
               }}
             >
-              sushovanpaul07@gmail.com
+              {localStorage.getItem("user_email")}
             </Typography>
             <Typography
               style={{
@@ -134,7 +134,7 @@ export default function MyAccount() {
                 color: "#00000090",
               }}
             >
-              <u>+91 8102535095</u>
+              <u>+{localStorage.getItem("mobile")}</u>
             </Typography>
 
             <Link to={"/my-account"}>

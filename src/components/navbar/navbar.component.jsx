@@ -42,6 +42,28 @@ const Navbar = () => {
   let categoryName;
   let navigate = useNavigate();
   const { category } = useParams();
+  const [wishListItems, setWishListItems] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const { data } = await axios.get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
+          "default_wishlist"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("wishlist", data);
+      setWishListItems(data.response.length);
+    })();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -117,7 +139,7 @@ const Navbar = () => {
         );
       }
     })();
-  });
+  }, []);
 
   const handleFuzzySearch = (event) => {
     if (event.key === "Enter") {
@@ -329,7 +351,7 @@ const Navbar = () => {
 
               <IconButton color="inherit" component={Link} to="/wishlist">
                 <Badge
-                  badgeContent={4}
+                  badgeContent={wishListItems}
                   sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
                 >
                   <FavoriteIcon />

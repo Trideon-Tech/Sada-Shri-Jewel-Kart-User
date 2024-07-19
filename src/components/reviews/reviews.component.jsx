@@ -67,7 +67,7 @@ const Reviews = ({ productDetails }) => {
     formData.append("rating", reviewRating);
     formData.append("title", reviewTitle);
     formData.append("content", reviewContent);
-    formData.append("review_img[]", reviewImages);
+    // formData.append("review_img[]", "reviewImages");
 
     const token = localStorage.getItem("token");
     axios

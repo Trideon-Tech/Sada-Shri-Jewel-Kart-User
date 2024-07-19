@@ -911,6 +911,7 @@ const Wishlist = () => {
       );
 
       console.log("wishlist", data);
+      setWishListItems(data.response);
     })();
   });
   const handleCardClick = (productName, hash, menuItemName) => {
@@ -986,7 +987,7 @@ const Wishlist = () => {
               <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard
                   key={item.id}
-                  image={item.images[0].file}
+                  image={item?.images ? item?.images[0]?.file : ""}
                   name={item.name}
                   price={item.price}
                   onClick={() =>

@@ -131,7 +131,25 @@ const Register = () => {
       .then((response) => {
         console.log(response);
         if (response.data.success === 1) {
-          if (response.data.response.type === "success") {
+          if (response.data.response.user_details.user_exists) {
+            localStorage.setItem(
+              "token",
+              response.data.response.user_details.user_details.token
+            );
+            localStorage.setItem(
+              "user_name",
+              response.data.response.user_details.user_details.name
+            );
+            localStorage.setItem(
+              "user_email",
+              response.data.response.user_details.user_details.email
+            );
+            localStorage.setItem(
+              "user_data",
+              response.data.response.user_details.user_details
+            );
+            navigate("/");
+          } else {
             navigate("/user-details");
           }
         }
