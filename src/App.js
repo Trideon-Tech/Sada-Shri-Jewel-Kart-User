@@ -17,6 +17,7 @@ import Orders from "./pages/orders/orders.component";
 import Address from "./pages/address/address.component";
 import EditProfile from "./pages/editProfile/editProfile.component";
 import SearchProductpage from "./pages/searchProductPage/searchProductPage.component";
+import Wallet from "./pages/wallet/wallet.component";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/user-details" element={<UserDetailsForm />} />
           <Route path="/my-account" element={<MyAccount />}>
             <Route path="orders" index element={<Orders />} />
+            <Route path="wallet" index element={<Wallet />} />
             <Route path="address" element={<Address />} />
             <Route path="" element={<EditProfile />} />
           </Route>

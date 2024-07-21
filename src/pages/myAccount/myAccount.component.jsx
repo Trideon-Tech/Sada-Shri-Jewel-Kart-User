@@ -176,6 +176,18 @@ export default function MyAccount() {
                 Saved Addresses
               </Button>
             </Link>
+            <Link to={"/my-account/wallet"}>
+              <Button
+                style={{
+                  fontWeight: "bold",
+                  color: "#a36e29",
+                  padding: 0,
+                  marginTop: "5%",
+                }}
+              >
+                Your Wallet
+              </Button>
+            </Link>
             <Divider
               style={{ width: "100%", marginTop: "auto", marginBottom: "10%" }}
             />
