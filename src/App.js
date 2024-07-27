@@ -25,7 +25,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/" element={<LandingPage />} />
           <Route path="/jwellery/:category" element={<Productpage />} />
           <Route path="/jwellery/search" element={<SearchProductpage />} />
           <Route path="/item/:category/:product" element={<ProductDetail />} />

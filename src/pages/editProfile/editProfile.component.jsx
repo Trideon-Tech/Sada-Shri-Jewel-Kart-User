@@ -17,10 +17,11 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const EditProfile = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
+  const userName = localStorage.getItem("user_name").split("");
+  const [firstName, setFirstName] = useState(userName[0]);
+  const [lastName, setLastName] = useState(userName[1]);
+  const [mobile, setMobile] = useState(localStorage.getItem("mobile"));
+  const [email, setEmail] = useState(localStorage.getItem("user_email"));
 
   const updateProfile = () => {
     const formData = new FormData();
@@ -101,7 +102,7 @@ const EditProfile = () => {
               "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
           }}
         >
-          S
+          {firstName.charAt(0)}
         </Avatar>
         <Box
           style={{
@@ -126,6 +127,7 @@ const EditProfile = () => {
             }}
           >
             <TextField
+              value={firstName}
               variant="outlined"
               label="First Name*"
               fullWidth
@@ -135,6 +137,7 @@ const EditProfile = () => {
               }}
             />
             <TextField
+              value={lastName}
               variant="outlined"
               label="Last Name*"
               fullWidth
@@ -146,6 +149,7 @@ const EditProfile = () => {
           </Box>
 
           <TextField
+            value={email}
             variant="outlined"
             label="Enter Email Id"
             fullWidth
@@ -154,7 +158,7 @@ const EditProfile = () => {
             }}
           />
           <TextField
-            variant="outlined"
+            value={mobile}
             label="Phone*"
             fullWidth
             onChange={(event) => {

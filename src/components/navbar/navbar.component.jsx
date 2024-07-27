@@ -61,7 +61,7 @@ const Navbar = () => {
       );
 
       console.log("wishlist", data);
-      setWishListItems(data.response.length);
+      setWishListItems(data?.response?.length);
     })();
   }, []);
 
@@ -77,9 +77,9 @@ const Navbar = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        console.log(response.data?.response?.length);
-        sessionStorage.setItem("cart", response.data?.response?.length || 0);
+        console.log(response?.data);
+        console.log(response?.data?.response?.length);
+        sessionStorage.setItem("cart", response?.data?.response?.length || 0);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
     // }
@@ -89,57 +89,57 @@ const Navbar = () => {
       .catch((error) => console.error("Error fetching menu items:", error));
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (localStorage.getItem("user_id")) {
-        const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   (async () => {
+  //     if (localStorage.getItem("user_id")) {
+  //       const token = localStorage.getItem("token");
 
-        if (!token) return;
+  //       if (!token) return;
 
-        //creating default wishlist
+  //       //creating default wishlist
 
-        const formData = new FormData();
-        formData.append("type", "create");
-        formData.append("user_id", localStorage.getItem("user_id"));
-        formData.append(
-          "wishlist_name",
-          `${localStorage.getItem("user_id")}_default`
-        );
-        formData.append("wishlist_items", "[]");
+  //       const formData = new FormData();
+  //       formData.append("type", "create");
+  //       formData.append("user_id", localStorage.getItem("user_id"));
+  //       formData.append(
+  //         "wishlist_name",
+  //         `${localStorage.getItem("user_id")}_default`
+  //       );
+  //       formData.append("wishlist_items", "[]");
 
-        try {
-          await axios.post(
-            `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
-            formData,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-        } catch (err) {
-          console.log(err.message);
-        }
-        //////////////////////////////////////////////////////
-        const { data: defaultWishlists } = await axios.get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
-            "user_id"
-          )}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        localStorage.setItem(
-          "default_wishlist",
-          defaultWishlists?.response[0]?.id
-        );
-      }
-    })();
-  }, []);
+  //       try {
+  //         await axios.post(
+  //           `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
+  //           formData,
+  //           {
+  //             headers: {
+  //               Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //               "Content-Type": "multipart/form-data",
+  //             },
+  //           }
+  //         );
+  //       } catch (err) {
+  //         console.log(err.message);
+  //       }
+  //       //////////////////////////////////////////////////////
+  //       const { data: defaultWishlists } = await axios.get(
+  //         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+  //           "user_id"
+  //         )}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
+  //       localStorage.setItem(
+  //         "default_wishlist",
+  //         defaultWishlists?.response[0]?.id
+  //       );
+  //     }
+  //   })();
+  // }, []);
 
   const handleFuzzySearch = (event) => {
     if (event.key === "Enter") {

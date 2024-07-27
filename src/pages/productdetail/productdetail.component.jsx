@@ -1163,17 +1163,6 @@ function ProductDetail() {
               >
                 You May Also{" "}
                 <span style={{ color: "#A36E29" }}> {` Like `}</span> These
-                <Button
-                  variant="outlined"
-                  style={{
-                    marginLeft: "2%",
-                    color: "#A36E29",
-                    border: "2px solid #A36E29",
-                    borderRadius: "100px",
-                  }}
-                >
-                  View All
-                </Button>
               </Typography>
 
               <div className="products-scroll-container">
