@@ -292,7 +292,9 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     defaultValue={editAddress.pincode}
                     size="large"
                     variant="outlined"
-                    onChange={(e) => setPincode(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value) setPincode(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -303,7 +305,10 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     defaultValue={editAddress.mobile}
                     size="large"
                     variant="outlined"
-                    onChange={(e) => setMobile(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 10)
+                        setMobile(e.target.value);
+                    }}
                   />
                 </Grid>
                 <Grid item xs={6}>

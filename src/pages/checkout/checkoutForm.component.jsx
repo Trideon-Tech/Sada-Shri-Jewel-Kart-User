@@ -30,6 +30,7 @@ import PaymentMethod from "./paymentMethod.component";
 import { generalToastStyle } from "../../utils/toast.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 const steps = ["Login", "Shipping", "Payment"];
 
 const SelectAddressStep = ({
@@ -162,6 +163,7 @@ const SelectPaymentMethodStep = ({
 };
 
 const CheckoutForm = ({ cartItems }) => {
+  const navigate = useNavigate();
   const [editing, setEditing] = React.useState(false);
   const [selectedAddress, setSelectedAddress] = React.useState({});
   const [paymentMethod, setPaymentMethod] = React.useState("CREDIT_CARD");
@@ -249,6 +251,7 @@ const CheckoutForm = ({ cartItems }) => {
           .then((response) => {
             console.log("order created", response);
             toast.info("Payment Verified", generalToastStyle);
+            navigate("/order-confirmation");
           })
           .catch((error) => {
             console.error("Error:", error);

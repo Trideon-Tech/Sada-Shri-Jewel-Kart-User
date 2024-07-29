@@ -49,7 +49,7 @@ import axios from "axios";
 
 const Reviews = ({ productDetails }) => {
   const matches = useMediaQuery("(min-width:600px)");
-  console.log("produce Details ", productDetails);
+  // console.log("produce Details ", productDetails);
   const [open, setOpen] = useState(false);
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewContent, setReviewContent] = useState("");
@@ -146,145 +146,7 @@ const Reviews = ({ productDetails }) => {
             Tap on the stars to rate your experience
           </Typography>
           <Divider style={{ width: "100%" }} />
-          {/* <Typography
-            style={{ fontWeight: "bold", fontSize: "1.5rem", marginTop: "3%" }}
-          >
-            What Can We Imporve?
-          </Typography>
-          <RadioGroup
-            aria-labelledby="storage-label"
-            defaultValue="512GB"
-            size="md"
-            sx={{
-              gap: 1.5,
-              display: "flex",
-              width: "90%",
 
-              height: "max-content",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {[
-              "Design",
-              "Size/Fit",
-              "Quality",
-              "Delivery",
-              "Packaging",
-              "Customer Service",
-              "Overall Experience",
-              "Others",
-            ].map((value) => (
-              <Sheet
-                key={value}
-                sx={{
-                  width: "max-content",
-                  p: 2,
-                  borderRadius: "md",
-                  boxShadow: "sm",
-                }}
-              >
-                <Radio
-                  label={`${value}`}
-                  overlay
-                  disableIcon
-                  value={value}
-                  slotProps={{
-                    label: ({ checked }) => ({
-                      sx: {
-                        fontWeight: "lg",
-                        fontSize: "md",
-                        color: checked ? "text.primary" : "text.secondary",
-                      },
-                    }),
-                    action: ({ checked }) => ({
-                      sx: (theme) => ({
-                        ...(checked && {
-                          "--variant-borderWidth": "2px",
-                          "&&": {
-                            // && to increase the specificity to win the base :hover styles
-                            borderColor: theme.vars.palette.primary[500],
-                          },
-                        }),
-                      }),
-                    }),
-                  }}
-                />
-              </Sheet>
-            ))}
-          </RadioGroup>
-          <Divider style={{ width: "100%", marginTop: "10%" }} />
-          <Typography
-            style={{ fontWeight: "bold", fontSize: "1.5rem", marginTop: "3%" }}
-          >
-            What did we impress you with?
-          </Typography>
-          <RadioGroup
-            aria-labelledby="storage-label"
-            defaultValue="512GB"
-            size="md"
-            sx={{
-              gap: 1.5,
-              display: "flex",
-              width: "90%",
-              height: "max-content",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {[
-              "Design",
-              "Size/Fit",
-              "Quality",
-              "Delivery",
-              "Packaging",
-              "Customer Service",
-              "Overall Experience",
-              "Others",
-            ].map((value) => (
-              <Sheet
-                key={value}
-                sx={{
-                  width: "max-content",
-                  p: 2,
-                  borderRadius: "md",
-                  boxShadow: "sm",
-                }}
-              >
-                <Radio
-                  label={`${value}`}
-                  overlay
-                  disableIcon
-                  value={value}
-                  slotProps={{
-                    label: ({ checked }) => ({
-                      sx: {
-                        fontWeight: "lg",
-                        fontSize: "md",
-                        color: checked ? "text.primary" : "text.secondary",
-                      },
-                    }),
-                    action: ({ checked }) => ({
-                      sx: (theme) => ({
-                        ...(checked && {
-                          "--variant-borderWidth": "2px",
-                          "&&": {
-                            // && to increase the specificity to win the base :hover styles
-                            borderColor: theme.vars.palette.primary[500],
-                          },
-                        }),
-                      }),
-                    }),
-                  }}
-                />
-              </Sheet>
-            ))}
-          </RadioGroup> */}
-          {/* <Divider style={{ width: "100%", marginTop: "5%" }} /> */}
           <label htmlFor="cat-image">
             <div
               style={{
@@ -325,7 +187,6 @@ const Reviews = ({ productDetails }) => {
                   setreviewImages([file]);
                 }
               }
-              console.log("reviewImages", reviewImages);
             }}
           />
           <ImageList

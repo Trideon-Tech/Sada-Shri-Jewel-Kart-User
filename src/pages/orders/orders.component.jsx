@@ -94,10 +94,9 @@ const Orders = () => {
         </TabList>
         <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
-            <OrderItem />
-            <OrderItem />
-            <OrderItem />
-            <OrderItem />
+            {orderList.map((order) => (
+              <OrderItem orderInfo={order} />
+            ))}
           </Box>
         </TabPanel>
         <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>

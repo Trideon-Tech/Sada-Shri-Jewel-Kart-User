@@ -14,7 +14,7 @@ import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export default function CartTotal({ items }) {
+export default function CartTotal({ items, openModal }) {
   const totalPrice = items
     .map((item) => parseInt(item.price))
     .reduce((prev, curr) => prev + curr, 0);
@@ -89,6 +89,7 @@ export default function CartTotal({ items }) {
         <Button
           variant="outlined"
           style={{ border: 0, color: "#A36E29", fontWeight: "bold" }}
+          onClick={() => openModal(true)}
         >
           <ArrowForwardIosIcon />
         </Button>

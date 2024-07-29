@@ -49,6 +49,27 @@ const Navbar = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
       const { data } = await axios.get(
+        `https://api.sadashrijewelkart.com//v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("wishlist List", data);
+      localStorage.setItem("default_wishlist", data?.response[0]?.id);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const { data } = await axios.get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
         )}`,

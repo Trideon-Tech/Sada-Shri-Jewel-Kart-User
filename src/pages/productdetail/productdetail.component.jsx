@@ -213,6 +213,11 @@ function ProductDetail() {
       });
   };
 
+  const handleCardClick = (productName, hash) => {
+    navigate(`/item/${menuItemName}/${productName}-${hash}`);
+    navigate(0);
+  };
+
   useEffect(() => {
     getJwelleryDetail();
   }, []);
@@ -753,13 +758,13 @@ function ProductDetail() {
                                         borderColor: "divider",
                                         borderRadius: 1,
                                         boxShadow: 1,
-                                        "&.selected": {
-                                          backgroundColor: "primary.main",
-                                          color: "primary.contrastText",
-                                          "&:hover": {
-                                            backgroundColor: "#a36e29",
-                                          },
-                                        },
+                                        // "&.selected": {
+                                        //   backgroundColor: "primary.main",
+                                        //   color: "primary.contrastText",
+                                        //   "&:hover": {
+                                        //     backgroundColor: "#a36e29",
+                                        //   },
+                                        // },
                                       }}
                                       onClick={() =>
                                         handleCustomizationSelect(metalOption)
@@ -781,6 +786,11 @@ function ProductDetail() {
                                       </Typography>
                                       <Box
                                         style={{
+                                          backgroundColor:
+                                            selectedMetal === metalOption
+                                              ? "#e0b872"
+                                              : "transparent",
+
                                           border: "3px solid #a36e29",
                                           padding: "2px",
                                           borderRadius: "10px",
@@ -850,6 +860,11 @@ function ProductDetail() {
                                       </Typography>
                                       <Box
                                         style={{
+                                          backgroundColor:
+                                            selectedDiamondType ===
+                                            diamondOption
+                                              ? "#e0b872"
+                                              : "transparent",
                                           border: "3px solid #a36e29",
                                           padding: "2px",
                                           borderRadius: "10px",
@@ -913,6 +928,10 @@ function ProductDetail() {
                                     </Typography>
                                     <Box
                                       style={{
+                                        backgroundColor:
+                                          selectedSize === size
+                                            ? "#e0b872"
+                                            : "transparent",
                                         border: "3px solid #a36e29",
                                         padding: "2px",
                                         borderRadius: "10px",
@@ -1171,7 +1190,9 @@ function ProductDetail() {
                     key={product.id}
                     image={product.images[0].file}
                     name={product.name}
+                    hash={product.hash}
                     price={product.price}
+                    clickHandler={handleCardClick}
                   />
                 ))}
               </div>
@@ -1599,7 +1620,9 @@ function ProductDetail() {
                   key={product.id}
                   image={product.images[0].file}
                   name={product.name}
+                  hash={product.hash}
                   price={product.price}
+                  clickHandler={handleCardClick}
                 />
               )) || null}
             </div>

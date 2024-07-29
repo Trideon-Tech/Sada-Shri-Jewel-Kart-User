@@ -50,48 +50,22 @@ const Register = () => {
           );
         });
     });
-
     localStorage.removeItem("cart");
   };
 
   const handleRegister = () => {
     const formData = new FormData();
-    formData.append("mobile", mobile);
-    localStorage.setItem("mobile", mobile);
+    formData.append("mobile", `91${mobile}`);
+    localStorage.setItem("mobile", `91${mobile}`);
     navigate("/user-details");
-
-    //call API for OTP verification
-    // axios
-    // .post(
-    //   "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
-    //   formData,
-    //   {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   }
-    // )
-    // .then((response) => {
-    //   console.log(
-    //     "User registered successfully:",
-    //     response.data.response.token
-    //   );
-    //   const token = response.data.response.token;
-    //   localStorage.setItem("token", token);
-    //   sendCartToAPI(token);
-    //   navigate("/");
-    // })
-    // .catch((error) => {
-    //   console.error("Error:", error);
-    // });
   };
 
   const sendOTPHandler = () => {
     const formData = new FormData();
     setotpSent(true);
     formData.append("type", "generate_otp");
-    formData.append("mobile", mobile);
-    localStorage.setItem("mobile", mobile);
+    formData.append("mobile", `91${mobile}`);
+    localStorage.setItem("mobile", `91${mobile}`);
 
     //call API for OTP verification
     axios
@@ -115,13 +89,13 @@ const Register = () => {
     const formData = new FormData();
     setotpSent(true);
     formData.append("type", "verify_otp");
-    formData.append("mobile", mobile);
+    formData.append("mobile", `91${mobile}`);
     formData.append("otp", otp);
 
     //call API for OTP verification
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${mobile}`,
+        `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${`91${mobile}`}`,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -192,8 +166,21 @@ const Register = () => {
                 value={mobile}
                 size="lg"
                 onChange={(e) => {
-                  setMobile(e.target.value);
+                  if (e.target.value.length <= 10) setMobile(e.target.value);
                 }}
+                startDecorator={
+                  <Button
+                    variant="solid"
+                    type="submit"
+                    style={{
+                      borderTopLeftRadius: 0,
+                      borderBottomLeftRadius: 0,
+                      backgroundColor: "#a36e29",
+                    }}
+                  >
+                    +91
+                  </Button>
+                }
                 // error={data.status === "failure"}
                 endDecorator={
                   mobile?.length > 9 ? (

@@ -144,7 +144,7 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [refreshCart, setRefreshCart] = useState(1);
 
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
@@ -169,16 +169,20 @@ const Cart = () => {
     );
     wishlistData.append("product_id", productId);
 
-    await axios.post(
-      "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
-      wishlistData,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    try {
+      await axios.post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        wishlistData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
     removeCartItemHandler(cartId);
   };
   const removeCartItemHandler = (cartId) => {
@@ -294,7 +298,7 @@ const Cart = () => {
                 </Box>
               </Grid>
               <Grid item xs={4}>
-                <CartTotal items={cartItems} />
+                <CartTotal items={cartItems} openModal={setModalOpen} />
               </Grid>
             </Grid>
           </Box>

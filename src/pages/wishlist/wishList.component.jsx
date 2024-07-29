@@ -911,14 +911,16 @@ const Wishlist = () => {
       );
 
       console.log("wishlist", data);
-      setWishListItems(data.response);
+      setWishListItems(data?.response);
     })();
   });
+
   const handleCardClick = (productName, hash, menuItemName) => {
     console.log(hash);
     console.log(`/item/${menuItemName}/${productName}-${hash}`);
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
+
   return (
     <div>
       <Navbar />
@@ -983,16 +985,15 @@ const Wishlist = () => {
             spacing={mediaQuery ? 5 : 1}
             style={{ width: "100%" }}
           >
-            {wishlistItems.map((item) => (
+            {wishlistItems?.map((item) => (
               <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard
-                  key={item.id}
+                  key={item?.id}
+                  hash={item?.hash}
                   image={item?.images ? item?.images[0]?.file : ""}
-                  name={item.name}
-                  price={item.price}
-                  onClick={() =>
-                    handleCardClick(item.name, item.hash, item.category)
-                  }
+                  name={item?.name}
+                  price={item?.price}
+                  clickHandler={handleCardClick}
                 />
               </Grid>
             ))}

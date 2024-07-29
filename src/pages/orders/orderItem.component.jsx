@@ -1,6 +1,6 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 
-const OrderItem = ({ titleColorType = "arriving" }) => {
+const OrderItem = ({ titleColorType = "arriving", orderInfo }) => {
   const titleColors = {
     arriving: "#a36e29",
     delivered: "#33A329",
@@ -46,7 +46,7 @@ const OrderItem = ({ titleColorType = "arriving" }) => {
           }}
         >
           <Typography style={{ color: "#7e7e7e" }}>
-            Order ID: #12343255a23456
+            Order ID: #{orderInfo?.id}
           </Typography>
           <Button
             style={{
@@ -109,7 +109,7 @@ const OrderItem = ({ titleColorType = "arriving" }) => {
               fontSize: "1.6rem",
             }}
           >
-            Faria Diamond Band
+            {orderInfo?.name}
           </Typography>
           <Box
             style={{
@@ -167,7 +167,7 @@ const OrderItem = ({ titleColorType = "arriving" }) => {
           >
             Price:{" "}
             <span style={{ color: "black", fontWeight: "bold" }}>
-              ₹ {parseFloat(41788).toLocaleString()}
+              ₹ {parseFloat(Number(orderInfo?.price)).toLocaleString()}
             </span>{" "}
           </Typography>
           <Typography

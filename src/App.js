@@ -18,6 +18,7 @@ import Address from "./pages/address/address.component";
 import EditProfile from "./pages/editProfile/editProfile.component";
 import SearchProductpage from "./pages/searchProductPage/searchProductPage.component";
 import Wallet from "./pages/wallet/wallet.component";
+import OrderConfirmation from "./pages/orderConfirmation/orderConfirmation.component";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/order-confirmation" element={<OrderConfirmation />} />
           <Route path="/user-details" element={<UserDetailsForm />} />
           <Route path="/my-account" element={<MyAccount />}>
             <Route path="orders" index element={<Orders />} />

@@ -55,7 +55,7 @@ export default function CartItem({
         }}
       >
         <img
-          src={`https://api.sadashrijewelkart.com/assets/${item.images[0].file}`}
+          src={`https://api.sadashrijewelkart.com/assets/${item?.images[0]?.file}`}
           // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
           style={{ height: "100%", width: "100%", objectFit: "contain" }}
         />
@@ -77,7 +77,7 @@ export default function CartItem({
           color="#505050"
           style={{ textAlign: "left", fontWeight: "bold" }}
         >
-          {item.name}
+          {item?.name}
         </Typography>
         <Box
           style={{
@@ -152,7 +152,7 @@ export default function CartItem({
           gutterBottom
         >
           <span style={{ fontWeight: "normal" }}>Price:</span> ₹
-          {parseFloat(item.price).toLocaleString()}
+          {parseFloat(item?.price).toLocaleString()}
         </Typography>
         <Typography
           variant="subtitle2"
@@ -172,7 +172,7 @@ export default function CartItem({
           }}
         >
           <Button
-            onClick={() => removeHandler(item.cart_id)}
+            onClick={() => removeHandler(item?.cart_id)}
             style={{ padding: 0 }}
           >
             <CloseIcon
@@ -185,7 +185,7 @@ export default function CartItem({
           </Button>
           <Button
             style={{ marginTop: "auto" }}
-            onClick={() => moveToWishlistHandler(item.id, item.cart_id)}
+            onClick={() => moveToWishlistHandler(item?.id, item?.cart_id)}
           >
             <FavoriteBorderIcon
               fontSize="large"

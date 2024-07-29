@@ -6,13 +6,14 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Box } from "@mui/material";
 import axios from "axios";
+import Skeleton from "@mui/material/Skeleton";
 
 const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
   const handleCreateWishList = async () => {
     const formData = new FormData();
     formData.append("type", "add_item");
-    formData.append("wishlist_id", "11");
-    formData.append("product_id", "5");
+    formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
+    formData.append("product_id", id);
     const token = localStorage.getItem("token");
     const a = await axios.post(
       "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
@@ -61,12 +62,23 @@ const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
               />
             </Button>
           </div>
-          <img
-            src={encodeURI(`https://api.sadashrijewelkart.com/assets/${image}`)}
-            alt={name}
-            onClick={() => clickHandler(name, hash)}
-            className="card-image"
-          />
+          {image.length ? (
+            <img
+              src={encodeURI(
+                `https://api.sadashrijewelkart.com/assets/${image}`
+              )}
+              alt={name}
+              onClick={() => clickHandler(name, hash)}
+              className="card-image"
+            />
+          ) : (
+            <Skeleton
+              sx={{ bgcolor: "grey.900" }}
+              variant="rectangular"
+              height={800}
+              width={650}
+            />
+          )}
         </div>
         <div
           className="card-content"
