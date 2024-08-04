@@ -11,11 +11,13 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
 import { Input, Textarea } from "@mui/joy";
 import "react-toastify/dist/ReactToastify.css";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 
-const CouponCard = ({ item }) => {
+const CouponCard = ({ item, handleClose, couponSelectHandler }) => {
+  const handleSelectedCoupon = () => {
+    localStorage.setItem("selected_coupon", item.id);
+    handleClose(false);
+    couponSelectHandler(item.id);
+  };
   return (
     <Card
       elevation={4}
@@ -57,7 +59,7 @@ const CouponCard = ({ item }) => {
             fontWeight: 600,
           }}
         >
-          {item.couponText}
+          {item.coupon_text}
         </p>
       </div>
       <div
@@ -73,10 +75,10 @@ const CouponCard = ({ item }) => {
             margin: 0,
           }}
         >
-          {item.couponCode}
+          {item.code}
         </h3>
         <p style={{ margin: 0, color: "#00000060", fontWeight: 600 }}>
-          Valid till {item.couponValidity}
+          Valid till {item.coupon_validity}
         </p>
         <div style={{ display: "flex" }}>
           <p
@@ -98,6 +100,7 @@ const CouponCard = ({ item }) => {
               fontWeight: 600,
               color: "#A36E29",
             }}
+            onClick={() => handleSelectedCoupon()}
           >
             Apply
           </Button>
@@ -108,43 +111,50 @@ const CouponCard = ({ item }) => {
 };
 
 const Cart = () => {
-  const couponList = [
+  const couponList_dummy = [
     {
-      couponText: "3% Off",
-      couponCode: "FIRST50",
-      couponValidity: "31 July 2024",
+      id: 1,
+      coupon_text: "5% Off",
+      code: "FEStIV",
+      coupon_validity: "31 July 2024",
     },
     {
-      couponText: "7% Off",
-      couponCode: "EXTRA7",
-      couponValidity: "31 July 2024",
-    },
-    {
-      couponText: "5% Off",
-      couponCode: "FEStIV",
-      couponValidity: "31 July 2024",
-    },
-    {
-      couponText: "3% Off",
-      couponCode: "FIRST50",
-      couponValidity: "31 July 2024",
-    },
-    {
-      couponText: "7% Off",
-      couponCode: "EXTRA7",
-      couponValidity: "31 July 2024",
-    },
-    {
-      couponText: "5% Off",
-      couponCode: "FEStIV",
-      couponValidity: "31 July 2024",
+      id: 2,
+      coupon_text: "5% Off",
+      code: "FEStIV",
+      coupon_validity: "31 July 2024",
     },
   ];
 
   const [cartItems, setCartItems] = useState([]);
   const [refreshCart, setRefreshCart] = useState(1);
+  const [couponList, setCouponList] = useState(couponList_dummy);
+  const [selectedCouponId, setSelectedCouponId] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const { data } = await axios.get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/coupons/all.php?type=all_coupons`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (Array.isArray(data?.response)) setCouponList(data?.response);
+      } catch (err) {
+        console.log("fetching coupons failed ", err);
+      }
+    })();
+  }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
@@ -266,7 +276,11 @@ const Cart = () => {
                 style={{ width: "100%", height: "100%", overflowX: "scroll" }}
               >
                 {couponList.map((item) => (
-                  <CouponCard item={item} />
+                  <CouponCard
+                    item={item}
+                    handleClose={setModalOpen}
+                    couponSelectHandler={setSelectedCouponId}
+                  />
                 ))}
               </div>
             </div>
@@ -298,7 +312,13 @@ const Cart = () => {
                 </Box>
               </Grid>
               <Grid item xs={4}>
-                <CartTotal items={cartItems} openModal={setModalOpen} />
+                <CartTotal
+                  items={cartItems}
+                  openModal={setModalOpen}
+                  couponData={
+                    couponList.filter((item) => item.id === selectedCouponId)[0]
+                  }
+                />
               </Grid>
             </Grid>
           </Box>

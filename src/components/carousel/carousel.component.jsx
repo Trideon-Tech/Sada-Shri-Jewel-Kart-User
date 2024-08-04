@@ -16,19 +16,19 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
   {
     label: "San Francisco – Oakland Bay Bridge, United States",
-    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
+    imgPath: "/assets/carousel1.jpeg",
   },
   {
     label: "Bird",
-    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
+    imgPath: "/assets/carousel1.jpeg",
   },
   {
     label: "Bali, Indonesia",
-    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
+    imgPath: "/assets/carousel1.jpeg",
   },
   {
     label: "Goč, Serbia",
-    imgPath: "https://random-image-pepebigotes.vercel.app/api/random-image",
+    imgPath: "/assets/carousel1.jpeg",
   },
 ];
 
@@ -56,7 +56,7 @@ function CarouselPanel() {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        height: matches ? "80vh" : "30vh",
+        height: matches ? "70vh" : "30vh",
         position: "relative",
       }}
     >
@@ -71,7 +71,7 @@ function CarouselPanel() {
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 style={{
-                  height: "80vh",
+                  height: "70vh",
                   overflow: "hidden",
                   width: "100%",
                 }}
@@ -82,7 +82,7 @@ function CarouselPanel() {
                     width: "100%",
                     height: "auto",
                   }}
-                  src={step.imgPath}
+                  src={process.env.PUBLIC_URL + step.imgPath}
                   alt={step.label}
                 />
               </Box>
@@ -104,7 +104,7 @@ function CarouselPanel() {
             position: "absolute",
             zIndex: 9,
             borderRadius: "20px",
-            top: matches ? "70vh" : "20vh",
+            top: matches ? "60vh" : "20vh",
             color: "white",
             backgroundColor: "rgba(0,0,0,0.5)",
             "& .MuiMobileStepper-dotActive": {

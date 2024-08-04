@@ -838,7 +838,7 @@ const Checkout = () => {
         },
       })
       .then((response) => {
-        setCartItems(response.data.response);
+        setCartItems(response.data?.response);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshCart]);
@@ -881,7 +881,7 @@ const Checkout = () => {
               >
                 Order Summary
               </Typography>
-              {cartItems.map((item) => (
+              {cartItems?.map((item) => (
                 <CartItem
                   key={item.cart_id}
                   item={item}

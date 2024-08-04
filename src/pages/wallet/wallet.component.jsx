@@ -1,4 +1,6 @@
 import { Box, Button, Divider, Paper, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const HistoryInfo = () => {
   return (
@@ -82,6 +84,42 @@ const HistoryInfo = () => {
 };
 
 const Wallet = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [creditLog, setCreditLog] = useState([]);
+  const [debitLog, setDebitLog] = useState([]);
+  const [showDebit, setShowDebit] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    // if (!sessionStorage.getItem("cart")) {
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setTransactions(response.data.response);
+        setCreditLog(
+          response.data.response.filter(
+            (item) => item.transaction_type === "credit"
+          )
+        );
+
+        setDebitLog(
+          response.data.response.filter(
+            (item) => item.transaction_type === "debit"
+          )
+        );
+      })
+      .catch((error) => console.log("Error while fetching wallet info", error));
+  }, []);
   return (
     <Box
       style={{
@@ -131,6 +169,10 @@ const Wallet = () => {
               background: "linear-gradient(90deg,#A36E29,#E0B872)",
             }}
           >
+            <img
+              style={{ position: "absolute", marginLeft: "400px" }}
+              src={process.env.PUBLIC_URL + "/assets/coins.png"}
+            />
             <p
               style={{
                 fontSize: "1.4rem",
@@ -142,7 +184,6 @@ const Wallet = () => {
             >
               Available Balance
             </p>
-
             <p
               style={{
                 margin: 0,
@@ -152,7 +193,7 @@ const Wallet = () => {
                 color: "white",
               }}
             >
-              ₹805
+              ₹{debitLog[0]?.balance || 0}
             </p>
           </div>
           <div
@@ -169,12 +210,13 @@ const Wallet = () => {
               style={{
                 width: "300px",
                 height: "50px",
-                backgroundColor: "white",
-                color: "#A36E29",
+                backgroundColor: !showDebit ? "#A36E29" : "white",
+                color: !showDebit ? "white" : "#A36E29",
                 border: "2px solid #A36E29",
                 fontWeight: 600,
                 borderRadius: "10px",
               }}
+              onClick={() => setShowDebit(false)}
             >
               Credit History
             </Button>
@@ -184,20 +226,20 @@ const Wallet = () => {
                 marginLeft: "20px",
                 width: "300px",
                 height: "50px",
-                backgroundColor: "white",
-                color: "#A36E29",
+                backgroundColor: showDebit ? "#A36E29" : "white",
+                color: showDebit ? "white" : "#A36E29",
                 border: "2px solid #A36E29",
                 fontWeight: 600,
                 borderRadius: "10px",
               }}
+              onClick={() => setShowDebit(true)}
             >
-              Credit History
+              Debit History
             </Button>
           </div>
           <div
             style={{ width: "100%", height: "max-content", minHeight: "300px" }}
           >
-            <HistoryInfo />
             <div
               style={{ width: "100%", display: "flex", alignItems: "center" }}
             >
@@ -205,15 +247,8 @@ const Wallet = () => {
               <Divider style={{ width: "90%", marginLeft: "auto" }} />
             </div>
 
-            <HistoryInfo />
-            <HistoryInfo />
-            <div
-              style={{ width: "100%", display: "flex", alignItems: "center" }}
-            >
-              <p>3rd June 2024</p>
-              <Divider style={{ width: "90%", marginLeft: "auto" }} />
-            </div>
-            <HistoryInfo />
+            {showDebit ? debitLog.map((item) => <HistoryInfo />) : ""}
+            {!showDebit ? creditLog.map((item) => <HistoryInfo />) : ""}
           </div>
         </Paper>
       </Box>

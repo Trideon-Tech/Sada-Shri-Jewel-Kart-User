@@ -49,7 +49,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
     const token = localStorage.getItem("token");
     axios
       .get(
-        "https://api.sadashrijewelkart.com//v1.0.0/user/details.php?key=address",
+        "https://api.sadashrijewelkart.com/v1.0.0/user/details.php?key=address",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -65,6 +65,8 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshAddresses]);
+
+  React.useEffect(() => {}, [selectedAddress]);
 
   const handleEditCreateAddress = (editMode = false) => {
     if (editMode) {
@@ -112,7 +114,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
         <Box>
           <Select
             defaultValue={selectedAddress}
-            value={selectedAddress.add_line1}
+            value={selectedAddress?.add_line_1}
             slotProps={{
               listbox: {
                 sx: {

@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Grid } from "@mui/material";
 export default function PromotionImageList() {
   const matches = useMediaQuery("(min-width:600px)");
   return (
@@ -11,23 +12,95 @@ export default function PromotionImageList() {
         width: "100%",
         height: "max-content",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "space-around",
         alignItems: "center",
       }}
     >
-      <Box sx={{ width: "90%", height: "100%" }}>
-        <ImageList variant="masonry" cols={matches ? 3 : 2} gap={8}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
+      <Box sx={{ width: "90%", height: "100%", marginTop: "100px" }}>
+        <Grid container spacing={5}>
+          <Grid item xs={4}>
+            <img
+              height={"150px"}
+              src={process.env.PUBLIC_URL + "/assets/brick1.png"}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <img
+              height={"150px"}
+              src={process.env.PUBLIC_URL + "/assets/brick2.png"}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <img
+              height={"150px"}
+              src={process.env.PUBLIC_URL + "/assets/brick3.png"}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <img
+              height={"150px"}
+              src={process.env.PUBLIC_URL + "/assets/brick4.png"}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <img
+              height={"150px"}
+              src={process.env.PUBLIC_URL + "/assets/brick5.png"}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <img
+              height={"150px"}
+              src={process.env.PUBLIC_URL + "/assets/brick6.png"}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Box sx={{ width: "90%", height: "100%", marginTop: "100px" }}>
+        <Grid container spacing={4}>
+          <Grid item xs={6}>
+            <img
+              width={"100%"}
+              src={process.env.PUBLIC_URL + "/assets/side1_1.png"}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <Box
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <img
-                srcSet={`${item.img}`}
-                src={`${item.img}`}
-                alt={item.title}
-                loading="lazy"
+                width={"100%"}
+                src={process.env.PUBLIC_URL + "/assets/side2_1.png"}
               />
-            </ImageListItem>
-          ))}
-        </ImageList>
+
+              <img
+                width={"100%"}
+                src={process.env.PUBLIC_URL + "/assets/side2_2.png"}
+              />
+
+              <img
+                width={"100%"}
+                src={process.env.PUBLIC_URL + "/assets/side2_1.png"}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+      <Box sx={{ width: "100%", height: "100%", marginTop: "100px" }}>
+        <img
+          width={"100%"}
+          src={process.env.PUBLIC_URL + "/assets/footer.png"}
+        />
       </Box>
     </Box>
   );

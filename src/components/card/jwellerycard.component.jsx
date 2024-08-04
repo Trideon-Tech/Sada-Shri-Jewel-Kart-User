@@ -2,20 +2,57 @@ import React from "react";
 import "./jwellerycard.styles.scss"; // Ensure this is the path to your SCSS file
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box } from "@mui/material";
 import axios from "axios";
 import Skeleton from "@mui/material/Skeleton";
+import { useNavigate } from "react-router-dom";
 
-const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
+const JwelleryCard = ({
+  id,
+  image,
+  name,
+  price,
+  hash,
+  clickHandler,
+  isWishlisted,
+}) => {
+  const navigate = useNavigate();
+  const removeFromWishList = async () => {
+    try {
+      console.log(localStorage.getItem("token"));
+
+      const a = await axios.delete(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
+        {
+          data: {
+            type: "wishlist_item",
+            wishlist_item_id: id,
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // navigate(0);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleCreateWishList = async () => {
+    if (isWishlisted) {
+      removeFromWishList();
+      return;
+    }
     const formData = new FormData();
     formData.append("type", "add_item");
     formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
     formData.append("product_id", id);
     const token = localStorage.getItem("token");
-    const a = await axios.post(
+    if (!token) return;
+    await axios.post(
       "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
       formData,
       {
@@ -25,7 +62,6 @@ const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
         },
       }
     );
-    console.log("hello");
   };
   return (
     <div className="jwellery-card">
@@ -51,13 +87,13 @@ const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
                 handleCreateWishList();
               }}
             >
-              <FavoriteBorderOutlinedIcon
+              <FavoriteIcon
                 style={{
                   fontSize: "2.5rem",
                   marginLeft: "auto",
                   marginRight: "5%",
                   marginTop: "5%",
-                  color: "#a36e29",
+                  color: isWishlisted ? "#a36e29" : "#bfbfbf",
                 }}
               />
             </Button>
@@ -128,6 +164,7 @@ const JwelleryCard = ({ id, image, name, price, hash, clickHandler }) => {
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
             }}
+            onClick={() => clickHandler(name, hash)}
           >
             Add to Cart
           </Button>

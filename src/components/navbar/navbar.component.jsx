@@ -69,6 +69,7 @@ const Navbar = () => {
     (async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
+      console.log("calling from navbar");
       const { data } = await axios.get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
@@ -87,6 +88,14 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
+      .then((response) => {
+        console.log("landing page:: ", response);
+        setMenuItems(response.data.response.categories);
+      })
+      .catch((error) => console.error("Error fetching menu items:", error));
+
     const token = localStorage.getItem("token");
     if (!token) return;
     // if (!sessionStorage.getItem("cart")) {
@@ -106,61 +115,12 @@ const Navbar = () => {
     // }
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
-      .then((response) => setMenuItems(response.data.response.categories))
+      .then((response) => {
+        console.log("landing page:: ", response);
+        setMenuItems(response.data.response.categories);
+      })
       .catch((error) => console.error("Error fetching menu items:", error));
   }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (localStorage.getItem("user_id")) {
-  //       const token = localStorage.getItem("token");
-
-  //       if (!token) return;
-
-  //       //creating default wishlist
-
-  //       const formData = new FormData();
-  //       formData.append("type", "create");
-  //       formData.append("user_id", localStorage.getItem("user_id"));
-  //       formData.append(
-  //         "wishlist_name",
-  //         `${localStorage.getItem("user_id")}_default`
-  //       );
-  //       formData.append("wishlist_items", "[]");
-
-  //       try {
-  //         await axios.post(
-  //           `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
-  //           formData,
-  //           {
-  //             headers: {
-  //               Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //               "Content-Type": "multipart/form-data",
-  //             },
-  //           }
-  //         );
-  //       } catch (err) {
-  //         console.log(err.message);
-  //       }
-  //       //////////////////////////////////////////////////////
-  //       const { data: defaultWishlists } = await axios.get(
-  //         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
-  //           "user_id"
-  //         )}`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //             "Content-Type": "multipart/form-data",
-  //           },
-  //         }
-  //       );
-  //       localStorage.setItem(
-  //         "default_wishlist",
-  //         defaultWishlists?.response[0]?.id
-  //       );
-  //     }
-  //   })();
-  // }, []);
 
   const handleFuzzySearch = (event) => {
     if (event.key === "Enter") {

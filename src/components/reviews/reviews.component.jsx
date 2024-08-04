@@ -67,7 +67,7 @@ const Reviews = ({ productDetails }) => {
     formData.append("rating", reviewRating);
     formData.append("title", reviewTitle);
     formData.append("content", reviewContent);
-    // formData.append("review_img[]", "reviewImages");
+    formData.append("review_img[]", reviewImages);
 
     const token = localStorage.getItem("token");
     axios
@@ -182,7 +182,7 @@ const Reviews = ({ productDetails }) => {
               console.log("reviewImages: ", file);
               if (file) {
                 if (reviewImages) {
-                  setreviewImages([...reviewImages, file]);
+                  setreviewImages([file]);
                 } else {
                   setreviewImages([file]);
                 }
@@ -258,7 +258,7 @@ const Reviews = ({ productDetails }) => {
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
             }}
-            onClick={addReviewHandler}
+            onClick={() => addReviewHandler()}
           >
             Submit Review
           </Button>

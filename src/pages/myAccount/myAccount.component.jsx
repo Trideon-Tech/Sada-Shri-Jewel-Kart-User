@@ -20,19 +20,54 @@ import {
 import Slide from "@mui/material/Slide";
 import Profile from "./profile.component";
 import Orders from "./orders.component";
-import { BrowserRouter, Route, Routes, Outlet, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Outlet,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function MyAccount() {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     console.log("trigereed");
     setOpen(true);
   };
 
+  const handleDeavticate = async () => {
+    try {
+      console.log("token===", localStorage.getItem("token"));
+      const token = localStorage.getItem("token");
+      console.log("token===", localStorage.getItem("user_id"));
+
+      await axios.delete(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/user.php`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          data: {
+            user_id: localStorage.getItem("user_id"),
+          },
+        }
+      );
+
+      navigate("/");
+      localStorage.clear();
+    } catch (err) {
+      console.log(err);
+      setOpen(false);
+    }
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -68,7 +103,7 @@ export default function MyAccount() {
               color: "#a36e29",
               width: "200px",
             }}
-            onClick={handleClose}
+            onClick={() => handleDeavticate()}
           >
             Are You Sure?
           </Button>
@@ -223,8 +258,8 @@ export default function MyAccount() {
             height: "100%",
             backgroundColor: "white",
             display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
           }}
         >
           <Outlet />

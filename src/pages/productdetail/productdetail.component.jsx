@@ -45,6 +45,7 @@ import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import "./productdetail.styles.scss";
 
@@ -176,9 +177,12 @@ function ProductDetail() {
   }, [selectedMetal, selectedDiamondType, selectedSize]);
 
   const getJwelleryDetail = () => {
+    const userId = localStorage.getItem("user_id")
+      ? localStorage.getItem("user_id")
+      : -1;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}`
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}&user_id=${userId}`
       )
       .then((response) => {
         const detail = response.data.response;
@@ -459,35 +463,6 @@ function ProductDetail() {
         </DialogActions>
       </Dialog>
 
-      {/* <Snackbar
-        autoHideDuration={5000}
-        variant="outlined"
-        color="primary"
-        size="lg"
-        open={open}
-        onClose={() => setOpen(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        sx={(theme) => ({
-          backgroundColor: "#fff2e0",
-          maxWidth: 360,
-        })}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "max-content",
-            padding: "2%",
-          }}
-        >
-          <Typography
-            variant="body"
-            style={{ color: "gray", fontWeight: "bold" }}
-          >
-            Product Added To Cart
-          </Typography>
-        </div>
-      </Snackbar> */}
       <div className="web">
         <div className="container">
           <div className="product-content">
@@ -503,13 +478,15 @@ function ProductDetail() {
                   display: "flex",
                 }}
               >
-                <FavoriteBorderOutlinedIcon
+                <FavoriteIcon
                   style={{
                     fontSize: "2.5rem",
                     marginLeft: "auto",
                     marginRight: "5%",
                     marginTop: "5%",
-                    color: "#a36e29",
+                    color: productDetail.exists_in_wishlist
+                      ? "#a36e29"
+                      : "#bfbfbf",
                   }}
                 />
               </Box>

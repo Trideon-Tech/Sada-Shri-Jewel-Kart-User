@@ -16,8 +16,10 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export default function CartTotal({ items }) {
   const totalPrice = items
-    .map((item) => parseInt(item.price))
-    .reduce((prev, curr) => prev + curr, 0);
+    ? items
+        .map((item) => parseInt(item.price))
+        .reduce((prev, curr) => prev + curr, 0)
+    : 0;
 
   return (
     <Box

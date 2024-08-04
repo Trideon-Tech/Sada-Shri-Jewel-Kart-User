@@ -49,6 +49,12 @@ function Productpage() {
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 
+  const handleFetchFilteredData = async () => {
+    const products = await axios.get(
+      "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all&user_id=13&min_weight=1&max_weight=100&min_height=1&max_height=100&min_width=1&max_width=100&min_purity=10&max_purity=200&min_price=0&max_price=400000"
+    );
+  };
+
   const handleFilterChange = (selectedRangeLabel) => {
     setSelectedPriceRanges((prevSelectedRanges) => {
       if (prevSelectedRanges.includes(selectedRangeLabel)) {
@@ -87,9 +93,13 @@ function Productpage() {
       : jwellery;
 
   const getProduct = () => {
+    let userId = localStorage.getItem("user_id")
+      ? localStorage.getItem("user_id")
+      : -1;
+
     const endpoint = isSubCategory
-      ? `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`
-      : `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
+      ? `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}&user_id=${userId}`
+      : `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}&user_id=${userId}`;
 
     axios
       .get(endpoint)
@@ -99,7 +109,6 @@ function Productpage() {
       })
       .catch((error) => {
         console.log(error);
-        // Handle error response here
       });
   };
 
@@ -219,6 +228,7 @@ function Productpage() {
                         name={item.name}
                         hash={item.hash}
                         price={item.price}
+                        isWishlisted={item.exists_in_wishlist}
                         clickHandler={handleCardClick}
                       />
                     </Grid>

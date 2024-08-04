@@ -9,6 +9,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const Orders = () => {
   const [orderList, setOrderList] = useState([]);
+
+  const STATUS_CREATED = "created";
+  const STATUS_COMPLETED = "completed";
+  const STATUS_CANCELLED = "cancelled";
+
+  const [openOrdersList, setOpenOrderList] = useState([]);
+  const [completedOrdersList, setCompletedOrderList] = useState([]);
+  const [cancelledOrdersList, setCancelledOrderList] = useState([]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -28,6 +36,21 @@ const Orders = () => {
       .then((response) => {
         console.log("orders", response.data.response);
         setOrderList(response.data.response);
+        setOpenOrderList(
+          response.data.response.filter(
+            (item) => item.status === STATUS_CREATED
+          )
+        );
+        setCompletedOrderList(
+          response.data.response.filter(
+            (item) => item.status === STATUS_COMPLETED
+          )
+        );
+        setCancelledOrderList(
+          response.data.response.filter(
+            (item) => item.status === STATUS_CANCELLED
+          )
+        );
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   }, []);
@@ -38,7 +61,8 @@ const Orders = () => {
         width: "100%",
         padding: "1%",
         paddingRight: "14%",
-        height: "100%",
+        maxHeight: "100%",
+        height: "max-content",
         overflowY: "scroll",
         display: "flex",
         marginLeft: "auto",
@@ -65,8 +89,12 @@ const Orders = () => {
       <Tabs
         aria-label="tabs"
         defaultValue={0}
-        style={{ width: "70%", margin: "auto", marginTop: "20px" }}
-        sx={{ marginTop: "2.5%", marginBottom: "5%", bgcolor: "transparent" }}
+        style={{
+          width: "70%",
+          margin: "auto",
+          marginTop: "20px",
+          marginBottom: "auto",
+        }}
       >
         <TabList
           sx={{
@@ -94,25 +122,25 @@ const Orders = () => {
         </TabList>
         <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
-            {orderList.map((order) => (
+            {openOrdersList.map((order) => (
               <OrderItem orderInfo={order} />
             ))}
           </Box>
         </TabPanel>
         <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
-            <OrderItem titleColorType="delivered" />
-            <OrderItem titleColorType="delivered" />
-            <OrderItem titleColorType="delivered" />
-            <OrderItem titleColorType="delivered" />
+            {completedOrdersList.map((order) => (
+              <OrderItem orderInfo={order} titleColorType="delivered" />
+            ))}
           </Box>
         </TabPanel>
         <TabPanel value={2} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
-            <OrderItem titleColorType="cancelled" />
-            <OrderItem titleColorType="cancelled" />
-            <OrderItem titleColorType="cancelled" />
-            <OrderItem titleColorType="cancelled" />
+            <Box style={{ width: "100%", height: "100%" }}>
+              {cancelledOrdersList.map((order) => (
+                <OrderItem orderInfo={order} titleColorType="cancelled" />
+              ))}
+            </Box>
           </Box>
         </TabPanel>
       </Tabs>

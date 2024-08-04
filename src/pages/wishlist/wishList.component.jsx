@@ -898,6 +898,7 @@ const Wishlist = () => {
     (async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
+      console.log("calling from wishlist comp");
       const { data } = await axios.get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
@@ -913,7 +914,7 @@ const Wishlist = () => {
       console.log("wishlist", data);
       setWishListItems(data?.response);
     })();
-  });
+  }, []);
 
   const handleCardClick = (productName, hash, menuItemName) => {
     console.log(hash);
@@ -994,6 +995,7 @@ const Wishlist = () => {
                   name={item?.name}
                   price={item?.price}
                   clickHandler={handleCardClick}
+                  isWishlisted={true}
                 />
               </Grid>
             ))}

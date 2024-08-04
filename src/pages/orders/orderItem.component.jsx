@@ -82,9 +82,8 @@ const OrderItem = ({ titleColorType = "arriving", orderInfo }) => {
           }}
         >
           <img
-            src={``}
-            // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
-            style={{ height: "100%", width: "100%", objectFit: "contain" }}
+            height={"150px"}
+            src={`https://api.sadashrijewelkart.com/assets/${orderInfo?.images[0]?.file}`}
           />
         </Box>
         <Box
@@ -152,7 +151,7 @@ const OrderItem = ({ titleColorType = "arriving", orderInfo }) => {
                 style={{ color: "gray", fontSize: "1.2rem" }}
                 gutterBottom
               >
-                Quantity : 2
+                Quantity : 1
               </Typography>
             </Box>
           </Box>

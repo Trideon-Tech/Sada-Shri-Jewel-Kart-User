@@ -14,10 +14,24 @@ import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export default function CartTotal({ items, openModal }) {
+export default function CartTotal({ items, openModal, couponData }) {
   const totalPrice = items
     .map((item) => parseInt(item.price))
     .reduce((prev, curr) => prev + curr, 0);
+
+  const [discountValue, setDiscountValue] = useState(0);
+
+  useEffect(() => {
+    console.log("couponData", couponData);
+    if (couponData) {
+      if (couponData.amount) {
+        setDiscountValue(Number(couponData.amount));
+      } else if (couponData.percentage) {
+        setDiscountValue(totalPrice * Number(couponData.percentage));
+      }
+    }
+  }, [couponData]);
+
   return (
     <Box
       style={{
@@ -148,7 +162,7 @@ export default function CartTotal({ items, openModal }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>You Saved:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 1500</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>₹ 0</Typography>
         </Box>
         <Box
           style={{
@@ -160,8 +174,12 @@ export default function CartTotal({ items, openModal }) {
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>Discount:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 12</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>
+            Discount:<b>{couponData?.code || ""}</b>
+          </Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>
+            ₹ {Number(discountValue).toLocaleString()}
+          </Typography>
         </Box>
         <Box
           style={{
@@ -176,7 +194,7 @@ export default function CartTotal({ items, openModal }) {
             Total:
           </Typography>
           <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            ₹ {Number(totalPrice).toLocaleString()}
+            ₹ {(Number(totalPrice) - discountValue).toLocaleString()}
           </Typography>
         </Box>
       </Card>

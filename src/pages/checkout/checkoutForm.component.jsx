@@ -184,6 +184,7 @@ const CheckoutForm = ({ cartItems }) => {
       )
       .then((response) => {
         console.log(response);
+        console.log(response.data.response[0]);
         setSelectedAddress(response.data.response[0]);
         console.log("SAP", selectedAddress);
       })
@@ -284,7 +285,7 @@ const CheckoutForm = ({ cartItems }) => {
     formData.append("user_address_id", selectedAddress.id);
     formData.append("payment_status", "pending");
     // formData.append("amount", 4210);
-    const orderList = cartItems.map((item) => {
+    const orderList = cartItems?.map((item) => {
       return {
         product_id: parseInt(item.id),
         // customization_id: -1,
@@ -333,13 +334,15 @@ const CheckoutForm = ({ cartItems }) => {
         <CheckoutProgressBar activeStep={activeStep} />
       </Box>
       {activeStep === 1 ? (
-        <SelectAddressStep
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          setSelectedAddress={setSelectedAddress}
-          selectedAddress={selectedAddress}
-          createOrderHandler={createOrderHandler}
-        />
+        Object.keys(selectedAddress).length && (
+          <SelectAddressStep
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            setSelectedAddress={setSelectedAddress}
+            selectedAddress={selectedAddress}
+            createOrderHandler={createOrderHandler}
+          />
+        )
       ) : activeStep === 2 ? (
         <SelectPaymentMethodStep
           activeStep={activeStep}
