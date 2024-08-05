@@ -34,6 +34,7 @@ function Productpage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
+  const [selectedPriceRange, setSelectedPriceRange] = useState({});
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -49,22 +50,66 @@ function Productpage() {
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 
+  const [weightFilter, setWeightFilter] = useState([0, 100]);
+  const [purityFilter, setPurityFilter] = useState([16, 24]);
+  const [heightFilter, setHeightFilter] = useState([0, 50]);
+  const [widthFilter, setWidthFilter] = useState([0, 50]);
+
   const handleFetchFilteredData = async () => {
-    const products = await axios.get(
-      "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all&user_id=13&min_weight=1&max_weight=100&min_height=1&max_height=100&min_width=1&max_width=100&min_purity=10&max_purity=200&min_price=0&max_price=400000"
-    );
+    // const products = await axios.get(
+    //   "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all&user_id=13&min_weight=1&max_weight=100&min_height=1&max_height=100&min_width=1&max_width=100&min_purity=10&max_purity=200&min_price=0&max_price=400000"
+    // );
+
+    const params = {};
+    params.user_id = localStorage.getItem("user_id") || -1;
+
+    params.min_height = heightFilter[0];
+    params.max_height = heightFilter[1];
+
+    params.min_width = widthFilter[0];
+    params.max_width = widthFilter[1];
+
+    params.min_price = selectedPriceRange.min || 0;
+    params.max_price = selectedPriceRange.max || 1000000000;
+
+    params.min_weight = weightFilter[0];
+    params.max_weight = weightFilter[1];
+
+    params.min_purity = purityFilter[0];
+    params.max_purity = purityFilter[1];
+
+    // Define the API endpoint
+    const apiUrl =
+      "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all"; // Replace with your actual API endpoint
+
+    // Make the GET request with query parameters
+    const response = await axios.get(apiUrl, { params });
+    setJwellery(response.data.response);
+    console.log(response);
   };
 
+  useEffect(() => {
+    (async () => {
+      await handleFetchFilteredData();
+    })();
+  }, [
+    weightFilter,
+    purityFilter,
+    heightFilter,
+    widthFilter,
+    selectedPriceRange,
+  ]);
+
   const handleFilterChange = (selectedRangeLabel) => {
-    setSelectedPriceRanges((prevSelectedRanges) => {
-      if (prevSelectedRanges.includes(selectedRangeLabel)) {
-        return prevSelectedRanges.filter(
-          (range) => range !== selectedRangeLabel
-        );
-      } else {
-        return [...prevSelectedRanges, selectedRangeLabel];
-      }
-    });
+    // setSelectedPriceRanges((prevSelectedRanges) => {
+    //   if (prevSelectedRanges.includes(selectedRangeLabel)) {
+    //     return prevSelectedRanges.filter(
+    //       (range) => range !== selectedRangeLabel
+    //     );
+    //   } else {
+    //     return [...prevSelectedRanges, selectedRangeLabel];
+    //   }
+    // });
   };
 
   const isProductInRange = (product) => {
@@ -165,8 +210,17 @@ function Productpage() {
               </Box>
               <Divider style={{ width: "90%" }} />
               <PriceFilter
-                selectedPriceRanges={selectedPriceRanges}
+                selectedPriceRange={selectedPriceRange}
+                handleSelectedPriceRange={setSelectedPriceRange}
                 onFilterChange={handleFilterChange}
+                weightFilter={weightFilter}
+                purityFilter={purityFilter}
+                heightFilter={heightFilter}
+                widthFilter={widthFilter}
+                handleWeightFilter={setWeightFilter}
+                handlePurityFilter={setPurityFilter}
+                handleHeightFilter={setHeightFilter}
+                handleWidthFilter={setWidthFilter}
               />
             </Grid>
 
@@ -219,7 +273,7 @@ function Productpage() {
                     }}
                   />
                 ) : (
-                  filteredJwellery.map((item, index) => (
+                  jwellery.map((item, index) => (
                     <Grid item xs={3} className="product-card">
                       <JwelleryCard
                         id={item.id}
@@ -267,13 +321,17 @@ function Productpage() {
                 style={{ margin: "auto", display: "flex", height: "100%" }}
               />
             ) : (
-              filteredJwellery.map((item, index) => (
+              jwellery.map((item, index) => (
                 <Grid item xs={6} sm={4} md={3} key={item.id}>
                   <JwelleryCard
+                    id={item.id}
+                    key={item.id}
                     image={item.images[0].file}
                     name={item.name}
+                    hash={item.hash}
                     price={item.price}
-                    onClick={() => handleCardClick(item.name, item.hash)}
+                    isWishlisted={item.exists_in_wishlist}
+                    clickHandler={handleCardClick}
                   />
                 </Grid>
               ))
@@ -343,7 +401,16 @@ function Productpage() {
               <Divider />
               <PriceFilter
                 selectedPriceRanges={selectedPriceRanges}
+                handleSelectedPriceRange={setSelectedPriceRange}
                 onFilterChange={handleFilterChange}
+                weightFilter={weightFilter}
+                purityFilter={purityFilter}
+                heightFilter={heightFilter}
+                widthFilter={widthFilter}
+                handleWeightFilter={setWeightFilter}
+                handlePurityFilter={setPurityFilter}
+                handleHeightFilter={setHeightFilter}
+                handleWidthFilter={setWidthFilter}
               />
             </div>
           </Drawer>
