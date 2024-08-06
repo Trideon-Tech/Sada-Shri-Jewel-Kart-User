@@ -13,12 +13,17 @@ import { Divider, CardContent } from "@mui/material";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function CartTotal({
   items,
   openModal,
   couponData,
   selectedCouponCode,
+  setSelectedCouponId,
+  setSelectedCouponCode,
+  selectedCouponId,
+  couponList,
 }) {
   const totalPrice = items
     .map((item) => parseInt(item.price))
@@ -26,16 +31,31 @@ export default function CartTotal({
 
   const [discountValue, setDiscountValue] = useState(0);
 
+  const handleCouponChange = () => {
+    if (selectedCouponCode) {
+      //unset Coupon
+      setSelectedCouponId(null);
+      setSelectedCouponCode(null);
+    } else {
+      openModal(true);
+    }
+  };
   useEffect(() => {
     console.log("couponData", couponData);
-    if (couponData) {
-      if (couponData.amount) {
-        setDiscountValue(Number(couponData.amount));
-      } else if (couponData.percentage) {
-        setDiscountValue(totalPrice * Number(couponData.percentage));
+    if (!selectedCouponId) {
+      setDiscountValue(0);
+    }
+    const selectedCouponData = couponList.filter(
+      (item) => item.id === selectedCouponId
+    )[0];
+    if (selectedCouponData) {
+      if (selectedCouponData.amount) {
+        setDiscountValue(Number(selectedCouponData.amount));
+      } else if (selectedCouponData.percentage) {
+        setDiscountValue(totalPrice * Number(selectedCouponData.percentage));
       }
     }
-  }, [couponData]);
+  }, [selectedCouponId]);
 
   return (
     <Box
@@ -51,7 +71,6 @@ export default function CartTotal({
       <Card
         style={{
           width: "90%",
-
           minHeight: 65,
           height: "7vh",
           borderRadius: "10px",
@@ -101,17 +120,23 @@ export default function CartTotal({
       >
         <LocalOfferIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
         <Typography
-          style={{ marginLeft: "5%", marginRight: "auto", fontWeight: "bold" }}
+          style={{
+            marginLeft: "5%",
+            marginRight: "auto",
+            fontWeight: "bold",
+            color: selectedCouponCode ? "#A36E29" : "black",
+          }}
         >
-          Apply Coupon{" "}
-          <span style={{ color: "#A36E29" }}>{selectedCouponCode}</span>
+          {selectedCouponCode
+            ? `Applied ${selectedCouponCode}`
+            : "Apply Coupon"}
         </Typography>
         <Button
           variant="outlined"
           style={{ border: 0, color: "#A36E29", fontWeight: "bold" }}
-          onClick={() => openModal(true)}
+          onClick={() => handleCouponChange()}
         >
-          <ArrowForwardIosIcon />
+          {!selectedCouponCode ? <ArrowForwardIosIcon /> : <CloseIcon />}
         </Button>
       </Card>
       <Card
@@ -180,9 +205,7 @@ export default function CartTotal({
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>
-            Discount:<b>{couponData?.code || ""}</b>
-          </Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>Discount:</Typography>
           <Typography style={{ fontSize: "1.1rem" }}>
             ₹ {Number(discountValue).toLocaleString()}
           </Typography>

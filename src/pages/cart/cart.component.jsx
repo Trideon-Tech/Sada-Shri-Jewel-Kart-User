@@ -66,7 +66,7 @@ const CouponCard = ({
             fontWeight: 600,
           }}
         >
-          {item.coupon_text}
+          {item.coupon_text.substring(0, 7)}
         </p>
       </div>
       <div
@@ -198,7 +198,6 @@ const Cart = () => {
     axios
       .delete(
         "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
-
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -247,7 +246,6 @@ const Cart = () => {
                 </p>
                 <ModalClose />
               </div>
-
               <div
                 style={{
                   width: "100%",
@@ -312,11 +310,15 @@ const Cart = () => {
               <Grid item xs={4}>
                 <CartTotal
                   selectedCouponCode={selectedCouponCode}
+                  selectedCouponId={selectedCouponId}
                   items={cartItems}
                   openModal={setModalOpen}
                   couponData={
                     couponList.filter((item) => item.id === selectedCouponId)[0]
                   }
+                  couponList={couponList}
+                  setSelectedCouponId={setSelectedCouponId}
+                  setSelectedCouponCode={setSelectedCouponCode}
                 />
               </Grid>
             </Grid>
