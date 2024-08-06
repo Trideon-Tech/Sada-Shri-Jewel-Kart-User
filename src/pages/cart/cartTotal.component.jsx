@@ -14,7 +14,12 @@ import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export default function CartTotal({ items, openModal, couponData }) {
+export default function CartTotal({
+  items,
+  openModal,
+  couponData,
+  selectedCouponCode,
+}) {
   const totalPrice = items
     .map((item) => parseInt(item.price))
     .reduce((prev, curr) => prev + curr, 0);
@@ -98,7 +103,8 @@ export default function CartTotal({ items, openModal, couponData }) {
         <Typography
           style={{ marginLeft: "5%", marginRight: "auto", fontWeight: "bold" }}
         >
-          Apply Coupon
+          Apply Coupon{" "}
+          <span style={{ color: "#A36E29" }}>{selectedCouponCode}</span>
         </Typography>
         <Button
           variant="outlined"

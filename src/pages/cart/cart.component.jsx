@@ -12,11 +12,18 @@ import ModalOverflow from "@mui/joy/ModalOverflow";
 import { Input, Textarea } from "@mui/joy";
 import "react-toastify/dist/ReactToastify.css";
 
-const CouponCard = ({ item, handleClose, couponSelectHandler }) => {
+const CouponCard = ({
+  item,
+  handleClose,
+  couponSelectHandler,
+  couponCodeSelector,
+}) => {
   const handleSelectedCoupon = () => {
     localStorage.setItem("selected_coupon", item.id);
     handleClose(false);
     couponSelectHandler(item.id);
+    console.log("=======", item.code);
+    couponCodeSelector(item.code);
   };
   return (
     <Card
@@ -81,17 +88,6 @@ const CouponCard = ({ item, handleClose, couponSelectHandler }) => {
           Valid till {item.coupon_validity}
         </p>
         <div style={{ display: "flex" }}>
-          <p
-            style={{
-              fontSize: "1.4rem",
-              margin: 0,
-              color: "#E0B872",
-              fontWeight: 600,
-            }}
-          >
-            Save ₹ 800
-          </p>
-
           <Button
             style={{
               backgroundColor: "transparent",
@@ -130,6 +126,7 @@ const Cart = () => {
   const [refreshCart, setRefreshCart] = useState(1);
   const [couponList, setCouponList] = useState(couponList_dummy);
   const [selectedCouponId, setSelectedCouponId] = useState(null);
+  const [selectedCouponCode, setSelectedCouponCode] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -280,6 +277,7 @@ const Cart = () => {
                     item={item}
                     handleClose={setModalOpen}
                     couponSelectHandler={setSelectedCouponId}
+                    couponCodeSelector={setSelectedCouponCode}
                   />
                 ))}
               </div>
@@ -313,6 +311,7 @@ const Cart = () => {
               </Grid>
               <Grid item xs={4}>
                 <CartTotal
+                  selectedCouponCode={selectedCouponCode}
                   items={cartItems}
                   openModal={setModalOpen}
                   couponData={
