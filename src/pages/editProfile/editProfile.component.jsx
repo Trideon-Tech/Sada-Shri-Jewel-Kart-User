@@ -17,7 +17,7 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const EditProfile = () => {
-  const userName = localStorage.getItem("user_name").split("");
+  const userName = localStorage.getItem("user_name")?.split(" ") || ["", ""];
   const [firstName, setFirstName] = useState(userName[0]);
   const [lastName, setLastName] = useState(userName[1]);
   const [mobile, setMobile] = useState(localStorage.getItem("mobile"));
@@ -162,7 +162,9 @@ const EditProfile = () => {
             label="Phone*"
             fullWidth
             onChange={(event) => {
-              setMobile(event.target.value);
+              if (Number.isInteger(Number(event.target.value)))
+                if (event.target.value.length <= 12)
+                  setMobile(event.target.value);
             }}
           />
           <TextField variant="outlined" label="Default Pincode*" fullWidth />

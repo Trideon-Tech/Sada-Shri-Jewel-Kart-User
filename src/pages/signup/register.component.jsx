@@ -166,7 +166,8 @@ const Register = () => {
                 value={mobile}
                 size="lg"
                 onChange={(e) => {
-                  if (e.target.value.length <= 10) setMobile(e.target.value);
+                  if (Number.isInteger(Number(e.target.value)))
+                    if (e.target.value.length <= 10) setMobile(e.target.value);
                 }}
                 startDecorator={
                   <Button

@@ -12,8 +12,16 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Divider, CardContent } from "@mui/material";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
+import { Input, Textarea } from "@mui/joy";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CloseIcon from "@mui/icons-material/Close";
+import Modal from "@mui/joy/Modal";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import ModalClose from "@mui/joy/ModalClose";
+import ModalDialog from "@mui/joy/ModalDialog";
+import ModalOverflow from "@mui/joy/ModalOverflow";
 
 export default function CartTotal({
   items,
@@ -30,6 +38,8 @@ export default function CartTotal({
     .reduce((prev, curr) => prev + curr, 0);
 
   const [discountValue, setDiscountValue] = useState(0);
+
+  const [locationModalOpen, setLocationModalOpen] = useState();
 
   const handleCouponChange = () => {
     if (selectedCouponCode) {
@@ -68,6 +78,138 @@ export default function CartTotal({
         justifyContent: "space-between",
       }}
     >
+      <Modal
+        open={locationModalOpen}
+        onClose={() => {
+          setLocationModalOpen(false);
+        }}
+      >
+        <ModalOverflow>
+          <ModalDialog
+            aria-labelledby="modal-dialog-overflow"
+            style={{ width: "500px", height: "600px", padding: "30px" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "max-content",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <p style={{ fontSize: "1.5rem", fontWeight: 600, margin: 0 }}>
+                  Locate me now
+                </p>
+                <ModalClose />
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "30%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50px",
+                }}
+              >
+                <PinDropOutlinedIcon
+                  style={{ fontSize: "5rem", color: "#a36e29" }}
+                />
+                <p
+                  style={{
+                    fontSize: "1.5rem",
+                    textAlign: "center",
+                    width: "300px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Add your Pincode to Browse Better
+                </p>
+              </div>
+              <div style={{ width: "100%", height: "max-content" }}>
+                <Input
+                  sx={{
+                    width: "100%",
+                    height: "60px",
+                    backgroundColor: "#F9F5EC",
+                    border: 0,
+                  }}
+                  placeholder="Enter your Pincode"
+                  inputProps={{ "aria-label": "Enter your Pincode" }}
+                  startDecorator={<MyLocationIcon />}
+                  endDecorator={
+                    <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
+                  }
+                  onChange={(event) =>
+                    localStorage.setItem("default_pincode", event.target.value)
+                  }
+                />
+                <div
+                  style={{
+                    width: "100%",
+                    height: "max-content",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    color: "#A36E29",
+                    fontWeight: 600,
+                    paddingLeft: "20px",
+                  }}
+                >
+                  <LocalShippingOutlinedIcon />
+                  <p>{"  "}Estimated delivery by 12 July</p>
+                </div>
+              </div>
+              <Card
+                elevation={4}
+                sx={{
+                  width: "calc(100% - 40px)",
+                  height: "60px",
+                  display: "flex",
+                  borderRadius: "10px",
+                  padding: "20px",
+                }}
+              >
+                <div style={{ width: "70%", height: "100%" }}>
+                  <h4
+                    style={{
+                      fontWeight: 600,
+                      margin: 0,
+                    }}
+                  >
+                    City Location
+                  </h4>
+                  <p style={{ margin: 0, color: "gray", fontWeight: 600 }}>
+                    Jamshedpur, Jharkhand
+                  </p>
+                </div>
+                <div
+                  style={{ marginLeft: "auto", width: "30%", height: "100%" }}
+                >
+                  <p
+                    style={{
+                      fontWeight: 600,
+                      color: "#A36E29",
+                      textAlign: "right ",
+                    }}
+                  >
+                    Submit
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </ModalDialog>
+        </ModalOverflow>
+      </Modal>
       <Card
         style={{
           width: "90%",
@@ -86,7 +228,7 @@ export default function CartTotal({
       >
         <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
         <Typography style={{ marginLeft: "2%", fontWeight: "bold" }}>
-          Delivering to : 834001
+          Delivering to : {localStorage.getItem("default_pincode")}
         </Typography>
         <Button
           variant="outlined"
@@ -97,6 +239,7 @@ export default function CartTotal({
             fontWeight: "bold",
             marginRight: 0,
           }}
+          onClick={() => setLocationModalOpen(true)}
         >
           Change Pincode
         </Button>

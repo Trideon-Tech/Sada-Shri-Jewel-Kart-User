@@ -60,13 +60,11 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
       .then((response) => {
         console.log(response);
         console.log("SA", selectedAddress);
-        if (!selectedAddress) setSelectedAddress(response.data.response[0]);
-        setAddresses(response.data.response);
+        if (!selectedAddress) setSelectedAddress(response?.data?.response[0]);
+        setAddresses(response?.data?.response);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshAddresses]);
-
-  React.useEffect(() => {}, [selectedAddress]);
 
   const handleEditCreateAddress = (editMode = false) => {
     if (editMode) {

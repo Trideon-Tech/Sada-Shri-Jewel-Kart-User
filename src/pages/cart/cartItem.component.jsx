@@ -12,8 +12,9 @@ import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultR
 import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded";
 import Select from "@mui/joy/Select";
 import CloseIcon from "@mui/icons-material/Close";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Option from "@mui/joy/Option";
+
 export default function CartItem({
   item,
   removeHandler,
@@ -187,11 +188,11 @@ export default function CartItem({
             style={{ marginTop: "auto" }}
             onClick={() => moveToWishlistHandler(item?.id, item?.cart_id)}
           >
-            <FavoriteBorderIcon
+            <FavoriteIcon
               fontSize="large"
               style={{
+                color: item?.exists_in_wishlist ? "#A36E29" : "gray",
                 marginBottom: "auto",
-                color: "#A36E29",
               }}
             />
           </Button>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/navbar/navbar.component";
 import { Button, Paper } from "@mui/material";
 import CartItem from "../cart/cartItem.component";
+import { useNavigate } from "react-router-dom";
 
 const productData = {
   id: "7",
@@ -65,6 +66,7 @@ const productData = {
 };
 
 const OrderConfirmation = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -99,6 +101,7 @@ const OrderConfirmation = () => {
               height: "57px",
               color: "#a36e29",
             }}
+            onClick={() => navigate("/jwellery/Rings")}
           >
             Continue Shopping
           </Button>

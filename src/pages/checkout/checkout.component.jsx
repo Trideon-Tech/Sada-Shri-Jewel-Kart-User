@@ -831,12 +831,17 @@ const Checkout = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         setCartItems(response.data?.response);
       })

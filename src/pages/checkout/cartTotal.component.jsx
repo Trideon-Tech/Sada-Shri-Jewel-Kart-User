@@ -13,6 +13,7 @@ import { Divider, CardContent } from "@mui/material";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import axios from "axios";
 
 export default function CartTotal({ items }) {
   const totalPrice = items
@@ -20,6 +21,49 @@ export default function CartTotal({ items }) {
         .map((item) => parseInt(item.price))
         .reduce((prev, curr) => prev + curr, 0)
     : 0;
+
+  const [selectedCoupon, setSelectedCoupon] = useState({});
+
+  const [discountValue, setDiscountValue] = useState(0);
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const { data } = await axios.get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/coupons/all.php?type=all_coupons`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        const couponId = localStorage.getItem("selected_coupon");
+
+        if (!couponId) {
+          setDiscountValue(0);
+        }
+
+        const selectedCouponData = data?.response?.filter(
+          (item) => item.id === couponId
+        )[0];
+
+        if (selectedCouponData) {
+          if (selectedCouponData.amount) {
+            setDiscountValue(Number(selectedCouponData.amount));
+          } else if (selectedCouponData.percentage) {
+            setDiscountValue(
+              totalPrice * Number(selectedCouponData.percentage)
+            );
+          }
+        }
+      } catch (err) {
+        console.log("fetching coupons failed ", err);
+      }
+    })();
+  }, []);
 
   return (
     <Box
@@ -86,7 +130,7 @@ export default function CartTotal({ items }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>You Saved:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 1500</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>₹ 0</Typography>
         </Box>
         <Box
           style={{
@@ -99,7 +143,9 @@ export default function CartTotal({ items }) {
           }}
         >
           <Typography style={{ fontSize: "1.1rem" }}>Dicount:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 12</Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>
+            ₹ {Number(discountValue).toLocaleString()}
+          </Typography>
         </Box>
         <Box
           style={{

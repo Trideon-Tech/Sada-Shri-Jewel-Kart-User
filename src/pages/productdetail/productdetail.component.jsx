@@ -90,6 +90,10 @@ function ProductDetail() {
   });
 
   const addToCartHandler = () => {
+    if (productDetail.exists_in_cart) {
+      navigate("/cart");
+      return;
+    }
     const token = localStorage.getItem("token");
 
     axios
@@ -120,12 +124,17 @@ function ProductDetail() {
       });
 
     axios
-      .get("https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         sessionStorage.setItem("cart", response.data.response.length);
       })
@@ -138,7 +147,7 @@ function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState("");
   const [variants, setVariants] = useState([]); //for variant
   const [selectedVariantPrice, setSelectedVariantPrice] = useState(""); //for variant price
-  const [pincode, setPincode] = useState();
+  const [pincode, setPincode] = useState("");
   const [locationModalOpen, setLocationModalOpen] = useState();
 
   const updateSelectedVariantPrice = () => {
@@ -174,6 +183,8 @@ function ProductDetail() {
 
   useEffect(() => {
     updateSelectedVariantPrice();
+    const pinCode = localStorage.getItem("default_pincode");
+    setPincode(pinCode);
   }, [selectedMetal, selectedDiamondType, selectedSize]);
 
   const getJwelleryDetail = () => {
@@ -185,18 +196,18 @@ function ProductDetail() {
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}&user_id=${userId}`
       )
       .then((response) => {
-        const detail = response.data.response;
+        const detail = response?.data?.response;
 
         const fetchedImages = detail.images
           .filter((item) => item.type === "img")
           .map(
-            (item) => `https://api.sadashrijewelkart.com/assets/${item.file}`
+            (item) => `https://api.sadashrijewelkart.com/assets/${item?.file}`
           );
         setImages(fetchedImages);
 
         if (detail.video !== "Product Infographics doesn't exist.") {
           const fetchedVideo = detail.video
-            ? `https://api.sadashrijewelkart.com/assets/${detail.video.file}`
+            ? `https://api.sadashrijewelkart.com/assets/${detail?.video?.file}`
             : "";
           setVideo(fetchedVideo);
         }
@@ -326,6 +337,10 @@ function ProductDetail() {
                   endDecorator={
                     <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
                   }
+                  onChange={(event) => {
+                    setPincode(event.target.value);
+                    localStorage.setItem("default_pincode", event.target.value);
+                  }}
                 />
                 <div
                   style={{
@@ -959,7 +974,9 @@ function ProductDetail() {
                       fullWidth
                       onClick={addToCartHandler}
                     >
-                      Add to Cart
+                      {productDetail.exists_in_cart
+                        ? "Go to Cart"
+                        : "Add to Cart"}
                       <ShoppingCart className="button-icon" />
                     </Button>
                   </div>
@@ -971,9 +988,6 @@ function ProductDetail() {
                     variant="solid"
                     className="pincode"
                     value={pincode}
-                    onChange={(e) => {
-                      setPincode(e.target.value);
-                    }}
                     size="lg"
                     style={{
                       backgroundColor: "white",
@@ -1250,7 +1264,9 @@ function ProductDetail() {
                 </Typography>
                 <div className="actions">
                   <Button variant="contained" className="button" fullWidth>
-                    Add to Cart
+                    {productDetail.exists_in_cart
+                      ? "Go to Cart"
+                      : "Add to Cart"}
                     <ShoppingCart className="button-icon" />
                   </Button>
                 </div>

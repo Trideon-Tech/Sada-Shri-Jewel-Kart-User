@@ -174,7 +174,7 @@ const CheckoutForm = ({ cartItems }) => {
     const token = localStorage.getItem("token");
     axios
       .get(
-        "https://api.sadashrijewelkart.com//v1.0.0/user/details.php?key=address",
+        "https://api.sadashrijewelkart.com/v1.0.0/user/details.php?key=address",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -184,8 +184,9 @@ const CheckoutForm = ({ cartItems }) => {
       )
       .then((response) => {
         console.log(response);
-        console.log(response.data.response[0]);
-        setSelectedAddress(response.data.response[0]);
+        console.log(response?.data?.response[0]);
+        if (response?.data?.response[0])
+          setSelectedAddress(response?.data?.response[0]);
         console.log("SAP", selectedAddress);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
@@ -334,15 +335,13 @@ const CheckoutForm = ({ cartItems }) => {
         <CheckoutProgressBar activeStep={activeStep} />
       </Box>
       {activeStep === 1 ? (
-        Object.keys(selectedAddress).length && (
-          <SelectAddressStep
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            setSelectedAddress={setSelectedAddress}
-            selectedAddress={selectedAddress}
-            createOrderHandler={createOrderHandler}
-          />
-        )
+        <SelectAddressStep
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          setSelectedAddress={setSelectedAddress}
+          selectedAddress={selectedAddress}
+          createOrderHandler={createOrderHandler}
+        />
       ) : activeStep === 2 ? (
         <SelectPaymentMethodStep
           activeStep={activeStep}

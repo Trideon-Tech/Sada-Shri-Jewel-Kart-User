@@ -46,7 +46,7 @@ const OrderItem = ({ titleColorType = "arriving", orderInfo }) => {
           }}
         >
           <Typography style={{ color: "#7e7e7e" }}>
-            Order ID: #{orderInfo?.id}
+            Order ID: #{orderInfo?.public_id}
           </Typography>
           <Button
             style={{
