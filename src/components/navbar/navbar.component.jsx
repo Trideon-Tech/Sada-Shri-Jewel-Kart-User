@@ -43,13 +43,30 @@ const Navbar = () => {
   let navigate = useNavigate();
   const { category } = useParams();
   const [wishListItems, setWishListItems] = useState(0);
+  const [cartLength, setCartLength] = useState(0);
+
+  const getCartLengthNonAuth = () => {
+    const cartList = localStorage.getItem("cart_list") || "";
+    if (cartList && cartList.length > 0) {
+      const cartItems = cartList.split(",");
+      setCartLength(cartItems.length - 1);
+    } else {
+      setCartLength(0);
+    }
+  };
 
   useEffect(() => {
     (async () => {
       const token = localStorage.getItem("token");
-      if (!token) return;
+
+      if (!token) {
+        getCartLengthNonAuth();
+        console.log("cartLength", cartLength);
+        return;
+      }
+      setCartLength(sessionStorage.getItem("cart"));
       const { data } = await axios.get(
-        `https://api.sadashrijewelkart.com//v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -175,6 +192,7 @@ const Navbar = () => {
       style={{
         height: "max-content",
         marginBottom: matches ? "100px" : "0px",
+        width: "100%",
       }}
     >
       <div className="web">
@@ -345,7 +363,7 @@ const Navbar = () => {
               </IconButton>
               <IconButton color="inherit" component={Link} to="/cart">
                 <Badge
-                  badgeContent={sessionStorage.getItem("cart")}
+                  badgeContent={cartLength}
                   sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
                 >
                   <ShoppingCartIcon />
@@ -447,7 +465,7 @@ const Navbar = () => {
                 </IconButton>
                 <IconButton color="inherit" component={Link} to="/cart">
                   <Badge
-                    badgeContent={sessionStorage.getItem("cart") || 0}
+                    badgeContent={cartLength}
                     sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
                   >
                     <ShoppingCartIcon />

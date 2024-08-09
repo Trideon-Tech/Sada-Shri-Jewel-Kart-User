@@ -79,13 +79,12 @@ function Productpage() {
     params.max_purity = purityFilter[1];
 
     // Define the API endpoint
-    const apiUrl =
-      "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all"; // Replace with your actual API endpoint
+    const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`; // Replace with your actual API endpoint
 
     // Make the GET request with query parameters
     const response = await axios.get(apiUrl, { params });
-    setJwellery(response.data.response);
-    console.log(response);
+    setJwellery(response?.data?.response);
+    console.log("pproducts", response);
   };
 
   useEffect(() => {

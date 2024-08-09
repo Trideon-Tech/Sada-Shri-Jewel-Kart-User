@@ -31,13 +31,15 @@ const UserDetailsForm = () => {
   const [wishlists, setWishlists] = useState([]);
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(items);
+    let items = JSON.parse(localStorage.getItem("cart_list")) || "";
+
+    items = items.split(",");
+    sendCartToAPI(items);
   }, []);
 
-  const sendCartToAPI = (token) => {
-    console.log(token);
-    cartItems.forEach((item) => {
+  const sendCartToAPI = (items) => {
+    const token = localStorage.getItem("token");
+    items.forEach((item) => {
       axios
         .put(
           "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
@@ -63,7 +65,7 @@ const UserDetailsForm = () => {
         });
     });
 
-    localStorage.removeItem("cart");
+    localStorage.removeItem("cart_list");
   };
 
   const handleUserRegistration = async () => {

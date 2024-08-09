@@ -31,6 +31,7 @@ import { generalToastStyle } from "../../utils/toast.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 const steps = ["Login", "Shipping", "Payment"];
 
 const SelectAddressStep = ({
@@ -39,6 +40,7 @@ const SelectAddressStep = ({
   selectedAddress,
   setSelectedAddress,
   createOrderHandler,
+  matches,
 }) => {
   const handleCreateOrder = async () => {
     await createOrderHandler();
@@ -48,7 +50,7 @@ const SelectAddressStep = ({
   return (
     <Box
       style={{
-        width: "60%",
+        width: matches ? "60%" : "100%",
         marginTop: "5%",
         height: "max-content",
         marginBottom: "5%",
@@ -94,11 +96,12 @@ const SelectPaymentMethodStep = ({
   paymentMethod,
   setPaymentMethod,
   handlePaymentRequest,
+  matches,
 }) => {
   return (
     <Box
       style={{
-        width: "60%",
+        width: matches ? "60%" : "100%",
         marginTop: "5%",
         height: "max-content",
         marginBottom: "5%",
@@ -317,6 +320,7 @@ const CheckoutForm = ({ cartItems }) => {
         console.error("Error:", error);
       });
   };
+  const matches = useMediaQuery("(min-width:600px)");
 
   return (
     <Box
@@ -331,12 +335,19 @@ const CheckoutForm = ({ cartItems }) => {
         alignItems: "center",
       }}
     >
-      <Box style={{ width: "60%", marginTop: "5%", height: "max-content" }}>
+      <Box
+        style={{
+          width: matches ? "60%" : "100%",
+          marginTop: "5%",
+          height: "max-content",
+        }}
+      >
         <CheckoutProgressBar activeStep={activeStep} />
       </Box>
       {activeStep === 1 ? (
         <SelectAddressStep
           activeStep={activeStep}
+          matches={matches}
           setActiveStep={setActiveStep}
           setSelectedAddress={setSelectedAddress}
           selectedAddress={selectedAddress}
@@ -344,6 +355,7 @@ const CheckoutForm = ({ cartItems }) => {
         />
       ) : activeStep === 2 ? (
         <SelectPaymentMethodStep
+          matches={matches}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
           setSelectedAddress={setSelectedAddress}

@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material";
 import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "../cart/cartItem.component";
 import CartTotal from "./cartTotal.component";
@@ -828,6 +828,31 @@ const Checkout = () => {
   const [editing, setEditing] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [refreshCart, setRefreshCart] = useState(1);
+  const [coinsRedeem, setCoinsRedeem] = useState(100);
+
+  const matches = useMediaQuery("(min-width:600px)");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    // if (!sessionStorage.getItem("cart")) {
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setCoinsRedeem(response?.data?.response[0].balance);
+      })
+      .catch((error) => console.log("Error while fetching wallet info", error));
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
@@ -860,12 +885,12 @@ const Checkout = () => {
       }}
     >
       <Navbar />
-      <Box style={{ width: "90%" }}>
+      <Box style={{ width: !matches ? "90%" : "100%" }}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={!matches ? 12 : 6}>
             <CheckoutForm cartItems={cartItems} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={!matches ? 12 : 6}>
             <Box
               style={{
                 width: "90%",
@@ -897,7 +922,10 @@ const Checkout = () => {
                 />
               ))}
               <Divider />
-              <CartTotal items={cartItems} />
+              <CartTotal
+                items={cartItems}
+                coinValueDiscount={Number(coinsRedeem)}
+              />
             </Box>
           </Grid>
         </Grid>

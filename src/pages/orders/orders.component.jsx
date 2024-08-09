@@ -1,4 +1,5 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, TextareaAutosize, Typography } from "@mui/material";
+import Modal from "@mui/material/Modal";
 
 import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
@@ -7,6 +8,7 @@ import OrderItem from "./orderItem.component";
 import { TabPanel } from "@mui/joy";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CartItem from "../cart/cartItem.component";
 const Orders = () => {
   const [orderList, setOrderList] = useState([]);
 
@@ -17,6 +19,7 @@ const Orders = () => {
   const [openOrdersList, setOpenOrderList] = useState([]);
   const [completedOrdersList, setCompletedOrderList] = useState([]);
   const [cancelledOrdersList, setCancelledOrderList] = useState([]);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -55,6 +58,18 @@ const Orders = () => {
       .catch((error) => console.log("Error while fetching cart items", error));
   }, []);
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+
+    width: 800,
+    height: 700,
+    backgroundColor: "white",
+    p: 4,
+  };
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <Box
       style={{
@@ -71,6 +86,37 @@ const Orders = () => {
         alignItems: "flex-start",
       }}
     >
+      <Modal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography
+            id="modal-modal-title"
+            variant="h5"
+            component="h2"
+            style={{ fontWeight: 700, marginBottom: "50px" }}
+          >
+            Cancel/Return order
+          </Typography>
+          <CartItem readOnly={true} />
+          <Typography
+            id="modal-modal-title"
+            variant="p"
+            component="h4"
+            style={{ marginBottom: "50px" }}
+          >
+            Cancellation/Return reason
+          </Typography>
+          <TextareaAutosize
+            style={{ width: "100%", height: "250px" }}
+          ></TextareaAutosize>
+        </Box>
+      </Modal>
       <Box
         style={{
           width: "70%",
@@ -123,14 +169,20 @@ const Orders = () => {
         <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
             {openOrdersList.map((order) => (
-              <OrderItem orderInfo={order} />
+              <OrderItem orderInfo={order} selectHandler={setSelectedOrderId} />
             ))}
           </Box>
         </TabPanel>
         <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
             {completedOrdersList.map((order) => (
-              <OrderItem orderInfo={order} titleColorType="delivered" />
+              <OrderItem
+                orderInfo={order}
+                titleColorType="delivered"
+                selectHandler={(id) => {
+                  return;
+                }}
+              />
             ))}
           </Box>
         </TabPanel>
@@ -138,7 +190,13 @@ const Orders = () => {
           <Box style={{ width: "100%", height: "100%" }}>
             <Box style={{ width: "100%", height: "100%" }}>
               {cancelledOrdersList.map((order) => (
-                <OrderItem orderInfo={order} titleColorType="cancelled" />
+                <OrderItem
+                  orderInfo={order}
+                  titleColorType="cancelled"
+                  selectHandler={(id) => {
+                    return;
+                  }}
+                />
               ))}
             </Box>
           </Box>

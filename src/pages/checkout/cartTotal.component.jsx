@@ -15,7 +15,7 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
 
-export default function CartTotal({ items }) {
+export default function CartTotal({ items, coinValueDiscount }) {
   const totalPrice = items
     ? items
         .map((item) => parseInt(item.price))
@@ -153,6 +153,23 @@ export default function CartTotal({ items }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            marginTop: "3%",
+            color: "gray",
+          }}
+        >
+          <Typography style={{ fontSize: "1.1rem" }}>
+            Redeemed Coins:
+          </Typography>
+          <Typography style={{ fontSize: "1.1rem" }}>
+            ₹ {Number(coinValueDiscount).toLocaleString()}
+          </Typography>
+        </Box>
+        <Box
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
             color: "#050505",
           }}
         >
@@ -160,7 +177,7 @@ export default function CartTotal({ items }) {
             Total:
           </Typography>
           <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            ₹ {Number(totalPrice).toLocaleString()}
+            ₹ {Number(totalPrice - coinValueDiscount).toLocaleString()}
           </Typography>
         </Box>
       </Card>

@@ -5,6 +5,7 @@ import { IconButton } from "@mui/material";
 import React, { useState } from "react";
 import "./carousal.styles.scss";
 import Skeleton from "@mui/material/Skeleton";
+import ReactImageMagnify from "react-image-magnify";
 
 const ImageVideoCarousel = ({ images, video }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -35,7 +36,20 @@ const ImageVideoCarousel = ({ images, video }) => {
             <source src={video} type="video/mp4" />
           </video>
         ) : images.length > 0 ? (
-          <img src={images[selectedIndex]} alt={`Item ${selectedIndex}`} />
+          <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: "Wristwatch by Ted Baker London",
+                isFluidWidth: true,
+                src: images[selectedIndex],
+              },
+              largeImage: {
+                src: images[selectedIndex],
+                width: 1200,
+                height: 1800,
+              },
+            }}
+          />
         ) : (
           <Skeleton
             sx={{ bgcolor: "grey.900" }}

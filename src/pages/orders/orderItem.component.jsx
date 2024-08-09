@@ -1,6 +1,10 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 
-const OrderItem = ({ titleColorType = "arriving", orderInfo }) => {
+const OrderItem = ({
+  titleColorType = "arriving",
+  orderInfo,
+  selectHandler,
+}) => {
   const titleColors = {
     arriving: "#a36e29",
     delivered: "#33A329",
@@ -18,6 +22,7 @@ const OrderItem = ({ titleColorType = "arriving", orderInfo }) => {
         marginBottom: "50px",
       }}
       elevation={2}
+      onClick={() => selectHandler(orderInfo.id)}
     >
       <Box
         style={{

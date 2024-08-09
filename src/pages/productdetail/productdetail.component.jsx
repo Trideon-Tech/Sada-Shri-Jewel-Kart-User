@@ -94,7 +94,18 @@ function ProductDetail() {
       navigate("/cart");
       return;
     }
+
     const token = localStorage.getItem("token");
+    if (!token) {
+      let existingList = localStorage.getItem("cart_list") || "";
+      existingList = existingList.split(",");
+      existingList.push(productDetail.id);
+      existingList = Array.from(new Set(existingList));
+      localStorage.setItem("cart_list", existingList.join(","));
+      toast.info("Product Added to Cart", generalToastStyle);
+      navigate(0);
+      return;
+    }
 
     axios
       .put(
@@ -215,13 +226,13 @@ function ProductDetail() {
         setProductDetail(detail);
         setCustomizationOptions({
           metal:
-            detail.customizations.options_per_field["Choice Of Metal"] || [],
+            detail?.customizations.options_per_field["Choice Of Metal"] || [],
           diamondQuality:
-            detail.customizations.options_per_field["Diamond Quality"] || [],
-          size: detail.customizations.options_per_field["Select Size"] || [],
+            detail?.customizations.options_per_field["Diamond Quality"] || [],
+          size: detail?.customizations.options_per_field["Select Size"] || [],
         });
 
-        setVariants(detail.customizations.variants.options);
+        setVariants(detail?.customizations.variants.options);
       })
       .catch((error) => {
         console.log(error);
@@ -960,7 +971,7 @@ function ProductDetail() {
                   >
                     Flat 50% off on Making Charges
                   </Typography>
-                  <div className="actions">
+                  <div style={{ width: "max-content" }}>
                     <Button
                       variant="contained"
                       className="button"
@@ -983,24 +994,36 @@ function ProductDetail() {
                 </Grid>
 
                 <Grid item xs={6} className="location-grid">
-                  <Typography style={{ color: "gray" }}>Pincode</Typography>
-                  <Input
-                    variant="solid"
-                    className="pincode"
-                    value={pincode}
-                    size="lg"
+                  <Typography style={{ color: "gray" }}>Pincodee</Typography>
+                  <div
                     style={{
-                      backgroundColor: "white",
+                      width: "100%",
                       height: "55px",
-                      color: "black",
+                      padding: 0,
+                      top: 0,
                     }}
-                    endDecorator={
-                      <LocationOnOutlined
-                        onClick={() => setLocationModalOpen(true)}
-                      />
-                    }
-                    fullWidth
-                  />
+                    onClick={() => setLocationModalOpen(true)}
+                  >
+                    <Input
+                      variant="solid"
+                      className="pincode"
+                      value={pincode}
+                      size="lg"
+                      style={{
+                        backgroundColor: "white",
+                        height: "55px",
+                        color: "black",
+                        border: "1ps solid #a36e29",
+                      }}
+                      disabled
+                      endDecorator={
+                        <LocationOnOutlined
+                          onClick={() => setLocationModalOpen(true)}
+                        />
+                      }
+                      fullWidth
+                    />
+                  </div>
                   <Typography variant="body" className="delivery-info">
                     <LocalShippingOutlined className="delivery-icon" /> Free
                     Delivery by 24th Feb
@@ -1262,7 +1285,7 @@ function ProductDetail() {
                 <Typography variant="body1" className="discount">
                   Flat 50% off on Making Charges
                 </Typography>
-                <div className="actions">
+                <div>
                   <Button variant="contained" className="button" fullWidth>
                     {productDetail.exists_in_cart
                       ? "Go to Cart"
