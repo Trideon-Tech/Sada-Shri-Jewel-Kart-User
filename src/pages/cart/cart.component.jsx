@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./cart.styles.scss";
 import Navbar from "../../components/navbar/navbar.component";
-import { Grid, Box, Divider, Typography, Card, Button } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Divider,
+  Typography,
+  Card,
+  Button,
+  useMediaQuery,
+} from "@mui/material";
 import CartItem from "./cartItem.component";
 import CartTotal from "./cartTotal.component";
 import axios from "axios";
@@ -121,6 +129,8 @@ const Cart = () => {
       coupon_validity: "31 July 2024",
     },
   ];
+
+  const matches = useMediaQuery("(min-width:600px)");
 
   const [cartItems, setCartItems] = useState([]);
   const [refreshCart, setRefreshCart] = useState(1);
@@ -300,7 +310,7 @@ const Cart = () => {
         {cartItems?.length > 0 ? (
           <Box style={{ width: "70%" }}>
             <Grid container spacing={6}>
-              <Grid item xs={8}>
+              <Grid item xs={matches ? 8 : 12}>
                 <Box style={{ height: "60%", marginTop: "6.8%" }}>
                   {cartItems?.map((item) => (
                     <CartItem
@@ -312,7 +322,7 @@ const Cart = () => {
                   ))}
                 </Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={matches ? 4 : 12}>
                 <CartTotal
                   selectedCouponCode={selectedCouponCode}
                   selectedCouponId={selectedCouponId}

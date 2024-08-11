@@ -25,7 +25,12 @@ export default function CartTotal({ items, coinValueDiscount }) {
   const [selectedCoupon, setSelectedCoupon] = useState({});
 
   const [discountValue, setDiscountValue] = useState(0);
+  const [coinsApplied, setCoinsApplied] = useState(false);
   useEffect(() => {
+    const coinsApplied = localStorage.getItem("coins_applied");
+    if (coinsApplied !== undefined) {
+      setCoinsApplied(coinsApplied);
+    }
     (async () => {
       try {
         const token = localStorage.getItem("token");
@@ -147,23 +152,25 @@ export default function CartTotal({ items, coinValueDiscount }) {
             ₹ {Number(discountValue).toLocaleString()}
           </Typography>
         </Box>
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: "3%",
-            color: "gray",
-          }}
-        >
-          <Typography style={{ fontSize: "1.1rem" }}>
-            Redeemed Coins:
-          </Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>
-            ₹ {Number(coinValueDiscount).toLocaleString()}
-          </Typography>
-        </Box>
+        {coinsApplied ? (
+          <Box
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "3%",
+              color: "gray",
+            }}
+          >
+            <Typography style={{ fontSize: "1.1rem" }}>
+              Redeemed Coins:
+            </Typography>
+            <Typography style={{ fontSize: "1.1rem" }}>
+              ₹ {Number(coinValueDiscount).toLocaleString()}
+            </Typography>
+          </Box>
+        ) : null}
         <Box
           style={{
             width: "100%",
@@ -177,7 +184,12 @@ export default function CartTotal({ items, coinValueDiscount }) {
             Total:
           </Typography>
           <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            ₹ {Number(totalPrice - coinValueDiscount).toLocaleString()}
+            ₹
+            {(
+              Number(totalPrice) -
+              discountValue -
+              (coinsApplied ? coinValueDiscount : 0)
+            ).toLocaleString()}
           </Typography>
         </Box>
       </Card>

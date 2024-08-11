@@ -14,6 +14,7 @@ import Select from "@mui/joy/Select";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Option from "@mui/joy/Option";
+import { useMediaQuery } from "@mui/material";
 
 export default function CartItem({
   item,
@@ -22,6 +23,8 @@ export default function CartItem({
   moveToWishlistHandler,
 }) {
   const [quantity, setQuantity] = useState(1);
+  const matches = useMediaQuery("(min-width:600px)");
+
   const theme = useTheme();
 
   const decreaseQuantity = () => {
@@ -43,6 +46,7 @@ export default function CartItem({
         marginBottom: "5%",
         justifyContent: "space-between",
         alignItems: "center",
+        flexDirection: matches ? "row" : "column",
       }}
       elevation={4}
     >
@@ -67,7 +71,6 @@ export default function CartItem({
           width: "70%",
           padding: "10px",
           display: "flex",
-
           flexDirection: "column",
           alignItems: "flex-start",
         }}

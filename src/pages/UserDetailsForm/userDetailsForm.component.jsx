@@ -30,12 +30,11 @@ const UserDetailsForm = () => {
   const [cartItems, setCartItems] = useState([]);
   const [wishlists, setWishlists] = useState([]);
 
-  useEffect(() => {
-    let items = JSON.parse(localStorage.getItem("cart_list")) || "";
-
-    items = items.split(",");
-    sendCartToAPI(items);
-  }, []);
+  // useEffect(() => {
+  //   let items = localStorage.getItem("cart_list") || "";
+  //   items = items.split(",");
+  //   sendCartToAPI(items);
+  // }, []);
 
   const sendCartToAPI = (items) => {
     const token = localStorage.getItem("token");

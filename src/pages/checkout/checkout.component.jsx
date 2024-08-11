@@ -828,7 +828,7 @@ const Checkout = () => {
   const [editing, setEditing] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [refreshCart, setRefreshCart] = useState(1);
-  const [coinsRedeem, setCoinsRedeem] = useState(100);
+  const [coinsRedeem, setCoinsRedeem] = useState(0);
 
   const matches = useMediaQuery("(min-width:600px)");
   useEffect(() => {

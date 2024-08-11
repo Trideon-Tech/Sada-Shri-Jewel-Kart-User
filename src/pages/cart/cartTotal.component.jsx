@@ -22,6 +22,8 @@ import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined
 import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
+import MonetizationOnRoundedIcon from "@mui/icons-material/MonetizationOnRounded";
+import axios from "axios";
 
 export default function CartTotal({
   items,
@@ -40,6 +42,7 @@ export default function CartTotal({
   const [discountValue, setDiscountValue] = useState(0);
 
   const [locationModalOpen, setLocationModalOpen] = useState();
+  const [coinsApplied, setCoinsApplied] = useState(false);
 
   const handleCouponChange = () => {
     if (selectedCouponCode) {
@@ -50,6 +53,28 @@ export default function CartTotal({
       openModal(true);
     }
   };
+  const [coinsRedeem, setCoinsRedeem] = useState(0);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    // if (!sessionStorage.getItem("cart")) {
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setCoinsRedeem(response?.data?.response[0].balance);
+      })
+      .catch((error) => console.log("Error while fetching wallet info", error));
+  }, []);
   useEffect(() => {
     console.log("couponData", couponData);
     if (!selectedCouponId) {
@@ -226,6 +251,47 @@ export default function CartTotal({
         }}
         elevation={4}
       >
+        <MonetizationOnRoundedIcon
+          style={{ fontSize: "2rem", color: "#A36E29" }}
+        />
+        <Typography
+          style={{ marginLeft: "2%", fontWeight: "bold", marginRight: "auto" }}
+        >
+          Coins Available : {coinsRedeem}
+        </Typography>
+        <Button
+          variant="outlined"
+          style={{
+            border: 0,
+            fontSize: "0.7rem",
+            color: "#A36E29",
+            fontWeight: "bold",
+            marginRight: 0,
+          }}
+          onClick={() => {
+            localStorage.setItem("coins_applied", !coinsApplied);
+            setCoinsApplied(!coinsApplied);
+          }}
+        >
+          {coinsApplied ? "Remove" : "Apply"}
+        </Button>
+      </Card>
+      <Card
+        style={{
+          width: "90%",
+          minHeight: 65,
+          height: "7vh",
+          borderRadius: "10px",
+          backgroundColor: "white",
+          paddingLeft: "5%",
+          paddingRight: "5%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "5%",
+        }}
+        elevation={4}
+      >
         <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
         <Typography style={{ marginLeft: "2%", fontWeight: "bold" }}>
           Delivering to : {localStorage.getItem("default_pincode")}
@@ -353,6 +419,25 @@ export default function CartTotal({
             ₹ {Number(discountValue).toLocaleString()}
           </Typography>
         </Box>
+        {coinsApplied ? (
+          <Box
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "3%",
+              color: "gray",
+            }}
+          >
+            <Typography style={{ fontSize: "1.1rem" }}>
+              Coins Redeemed:
+            </Typography>
+            <Typography style={{ fontSize: "1.1rem" }}>
+              ₹ {coinsRedeem}
+            </Typography>
+          </Box>
+        ) : null}
         <Box
           style={{
             width: "100%",
@@ -366,7 +451,12 @@ export default function CartTotal({
             Total:
           </Typography>
           <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-            ₹ {(Number(totalPrice) - discountValue).toLocaleString()}
+            ₹{" "}
+            {(
+              Number(totalPrice) -
+              discountValue -
+              (coinsApplied ? coinsRedeem : 0)
+            ).toLocaleString()}
           </Typography>
         </Box>
       </Card>

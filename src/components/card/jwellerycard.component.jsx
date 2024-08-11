@@ -36,7 +36,7 @@ const JwelleryCard = ({
           },
         }
       );
-      // navigate(0);
+      navigate(0);
     } catch (err) {
       console.log(err);
     }
@@ -62,6 +62,7 @@ const JwelleryCard = ({
         },
       }
     );
+    navigate(0);
   };
   return (
     <div className="jwellery-card">
@@ -164,7 +165,7 @@ const JwelleryCard = ({
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
             }}
-            onClick={() => clickHandler(name, hash)}
+            onClick={() => clickHandler(name, hash, true)}
           >
             Add to Cart
           </Button>

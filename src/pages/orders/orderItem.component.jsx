@@ -4,6 +4,7 @@ const OrderItem = ({
   titleColorType = "arriving",
   orderInfo,
   selectHandler,
+  handleCancelOrder,
 }) => {
   const titleColors = {
     arriving: "#a36e29",
@@ -22,7 +23,10 @@ const OrderItem = ({
         marginBottom: "50px",
       }}
       elevation={2}
-      onClick={() => selectHandler(orderInfo.id)}
+      onClick={() => {
+        handleCancelOrder(true);
+        selectHandler(orderInfo.id);
+      }}
     >
       <Box
         style={{

@@ -65,8 +65,7 @@ const productData = {
   ],
 };
 
-const OrderConfirmation = () => {
-  const navigate = useNavigate();
+const OrderConfirmation3 = () => {
   return (
     <div
       style={{
@@ -79,167 +78,201 @@ const OrderConfirmation = () => {
       }}
     >
       <Navbar />
-      <div style={{ width: "70%", height: "100%" }}>
-        <div
-          style={{
-            width: "100%",
-            height: "max-content",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <p style={{ fontSize: "2rem", fontWeight: 600 }}>
-            Thanks you for your order #1232143545
-          </p>
-          <Button
-            style={{
-              borderRadius: "10px",
-              border: "2px solid #a36e29",
-              width: "200px",
-              backgroundColor: "white",
-              height: "57px",
-              color: "#a36e29",
-            }}
-            onClick={() => navigate("/jwellery/Rings")}
-          >
-            Continue Shopping
-          </Button>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
-        >
-          <p style={{ fontSize: "2rem" }}>
-            Congratulations you have received{" "}
-            <span style={{ fontWeight: 600, color: "#a36e29" }}>345</span> in
-            your wallet{" "}
-          </p>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            height: "max-content",
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}
-        >
+    </div>
+  );
+};
+
+const OrderConfirmation = () => {
+  const navigate = useNavigate();
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "#F8F8F8",
+        display: "flex",
+        paddingTop: "100px",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Navbar />
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "#F8F8F8",
+          display: "flex",
+          paddingTop: "100px",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ width: "70%", height: "100%" }}>
           <div
             style={{
-              width: "60%",
+              width: "100%",
               height: "max-content",
               display: "flex",
-              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <p style={{ fontSize: "2rem", fontWeight: 600 }}>
+              Thanks you for your order #1232143545
+            </p>
+            <Button
+              style={{
+                borderRadius: "10px",
+                border: "2px solid #a36e29",
+                width: "200px",
+                backgroundColor: "white",
+                height: "57px",
+                color: "#a36e29",
+              }}
+              onClick={() => navigate("/jwellery/Rings")}
+            >
+              Continue Shopping
+            </Button>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
               justifyContent: "flex-start",
-              alignItems: "flex-start",
+            }}
+          >
+            <p style={{ fontSize: "2rem" }}>
+              Congratulations you have received ₹
+              <span style={{ fontWeight: 600, color: "#a36e29" }}>345</span> in
+              your wallet{" "}
+            </p>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "max-content",
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
             }}
           >
             <div
               style={{
-                width: "100%",
+                width: "60%",
                 height: "max-content",
                 display: "flex",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                justifyContent: "flex-start",
                 alignItems: "flex-start",
               }}
             >
               <div
                 style={{
-                  width: "50%",
+                  width: "100%",
                   height: "max-content",
-                  textAlign: "left",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
                 }}
               >
-                <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
-                <p style={{ fontWeight: 600 }}>Value Shipping</p>
-                <p style={{ fontWeight: 600 }}>Arriving By 7th May 10</p>
-                <p style={{ fontWeight: 600, color: "gray" }}>
-                  Sold by Sada Shri Jewel Kart
-                </p>
-                <p style={{ fontWeight: 600, color: "gray" }}>
-                  Order #1234562343567
-                </p>
+                <div
+                  style={{
+                    width: "50%",
+                    height: "max-content",
+                    textAlign: "left",
+                  }}
+                >
+                  <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
+                  <p style={{ fontWeight: 600 }}>Value Shipping</p>
+                  <p style={{ fontWeight: 600 }}>Arriving By 7th May 10</p>
+                  <p style={{ fontWeight: 600, color: "gray" }}>
+                    Sold by Sada Shri Jewel Kart
+                  </p>
+                  <p style={{ fontWeight: 600, color: "gray" }}>
+                    Order #1234562343567
+                  </p>
+                </div>
+                <div
+                  style={{
+                    width: "50%",
+                    height: "max-content",
+                    textAlign: "left",
+                  }}
+                >
+                  <p style={{ fontWeight: 600, color: "gray" }}>
+                    Shipping Address
+                  </p>
+                  <p style={{ fontWeight: 600, color: "gray" }}>JP Singh</p>
+                  <p style={{ width: "200px", fontWeight: 600, color: "gray" }}>
+                    92, South Park Street, Bangalore, India-843212
+                    xyz@gmail.com +91-7250516843
+                  </p>
+                  <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
+                </div>
               </div>
               <div
                 style={{
-                  width: "50%",
+                  width: "100%",
                   height: "max-content",
-                  textAlign: "left",
+                  minHeight: "200px",
                 }}
               >
-                <p style={{ fontWeight: 600, color: "gray" }}>
-                  Shipping Address
-                </p>
-                <p style={{ fontWeight: 600, color: "gray" }}>JP Singh</p>
-                <p style={{ width: "200px", fontWeight: 600, color: "gray" }}>
-                  92, South Park Street, Bangalore, India-843212
-                  xyz@gmail.com +91-7250516843
-                </p>
-                <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
+                <CartItem
+                  moveToWishlistHandler={() => {}}
+                  key={"someId"}
+                  item={productData}
+                  removeHandler={() => {}}
+                />
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "max-content",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Paper
+                  style={{
+                    width: "35%",
+                    minHeight: "300px",
+                    borderRadius: "5px",
+                    padding: "10px",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                  }}
+                  elevation={5}
+                >
+                  <p style={{ fontWeight: 600, textAlign: "left" }}>
+                    Order Summary
+                  </p>
+                </Paper>
+                <Paper
+                  style={{
+                    width: "35%",
+                    minHeight: "300px",
+                    borderRadius: "5px",
+                    padding: "10px",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                  }}
+                  elevation={5}
+                >
+                  <p style={{ fontWeight: 600, textAlign: "left" }}>
+                    Billing Address
+                  </p>
+                </Paper>
               </div>
             </div>
             <div
               style={{
-                width: "100%",
+                width: "40%",
                 height: "max-content",
-                minHeight: "200px",
+                minHeight: "100px",
               }}
-            >
-              <CartItem
-                moveToWishlistHandler={() => {}}
-                key={"someId"}
-                item={productData}
-                removeHandler={() => {}}
-              />
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "max-content",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Paper
-                style={{
-                  width: "35%",
-                  minHeight: "300px",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  paddingLeft: "20px",
-                  paddingRight: "20px",
-                }}
-                elevation={5}
-              >
-                <p style={{ fontWeight: 600, textAlign: "left" }}>
-                  Order Summary
-                </p>
-              </Paper>
-              <Paper
-                style={{
-                  width: "35%",
-                  minHeight: "300px",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  paddingLeft: "20px",
-                  paddingRight: "20px",
-                }}
-                elevation={5}
-              >
-                <p style={{ fontWeight: 600, textAlign: "left" }}>
-                  Billing Address
-                </p>
-              </Paper>
-            </div>
+            ></div>
           </div>
-          <div
-            style={{ width: "40%", height: "max-content", minHeight: "100px" }}
-          ></div>
         </div>
       </div>
     </div>

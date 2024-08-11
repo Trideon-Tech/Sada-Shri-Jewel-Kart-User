@@ -54,6 +54,34 @@ const Navbar = () => {
       setCartLength(0);
     }
   };
+  const sendCartToAPI = (items) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    items.forEach((item) => {
+      axios
+        .put(
+          "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            data: {
+              product: item,
+              customization: -1,
+            },
+          }
+        )
+        .then(() => {
+          console.log(`Product with ID ${item} sent to API`);
+        })
+        .catch((error) => {
+          console.error(`Error sending product with ID ${item} to API`, error);
+        });
+    });
+
+    localStorage.removeItem("cart_list");
+  };
 
   useEffect(() => {
     (async () => {

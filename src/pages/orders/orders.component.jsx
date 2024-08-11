@@ -103,7 +103,12 @@ const Orders = () => {
           >
             Cancel/Return order
           </Typography>
-          <CartItem readOnly={true} />
+          <CartItem
+            readOnly={true}
+            item={openOrdersList?.filter(
+              (item) => (item.id = selectedOrderId)[0]
+            )}
+          />
           <Typography
             id="modal-modal-title"
             variant="p"
@@ -169,7 +174,11 @@ const Orders = () => {
         <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
             {openOrdersList.map((order) => (
-              <OrderItem orderInfo={order} selectHandler={setSelectedOrderId} />
+              <OrderItem
+                orderInfo={order}
+                selectHandler={setSelectedOrderId}
+                handleCancelOrder={setModalOpen}
+              />
             ))}
           </Box>
         </TabPanel>

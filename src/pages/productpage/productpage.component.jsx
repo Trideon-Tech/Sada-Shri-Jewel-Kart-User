@@ -46,8 +46,67 @@ function Productpage() {
     setIsDrawerOpen(open);
   };
 
-  const handleCardClick = (productName, hash) => {
+  const handleCardClick = async (productName, hash, cartAdd = false) => {
+    const selectedProduct = jwellery.filter((item) => item.hash === hash)[0];
+    if (!selectedProduct.customizations) {
+      if (cartAdd) addToCartHandler(selectedProduct.id);
+      return;
+    }
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
+  };
+  // const handleDirectAddToCart = async();
+
+  const addToCartHandler = (id) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      let existingList = localStorage.getItem("cart_list") || "";
+      existingList = existingList.split(",");
+      existingList.push(id);
+      existingList = Array.from(new Set(existingList));
+      localStorage.setItem("cart_list", existingList.join(","));
+      navigate(0);
+      return;
+    }
+
+    axios
+      .put(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        {
+          product: id,
+          customization: -1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log(`Product with ID ${id} sent to API`);
+        navigate("/cart");
+      })
+      .catch((error) => {
+        console.error(`Error sending product with ID ${id} to API`, error);
+      });
+
+    //UNDER TEST
+    // axios
+    //   .get(
+    //     `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+    //       "user_id"
+    //     )}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     sessionStorage.setItem("cart", response.data.response.length);
+    //   })
+    //   .catch((error) => console.log("Error while fetching cart items", error));
   };
 
   const [weightFilter, setWeightFilter] = useState([0, 100]);
