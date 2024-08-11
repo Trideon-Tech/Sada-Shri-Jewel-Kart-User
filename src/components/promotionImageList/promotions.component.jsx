@@ -19,39 +19,39 @@ export default function PromotionImageList() {
     >
       <Box sx={{ width: "90%", height: "100%", marginTop: "100px" }}>
         <Grid container spacing={5}>
-          <Grid item xs={4}>
+          <Grid item xs={matches ? 4 : 12}>
             <img
-              height={"150px"}
+              height={matches ? "150px" : "100px"}
               src={process.env.PUBLIC_URL + "/assets/brick1.png"}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={matches ? 4 : 12}>
             <img
-              height={"150px"}
+              height={matches ? "150px" : "100px"}
               src={process.env.PUBLIC_URL + "/assets/brick2.png"}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={matches ? 4 : 12}>
             <img
-              height={"150px"}
+              height={matches ? "150px" : "100px"}
               src={process.env.PUBLIC_URL + "/assets/brick3.png"}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={matches ? 4 : 12}>
             <img
-              height={"150px"}
+              height={matches ? "150px" : "100px"}
               src={process.env.PUBLIC_URL + "/assets/brick4.png"}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={matches ? 4 : 12}>
             <img
-              height={"150px"}
+              height={matches ? "150px" : "100px"}
               src={process.env.PUBLIC_URL + "/assets/brick5.png"}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={matches ? 4 : 12}>
             <img
-              height={"150px"}
+              height={matches ? "150px" : "100px"}
               src={process.env.PUBLIC_URL + "/assets/brick6.png"}
             />
           </Grid>
@@ -60,14 +60,14 @@ export default function PromotionImageList() {
 
       <Box sx={{ width: "90%", height: "100%", marginTop: "100px" }}>
         <Grid container spacing={4}>
-          <Grid item xs={6}>
+          <Grid item xs={matches ? 6 : 12}>
             <img
               width={"100%"}
               src={process.env.PUBLIC_URL + "/assets/side1_1.png"}
             />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={matches ? 6 : 12}>
             <Box
               style={{
                 display: "flex",

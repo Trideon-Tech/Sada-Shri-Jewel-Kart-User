@@ -54,7 +54,7 @@ export default function CartItem({
         style={{
           border: "2px solid #e7e7e7",
           borderRadius: "10px",
-          height: "100%",
+          height: matches ? "100%" : "max-content",
           aspectRatio: "1/1",
           overflow: "hidden",
         }}
