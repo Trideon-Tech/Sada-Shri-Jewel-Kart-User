@@ -7,8 +7,20 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 
-const ReviewList = () => {
+const ReviewList = ({ reviewsData, totalPages }) => {
+  const [parsedReview, setParsedreview] = useState([]);
+
+  useEffect(() => {
+    const mappedReview = reviewsData?.map((item) => {
+      item.image_url = JSON.parse(item?.image_url);
+      return item;
+    });
+    console.log("mappedReview", mappedReview);
+    setParsedreview(mappedReview);
+  }, [reviewsData]);
+
   return (
     <Box
       style={{
@@ -18,7 +30,7 @@ const ReviewList = () => {
         justifyContent: "space-evenly",
       }}
     >
-      {[1, 2, 3, 4, 5].map((review) => (
+      {parsedReview?.map((review) => (
         <Box
           style={{
             display: "flex",
@@ -44,14 +56,13 @@ const ReviewList = () => {
           <Typography
             style={{ textAlign: "left", color: "#606060", marginTop: "2%" }}
           >
-            Ordered this in rose gold. It’s a unique design combination of
-            rectangular and oval cut diamonds. Love Sada Shri.
+            {review.content}
           </Typography>
           <Box
             style={{ display: "flex", alignItems: "center", marginTop: "2%" }}
           >
             <Avatar sx={{ bgcolor: "gray" }} alt="Gemy Sharp">
-              G
+              {review.user_id.substring(0, 1)}
             </Avatar>
             <Box
               style={{
@@ -69,17 +80,17 @@ const ReviewList = () => {
                   fontSize: "1rem",
                 }}
               >
-                Gordon Ramsey
+                {review.user_id}
               </Typography>
               <Typography style={{ color: "#a0a0a0" }}>
-                12 March 2014
+                {review.created_at}
               </Typography>
             </Box>
           </Box>
           <Box
             style={{
               width: "50vw",
-              height: "30%",
+              height: review?.image_url.length ? "30%" : 0,
               overflowY: "scroll",
               display: "flex",
               marginTop: "2%",
@@ -89,7 +100,7 @@ const ReviewList = () => {
               padding: "10px",
             }}
           >
-            {itemData.map((image) => (
+            {review?.image_url?.map((image) => (
               <img
                 src={image.img}
                 style={{ height: "20vh", width: "auto", marginRight: "10px" }}
@@ -101,7 +112,7 @@ const ReviewList = () => {
       ))}
       <Pagination
         style={{ marginTop: "2%" }}
-        count={5}
+        count={totalPages}
         variant="outlined"
         shape="rounded"
       />

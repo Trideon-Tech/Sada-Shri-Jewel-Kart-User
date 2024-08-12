@@ -50,7 +50,9 @@ function Productpage() {
     const selectedProduct = jwellery.filter((item) => item.hash === hash)[0];
     if (!selectedProduct.customizations) {
       if (cartAdd) addToCartHandler(selectedProduct.id);
-      return;
+      else {
+        navigate(`/item/${menuItemName}/${productName}-${hash}`);
+      }
     }
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };

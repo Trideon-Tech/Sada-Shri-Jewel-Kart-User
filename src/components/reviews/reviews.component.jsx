@@ -33,7 +33,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Radio from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import Sheet from "@mui/joy/Sheet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Textarea from "@mui/joy/Textarea";
 import {
   Search,
@@ -55,6 +55,8 @@ const Reviews = ({ productDetails }) => {
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(3);
   const [reviewImages, setreviewImages] = useState(null);
+  const [reviewsData, setReivewData] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
 
   const openModal = () => {
     setOpen(true);
@@ -67,12 +69,12 @@ const Reviews = ({ productDetails }) => {
     formData.append("rating", reviewRating);
     formData.append("title", reviewTitle);
     formData.append("content", reviewContent);
-    formData.append("review_img[]", reviewImages);
+    formData.append("review_img[]", reviewImages[0]);
 
     const token = localStorage.getItem("token");
     axios
       .post(
-        "https://api.sadashrijewelkart.com/v1.0.0//user/products/reviews.php",
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/reviews.php",
         formData,
         {
           headers: {
@@ -92,6 +94,29 @@ const Reviews = ({ productDetails }) => {
         toast.error(error.response.data.message, generalToastStyle);
       });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("productDetails", productDetails);
+    console.log("productDetails id", productDetails.id);
+    if (!productDetails.id) return;
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/reviews.php?type=all&page=1&page_size=10&product_id=${productDetails.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        setTotalPages(response?.data?.response?.totalPages);
+        setReivewData(response?.data?.response?.reviews);
+      })
+      .catch((error) => {});
+  }, [productDetails]);
+
   return (
     <Box
       style={{
@@ -300,7 +325,7 @@ const Reviews = ({ productDetails }) => {
         <RatingImages mobileView={!matches} />
       </Box>
       <Divider style={{ width: "100%" }} />
-      <ReviewList />
+      <ReviewList reviewsData={reviewsData} totalpages={totalPages} />
     </Box>
   );
 };
