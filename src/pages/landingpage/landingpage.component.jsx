@@ -5,6 +5,7 @@ import { Divider } from "@mui/material";
 import PromotionImageList from "../../components/promotionImageList/promotions.component";
 import CarouselPanel from "../../components/carousel/carousel.component";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Footer from "../../components/footer/footer.component";
 const LandingPage = () => {
   const matches = useMediaQuery("(min-width:600px)");
   return (
@@ -16,6 +17,7 @@ const LandingPage = () => {
       {/* <Divider /> */}
       <CarouselPanel />
       <PromotionImageList />
+      <Footer />
     </div>
   );
 };
