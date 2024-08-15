@@ -19,7 +19,7 @@ const Orders = () => {
   const [openOrdersList, setOpenOrderList] = useState([]);
   const [completedOrdersList, setCompletedOrderList] = useState([]);
   const [cancelledOrdersList, setCancelledOrderList] = useState([]);
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState("");
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -106,7 +106,7 @@ const Orders = () => {
           <CartItem
             readOnly={true}
             item={openOrdersList?.filter(
-              (item) => (item.id = selectedOrderId)[0]
+              (item) => (item.id === selectedOrderId)[0]
             )}
           />
           <Typography

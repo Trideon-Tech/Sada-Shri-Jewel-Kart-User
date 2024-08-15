@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./jwellerycard.styles.scss"; // Ensure this is the path to your SCSS file
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -19,39 +19,81 @@ const JwelleryCard = ({
   isWishlisted,
 }) => {
   const navigate = useNavigate();
+  const [wishListed, setWishListed] = useState(false);
+  useEffect(() => {
+    let wishListItems = localStorage.getItem("wish_list");
+    if (wishListItems) {
+      wishListItems = wishListItems.split(",");
+      if (wishListItems.includes(id)) {
+        setWishListed(true);
+      }
+    }
+    console.log("isWishlisted, wishListed", isWishlisted, wishListed);
+  }, []);
+
   const removeFromWishList = async () => {
     try {
-      console.log(localStorage.getItem("token"));
+      if (!id) return;
 
-      const a = await axios.delete(
+      console.log(localStorage.getItem("token"));
+      console.log(localStorage.getItem("wish_list"));
+      console.log(id);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        const wishListExists = localStorage.getItem("wish_list");
+        if (wishListExists && wishListExists.length > 0) {
+          let wlItems = wishListExists.split(",");
+          wlItems = wlItems.filter((item) => item !== id);
+          localStorage.setItem("wish_list", wlItems.join(","));
+        }
+        navigate(0);
+        return;
+      }
+
+      console.log(id);
+      await axios.delete(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
           data: {
             type: "wishlist_item",
             wishlist_item_id: id,
           },
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
         }
       );
+
       navigate(0);
     } catch (err) {
       console.log(err);
     }
   };
+
   const handleCreateWishList = async () => {
-    if (isWishlisted) {
+    if (isWishlisted || wishListed) {
       removeFromWishList();
+      return;
+    }
+    const token = localStorage.getItem("token");
+    if (!token) {
+      let wishListItems = localStorage.getItem("wish_list");
+      if (!wishListItems) {
+        localStorage.setItem("wish_list", id);
+      } else {
+        wishListItems = wishListItems.split(",");
+        wishListItems.push(id);
+        wishListItems = Array.from(new Set(wishListItems));
+        localStorage.setItem("wish_list", wishListItems.join(","));
+      }
+      navigate(0);
       return;
     }
     const formData = new FormData();
     formData.append("type", "add_item");
     formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
     formData.append("product_id", id);
-    const token = localStorage.getItem("token");
-    if (!token) return;
     await axios.post(
       "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
       formData,
@@ -94,7 +136,7 @@ const JwelleryCard = ({
                   marginLeft: "auto",
                   marginRight: "5%",
                   marginTop: "5%",
-                  color: isWishlisted ? "#a36e29" : "#bfbfbf",
+                  color: isWishlisted || wishListed ? "#a36e29" : "#bfbfbf",
                 }}
               />
             </Button>

@@ -59,11 +59,13 @@ export default function CartItem({
           overflow: "hidden",
         }}
       >
-        <img
-          src={`https://api.sadashrijewelkart.com/assets/${item?.images[0]?.file}`}
-          // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
-          style={{ height: "100%", width: "100%", objectFit: "contain" }}
-        />
+        {item?.images ? (
+          <img
+            src={`https://api.sadashrijewelkart.com/assets/${item?.images[0]?.file}`}
+            // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
+            style={{ height: "100%", width: "100%", objectFit: "contain" }}
+          />
+        ) : null}
       </Box>
       <Box
         style={{

@@ -97,8 +97,8 @@ function SearchProductpage() {
       .get(endpoint)
       .then((response) => {
         console.log(searchTerm);
-        console.log("got products : ", response.data.response);
-        setJwellery(response.data.response);
+        console.log("got products search: ", response.data.response);
+        setJwellery(response?.data?.response);
         setProductsLoaded(true);
       })
       .catch((error) => {
@@ -215,11 +215,14 @@ function SearchProductpage() {
                   filteredJwellery.map((item, index) => (
                     <Grid item xs={3} className="product-card">
                       <JwelleryCard
+                        id={item.id}
                         key={item.id}
-                        image={""}
+                        image={item.images[0].file}
                         name={item.name}
+                        hash={item.hash}
                         price={item.price}
-                        onClick={() => handleCardClick(item.name, item.hash)}
+                        isWishlisted={item.exists_in_wishlist}
+                        clickHandler={handleCardClick}
                       />
                     </Grid>
                   ))

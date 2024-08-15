@@ -293,7 +293,9 @@ export default function CartTotal({
         elevation={4}
       >
         <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
-        <Typography style={{ marginLeft: "2%", fontWeight: "bold" }}>
+        <Typography
+          style={{ fontWeight: "bold", marginRight: "auto", marginLeft: "2%" }}
+        >
           Delivering to : {localStorage.getItem("default_pincode")}
         </Typography>
         <Button

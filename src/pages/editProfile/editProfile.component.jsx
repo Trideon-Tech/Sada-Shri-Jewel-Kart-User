@@ -22,6 +22,9 @@ const EditProfile = () => {
   const [lastName, setLastName] = useState(userName[1]);
   const [mobile, setMobile] = useState(localStorage.getItem("mobile"));
   const [email, setEmail] = useState(localStorage.getItem("user_email"));
+  const [pincode, setPincode] = useState(
+    localStorage.getItem("default_pincode")
+  );
 
   const updateProfile = () => {
     const formData = new FormData();
@@ -167,7 +170,16 @@ const EditProfile = () => {
                   setMobile(event.target.value);
             }}
           />
-          <TextField variant="outlined" label="Default Pincode*" fullWidth />
+          <TextField
+            value={pincode}
+            variant="outlined"
+            label="Default Pincode*"
+            fullWidth
+            onChange={(event) => {
+              setPincode(event.target.value);
+              localStorage.setItem("default_pincode", event.target.value);
+            }}
+          />
           <Box
             style={{
               width: "100%",

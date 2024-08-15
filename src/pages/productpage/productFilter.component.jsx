@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./productFilter.styles.scss";
 import Checkbox from "@mui/joy/Checkbox";
 import { Box, Slider, Typography } from "@mui/material";
@@ -16,6 +16,7 @@ const PriceFilter = ({
   handleHeightFilter,
   handleWidthFilter,
 }) => {
+  const [rangeList, setRangeList] = useState([]);
   const priceRanges = [
     { id: 1, label: "₹10,001 - ₹20,000", low: 10000, high: 20000 },
     { id: 2, label: "₹20,001 - ₹30,000", low: 20001, high: 30000 },
@@ -48,9 +49,91 @@ const PriceFilter = ({
 
   // const [selectedPrice]
 
-  const handleCheckboxChange = (range) => {
+  useEffect(() => {
+    const finalRange = getHighLow(rangeList);
+    handleSelectedPriceRange(finalRange);
+    console.log(finalRange);
+    console.log("rangeList", rangeList);
+  }, [rangeList]);
+
+  const getHighLow = (rangeListL) => {
+    if (!rangeList.length) {
+      return {
+        high: 100000000,
+        low: 0,
+      };
+    }
+    let minVal = 1000000;
+    let maxVal = 0;
+    for (let range of rangeListL) {
+      minVal = Math.min(range.low, minVal);
+      maxVal = Math.max(range.high, maxVal);
+    }
+    return {
+      high: maxVal,
+      low: minVal,
+    };
+  };
+
+  const handleCheckboxChange = (event, range) => {
+    if (!rangeList.length) {
+      handleSelectedPriceRange(range);
+
+      setRangeList([{ high: range.high, low: range.low }]);
+      // setRangeList(rangeList.low);
+      onFilterChange(range.label);
+
+      return;
+    }
+
+    console.log("curr low high", range.low, range.high);
+    const found = rangeList.find((item) => item.low === range.low);
+    if (found) {
+      setRangeList(rangeList.filter((item) => item.low !== range.low));
+    } else {
+      setRangeList([...rangeList, { high: range.high, low: range.low }]);
+    }
+    onFilterChange(range.label);
+  };
+
+  const handleCheckboxChangeO = (event, range) => {
+    console.log("event", event.target.checked);
     // Call the passed in `onFilterChange` function with the label of the clicked checkbox
+    console.log(range);
+    let minVal;
+    let maxVal;
+    console.log(selectedPriceRange);
+    if (Object.keys(selectedPriceRange).length) {
+      if (event.target.checked) {
+        minVal = Math.min(range.low, selectedPriceRange.low);
+        maxVal = Math.max(range.high, selectedPriceRange.high);
+      } else {
+        if (
+          range.low > selectedPriceRange.low &&
+          range.hight < selectedPriceRange.high
+        )
+          return;
+
+        if (range.low === selectedPriceRange.low) {
+          minVal = Math.min(range.high, range.high);
+          maxVal = selectedPriceRange.high;
+          return;
+        }
+        if (range.high === selectedPriceRange.high) {
+          minVal = selectedPriceRange.low;
+          maxVal = Math.max(selectedPriceRange.high, selectedPriceRange.high);
+          return;
+        }
+      }
+
+      range.low = minVal;
+      range.high = maxVal;
+    }
+
+    console.log("range", range);
+
     handleSelectedPriceRange(range);
+
     onFilterChange(range.label);
   };
   const handleWeightChange = (event, newValue) => {
@@ -79,7 +162,7 @@ const PriceFilter = ({
           <label>
             <Checkbox
               checked={selectedPriceRange?.label?.includes(range.label)}
-              onChange={() => handleCheckboxChange(range)}
+              onChange={(event) => handleCheckboxChange(event, range)}
               color="warning"
             />
 

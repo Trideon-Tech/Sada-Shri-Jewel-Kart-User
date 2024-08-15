@@ -2,7 +2,10 @@ import { Box, Button, Divider, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const HistoryInfo = () => {
+const HistoryInfo = ({ logData, orderDetail }) => {
+  console.log(logData);
+  console.log(orderDetail);
+
   return (
     <div
       style={{
@@ -45,7 +48,7 @@ const HistoryInfo = () => {
             <b>Marigold Ring</b>
           </p>
           <p style={{ margin: 0, fontSize: "16px" }}>
-            <b>₹ 345</b>
+            <b>₹ {logData?.amount}</b>
           </p>
         </div>
         <div
@@ -65,7 +68,7 @@ const HistoryInfo = () => {
             }}
           >
             {" "}
-            3:45 Pm
+            {logData?.created_at} Pm
           </p>
           <p
             style={{
@@ -88,6 +91,30 @@ const Wallet = () => {
   const [creditLog, setCreditLog] = useState([]);
   const [debitLog, setDebitLog] = useState([]);
   const [showDebit, setShowDebit] = useState(false);
+
+  const [orderList, setOrderList] = useState([]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("orders", response?.data?.response);
+        setOrderList(response?.data?.response);
+      })
+      .catch((error) => console.log("Error while fetching cart items", error));
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -105,9 +132,10 @@ const Wallet = () => {
         }
       )
       .then((response) => {
-        setTransactions(response.data.response);
+        console.log("wallet", response);
+        setTransactions(response?.data?.response);
         setCreditLog(
-          response.data.response.filter(
+          response?.data?.response?.filter(
             (item) => item.transaction_type === "credit"
           )
         );
@@ -117,6 +145,7 @@ const Wallet = () => {
             (item) => item.transaction_type === "debit"
           )
         );
+        console.log("creditLog", creditLog);
       })
       .catch((error) => console.log("Error while fetching wallet info", error));
   }, []);
@@ -193,7 +222,7 @@ const Wallet = () => {
                 color: "white",
               }}
             >
-              ₹{debitLog[0]?.balance || 0}
+              ₹{creditLog[0]?.balance}
             </p>
           </div>
           <div
@@ -247,8 +276,30 @@ const Wallet = () => {
               <Divider style={{ width: "90%", marginLeft: "auto" }} />
             </div>
 
-            {showDebit ? debitLog.map((item) => <HistoryInfo />) : ""}
-            {!showDebit ? creditLog.map((item) => <HistoryInfo />) : ""}
+            {showDebit
+              ? debitLog.map((item) => (
+                  <HistoryInfo
+                    logData={item}
+                    orderDetail={
+                      orderList.filter(
+                        (order) => order.id === item.order_record_id
+                      )[0]
+                    }
+                  />
+                ))
+              : ""}
+            {!showDebit
+              ? creditLog.map((item) => (
+                  <HistoryInfo
+                    logData={item}
+                    orderDetail={
+                      orderList.filter(
+                        (order) => order.id === item.order_record_id
+                      )[0]
+                    }
+                  />
+                ))
+              : ""}
           </div>
         </Paper>
       </Box>

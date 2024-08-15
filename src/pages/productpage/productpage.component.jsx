@@ -112,7 +112,7 @@ function Productpage() {
   };
 
   const [weightFilter, setWeightFilter] = useState([0, 100]);
-  const [purityFilter, setPurityFilter] = useState([16, 24]);
+  const [purityFilter, setPurityFilter] = useState([0, 24]);
   const [heightFilter, setHeightFilter] = useState([0, 50]);
   const [widthFilter, setWidthFilter] = useState([0, 50]);
 
@@ -130,8 +130,8 @@ function Productpage() {
     params.min_width = widthFilter[0];
     params.max_width = widthFilter[1];
 
-    params.min_price = selectedPriceRange.min || 0;
-    params.max_price = selectedPriceRange.max || 1000000000;
+    params.min_price = selectedPriceRange.low || 0;
+    params.max_price = selectedPriceRange.high || 1000000000;
 
     params.min_weight = weightFilter[0];
     params.max_weight = weightFilter[1];
@@ -140,11 +140,12 @@ function Productpage() {
     params.max_purity = purityFilter[1];
 
     // Define the API endpoint
-    const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`; // Replace with your actual API endpoint
+    const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
 
     // Make the GET request with query parameters
     const response = await axios.get(apiUrl, { params });
     setJwellery(response?.data?.response);
+    setProductsLoaded(true);
     console.log("pproducts", response);
   };
 
@@ -158,6 +159,8 @@ function Productpage() {
     heightFilter,
     widthFilter,
     selectedPriceRange,
+    menuItemId,
+    isSubCategory,
   ]);
 
   const handleFilterChange = (selectedRangeLabel) => {
@@ -202,6 +205,8 @@ function Productpage() {
       ? localStorage.getItem("user_id")
       : -1;
 
+    console.log(isSubCategory, "isSubCategory");
+
     const endpoint = isSubCategory
       ? `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}&user_id=${userId}`
       : `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}&user_id=${userId}`;
@@ -217,9 +222,9 @@ function Productpage() {
       });
   };
 
-  useEffect(() => {
-    getProduct();
-  }, [menuItemId, isSubCategory]);
+  // useEffect(() => {
+  //   getProduct();
+  // }, [isSubCategory]);
 
   // Check if state is defined to prevent errors
   if (!state) {

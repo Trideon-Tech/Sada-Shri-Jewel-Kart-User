@@ -103,9 +103,16 @@ const Register = () => {
         }
       )
       .then((response) => {
-        console.log(response);
-        if (response.data.success === 1) {
+        console.log("userdata=====================================", response);
+        if (
+          response.data.success === 1 &&
+          response?.data?.response?.user_details
+        ) {
           if (response.data.response.user_details.user_exists) {
+            localStorage.setItem(
+              "user_id",
+              response.data.response.user_details.user_details.id
+            );
             localStorage.setItem(
               "token",
               response.data.response.user_details.user_details.token
