@@ -138,6 +138,26 @@ const Cart = () => {
   const [selectedCouponId, setSelectedCouponId] = useState(null);
   const [selectedCouponCode, setSelectedCouponCode] = useState("");
 
+  const getWishListItemsNonAuth = async () => {
+    const cartListExists = localStorage.getItem("cart_list");
+    console.log(cartListExists, "cartListExists================");
+    if (cartListExists && cartListExists.length > 0) {
+      const cartListItems = cartListExists.split(",");
+      console.log(cartListItems, "cartListItems================");
+      const detailsList = [];
+      for (let item of cartListItems) {
+        if (item.length > 0) {
+          const { data } = await axios.get(
+            `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?type=product_details_on_id&user_id=-1&product_id=${item}`
+          );
+          console.log(data);
+          detailsList.push(data?.response);
+        }
+      }
+      setCartItems(detailsList);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -163,23 +183,31 @@ const Cart = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
-          "user_id"
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        setCartItems(response.data.response);
-      })
-      .catch((error) => console.log("Error while fetching cart items", error));
+    (async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        await getWishListItemsNonAuth();
+        return;
+      }
+      axios
+        .get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+            "user_id"
+          )}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          setCartItems(response?.data?.response);
+        })
+        .catch((error) =>
+          console.log("Error while fetching cart items", error)
+        );
+    })();
   }, [refreshCart]);
 
   const moveToWishlistHandler = async (productId, cartId) => {

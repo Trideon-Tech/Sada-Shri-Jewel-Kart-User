@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import axios from "axios";
 import Skeleton from "@mui/material/Skeleton";
 import { useNavigate } from "react-router-dom";
+import { useRefresh } from "../../RefreshContent";
 
 const JwelleryCard = ({
   id,
@@ -19,6 +20,7 @@ const JwelleryCard = ({
   isWishlisted,
 }) => {
   const navigate = useNavigate();
+  const { triggerRefresh } = useRefresh();
   const [wishListed, setWishListed] = useState(false);
   useEffect(() => {
     let wishListItems = localStorage.getItem("wish_list");
@@ -46,7 +48,8 @@ const JwelleryCard = ({
           wlItems = wlItems.filter((item) => item !== id);
           localStorage.setItem("wish_list", wlItems.join(","));
         }
-        navigate(0);
+        triggerRefresh();
+        // navigate(0);
         return;
       }
 
@@ -64,8 +67,9 @@ const JwelleryCard = ({
           },
         }
       );
+      triggerRefresh();
 
-      navigate(0);
+      // navigate(0);
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +91,9 @@ const JwelleryCard = ({
         wishListItems = Array.from(new Set(wishListItems));
         localStorage.setItem("wish_list", wishListItems.join(","));
       }
-      navigate(0);
+      // navigate(0);
+      triggerRefresh();
+
       return;
     }
     const formData = new FormData();
@@ -104,7 +110,8 @@ const JwelleryCard = ({
         },
       }
     );
-    navigate(0);
+    // navigate(0);
+    triggerRefresh();
   };
   return (
     <div className="jwellery-card">

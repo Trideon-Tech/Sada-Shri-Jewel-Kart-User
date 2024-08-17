@@ -18,6 +18,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import "./productpage.styles.scss";
+import { useRefresh } from "../../RefreshContent";
 
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
@@ -26,10 +27,12 @@ import { Button } from "@mui/joy";
 
 function Productpage() {
   const location = useLocation();
+  const { triggerRefresh } = useRefresh();
   const { state } = location;
   const { menuItemId, menuItemName, isSubCategory } = state;
   const [jwellery, setJwellery] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
+  const [reloadNavbar, setReloadNavbar] = useState(1);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [value, setValue] = useState(0);
@@ -66,7 +69,8 @@ function Productpage() {
       existingList.push(id);
       existingList = Array.from(new Set(existingList));
       localStorage.setItem("cart_list", existingList.join(","));
-      navigate(0);
+      // setReloadNavbar(reloadNavbar + 1);
+      triggerRefresh();
       return;
     }
 
@@ -234,7 +238,7 @@ function Productpage() {
 
   return (
     <div className="product-page">
-      <Navbar />
+      <Navbar triggerRefresh={reloadNavbar} />
       <div className="web">
         <Box
           style={{

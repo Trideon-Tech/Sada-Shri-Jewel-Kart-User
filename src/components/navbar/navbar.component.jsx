@@ -33,8 +33,10 @@ import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import axios from "axios";
 import "./navbar.styles.scss";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useRefresh } from "../../RefreshContent";
 
 const Navbar = () => {
+  const { refresh } = useRefresh();
   const matches = useMediaQuery("(min-width:600px)");
   const [menuItems, setMenuItems] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -157,7 +159,7 @@ const Navbar = () => {
       if (data.response)
         localStorage.setItem("default_wishlist", data?.response[0]?.id);
     })();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     (async () => {
@@ -188,7 +190,7 @@ const Navbar = () => {
       console.log("wishlist", data);
       setWishListItems(data?.response?.length);
     })();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     axios
@@ -228,7 +230,7 @@ const Navbar = () => {
         setMenuItems(response.data.response.categories);
       })
       .catch((error) => console.error("Error fetching menu items:", error));
-  }, []);
+  }, [refresh]);
 
   const handleFuzzySearch = (event) => {
     if (event.key === "Enter") {

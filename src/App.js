@@ -19,34 +19,40 @@ import EditProfile from "./pages/editProfile/editProfile.component";
 import SearchProductpage from "./pages/searchProductPage/searchProductPage.component";
 import Wallet from "./pages/wallet/wallet.component";
 import OrderConfirmation from "./pages/orderConfirmation/orderConfirmation.component";
+import { RefreshProvider } from "./RefreshContent";
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route exact path="/" element={<LandingPage />} />
-          <Route path="/jwellery/:category" element={<Productpage />} />
-          <Route path="/jwellery/search" element={<SearchProductpage />} />
-          <Route path="/item/:category/:product" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/my-orders" element={<MyOrders />} />
-          <Route path="/track-order" element={<TrackOrder />} />
-          <Route path="/order-details" element={<OrderDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/signin" element={<Register />} />
-          <Route path="/order-confirmation" element={<OrderConfirmation />} />
-          <Route path="/user-details" element={<UserDetailsForm />} />
-          <Route path="/my-account" element={<MyAccount />}>
-            <Route path="orders" index element={<Orders />} />
-            <Route path="wallet" index element={<Wallet />} />
-            <Route path="address" element={<Address />} />
-            <Route path="" element={<EditProfile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <RefreshProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route exact path="/" element={<LandingPage />} />
+            <Route path="/jwellery/:category" element={<Productpage />} />
+            <Route path="/jwellery/search" element={<SearchProductpage />} />
+            <Route
+              path="/item/:category/:product"
+              element={<ProductDetail />}
+            />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/my-orders" element={<MyOrders />} />
+            <Route path="/track-order" element={<TrackOrder />} />
+            <Route path="/order-details" element={<OrderDetails />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/signin" element={<Register />} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/user-details" element={<UserDetailsForm />} />
+            <Route path="/my-account" element={<MyAccount />}>
+              <Route path="orders" index element={<Orders />} />
+              <Route path="wallet" index element={<Wallet />} />
+              <Route path="address" element={<Address />} />
+              <Route path="" element={<EditProfile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </RefreshProvider>
     </div>
   );
 }

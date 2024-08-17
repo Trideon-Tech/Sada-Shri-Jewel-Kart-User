@@ -3,9 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const HistoryInfo = ({ logData, orderDetail }) => {
-  console.log(logData);
-  console.log(orderDetail);
-
   return (
     <div
       style={{
@@ -24,7 +21,9 @@ const HistoryInfo = ({ logData, orderDetail }) => {
           borderRadius: "100px",
           backgroundColor: "#D9D9D9",
         }}
-      ></div>
+      >
+        <img src="" alt="" />
+      </div>
       <div
         style={{
           width: "100%",
@@ -45,7 +44,7 @@ const HistoryInfo = ({ logData, orderDetail }) => {
         >
           <p style={{ margin: 0, fontSize: "16px" }}>
             {" "}
-            <b>Marigold Ring</b>
+            <b>{logData?.order_details[0]?.product_name}</b>
           </p>
           <p style={{ margin: 0, fontSize: "16px" }}>
             <b>₹ {logData?.amount}</b>
@@ -78,7 +77,7 @@ const HistoryInfo = ({ logData, orderDetail }) => {
               fontSize: "14px",
             }}
           >
-            <b>Paid against order #1232213121</b>
+            <b>Paid against order #{logData.order_details[0].public_id}</b>
           </p>
         </div>
       </div>
@@ -191,39 +190,47 @@ const Wallet = () => {
               height: "300px",
               borderRadius: "10px",
               display: "flex",
-              flexDirection: "column",
               justifyContent: "space-around",
               alignItems: "flex-start",
               paddingLeft: "70px",
               background: "linear-gradient(90deg,#A36E29,#E0B872)",
             }}
           >
+            <div
+              style={{
+                width: "300px",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "1.4rem",
+                  fontWeight: 600,
+                  color: "white",
+                  margin: 0,
+                  marginTop: "auto",
+                }}
+              >
+                Available Balance
+              </p>
+              <p
+                style={{
+                  margin: 0,
+                  marginBottom: "auto",
+                  fontSize: "5rem",
+                  fontWeight: 500,
+                  color: "white",
+                }}
+              >
+                ₹{creditLog[0]?.balance}
+              </p>
+            </div>
             <img
-              style={{ position: "absolute", marginLeft: "400px" }}
+              style={{ marginRight: 0, marginLeft: "auto", marginTop: "auto" }}
               src={process.env.PUBLIC_URL + "/assets/coins.png"}
             />
-            <p
-              style={{
-                fontSize: "1.4rem",
-                fontWeight: 600,
-                color: "white",
-                margin: 0,
-                marginTop: "auto",
-              }}
-            >
-              Available Balance
-            </p>
-            <p
-              style={{
-                margin: 0,
-                marginBottom: "auto",
-                fontSize: "5rem",
-                fontWeight: 500,
-                color: "white",
-              }}
-            >
-              ₹{creditLog[0]?.balance}
-            </p>
           </div>
           <div
             style={{

@@ -38,31 +38,11 @@ const ReviewList = ({ reviewsData, totalPages }) => {
             flexDirection: "column",
           }}
         >
-          <Rating
-            name="size-large"
-            readOnly
-            value={3}
-            style={{ marginTop: "1%" }}
-          />
-          <Box
-            style={{ display: "flex", alignItems: "center", marginTop: "1%" }}
-          >
-            <ThumbUpIcon style={{ color: "green", marginRight: "2%" }} />
-            <Typography style={{ color: "green", marginRight: "auto" }}>
-              {" "}
-              POSITIVES{" "}
-            </Typography>
-          </Box>
-          <Typography
-            style={{ textAlign: "left", color: "#606060", marginTop: "2%" }}
-          >
-            {review.content}
-          </Typography>
           <Box
             style={{ display: "flex", alignItems: "center", marginTop: "2%" }}
           >
             <Avatar sx={{ bgcolor: "gray" }} alt="Gemy Sharp">
-              {review.user_id.substring(0, 1)}
+              {review?.name.substring(0, 1)}
             </Avatar>
             <Box
               style={{
@@ -80,13 +60,24 @@ const ReviewList = ({ reviewsData, totalPages }) => {
                   fontSize: "1rem",
                 }}
               >
-                {review.user_id}
+                {review?.name}
               </Typography>
               <Typography style={{ color: "#a0a0a0" }}>
-                {review.created_at}
+                {review?.created_at}
               </Typography>
             </Box>
           </Box>
+          <Rating
+            name="size-large"
+            readOnly
+            value={Number(review?.rating)}
+            style={{ marginTop: "1%" }}
+          />{" "}
+          <Typography
+            style={{ textAlign: "left", color: "#606060", marginTop: "2%" }}
+          >
+            {review?.content}
+          </Typography>
           <Box
             style={{
               width: "50vw",

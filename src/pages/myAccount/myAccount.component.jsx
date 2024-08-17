@@ -234,6 +234,10 @@ export default function MyAccount() {
                 padding: 0,
                 marginTop: "5%",
               }}
+              onClick={() => {
+                localStorage.clear();
+                navigate("/");
+              }}
             >
               Logout
             </Button>
