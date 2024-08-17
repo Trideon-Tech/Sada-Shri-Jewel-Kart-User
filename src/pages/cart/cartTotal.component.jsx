@@ -475,10 +475,10 @@ export default function CartTotal({
             "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
         }}
         component={Link}
-        to="/checkout"
+        to={localStorage.getItem("token") ? "/checkout" : "/signin"}
         fullWidth
       >
-        Checkout
+        {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}
       </Button>
     </Box>
   );

@@ -42,6 +42,7 @@ export default function CartItem({
         display: "flex",
         padding: "3%",
         width: "93%",
+        height: matches ? "max-content" : "500px",
         aspectRatio: "4/1",
         marginBottom: "5%",
         justifyContent: "space-between",
@@ -92,7 +93,8 @@ export default function CartItem({
             height: "max-content",
             display: "flex",
             justifyContent: "flex-start",
-            alignItems: "center",
+            flexDirection: matches ? "row" : "column",
+            alignItems: matches ? "center" : "flex-start",
           }}
         >
           <Box
@@ -124,7 +126,7 @@ export default function CartItem({
           <Box
             style={{
               display: "flex",
-              marginLeft: "10%",
+              marginLeft: matches ? "10%" : 0,
               marginRight: "auto",
               width: "max-content",
               justifyContent: "space-evenly",
@@ -172,7 +174,7 @@ export default function CartItem({
         <Box
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: matches ? "column" : "row",
             width: "max-content",
             height: "100%",
           }}
@@ -190,7 +192,7 @@ export default function CartItem({
             />
           </Button>
           <Button
-            style={{ marginTop: "auto" }}
+            style={{ marginTop: matches ? "auto" : 0 }}
             onClick={() => moveToWishlistHandler(item?.id, item?.cart_id)}
           >
             <FavoriteIcon
