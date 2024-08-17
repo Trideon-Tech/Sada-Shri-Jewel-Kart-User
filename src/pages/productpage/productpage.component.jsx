@@ -19,7 +19,7 @@ import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import "./productpage.styles.scss";
 import { useRefresh } from "../../RefreshContent";
-
+import Footer from "../../components/footer/footer.component";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
@@ -239,7 +239,7 @@ function Productpage() {
   return (
     <div className="product-page">
       <Navbar triggerRefresh={reloadNavbar} />
-      <div className="web">
+      <div className="web" style={{ height: "max-content" }}>
         <Box
           style={{
             width: "100vw",
@@ -362,7 +362,7 @@ function Productpage() {
           </Grid>
         </div>
       </div>
-      <div className="mobile">
+      <div className="mobile" style={{ height: "max-content" }}>
         <div className="block-with-background">
           <Typography variant="h4" className="page-heading">
             {menuItemName}
@@ -485,6 +485,8 @@ function Productpage() {
           </Drawer>
         </div>
       </div>
+
+      {/* <Footer /> */}
     </div>
   );
 }

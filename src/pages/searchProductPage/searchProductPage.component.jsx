@@ -23,6 +23,7 @@ import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
 import { Button } from "@mui/joy";
+import Footer from "../../components/footer/footer.component";
 
 function useQuery() {
   const { search } = useLocation();
@@ -335,6 +336,7 @@ function SearchProductpage() {
           </Drawer>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

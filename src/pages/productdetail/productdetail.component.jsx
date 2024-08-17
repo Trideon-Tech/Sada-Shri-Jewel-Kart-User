@@ -54,6 +54,7 @@ import Navbar from "../../components/navbar/navbar.component";
 import ImageVideoCarousel from "./carousal.component";
 import { Input, Textarea } from "@mui/joy";
 import Reviews from "../../components/reviews/reviews.component";
+import Footer from "../../components/footer/footer.component";
 
 const theme = createTheme({
   palette: {

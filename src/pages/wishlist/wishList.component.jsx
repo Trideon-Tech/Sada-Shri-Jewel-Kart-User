@@ -6,6 +6,7 @@ import JwelleryCard from "../../components/card/jwellerycard.component";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footer from "../../components/footer/footer.component";
 const mockData = [
   {
     id: "1",
@@ -1022,6 +1023,7 @@ const Wishlist = () => {
           </Grid>
         </Box>
       </Box>
+      <Footer />
     </div>
   );
 };
