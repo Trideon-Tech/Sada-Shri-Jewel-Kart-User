@@ -48,6 +48,7 @@ const JwelleryCard = ({
           wlItems = wlItems.filter((item) => item !== id);
           localStorage.setItem("wish_list", wlItems.join(","));
         }
+        isWishlisted = false;
         triggerRefresh();
         // navigate(0);
         return;
@@ -220,7 +221,7 @@ const JwelleryCard = ({
           </Button>
         </div>
       </div>
-      <div className="mobile">
+      <div className="mobile" style={{ padding: "5px", height: "max-content" }}>
         <div className="card-image-container" style={{ position: "relative" }}>
           <div
             style={{
@@ -315,7 +316,6 @@ const JwelleryCard = ({
               borderRadius: "50px",
               fontWeight: "bold",
               marginTop: "3%",
-              marginBottom: "3%",
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
             }}

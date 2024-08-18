@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
-import { Divider, Grid, IconButton, TextField } from "@mui/material";
+import {
+  Divider,
+  Grid,
+  IconButton,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
 import { Facebook, Google } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import FormControl from "@mui/joy/FormControl";
@@ -8,10 +14,11 @@ import FormLabel from "@mui/joy/FormLabel";
 import FormHelperText from "@mui/joy/FormHelperText";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
-import "./register.styles.scss";
+// import "./register.styles.scss";
 import axios from "axios";
 
 const Register = () => {
+  const matches = useMediaQuery("(min-width:600px)");
   let navigate = useNavigate();
   const [mobile, setMobile] = useState();
   const [otp, setOTP] = useState();
@@ -144,7 +151,7 @@ const Register = () => {
     <div className="register">
       <Navbar />
       <div className="register-container">
-        <div className="register-form">
+        <div className="register-form" style={{ width: "500px" }}>
           <h2>
             Signup to <br />
             Sada Shri Jewel Kart

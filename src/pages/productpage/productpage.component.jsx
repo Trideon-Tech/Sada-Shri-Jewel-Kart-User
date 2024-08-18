@@ -26,6 +26,7 @@ import PriceFilter from "./productFilter.component";
 import { Button } from "@mui/joy";
 
 function Productpage() {
+  const { refresh } = useRefresh();
   const location = useLocation();
   const { triggerRefresh } = useRefresh();
   const { state } = location;
@@ -158,6 +159,7 @@ function Productpage() {
       await handleFetchFilteredData();
     })();
   }, [
+    refresh,
     weightFilter,
     purityFilter,
     heightFilter,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./productFilter.styles.scss";
 import Checkbox from "@mui/joy/Checkbox";
-import { Box, Slider, Typography } from "@mui/material";
+import { Box, Slider, Typography, useMediaQuery } from "@mui/material";
 
 const PriceFilter = ({
   selectedPriceRange,
@@ -16,6 +16,8 @@ const PriceFilter = ({
   handleHeightFilter,
   handleWidthFilter,
 }) => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const [rangeList, setRangeList] = useState([]);
   const priceRanges = [
     { id: 1, label: "₹10,001 - ₹20,000", low: 10000, high: 20000 },
@@ -181,7 +183,7 @@ const PriceFilter = ({
         Weight
       </div>
 
-      <Box sx={{ width: 300 }}>
+      <Box sx={{ width: matches ? 300 : 150 }}>
         <Slider
           max={100}
           getAriaLabel={() => "Temperature range"}
@@ -208,7 +210,7 @@ const PriceFilter = ({
         Purity
       </div>
 
-      <Box sx={{ width: 300 }}>
+      <Box sx={{ width: matches ? 300 : 150 }}>
         <Slider
           max={24}
           min={16}
@@ -235,7 +237,7 @@ const PriceFilter = ({
         Height
       </div>
 
-      <Box sx={{ width: 300 }}>
+      <Box sx={{ width: matches ? 300 : 150 }}>
         <Slider
           max={50}
           getAriaLabel={() => "Temperature range"}
@@ -262,7 +264,7 @@ const PriceFilter = ({
         Width
       </div>
 
-      <Box sx={{ width: 300 }}>
+      <Box sx={{ width: matches ? 300 : 150 }}>
         <Slider
           max={50}
           getAriaLabel={() => "Temperature range"}

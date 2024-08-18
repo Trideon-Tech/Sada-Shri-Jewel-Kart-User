@@ -9,7 +9,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import React, { useEffect, useState } from "react";
 import BalanceIcon from "@mui/icons-material/Balance";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Divider, CardContent } from "@mui/material";
+import { Divider, CardContent, CircularProgress } from "@mui/material";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
@@ -91,6 +91,41 @@ export default function CartTotal({
       }
     }
   }, [selectedCouponId]);
+
+  const [estimatedDelivery, setEstimatedDelivery] = useState("");
+  const [inputPinCode, setInputPinCode] = useState(0);
+  const [loadingEstimation, setLoadingEstimation] = useState(false);
+
+  useEffect(() => {
+    handleDeliveryEstimation();
+  }, [inputPinCode]);
+
+  const handleDeliveryEstimation = () => {
+    const token = localStorage.getItem("token");
+    const pinCode = localStorage.getItem("default_pincode");
+    console.log(pinCode);
+    if (pinCode && pinCode.length > 5) {
+      setLoadingEstimation(true);
+      axios
+        .get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pinCode}&product_id=1`
+        )
+        .then((response) => {
+          setEstimatedDelivery(
+            `${response?.data?.response?.data?.estimated_delivery}  ${response?.data?.response?.data?.estimated_day}`
+          );
+          console.log(
+            response?.data?.response?.data.estimated_delivery,
+            response?.data?.response?.data.estimated_day
+          );
+          setLoadingEstimation(false);
+          // setCoinsRedeem(response?.data?.response[0].balance);
+        })
+        .catch((error) =>
+          console.log("Error while fetching wallet info", error)
+        );
+    }
+  };
 
   return (
     <Box
@@ -174,9 +209,11 @@ export default function CartTotal({
                   endDecorator={
                     <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
                   }
-                  onChange={(event) =>
-                    localStorage.setItem("default_pincode", event.target.value)
-                  }
+                  onChange={(event) => {
+                    setInputPinCode(event.target.value);
+                    handleDeliveryEstimation();
+                    localStorage.setItem("default_pincode", event.target.value);
+                  }}
                 />
                 <div
                   style={{
@@ -191,7 +228,31 @@ export default function CartTotal({
                   }}
                 >
                   <LocalShippingOutlinedIcon />
-                  <p>{"  "}Estimated delivery by 12 July</p>
+                  {!loadingEstimation ? (
+                    <p>
+                      {"  "}Estimated delivery by {estimatedDelivery}
+                    </p>
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        paddingTop: "15px",
+                        paddingBottom: "15px",
+                      }}
+                    >
+                      {"  "}Estimated delivery by
+                      <CircularProgress
+                        color="success"
+                        style={{
+                          color: "#A36E29",
+                          height: "20px",
+                          width: "20px",
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <Card

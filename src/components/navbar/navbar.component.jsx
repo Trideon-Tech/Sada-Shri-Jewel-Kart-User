@@ -411,10 +411,9 @@ const Navbar = () => {
                 </MenuButton>
                 <Menu
                   style={{
-                    width: "15vw",
-                    height: "10%",
-                    marginTop: "200px",
-                    paddingTop: "100px  ",
+                    width: matches ? "15vw" : "40vw",
+                    height: "max-content",
+                    paddingTop: "40px",
                   }}
                 >
                   {localStorage.getItem("token") ? (
@@ -513,10 +512,8 @@ const Navbar = () => {
                   </MenuButton>
                   <Menu
                     style={{
-                      width: "15vw",
-                      height: "10%",
-                      marginTop: "200px",
-                      paddingTop: "100px  ",
+                      width: "40vw",
+                      height: "max-content",
                     }}
                   >
                     {localStorage.getItem("token") ? (
