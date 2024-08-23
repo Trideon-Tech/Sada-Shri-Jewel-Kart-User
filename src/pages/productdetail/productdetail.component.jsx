@@ -55,7 +55,7 @@ import ImageVideoCarousel from "./carousal.component";
 import { Input, Textarea } from "@mui/joy";
 import Reviews from "../../components/reviews/reviews.component";
 import Footer from "../../components/footer/footer.component";
-
+import { useRefresh } from "../../RefreshContent";
 const theme = createTheme({
   palette: {
     primary: {
@@ -72,6 +72,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function ProductDetail() {
+  const { triggerRefresh } = useRefresh();
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [video, setVideo] = useState(null);
@@ -274,6 +275,82 @@ function ProductDetail() {
   const handleClose = () => {
     setOpenShareDialog(false);
   };
+
+  const [totalPages, setTotalPages] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
+
+  const [localWishlisted, setLocalWishlisted] = useState(false);
+
+  const getWishListItemsNonAuth = () => {
+    const wishListExists = localStorage.getItem("wish_list");
+    if (wishListExists && wishListExists.length > 0) {
+      const wishListItems = wishListExists.split(",");
+      setLocalWishlisted(wishListItems.includes(productDetail.id));
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("productDetails", productDetail);
+    console.log("productDetail id", productDetail.id);
+    getWishListItemsNonAuth();
+    if (!productDetail.id) return;
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/reviews.php?type=all&page=1&page_size=10&product_id=${productDetail.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("response", response?.data?.response?.totalPages);
+        setTotalPages(Number(response?.data?.response?.totalPages));
+        const sum = response?.data?.response?.reviews.map((item) =>
+          Number(item.ratng)
+        );
+        console.log(sum, "  ");
+        if (sum && sum?.length > 0)
+          setAverageRating((sum) => sum?.reduce((a, b) => a + b) / sum.length);
+      })
+      .catch((error) => {});
+  }, [productDetail]);
+
+  const handleWishList = async () => {
+    if (productDetail.exists_in_wishlist || localWishlisted) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        removeFromLocalWishlist();
+        return;
+      }
+      await axios.delete(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          data: {
+            type: "wishlist_item",
+            wishlist_item_id: productDetail.id,
+          },
+        }
+      );
+      triggerRefresh();
+    }
+  };
+
+  const removeFromLocalWishlist = () => {
+    const localWishList = localStorage.getItem("wish_list");
+    if (localWishList && localWishList?.length > 0) {
+      const items = localWishList.split(",");
+      const filteredItems = items?.filter((item) => !item === productDetail.id);
+      localStorage.setItem(filteredItems.join(","));
+    }
+  };
+
   return (
     <div className="product-detail">
       <Navbar />
@@ -511,9 +588,13 @@ function ProductDetail() {
                     marginLeft: "auto",
                     marginRight: "5%",
                     marginTop: "5%",
-                    color: productDetail.exists_in_wishlist
-                      ? "#a36e29"
-                      : "#bfbfbf",
+                    color:
+                      productDetail.exists_in_wishlist || localWishlisted
+                        ? "#a36e29"
+                        : "#bfbfbf",
+                  }}
+                  onClick={() => {
+                    handleWishList();
                   }}
                 />
               </Box>
@@ -551,11 +632,11 @@ function ProductDetail() {
                     paddingRight: "2%",
                   }}
                 >
-                  <Typography>3.5</Typography>
+                  <Typography>{averageRating}</Typography>
                   <StarBorderRoundedIcon
                     style={{ fontSize: "1.5rem", color: "orange" }}
                   />
-                  <Typography>(500 reviews)</Typography>
+                  <Typography>({totalPages * 5} reviews)</Typography>
                 </Box>
                 <Box
                   style={{

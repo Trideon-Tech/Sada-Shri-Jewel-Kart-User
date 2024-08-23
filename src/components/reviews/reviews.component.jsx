@@ -298,7 +298,7 @@ const Reviews = ({ productDetails }) => {
       >
         Customer Reviews
       </Typography>
-      <Box
+      {/* <Box
         style={{
           width: "100%",
           display: "flex",
@@ -323,7 +323,7 @@ const Reviews = ({ productDetails }) => {
         ) : null}
 
         <RatingImages mobileView={!matches} />
-      </Box>
+      </Box> */}
       <Divider style={{ width: "100%" }} />
       <ReviewList reviewsData={reviewsData} totalpages={totalPages} />
     </Box>

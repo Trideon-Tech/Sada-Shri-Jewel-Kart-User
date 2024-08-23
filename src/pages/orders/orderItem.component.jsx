@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Typography, useMediaQuery } from "@mui/material";
 
 const OrderItem = ({
   titleColorType = "arriving",
@@ -6,6 +6,8 @@ const OrderItem = ({
   selectHandler,
   handleCancelOrder,
 }) => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const titleColors = {
     arriving: "#a36e29",
     delivered: "#33A329",
@@ -14,10 +16,10 @@ const OrderItem = ({
   return (
     <Card
       style={{
-        minWidth: "837px",
+        minWidth: matches ? "837px" : "100%",
         minHeight: "331px",
         width: "95%",
-        height: "10%",
+        height: matches ? "10%" : "max-content",
         padding: "2.5%",
         borderRadius: "10px",
         marginBottom: "50px",
@@ -77,6 +79,7 @@ const OrderItem = ({
           height: "60%",
           marginTop: "2%",
           justifyContent: "space-between",
+          flexDirection: matches ? "row" : "column",
           alignItems: "center",
         }}
       >
@@ -221,7 +224,7 @@ const OrderItem = ({
             color: "#a36e29",
           }}
         >
-          {titleColorType === "arriving" ? "Cancel Order" : "Return Order"}
+          {titleColorType === "arriving" ? "Cancel " : "Return Order"}
         </Button>
         <Button
           fullWidth

@@ -1,4 +1,11 @@
-import { Box, Button, Card, TextareaAutosize, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  TextareaAutosize,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import Modal from "@mui/material/Modal";
 
 import Tabs from "@mui/joy/Tabs";
@@ -12,6 +19,7 @@ import CartItem from "../cart/cartItem.component";
 const Orders = () => {
   const [orderList, setOrderList] = useState([]);
 
+  const matches = useMediaQuery("(min-width:600px)");
   const STATUS_CREATED = "created";
   const STATUS_COMPLETED = "completed";
   const STATUS_CANCELLED = "cancelled";
@@ -75,7 +83,7 @@ const Orders = () => {
       style={{
         width: "100%",
         padding: "1%",
-        paddingRight: "14%",
+        paddingRight: matches ? "14%" : "5%",
         maxHeight: "100%",
         height: "max-content",
         overflowY: "scroll",
@@ -141,7 +149,7 @@ const Orders = () => {
         aria-label="tabs"
         defaultValue={0}
         style={{
-          width: "70%",
+          width: matches ? "70%" : "100%",
           margin: "auto",
           marginTop: "20px",
           marginBottom: "auto",

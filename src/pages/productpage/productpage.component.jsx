@@ -116,10 +116,17 @@ function Productpage() {
     //   .catch((error) => console.log("Error while fetching cart items", error));
   };
 
+  const sortOrders = {
+    "Price | Low-High": { param: "price_sort", order: "ASC" },
+    "Price | High-Low": { param: "price_sort", order: "DESC" },
+    "Review | Top": { param: "review_sort", order: "DESC" },
+    "Review | Low": { param: "review_sort", order: "ASC" },
+  };
   const [weightFilter, setWeightFilter] = useState([0, 100]);
   const [purityFilter, setPurityFilter] = useState([0, 24]);
   const [heightFilter, setHeightFilter] = useState([0, 50]);
   const [widthFilter, setWidthFilter] = useState([0, 50]);
+  const [selectedSort, setSelectedSort] = useState("Review | Top");
 
   const handleFetchFilteredData = async () => {
     // const products = await axios.get(
@@ -144,6 +151,12 @@ function Productpage() {
     params.min_purity = purityFilter[0];
     params.max_purity = purityFilter[1];
 
+    // if (selectedSort === "Review | Top") {
+    //   params.review_sort = sortOrders["DESC"].order;
+    // }
+    if (selectedSort)
+      params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
+
     // Define the API endpoint
     const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
 
@@ -167,11 +180,12 @@ function Productpage() {
     selectedPriceRange,
     menuItemId,
     isSubCategory,
+    selectedSort,
   ]);
 
   const handleFilterChange = (selectedRangeLabel) => {
     // setSelectedPriceRanges((prevSelectedRanges) => {
-    //   if (prevSelectedRanges.includes(selectedRangeLabel)) {
+    //   if (sortOrdersprevSelectedRanges.includes(selectedRangeLabel)) {
     //     return prevSelectedRanges.filter(
     //       (range) => range !== selectedRangeLabel
     //     );
@@ -316,7 +330,10 @@ function Productpage() {
                 </Typography>
                 <Select
                   defaultValue={["dog"]}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    console.log("value", value?.target?.textContent);
+                    setSelectedSort(value?.target?.textContent);
+                  }}
                   sx={{
                     minWidth: "13rem",
                   }}
@@ -328,10 +345,9 @@ function Productpage() {
                     },
                   }}
                 >
-                  <Option value="dog">Price: High - Low</Option>
-                  <Option value="cat">Price: Low - High</Option>
-                  <Option value="fish">Avg. Reviews</Option>
-                  <Option value="bird">Latest</Option>
+                  {Object.keys(sortOrders).map((sort) => (
+                    <Option value={sort}>{sort}</Option>
+                  ))}
                 </Select>
               </Box>
               <Grid container spacing={1}>

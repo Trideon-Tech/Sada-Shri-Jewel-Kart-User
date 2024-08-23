@@ -1,4 +1,11 @@
-import { Box, Button, Divider, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -86,6 +93,8 @@ const HistoryInfo = ({ logData, orderDetail }) => {
 };
 
 const Wallet = () => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const [transactions, setTransactions] = useState([]);
   const [creditLog, setCreditLog] = useState([]);
   const [debitLog, setDebitLog] = useState([]);
@@ -152,7 +161,7 @@ const Wallet = () => {
     <Box
       style={{
         width: "100%",
-        padding: "1%",
+        padding: matches ? "1%" : 0,
         height: "100%",
         overflowY: "scroll",
         display: "flex",
@@ -164,23 +173,28 @@ const Wallet = () => {
     >
       <Box
         style={{
-          width: "80%",
+          width: matches ? "80%" : "100%",
           margin: "auto",
           textAlign: "left",
           marginTop: "30px",
         }}
       >
         <Typography
-          style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
+          style={{
+            marginTop: "2.5%",
+            fontSize: "2rem",
+            fontWeight: "bold",
+            marginLeft: matches ? 0 : "10px",
+          }}
         >
           Your Wallet
         </Typography>
 
         <Paper
           style={{
-            width: "90%",
+            width: matches ? "90%" : "95%",
             minHeight: "500px",
-            padding: "50px",
+            padding: matches ? "50px" : "10px",
             paddingTop: "30px",
           }}
         >
@@ -227,10 +241,16 @@ const Wallet = () => {
                 ₹{creditLog[0]?.balance}
               </p>
             </div>
-            <img
-              style={{ marginRight: 0, marginLeft: "auto", marginTop: "auto" }}
-              src={process.env.PUBLIC_URL + "/assets/coins.png"}
-            />
+            {matches ? (
+              <img
+                style={{
+                  marginRight: 0,
+                  marginLeft: "auto",
+                  marginTop: "auto",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/coins.png"}
+              />
+            ) : null}
           </div>
           <div
             style={{

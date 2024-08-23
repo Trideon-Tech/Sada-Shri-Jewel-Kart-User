@@ -149,7 +149,7 @@ const JwelleryCard = ({
               />
             </Button>
           </div>
-          {image.length ? (
+          {image?.length ? (
             <img
               src={encodeURI(
                 `https://api.sadashrijewelkart.com/assets/${image}`
@@ -254,7 +254,7 @@ const JwelleryCard = ({
               />
             </Button>
           </div>
-          {image.length ? (
+          {image?.length ? (
             <img
               src={encodeURI(
                 `https://api.sadashrijewelkart.com/assets/${image}`

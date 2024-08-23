@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Avatar from "@mui/joy/Avatar";
 import FormLabel from "@mui/joy/FormLabel";
@@ -28,6 +28,8 @@ import axios from "axios";
 import { useState } from "react";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const [isEditing, setIsEditing] = useState(false);
   const [add_line_1, setAdd_line1] = useState("");
   const [add_line_2, setAdd_line2] = useState("");
@@ -70,9 +72,9 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
     <Card
       elevation={3}
       style={{
-        width: "96%",
+        width: "95%",
         height: isEditing ? "90%" : "25%",
-        minWidth: "700px",
+        minWidth: matches ? "700px" : "250px",
         minHeight: "10px",
         backgroundColor: "white",
         boxShadow: "0 0 3px 0 #555555",
@@ -87,7 +89,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
           style={{
             width: "100%",
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             alignItems: "center",
           }}
         >

@@ -15,7 +15,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Drawer,
+  useMediaQuery,
+  Fab,
 } from "@mui/material";
+
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import Slide from "@mui/material/Slide";
 import Profile from "./profile.component";
@@ -29,12 +34,15 @@ import {
   useNavigate,
 } from "react-router-dom";
 import axios from "axios";
+import { AddIcCallOutlined } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function MyAccount() {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -42,6 +50,7 @@ export default function MyAccount() {
     setOpen(true);
   };
 
+  const [drawerOpen, setDrawerOpen] = React.useState(true);
   const handleDeavticate = async () => {
     try {
       console.log("token===", localStorage.getItem("token"));
@@ -80,6 +89,23 @@ export default function MyAccount() {
       }}
     >
       <Navbar />
+      {!matches ? (
+        <Box
+          style={{
+            width: "100%",
+            height: "50px",
+            display: "flex",
+            justifyContent: "flex-start",
+
+            alignItems: "center",
+          }}
+        >
+          <ArrowForwardIosIcon
+            style={{ color: "#a36e29", marginLeft: "30px" }}
+            onClick={() => setDrawerOpen(true)}
+          />
+        </Box>
+      ) : null}
       <Dialog
         open={open}
         style={{ borderRadius: "20px" }}
@@ -88,7 +114,7 @@ export default function MyAccount() {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Are you sure?"}</DialogTitle>
+        <DialogTitle>{"Yes"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             You want to delete you account. You will lose all your data, saved
@@ -123,7 +149,7 @@ export default function MyAccount() {
       <Box style={{ width: "100%", height: "100%", display: "flex" }}>
         <Box
           style={{
-            width: "30%",
+            width: matches ? "30%" : 0,
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -132,133 +158,304 @@ export default function MyAccount() {
             backgroundColor: "transparent",
           }}
         >
-          <Box
-            style={{
-              margin: "auto",
-              width: "60%",
-              height: "100%",
-              textAlign: "left",
-              display: "flex",
-              alignItems: "flex-start",
-              flexDirection: "column",
-            }}
-          >
-            <Typography
-              style={{ fontWeight: "bold", fontSize: "2rem", marginTop: "10%" }}
-            >
-              My Account
-            </Typography>
-            <Typography
-              style={{ fontWeight: "bold", fontSize: "1rem", marginTop: "20%" }}
-            >
-              {localStorage.getItem("user_name")}
-            </Typography>
-            <Typography
+          {matches ? (
+            <Box
               style={{
-                fontSize: "1rem",
-                marginTop: "5%",
-                color: "#00000090",
+                margin: "auto",
+                width: "60%",
+                height: "100%",
+                textAlign: "left",
+                display: "flex",
+                alignItems: "flex-start",
+                flexDirection: "column",
               }}
             >
-              {localStorage.getItem("user_email")}
-            </Typography>
-            <Typography
-              style={{
-                fontSize: "1rem",
-                marginTop: "5%",
-                color: "#00000090",
-              }}
-            >
-              <u>+{localStorage.getItem("mobile")}</u>
-            </Typography>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "2rem",
+                  marginTop: "10%",
+                }}
+              >
+                My Account
+              </Typography>
+              <Typography
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  marginTop: "20%",
+                }}
+              >
+                {localStorage.getItem("user_name")}
+              </Typography>
+              <Typography
+                style={{
+                  fontSize: "1rem",
+                  marginTop: "5%",
+                  color: "#00000090",
+                }}
+              >
+                {localStorage.getItem("user_email")}
+              </Typography>
+              <Typography
+                style={{
+                  fontSize: "1rem",
+                  marginTop: "5%",
+                  color: "#00000090",
+                }}
+              >
+                <u>+{localStorage.getItem("mobile")}</u>
+              </Typography>
 
-            <Link to={"/my-account"}>
+              <Link to={"/my-account"}>
+                <Button
+                  style={{
+                    fontWeight: "bold",
+                    color: "#a36e29",
+                    padding: 0,
+                    marginTop: "5%",
+                  }}
+                >
+                  Edit Profile
+                </Button>
+              </Link>
+              <Divider
+                style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
+              />
+              <Link to={"/my-account/orders"}>
+                <Button
+                  style={{
+                    fontWeight: "bold",
+                    color: "#a36e29",
+                    padding: 0,
+                    marginTop: "5%",
+                  }}
+                >
+                  Orders and Returns
+                </Button>
+              </Link>
+              <Link to={"/my-account/address"}>
+                <Button
+                  style={{
+                    fontWeight: "bold",
+                    color: "#a36e29",
+                    padding: 0,
+                    marginTop: "5%",
+                  }}
+                >
+                  Saved Addresses
+                </Button>
+              </Link>
+              <Link to={"/my-account/wallet"}>
+                <Button
+                  style={{
+                    fontWeight: "bold",
+                    color: "#a36e29",
+                    padding: 0,
+                    marginTop: "5%",
+                  }}
+                >
+                  Your Wallet
+                </Button>
+              </Link>
+              <Divider
+                style={{
+                  width: "100%",
+                  marginTop: "auto",
+                  marginBottom: "10%",
+                }}
+              />
               <Button
                 style={{
+                  fontSize: "0.8rem",
                   fontWeight: "bold",
-                  color: "#a36e29",
+                  color: "#00000090",
                   padding: 0,
                   marginTop: "5%",
                 }}
-              >
-                Edit Profile
-              </Button>
-            </Link>
-            <Divider
-              style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
-            />
-            <Link to={"/my-account/orders"}>
-              <Button
-                style={{
-                  fontWeight: "bold",
-                  color: "#a36e29",
-                  padding: 0,
-                  marginTop: "5%",
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/");
                 }}
               >
-                Orders and Returns
+                Logout
               </Button>
-            </Link>
-            <Link to={"/my-account/address"}>
               <Button
                 style={{
+                  fontSize: "0.8rem",
                   fontWeight: "bold",
-                  color: "#a36e29",
+                  color: "#00000090",
                   padding: 0,
                   marginTop: "5%",
+                  marginBottom: "20%",
                 }}
+                onClick={() => handleClickOpen()}
               >
-                Saved Addresses
+                Deactivate Account
               </Button>
-            </Link>
-            <Link to={"/my-account/wallet"}>
-              <Button
-                style={{
-                  fontWeight: "bold",
-                  color: "#a36e29",
-                  padding: 0,
-                  marginTop: "5%",
-                }}
-              >
-                Your Wallet
-              </Button>
-            </Link>
-            <Divider
-              style={{ width: "100%", marginTop: "auto", marginBottom: "10%" }}
-            />
-            <Button
-              style={{
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-                color: "#00000090",
-                padding: 0,
-                marginTop: "5%",
+            </Box>
+          ) : null}
+          {!matches ? (
+            <Drawer
+              anchor={"left"}
+              open={drawerOpen}
+              style={{ width: "70%" }}
+              PaperProps={{
+                sx: {
+                  width: "70%",
+                },
               }}
-              onClick={() => {
-                localStorage.clear();
-                navigate("/");
-              }}
+              onClose={() => setDrawerOpen(false)}
             >
-              Logout
-            </Button>
-            <Button
-              style={{
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-                color: "#00000090",
-                padding: 0,
-                marginTop: "5%",
-                marginBottom: "20%",
-              }}
-              onClick={() => handleClickOpen()}
-            >
-              Deactivate Account
-            </Button>
-          </Box>
+              <Box
+                style={{
+                  margin: "auto",
+                  width: "80%",
+                  height: "100%",
+                  textAlign: "left",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1.5rem",
+                    marginTop: "10%",
+                  }}
+                >
+                  My Account
+                </Typography>
+                <Typography
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1rem",
+                    marginTop: "20%",
+                  }}
+                >
+                  {localStorage.getItem("user_name")}
+                </Typography>
+                <Typography
+                  style={{
+                    fontSize: "1rem",
+                    marginTop: "5%",
+                    color: "#00000090",
+                  }}
+                >
+                  {localStorage.getItem("user_email")}
+                </Typography>
+                <Typography
+                  style={{
+                    fontSize: "1rem",
+                    marginTop: "5%",
+                    color: "#00000090",
+                  }}
+                >
+                  <u>+{localStorage.getItem("mobile")}</u>
+                </Typography>
+
+                <Link to={"/my-account"}>
+                  <Button
+                    style={{
+                      fontWeight: "bold",
+                      color: "#a36e29",
+                      padding: 0,
+                      marginTop: "5%",
+                    }}
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    Edit Profile
+                  </Button>
+                </Link>
+                <Divider
+                  style={{
+                    width: "100%",
+                    marginTop: "10%",
+                    marginBottom: "10%",
+                  }}
+                />
+                <Link to={"/my-account/orders"}>
+                  <Button
+                    style={{
+                      fontWeight: "bold",
+                      color: "#a36e29",
+                      padding: 0,
+                      marginTop: "5%",
+                    }}
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    Orders and Returns
+                  </Button>
+                </Link>
+                <Link to={"/my-account/address"}>
+                  <Button
+                    style={{
+                      fontWeight: "bold",
+                      color: "#a36e29",
+                      padding: 0,
+                      marginTop: "5%",
+                    }}
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    Saved Addresses
+                  </Button>
+                </Link>
+                <Link to={"/my-account/wallet"}>
+                  <Button
+                    style={{
+                      fontWeight: "bold",
+                      color: "#a36e29",
+                      padding: 0,
+                      marginTop: "5%",
+                    }}
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    Your Wallet
+                  </Button>
+                </Link>
+                <Divider
+                  style={{
+                    width: "100%",
+                    marginTop: "auto",
+                    marginBottom: "10%",
+                  }}
+                />
+                <Button
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: "bold",
+                    color: "#00000090",
+                    padding: 0,
+                    marginTop: "5%",
+                  }}
+                  onClick={() => {
+                    localStorage.clear();
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </Button>
+                <Button
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: "bold",
+                    color: "#00000090",
+                    padding: 0,
+                    marginTop: "5%",
+                    marginBottom: "20%",
+                  }}
+                  onClick={() => handleClickOpen()}
+                >
+                  Deactivate Account
+                </Button>
+              </Box>
+            </Drawer>
+          ) : null}
         </Box>
         <Box
           style={{
-            width: "70%",
+            width: matches ? "70%" : "100%",
             height: "100%",
             backgroundColor: "white",
             display: "flex",

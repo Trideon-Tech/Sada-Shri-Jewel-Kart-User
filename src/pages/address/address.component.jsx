@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 
 import axios from "axios";
 import { useState } from "react";
@@ -7,6 +7,8 @@ import AddressTile from "./addressTile.component";
 import AddressNew from "./addressNew.component";
 
 const Address = () => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const [addresses, setAddresses] = useState([]);
   const [refreshAddresses, setRefreshAddresses] = useState(1);
   React.useEffect(() => {
@@ -36,17 +38,16 @@ const Address = () => {
         height: "100%",
         overflowY: "scroll",
         display: "flex",
-        marginLeft: "auto",
         flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
+        justifyContent: "space-around",
+        alignItems: "center",
         paddingBottom: "30px",
       }}
     >
       {" "}
       <Box
         style={{
-          width: "70%",
+          width: matches ? "70%" : "100%",
           margin: "auto",
           marginBottom: "20px",
           marginTop: "30px",
@@ -61,7 +62,7 @@ const Address = () => {
       </Box>
       <Box
         style={{
-          width: "70%",
+          width: matches ? "70%" : "100%",
           margin: "auto",
           marginBottom: "20px",
           marginTop: "10px",
@@ -78,7 +79,7 @@ const Address = () => {
       </Box>
       <Box
         style={{
-          width: "70%",
+          width: matches ? "70%" : "100%",
           margin: "auto",
           height: "40%",
           marginTop: "30px",
