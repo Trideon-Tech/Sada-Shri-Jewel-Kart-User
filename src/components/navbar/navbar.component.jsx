@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
+import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
+import MenuIcon from "@mui/icons-material/Menu";
+import Badge from "@mui/joy/Badge";
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
-import Badge from "@mui/joy/Badge";
-import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
-  Toolbar,
+  Avatar,
   Button,
+  Drawer,
+  Grid,
   IconButton,
   InputBase,
-  Grid,
-  Drawer,
-  Avatar,
-  ListItem,
-  ListItemText,
   List,
+  ListItem,
   ListItemAvatar,
+  ListItemText,
+  Toolbar,
   Typography,
 } from "@mui/material";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 // import { Menu as MenuIcon } from "@mui/icons-material";
-import CloseIcon from "@mui/icons-material/Close";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SearchIcon from "@mui/icons-material/Search";
-import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
+import CloseIcon from "@mui/icons-material/Close";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
-import axios from "axios";
-import "./navbar.styles.scss";
+import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import axios from "axios";
 import { useRefresh } from "../../RefreshContent";
+import "./navbar.styles.scss";
 
 const Navbar = () => {
   const { refresh } = useRefresh();
@@ -353,10 +353,6 @@ const Navbar = () => {
                                   />
                                   <Button
                                     key={subCategory.id}
-                                    // component={Link}
-                                    // to={`/jwellery/${
-                                    //   category.name + "+" + subCategory.name
-                                    // }`}
                                     className="sub-category"
                                     onClick={() =>
                                       handleSubMenuItemClick(
@@ -382,7 +378,7 @@ const Navbar = () => {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Search for Jwellery..."
                 classes={{
                   root: "input-root",
                   input: "input-input",
