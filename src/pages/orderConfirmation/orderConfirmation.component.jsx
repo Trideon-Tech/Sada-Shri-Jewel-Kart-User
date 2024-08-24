@@ -129,7 +129,7 @@ const OrderConfirmation = () => {
                 height: "57px",
                 color: "#a36e29",
               }}
-              onClick={() => navigate("/jwellery/Rings")}
+              onClick={() => navigate("/jwellery/Rings/1/false")}
             >
               Continue Shopping
             </Button>

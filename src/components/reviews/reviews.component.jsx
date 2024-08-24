@@ -298,7 +298,7 @@ const Reviews = ({ productDetails }) => {
       >
         Customer Reviews
       </Typography>
-      {/* <Box
+      <Box
         style={{
           width: "100%",
           display: "flex",
@@ -310,7 +310,7 @@ const Reviews = ({ productDetails }) => {
         }}
       >
         <OverAllRating openModal={openModal} />
-        {!matches ? (
+        {/* {!matches ? (
           <Divider
             style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
           />
@@ -322,8 +322,8 @@ const Reviews = ({ productDetails }) => {
           />
         ) : null}
 
-        <RatingImages mobileView={!matches} />
-      </Box> */}
+        <RatingImages mobileView={!matches} /> */}
+      </Box>
       <Divider style={{ width: "100%" }} />
       <ReviewList reviewsData={reviewsData} totalpages={totalPages} />
     </Box>

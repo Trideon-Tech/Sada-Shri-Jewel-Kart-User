@@ -14,7 +14,7 @@ import {
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import "./productpage.styles.scss";
@@ -29,8 +29,10 @@ function Productpage() {
   const { refresh } = useRefresh();
   const location = useLocation();
   const { triggerRefresh } = useRefresh();
-  const { state } = location;
-  const { menuItemId, menuItemName, isSubCategory } = state;
+  const { menuItemId, category: menuItemName, isSubCategory } = useParams();
+
+  // let { state } = location;
+  // let { menuItemId, menuItemName, isSubCategory } = state || {};
   const [jwellery, setJwellery] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [reloadNavbar, setReloadNavbar] = useState(1);
@@ -55,10 +57,10 @@ function Productpage() {
     if (!selectedProduct.customizations) {
       if (cartAdd) addToCartHandler(selectedProduct.id);
       else {
-        navigate(`/item/${menuItemName}/${productName}-${hash}`);
+        navigate(`/item/${menuItemName}/${productName}-${hash}?drawer=open`);
       }
     }
-    navigate(`/item/${menuItemName}/${productName}-${hash}`);
+    navigate(`/item/${menuItemName}/${productName}-${hash}?drawer=open`);
   };
   // const handleDirectAddToCart = async();
 
@@ -133,6 +135,8 @@ function Productpage() {
     //   "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all&user_id=13&min_weight=1&max_weight=100&min_height=1&max_height=100&min_width=1&max_width=100&min_purity=10&max_purity=200&min_price=0&max_price=400000"
     // );
 
+    // console.log(location, "location");
+    if (!menuItemId) return;
     const params = {};
     params.user_id = localStorage.getItem("user_id") || -1;
 
@@ -247,10 +251,10 @@ function Productpage() {
   // }, [isSubCategory]);
 
   // Check if state is defined to prevent errors
-  if (!state) {
-    // Handle the case when state is not defined
-    console.log("No state data found");
-  }
+  // if (!state) {
+  //   // Handle the case when state is not defined
+  //   console.log("No state data found");
+  // }
 
   return (
     <div className="product-page">

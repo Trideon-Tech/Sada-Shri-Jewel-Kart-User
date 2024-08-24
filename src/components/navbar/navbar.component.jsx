@@ -251,13 +251,7 @@ const Navbar = () => {
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
-    navigate(`/jwellery/${menuItem.name}`, {
-      state: {
-        menuItemId: menuItem.id,
-        menuItemName: menuItem.name,
-        isSubCategory: !isSubCategory,
-      },
-    });
+    navigate(`/jwellery/${menuItem.name}/${menuItem.id}/${!isSubCategory}`);
   };
 
   const handleSubMenuItemClick = (category, menuItem) => {
@@ -266,13 +260,11 @@ const Navbar = () => {
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
-    navigate(`/jwellery/${category + "+" + menuItem.name}`, {
-      state: {
-        menuItemId: menuItem.id,
-        menuItemName: menuItem.name,
-        isSubCategory: !isSubCategory,
-      },
-    });
+    navigate(
+      `/jwellery/${category + "+" + menuItem.name}/${
+        menuItem.id
+      }/${!isSubCategory}`
+    );
   };
 
   return (

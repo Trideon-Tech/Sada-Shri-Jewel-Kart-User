@@ -93,7 +93,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
           >
             {review?.image_url?.map((image) => (
               <img
-                src={image.img}
+                src={`https://api.sadashrijewelkart.com/assets/${image}`}
                 style={{ height: "20vh", width: "auto", marginRight: "10px" }}
               />
             ))}

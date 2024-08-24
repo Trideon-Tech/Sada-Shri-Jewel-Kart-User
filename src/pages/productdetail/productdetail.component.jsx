@@ -39,11 +39,12 @@ import {
   ThemeProvider,
   Typography,
   createTheme,
+  useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -72,6 +73,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function ProductDetail() {
+  const matches = useMediaQuery("(min-width:600px)");
+
   const { triggerRefresh } = useRefresh();
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
@@ -79,6 +82,8 @@ function ProductDetail() {
   const { product } = useParams();
   const navigate = useNavigate();
   const [menuItemName, hashId] = product.split("-");
+
+  const location = useLocation();
 
   const [customizationOptions, setCustomizationOptions] = useState({
     metal: [],
@@ -247,6 +252,15 @@ function ProductDetail() {
   };
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+
+    const query = searchParams.get("drawer");
+
+    console.log(query, "query");
+    if (query === "open") {
+      setDrawerOpen(true);
+    }
+
     getJwelleryDetail();
   }, []);
 
@@ -1588,7 +1602,7 @@ function ProductDetail() {
                         </Box>
                         <Drawer
                           anchor="right"
-                          open={drawerOpen}
+                          open={drawerOpen && !matches}
                           onClose={handleDrawerClose}
                         >
                           <Box
