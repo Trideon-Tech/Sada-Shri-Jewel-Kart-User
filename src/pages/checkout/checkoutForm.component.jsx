@@ -117,7 +117,7 @@ const SelectPaymentMethodStep = ({
           marginBottom: "3%",
         }}
       >
-        Select Payment Method
+        Continue To Payment
       </Typography>
 
       <PaymentMethod

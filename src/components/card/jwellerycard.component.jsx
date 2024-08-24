@@ -33,9 +33,13 @@ const JwelleryCard = ({
     console.log("isWishlisted, wishListed", isWishlisted, wishListed);
   }, []);
 
+  const [unWishList, setUnwishList] = useState(false);
+
   const removeFromWishList = async () => {
     try {
       if (!id) return;
+
+      setUnwishList(true);
 
       console.log(localStorage.getItem("token"));
       console.log(localStorage.getItem("wish_list"));
@@ -138,15 +142,27 @@ const JwelleryCard = ({
                 handleCreateWishList();
               }}
             >
-              <FavoriteIcon
-                style={{
-                  fontSize: "2.5rem",
-                  marginLeft: "auto",
-                  marginRight: "5%",
-                  marginTop: "5%",
-                  color: isWishlisted || wishListed ? "#a36e29" : "#bfbfbf",
-                }}
-              />
+              {unWishList ? (
+                <FavoriteIcon
+                  style={{
+                    fontSize: "2.5rem",
+                    marginLeft: "auto",
+                    marginRight: "5%",
+                    marginTop: "5%",
+                    color: "#bfbfbf",
+                  }}
+                />
+              ) : (
+                <FavoriteIcon
+                  style={{
+                    fontSize: "2.5rem",
+                    marginLeft: "auto",
+                    marginRight: "5%",
+                    marginTop: "5%",
+                    color: isWishlisted || wishListed ? "#a36e29" : "#bfbfbf",
+                  }}
+                />
+              )}
             </Button>
           </div>
           {image?.length ? (
@@ -162,7 +178,7 @@ const JwelleryCard = ({
             <Skeleton
               sx={{ bgcolor: "grey.900" }}
               variant="rectangular"
-              height={800}
+              height={350}
               width={650}
             />
           )}

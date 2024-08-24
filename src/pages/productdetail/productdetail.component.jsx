@@ -22,7 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-
+import { WhatsappShareButton, WhatsappIcon } from "react-share";
 import {
   Box,
   Button,
@@ -309,11 +309,11 @@ function ProductDetail() {
         console.log("response", response?.data?.response?.totalPages);
         setTotalPages(Number(response?.data?.response?.totalPages));
         const sum = response?.data?.response?.reviews.map((item) =>
-          Number(item.ratng)
+          Number(item.rating)
         );
-        console.log(sum, "  ");
+        console.log(sum, " sum ");
         if (sum && sum?.length > 0)
-          setAverageRating((sum) => sum?.reduce((a, b) => a + b) / sum.length);
+          setAverageRating(sum?.reduce((a, b) => a + b) / sum.length);
       })
       .catch((error) => {});
   }, [productDetail]);
@@ -339,6 +339,47 @@ function ProductDetail() {
         }
       );
       triggerRefresh();
+    }
+    await handleCreateWishList();
+    navigate(0);
+  };
+
+  const handleCreateWishList = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      let wishListItems = localStorage.getItem("wish_list");
+      if (!wishListItems) {
+        localStorage.setItem("wish_list", productDetail.id);
+      } else {
+        wishListItems = wishListItems.split(",");
+        wishListItems.push(productDetail.id);
+        wishListItems = Array.from(new Set(wishListItems));
+        localStorage.setItem("wish_list", wishListItems.join(","));
+      }
+      // navigate(0);
+      triggerRefresh();
+
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append("type", "add_item");
+      formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
+      formData.append("product_id", productDetail.id);
+      await axios.post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      // triggerRefresh();
+      navigate(0);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -534,7 +575,13 @@ function ProductDetail() {
                 backgroundColor: "#e7e7e7",
               }}
             >
-              <WhatsAppIcon style={{ fontSize: "1.5rem", color: "#a36e29" }} />
+              <WhatsappShareButton
+                title={`Sharing ${productDetail.name}`}
+                round={true}
+                url={window.location}
+              >
+                <WhatsappIcon round={true} size={32}></WhatsappIcon>
+              </WhatsappShareButton>
             </Button>
           </Box>
           <Box
@@ -632,7 +679,7 @@ function ProductDetail() {
                     paddingRight: "2%",
                   }}
                 >
-                  <Typography>{averageRating}</Typography>
+                  <Typography>{averageRating?.toFixed(2)}</Typography>
                   <StarBorderRoundedIcon
                     style={{ fontSize: "1.5rem", color: "orange" }}
                   />

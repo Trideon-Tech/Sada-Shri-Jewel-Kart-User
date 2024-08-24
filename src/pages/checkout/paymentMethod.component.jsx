@@ -9,7 +9,7 @@ const PaymentMethod = ({
   console.log("selectedAddress", selectedAddress);
   return (
     <Box>
-      <Card
+      {/* <Card
         variant="soft"
         style={{
           display: "flex",
@@ -89,7 +89,7 @@ const PaymentMethod = ({
         </Typography>
 
         <Radio color="warning" checked={paymentMethod === "UPI"} />
-      </Card>
+      </Card> */}
       <Card
         orientation="Verticle"
         size="sm"
