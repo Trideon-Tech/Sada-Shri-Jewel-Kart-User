@@ -1,5 +1,17 @@
+import {
+  AccountCircleOutlined,
+  FavoriteBorderOutlined,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CloseIcon from "@mui/icons-material/Close";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
+import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/joy/Badge";
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
@@ -20,18 +32,10 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-// import { Menu as MenuIcon } from "@mui/icons-material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import CloseIcon from "@mui/icons-material/Close";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
-import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
-import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import "./navbar.styles.scss";
 
@@ -395,7 +399,7 @@ const Navbar = () => {
                   slotProps={{ root: { variant: "plain", color: "neutral" } }}
                   sx={{ borderRadius: 40 }}
                 >
-                  <AccountCircleIcon style={{ color: "#a36e29" }} />
+                  <AccountCircleOutlined style={{ color: "#a36e29" }} />
                 </MenuButton>
                 <Menu
                   style={{
@@ -434,7 +438,7 @@ const Navbar = () => {
                   badgeContent={wishListItems}
                   sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
                 >
-                  <FavoriteIcon />
+                  <FavoriteBorderOutlined />
                 </Badge>
               </IconButton>
               <IconButton color="inherit" component={Link} to="/cart">
@@ -442,7 +446,7 @@ const Navbar = () => {
                   badgeContent={cartLength}
                   sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
                 >
-                  <ShoppingCartIcon />
+                  <ShoppingCartOutlined />
                 </Badge>
               </IconButton>
             </div>

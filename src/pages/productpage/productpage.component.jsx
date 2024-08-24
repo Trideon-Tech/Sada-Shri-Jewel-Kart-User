@@ -1,5 +1,7 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SortIcon from "@mui/icons-material/Sort";
+import Option from "@mui/joy/Option";
+import Select from "@mui/joy/Select";
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -15,15 +17,11 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
-import "./productpage.styles.scss";
 import { useRefresh } from "../../RefreshContent";
-import Footer from "../../components/footer/footer.component";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
-import { Button } from "@mui/joy";
+import "./productpage.styles.scss";
 
 function Productpage() {
   const { refresh } = useRefresh();
@@ -119,6 +117,7 @@ function Productpage() {
   };
 
   const sortOrders = {
+    Featured: { param: "", order: "" },
     "Price | Low-High": { param: "price_sort", order: "ASC" },
     "Price | High-Low": { param: "price_sort", order: "DESC" },
     "Review | Top": { param: "review_sort", order: "DESC" },
@@ -158,7 +157,7 @@ function Productpage() {
     // if (selectedSort === "Review | Top") {
     //   params.review_sort = sortOrders["DESC"].order;
     // }
-    if (selectedSort)
+    if (selectedSort !== "Featured" && selectedSort)
       params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
 
     // Define the API endpoint
@@ -273,29 +272,10 @@ function Productpage() {
         </Box>
         <div className="product-container">
           <Grid container spacing={0}>
-            <Grid item xs={3} className="filter">
-              <Box
-                style={{
-                  width: "100%",
-                  height: "max-content",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
+            <Grid item xs={3}>
+              <Box className="filter-title">
                 <div className="heading">Filters</div>
-                <Button
-                  style={{
-                    border: 0,
-                    marginRight: "6%",
-                    backgroundColor: "rgba(0,0,0,0)",
-                    color: "#A36E29",
-                    height: "max-content",
-                    marginTop: "auto",
-                  }}
-                >
-                  Clear All
-                </Button>
+                <div className="clear">Clear All</div>
               </Box>
               <Divider style={{ width: "90%" }} />
               <PriceFilter
@@ -329,22 +309,34 @@ function Productpage() {
                   alignItems: "center",
                 }}
               >
-                <Typography style={{ marginLeft: "auto", marginRight: "1%" }}>
+                <Typography
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "1%",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
                   Sort by
                 </Typography>
                 <Select
-                  defaultValue={["dog"]}
+                  defaultValue={"Featured"}
                   onChange={(value) => {
-                    console.log("value", value?.target?.textContent);
                     setSelectedSort(value?.target?.textContent);
                   }}
                   sx={{
-                    minWidth: "13rem",
+                    minWidth: "10rem",
+                    background: "none",
+                    border: "none",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
                   }}
                   slotProps={{
                     listbox: {
                       sx: {
                         width: "100%",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
                       },
                     },
                   }}
@@ -365,7 +357,7 @@ function Productpage() {
                   />
                 ) : (
                   jwellery.map((item, index) => (
-                    <Grid item xs={3} className="product-card">
+                    <Grid item xs={2.4} className="product-card">
                       <JwelleryCard
                         id={item.id}
                         key={item.id}

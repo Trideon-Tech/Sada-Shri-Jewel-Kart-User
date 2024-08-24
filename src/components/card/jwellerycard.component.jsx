@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import "./jwellerycard.styles.scss"; // Ensure this is the path to your SCSS file
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box } from "@mui/material";
-import axios from "axios";
+import Button from "@mui/material/Button";
 import Skeleton from "@mui/material/Skeleton";
-import { useNavigate } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useRefresh } from "../../RefreshContent";
+import "./jwellerycard.styles.scss"; // Ensure this is the path to your SCSS file
 
 const JwelleryCard = ({
   id,
@@ -19,7 +18,6 @@ const JwelleryCard = ({
   clickHandler,
   isWishlisted,
 }) => {
-  const navigate = useNavigate();
   const { triggerRefresh } = useRefresh();
   const [wishListed, setWishListed] = useState(false);
   useEffect(() => {
@@ -41,9 +39,6 @@ const JwelleryCard = ({
 
       setUnwishList(true);
 
-      console.log(localStorage.getItem("token"));
-      console.log(localStorage.getItem("wish_list"));
-      console.log(id);
       const token = localStorage.getItem("token");
       if (!token) {
         const wishListExists = localStorage.getItem("wish_list");
@@ -118,6 +113,7 @@ const JwelleryCard = ({
     // navigate(0);
     triggerRefresh();
   };
+
   return (
     <div className="jwellery-card">
       <div className="web">
@@ -143,23 +139,33 @@ const JwelleryCard = ({
               }}
             >
               {unWishList ? (
-                <FavoriteIcon
+                <FavoriteBorderOutlined
                   style={{
-                    fontSize: "2.5rem",
+                    fontSize: "2rem",
                     marginLeft: "auto",
                     marginRight: "5%",
                     marginTop: "5%",
                     color: "#bfbfbf",
                   }}
                 />
-              ) : (
+              ) : isWishlisted || wishListed ? (
                 <FavoriteIcon
                   style={{
-                    fontSize: "2.5rem",
+                    fontSize: "2rem",
                     marginLeft: "auto",
                     marginRight: "5%",
                     marginTop: "5%",
-                    color: isWishlisted || wishListed ? "#a36e29" : "#bfbfbf",
+                    color: "#a36e29",
+                  }}
+                />
+              ) : (
+                <FavoriteBorderOutlined
+                  style={{
+                    fontSize: "2rem",
+                    marginLeft: "auto",
+                    marginRight: "5%",
+                    marginTop: "5%",
+                    color: "#bfbfbf",
                   }}
                 />
               )}
@@ -198,7 +204,12 @@ const JwelleryCard = ({
           >
             <Typography
               variant="h5"
-              style={{ fontWeight: "bold", color: "#a36e29" }}
+              style={{
+                fontWeight: "bold",
+                color: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.4rem",
+              }}
             >
               ₹{price}
             </Typography>
@@ -209,6 +220,8 @@ const JwelleryCard = ({
                 marginLeft: "3%",
                 color: "gray",
                 textDecoration: "line-through",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.2rem",
               }}
             >
               ₹{price}
@@ -216,20 +229,27 @@ const JwelleryCard = ({
           </Box>
           <Typography
             variant="subtitle"
-            style={{ marginBottom: "3%", color: "gray", fontWeight: "bold" }}
+            style={{
+              marginBottom: "3%",
+              color: "gray",
+              fontWeight: "bold",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
           >
-            {name.substring(0, 23)}
+            {name.length > 20 ? `${name.substring(0, 20)}...` : name}
           </Typography>
           <Button
             variant="contained"
             style={{
               width: "100%",
-              borderRadius: "50px",
               fontWeight: "bold",
-              marginTop: "3%",
+              marginTop: "6%",
               marginBottom: "3%",
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
             }}
             onClick={() => clickHandler(name, hash, true)}
           >
