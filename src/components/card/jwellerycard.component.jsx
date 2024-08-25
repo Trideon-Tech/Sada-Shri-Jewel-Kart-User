@@ -28,7 +28,6 @@ const JwelleryCard = ({
         setWishListed(true);
       }
     }
-    console.log("isWishlisted, wishListed", isWishlisted, wishListed);
   }, []);
 
   const [unWishList, setUnwishList] = useState(false);
@@ -49,7 +48,6 @@ const JwelleryCard = ({
         }
         isWishlisted = false;
         triggerRefresh();
-        // navigate(0);
         return;
       }
 
@@ -68,8 +66,6 @@ const JwelleryCard = ({
         }
       );
       triggerRefresh();
-
-      // navigate(0);
     } catch (err) {
       console.log(err);
     }
@@ -91,11 +87,12 @@ const JwelleryCard = ({
         wishListItems = Array.from(new Set(wishListItems));
         localStorage.setItem("wish_list", wishListItems.join(","));
       }
-      // navigate(0);
+      setWishListed(true);
       triggerRefresh();
 
       return;
     }
+
     const formData = new FormData();
     formData.append("type", "add_item");
     formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
@@ -110,7 +107,7 @@ const JwelleryCard = ({
         },
       }
     );
-    // navigate(0);
+    setWishListed(true);
     triggerRefresh();
   };
 

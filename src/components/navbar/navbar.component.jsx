@@ -281,7 +281,7 @@ const Navbar = () => {
       }}
     >
       <div className="web">
-        <AppBar elevation={2} className="appbar">
+        <AppBar elevation={0} className="appbar">
           <Toolbar variant="dense" className="toolbar">
             <img
               alt="logo"

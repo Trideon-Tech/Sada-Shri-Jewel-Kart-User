@@ -16,7 +16,7 @@ import {
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
@@ -25,12 +25,9 @@ import "./productpage.styles.scss";
 
 function Productpage() {
   const { refresh } = useRefresh();
-  const location = useLocation();
   const { triggerRefresh } = useRefresh();
   const { menuItemId, category: menuItemName, isSubCategory } = useParams();
 
-  // let { state } = location;
-  // let { menuItemId, menuItemName, isSubCategory } = state || {};
   const [jwellery, setJwellery] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [reloadNavbar, setReloadNavbar] = useState(1);
@@ -60,7 +57,6 @@ function Productpage() {
     }
     navigate(`/item/${menuItemName}/${productName}-${hash}?drawer=open`);
   };
-  // const handleDirectAddToCart = async();
 
   const addToCartHandler = (id) => {
     const token = localStorage.getItem("token");
@@ -70,7 +66,6 @@ function Productpage() {
       existingList.push(id);
       existingList = Array.from(new Set(existingList));
       localStorage.setItem("cart_list", existingList.join(","));
-      // setReloadNavbar(reloadNavbar + 1);
       triggerRefresh();
       return;
     }
@@ -96,24 +91,6 @@ function Productpage() {
       .catch((error) => {
         console.error(`Error sending product with ID ${id} to API`, error);
       });
-
-    //UNDER TEST
-    // axios
-    //   .get(
-    //     `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
-    //       "user_id"
-    //     )}`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     sessionStorage.setItem("cart", response.data.response.length);
-    //   })
-    //   .catch((error) => console.log("Error while fetching cart items", error));
   };
 
   const sortOrders = {
@@ -130,11 +107,6 @@ function Productpage() {
   const [selectedSort, setSelectedSort] = useState("Review | Top");
 
   const handleFetchFilteredData = async () => {
-    // const products = await axios.get(
-    //   "https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=all&user_id=13&min_weight=1&max_weight=100&min_height=1&max_height=100&min_width=1&max_width=100&min_purity=10&max_purity=200&min_price=0&max_price=400000"
-    // );
-
-    // console.log(location, "location");
     if (!menuItemId) return;
     const params = {};
     params.user_id = localStorage.getItem("user_id") || -1;
@@ -154,16 +126,11 @@ function Productpage() {
     params.min_purity = purityFilter[0];
     params.max_purity = purityFilter[1];
 
-    // if (selectedSort === "Review | Top") {
-    //   params.review_sort = sortOrders["DESC"].order;
-    // }
     if (selectedSort !== "Featured" && selectedSort)
       params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
 
-    // Define the API endpoint
     const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
 
-    // Make the GET request with query parameters
     const response = await axios.get(apiUrl, { params });
     setJwellery(response?.data?.response);
     setProductsLoaded(true);
@@ -187,15 +154,7 @@ function Productpage() {
   ]);
 
   const handleFilterChange = (selectedRangeLabel) => {
-    // setSelectedPriceRanges((prevSelectedRanges) => {
-    //   if (sortOrdersprevSelectedRanges.includes(selectedRangeLabel)) {
-    //     return prevSelectedRanges.filter(
-    //       (range) => range !== selectedRangeLabel
-    //     );
-    //   } else {
-    //     return [...prevSelectedRanges, selectedRangeLabel];
-    //   }
-    // });
+    
   };
 
   const isProductInRange = (product) => {
@@ -245,16 +204,6 @@ function Productpage() {
       });
   };
 
-  // useEffect(() => {
-  //   getProduct();
-  // }, [isSubCategory]);
-
-  // Check if state is defined to prevent errors
-  // if (!state) {
-  //   // Handle the case when state is not defined
-  //   console.log("No state data found");
-  // }
-
   return (
     <div className="product-page">
       <Navbar triggerRefresh={reloadNavbar} />
@@ -275,21 +224,20 @@ function Productpage() {
             <Grid item xs={3}>
               <Box className="filter-title">
                 <div className="heading">Filters</div>
-                <div className="clear">Clear All</div>
+                <div
+                  className="clear"
+                  onClick={() => {
+                    setSelectedPriceRange([]);
+                  }}
+                >
+                  Clear All
+                </div>
               </Box>
               <Divider style={{ width: "90%" }} />
               <PriceFilter
                 selectedPriceRange={selectedPriceRange}
                 handleSelectedPriceRange={setSelectedPriceRange}
                 onFilterChange={handleFilterChange}
-                weightFilter={weightFilter}
-                purityFilter={purityFilter}
-                heightFilter={heightFilter}
-                widthFilter={widthFilter}
-                handleWeightFilter={setWeightFilter}
-                handlePurityFilter={setPurityFilter}
-                handleHeightFilter={setHeightFilter}
-                handleWidthFilter={setWidthFilter}
               />
             </Grid>
 

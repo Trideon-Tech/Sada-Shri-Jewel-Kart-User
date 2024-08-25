@@ -110,9 +110,9 @@ const PriceFilter = ({
                 marginLeft: "30px",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
+                color: "grey",
               }}
             >
-              {" "}
               {range.label}
             </span>
             <span className="count"></span>
