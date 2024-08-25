@@ -1,23 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/navbar.component";
+import { Facebook, Google } from "@mui/icons-material";
+import Button from "@mui/joy/Button";
 import {
   Divider,
   Grid,
   IconButton,
+  InputAdornment,
   TextField,
   useMediaQuery,
 } from "@mui/material";
-import { Facebook, Google } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import FormHelperText from "@mui/joy/FormHelperText";
-import Input from "@mui/joy/Input";
-import Button from "@mui/joy/Button";
-// import "./register.styles.scss";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/navbar/navbar.component";
+
+import "../signin/signin.styles.scss";
 
 const Register = () => {
+  const isSignUp = window.location.pathname === "/signup";
   const matches = useMediaQuery("(min-width:600px)");
   let navigate = useNavigate();
   const [mobile, setMobile] = useState();
@@ -151,93 +150,155 @@ const Register = () => {
     <div className="register">
       <Navbar />
       <div className="register-container">
-        <div className="register-form" style={{ width: "500px" }}>
-          <h2>
-            Signup to <br />
+        <div
+          className="register-form"
+          style={{
+            width: "500px",
+          }}
+        >
+          <div className="head">
+            {isSignUp ? "Sign Up" : "Login"} to <br />
             Sada Shri Jewel Kart
-          </h2>
-          <p>
+          </div>
+          <div className="text">
             Unlock Best prices and become an insider for our exclusive launches
-            & offers. Complete your profile and get ₹250 worth of xCLusive
-            Points.
-          </p>
+            & offers.
+          </div>
           <IconButton className="google-button" style={{ color: "#a36e29" }}>
             <Google style={{ fontSize: "3rem" }} />
           </IconButton>
           <IconButton className="facebook-button" style={{ color: "#a36e29" }}>
             <Facebook style={{ fontSize: "3rem" }} />
           </IconButton>
-          <p>Or</p>
+          <div className="text">Or</div>
           <Divider />
           <Grid container className="register-grid" spacing={2}>
             <Grid item xs={12}>
-              <Input
-                sx={{ "--Input-decoratorChildHeight": "45px" }}
-                placeholder="Enter Your Mobile Number"
-                type="text"
+              <TextField
                 variant="outlined"
+                size="small"
+                placeholder="Enter Your Mobile Number"
                 required
                 value={mobile}
-                size="lg"
                 onChange={(e) => {
                   if (Number.isInteger(Number(e.target.value)))
                     if (e.target.value.length <= 10) setMobile(e.target.value);
                 }}
-                startDecorator={
-                  <Button
-                    variant="solid"
-                    type="submit"
-                    style={{
-                      borderTopLeftRadius: 0,
-                      borderBottomLeftRadius: 0,
-                      backgroundColor: "#a36e29",
-                    }}
-                  >
-                    +91
-                  </Button>
-                }
-                // error={data.status === "failure"}
-                endDecorator={
-                  mobile?.length > 9 ? (
-                    <Button
-                      variant="solid"
-                      loading={optSent}
-                      type="submit"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position="start"
                       style={{
-                        borderTopLeftRadius: 0,
-                        borderBottomLeftRadius: 0,
-                        backgroundColor: "#a36e29",
+                        marginLeft: "-13px",
                       }}
-                      onClick={() => sendOTPHandler()}
                     >
-                      Send OTP
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="solid"
-                      color="neutral"
-                      // loading={data.status === "loading"}
-                      type="submit"
+                      <Button
+                        variant="solid"
+                        type="submit"
+                        style={{
+                          borderTopLeftRadius: "5px",
+                          borderBottomLeftRadius: "5px",
+                          borderTopRightRadius: 0,
+                          borderBottomRightRadius: 0,
+                          backgroundColor: "#a36e29",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        +91
+                      </Button>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
                       style={{
-                        borderTopLeftRadius: 0,
-                        borderBottomLeftRadius: 0,
+                        marginRight: "-13px",
                       }}
-                      disabled={true}
                     >
-                      Send OTP
-                    </Button>
-                  )
-                }
+                      {mobile?.length > 9 ? (
+                        <Button
+                          variant="solid"
+                          loading={optSent}
+                          type="submit"
+                          style={{
+                            borderTopLeftRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            backgroundColor: "#a36e29",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                          onClick={() => sendOTPHandler()}
+                        >
+                          Send OTP
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="solid"
+                          color="neutral"
+                          type="submit"
+                          style={{
+                            borderTopLeftRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                          disabled={true}
+                        >
+                          Send OTP
+                        </Button>
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+                e
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <Input
-                placeholder="Enter OTP"
-                type="text"
+              <TextField
                 variant="outlined"
+                size="small"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Enter OTP"
                 required
                 value={otp}
-                size="lg"
                 onChange={(e) => {
                   setOTP(e.target.value);
                 }}
@@ -255,6 +316,8 @@ const Register = () => {
                   style={{
                     color: "white",
                     backgroundColor: "#a36e29",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
                   }}
                   disabled={false}
                 >
@@ -268,22 +331,33 @@ const Register = () => {
                   size="lg"
                   onClick={handleRegister}
                   disabled={true}
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
                 >
                   Continue
                 </Button>
-              )}{" "}
+              )}
             </Grid>
           </Grid>
-          <p className="signup-text">
-            Already Have a account?{" "}
-            <p
-              style={{ color: "#a36e29", textDecoration: "underline" }}
-              onClick={() => {
-                navigate("/signin");
-              }}
-            >
-              Signin
-            </p>
+          <p className="signup-text text">
+            {isSignUp ? "Already have an account?" : "Need a new account?"}
+          </p>
+          <p
+            style={{
+              color: "#a36e29",
+              textDecoration: "underline",
+              cursor: "pointer",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              marginTop: "-12px",
+            }}
+            onClick={() => {
+              navigate(isSignUp ? "/signin" : "/signup");
+            }}
+          >
+            {isSignUp ? "Login" : "Sign Up"}
           </p>
         </div>
       </div>

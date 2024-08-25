@@ -1,47 +1,52 @@
-.register-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    background-color: #f4f4f4;
-    .register-form{
-      max-width: 400px;
-      width: 25%;
-      padding: 20px;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-      background: #fff;
-      border-radius: 4px;
-      text-align: center;
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  background-color: #f4f4f4;
 
-      h2 {
-        color: #333;
-        margin-bottom: 20px;
-      }
-      p {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.5;
-        margin-bottom: 20px;
-      }
-      .google-button, .facebook-button {
-        margin: 5px;
-      }
+  .register-form {
+    max-width: 400px;
+    width: 25%;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-radius: 4px;
+    text-align: center;
 
-      .MuiTextField-root {
-        margin-bottom: 20px;
-      }
-
-      .register-grid{
-        margin-top: 10px;
-      }
-
-      .register-button {
-        background-color: #fff2e0;
-        padding: 10px;
-        margin-bottom: 20px;
-      }
-
-      
-
+    .head {
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 1.2rem;
     }
+
+    .text {
+      color: #666;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      margin-top: 10px;
+    }
+
+    .google-button,
+    .facebook-button {
+      margin: 5px;
+      height: 3rem;
+    }
+
+    .MuiTextField-root {
+      margin-bottom: 20px;
+    }
+
+    .register-grid {
+      margin-top: 10px;
+    }
+
+    .register-button {
+      background-color: #fff2e0;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  }
 }
