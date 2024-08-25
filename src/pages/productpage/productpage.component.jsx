@@ -140,6 +140,7 @@ function Productpage() {
     //   ...response?.data?.response,
     // ]);
     setJwellery(response?.data?.response);
+    console.log(response?.data?.response);
     setProductsLoaded(true);
   };
 
@@ -319,6 +320,7 @@ function Productpage() {
                         hash={item.hash}
                         price={item.price}
                         isWishlisted={item.exists_in_wishlist}
+                        isInCart={item.exists_in_cart}
                         clickHandler={handleCardClick}
                       />
                     </Grid>

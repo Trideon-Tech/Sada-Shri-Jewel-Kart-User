@@ -411,23 +411,51 @@ const Navbar = () => {
                   {localStorage.getItem("token") ? (
                     <MenuItem component={Link} to="/my-account">
                       <AccountCircleIcon style={{ color: "#a36e29" }} />
-                      <Typography>My Account</Typography>
+                      <Typography
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        My Account
+                      </Typography>
                     </MenuItem>
                   ) : (
                     <MenuItem component={Link} to="/signup">
                       <HowToRegRoundedIcon style={{ color: "#a36e29" }} />
-                      <Typography>Register</Typography>
+                      <Typography
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        Register
+                      </Typography>
                     </MenuItem>
                   )}
                   {localStorage.getItem("token") ? (
                     <MenuItem onClick={handleLogout}>
                       <ExitToAppRoundedIcon style={{ color: "#a36e29" }} />
-                      <Typography>Logout</Typography>
+                      <Typography
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        Logout
+                      </Typography>
                     </MenuItem>
                   ) : (
                     <MenuItem component={Link} to="/signin">
                       <LoginRoundedIcon style={{ color: "#a36e29" }} />
-                      <Typography>SignIn</Typography>
+                      <Typography
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                        }}
+                      >
+                        SignIn
+                      </Typography>
                     </MenuItem>
                   )}
                 </Menu>

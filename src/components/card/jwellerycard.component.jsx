@@ -17,6 +17,7 @@ const JwelleryCard = ({
   hash,
   clickHandler,
   isWishlisted,
+  isInCart,
 }) => {
   const { triggerRefresh } = useRefresh();
   const [wishListed, setWishListed] = useState(false);
@@ -250,7 +251,7 @@ const JwelleryCard = ({
             }}
             onClick={() => clickHandler(name, hash, true)}
           >
-            Add to Cart
+            {isInCart ? "Go to Cart" : "Add to Cart"}
           </Button>
         </div>
       </div>
