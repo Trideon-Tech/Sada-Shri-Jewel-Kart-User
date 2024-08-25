@@ -132,9 +132,15 @@ function Productpage() {
     const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
 
     const response = await axios.get(apiUrl, { params });
+    // setJwellery([
+    //   ...response?.data?.response,
+    //   ...response?.data?.response,
+    //   ...response?.data?.response,
+    //   ...response?.data?.response,
+    //   ...response?.data?.response,
+    // ]);
     setJwellery(response?.data?.response);
     setProductsLoaded(true);
-    console.log("pproducts", response);
   };
 
   useEffect(() => {
@@ -153,9 +159,7 @@ function Productpage() {
     selectedSort,
   ]);
 
-  const handleFilterChange = (selectedRangeLabel) => {
-    
-  };
+  const handleFilterChange = (selectedRangeLabel) => {};
 
   const isProductInRange = (product) => {
     // Convert product price to a number by removing currency symbol and commas
@@ -294,6 +298,7 @@ function Productpage() {
                   ))}
                 </Select>
               </Box>
+
               <Grid container spacing={1}>
                 {productsLoaded === false ? (
                   <CircularProgress
@@ -305,7 +310,7 @@ function Productpage() {
                   />
                 ) : (
                   jwellery.map((item, index) => (
-                    <Grid item xs={2.4} className="product-card">
+                    <Grid item xs={3} className="product-card">
                       <JwelleryCard
                         id={item.id}
                         key={item.id}

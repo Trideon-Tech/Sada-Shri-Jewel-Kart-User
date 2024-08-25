@@ -1,62 +1,56 @@
 import {
+  FavoriteBorderOutlined,
   LocalShippingOutlined,
   LocationOnOutlined,
   ShoppingCart,
 } from "@mui/icons-material";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
+import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { generalToastStyle } from "../../utils/toast.styles";
-import { toast, ToastContainer } from "react-toastify";
-import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
-import MyLocationIcon from "@mui/icons-material/MyLocation";
 import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
-import "react-toastify/dist/ReactToastify.css";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import { WhatsappShareButton, WhatsappIcon } from "react-share";
 import {
   Box,
   Button,
   Card,
+  createTheme,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Drawer,
   Grid,
-  OutlinedInput,
   Slide,
-  ThemeProvider,
   Typography,
-  createTheme,
   useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { WhatsappIcon, WhatsappShareButton } from "react-share";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { generalToastStyle } from "../../utils/toast.styles";
 
 import "./productdetail.styles.scss";
 
+import { Input } from "@mui/joy";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Navbar from "../../components/navbar/navbar.component";
-import ImageVideoCarousel from "./carousal.component";
-import { Input, Textarea } from "@mui/joy";
 import Reviews from "../../components/reviews/reviews.component";
-import Footer from "../../components/footer/footer.component";
 import { useRefresh } from "../../RefreshContent";
+import ImageVideoCarousel from "./carousal.component";
 const theme = createTheme({
   palette: {
     primary: {
@@ -641,23 +635,36 @@ function ProductDetail() {
                   zIndex: 2,
                   width: "100%",
                   display: "flex",
+                  cursor: "pointer",
                 }}
               >
-                <FavoriteIcon
-                  style={{
-                    fontSize: "2.5rem",
-                    marginLeft: "auto",
-                    marginRight: "5%",
-                    marginTop: "5%",
-                    color:
-                      productDetail.exists_in_wishlist || localWishlisted
-                        ? "#a36e29"
-                        : "#bfbfbf",
-                  }}
-                  onClick={() => {
-                    handleWishList();
-                  }}
-                />
+                {productDetail.exists_in_wishlist || localWishlisted ? (
+                  <FavoriteIcon
+                    style={{
+                      fontSize: "2.5rem",
+                      marginLeft: "auto",
+                      marginRight: "5%",
+                      marginTop: "5%",
+                      color: "#a36e29",
+                    }}
+                    onClick={() => {
+                      handleWishList();
+                    }}
+                  />
+                ) : (
+                  <FavoriteBorderOutlined
+                    style={{
+                      fontSize: "2.5rem",
+                      marginLeft: "auto",
+                      marginRight: "5%",
+                      marginTop: "5%",
+                      color: "#ffffff",
+                    }}
+                    onClick={() => {
+                      handleWishList();
+                    }}
+                  />
+                )}
               </Box>
               {/* Placeholder for product images */}
               <ImageVideoCarousel images={images} video={video} />
