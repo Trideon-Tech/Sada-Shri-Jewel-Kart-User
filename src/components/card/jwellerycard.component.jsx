@@ -201,53 +201,50 @@ const JwelleryCard = ({
             }}
           >
             <Typography
-              variant="h5"
               style={{
                 fontWeight: "bold",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1.4rem",
-              }}
-            >
-              ₹{price}
-            </Typography>
-            <Typography
-              variant="h6"
-              style={{
-                marginRight: "auto",
-                marginLeft: "3%",
-                color: "gray",
-                textDecoration: "line-through",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "1.2rem",
               }}
             >
               ₹{price}
             </Typography>
+            <Typography
+              style={{
+                marginRight: "auto",
+                marginLeft: "3%",
+                color: "gray",
+                textDecoration: "line-through",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+              }}
+            >
+              ₹{price}
+            </Typography>
           </Box>
           <Typography
-            variant="subtitle"
             style={{
               marginBottom: "3%",
               color: "gray",
               fontWeight: "bold",
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           >
-            {name.length > 20 ? `${name.substring(0, 20)}...` : name}
+            {name.length > 25 ? `${name.substring(0, 25)}...` : name}
           </Typography>
           <Button
             variant="contained"
             style={{
               width: "100%",
               fontWeight: "bold",
-              marginTop: "6%",
+              marginTop: "3%",
               marginBottom: "3%",
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
             onClick={() => clickHandler(name, hash, true)}
           >

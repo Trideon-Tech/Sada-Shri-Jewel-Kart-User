@@ -2,10 +2,10 @@ import { PlayCircle } from "@mui/icons-material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { IconButton } from "@mui/material";
-import React, { useState } from "react";
-import "./carousal.styles.scss";
 import Skeleton from "@mui/material/Skeleton";
+import React, { useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
+import "./carousal.styles.scss";
 
 const ImageVideoCarousel = ({ images, video }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -32,7 +32,7 @@ const ImageVideoCarousel = ({ images, video }) => {
       </IconButton>
       <div className="selected-item">
         {selectedIndex === images.length && video !== null ? (
-          <video controls>
+          <video controls autoPlay>
             <source src={video} type="video/mp4" />
           </video>
         ) : images.length > 0 ? (

@@ -3,6 +3,8 @@ import {
   LocalShippingOutlined,
   LocationOnOutlined,
   ShoppingCart,
+  ShoppingCartOutlined,
+  StarBorderOutlined,
 } from "@mui/icons-material";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
@@ -284,7 +286,8 @@ function ProductDetail() {
     setOpenShareDialog(false);
   };
 
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
+  // const [totalPages, setTotalPages] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
 
   const [localWishlisted, setLocalWishlisted] = useState(false);
@@ -315,7 +318,12 @@ function ProductDetail() {
       )
       .then((response) => {
         console.log("response", response?.data?.response?.totalPages);
-        setTotalPages(Number(response?.data?.response?.totalPages));
+        // setTotalPages(response?.data?.response?.totalPages > 1 Number(response?.data?.response?.totalPages));
+        setTotalReviewsCount(
+          response?.data?.response?.totalPages > 1
+            ? Number(response?.data?.response?.totalPages) * 5
+            : response?.data?.response?.reviews?.length
+        );
         const sum = response?.data?.response?.reviews.map((item) =>
           Number(item.rating)
         );
@@ -625,9 +633,10 @@ function ProductDetail() {
       <div className="web">
         <div className="container">
           <div className="product-content">
+            {/* Image */}
             <div
               className="product-image-section"
-              style={{ position: "relative" }}
+              style={{ position: "relative", padding: "20px" }}
             >
               <Box
                 style={{
@@ -643,7 +652,7 @@ function ProductDetail() {
                     style={{
                       fontSize: "2.5rem",
                       marginLeft: "auto",
-                      marginRight: "5%",
+                      marginRight: "7%",
                       marginTop: "5%",
                       color: "#a36e29",
                     }}
@@ -656,7 +665,7 @@ function ProductDetail() {
                     style={{
                       fontSize: "2.5rem",
                       marginLeft: "auto",
-                      marginRight: "5%",
+                      marginRight: "7%",
                       marginTop: "5%",
                       color: "#ffffff",
                     }}
@@ -666,29 +675,31 @@ function ProductDetail() {
                   />
                 )}
               </Box>
-              {/* Placeholder for product images */}
+
               <ImageVideoCarousel images={images} video={video} />
             </div>
             <div className="product-detail-section">
               <div className="title">
                 <Typography
-                  variant="h5"
-                  component="h1"
-                  style={{ marginTop: "2%", fontWeight: "bold" }}
+                  style={{
+                    marginTop: "2%",
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.8rem",
+                  }}
                 >
                   {menuItemName}
                 </Typography>
               </div>
               <Box
                 style={{
-                  width: "100%",
-                  height: "5%",
                   display: "flex",
                   justifyContent: "flex-start",
                 }}
               >
                 <Box
                   style={{
+                    height: "2rem",
                     backgroundColor: "white",
                     color: "black",
                     display: "flex",
@@ -700,46 +711,48 @@ function ProductDetail() {
                     paddingRight: "2%",
                   }}
                 >
-                  <Typography>{averageRating?.toFixed(2)}</Typography>
-                  <StarBorderRoundedIcon
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      marginRight: "5px",
+                      color: "grey",
+                    }}
+                  >
+                    {averageRating?.toFixed(2)}
+                  </Typography>
+                  <StarBorderOutlined
                     style={{ fontSize: "1.5rem", color: "orange" }}
                   />
-                  <Typography>({totalPages * 5} reviews)</Typography>
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      marginLeft: "5px",
+                      color: "grey",
+                    }}
+                  >
+                    ({totalReviewsCount} reviews)
+                  </Typography>
                 </Box>
                 <Box
                   style={{
-                    height: "100%",
+                    height: "2rem",
                     display: "flex",
+                    backgroundColor: "white",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    marginLeft: "auto",
-                    width: "30%",
-                    paddingLeft: "2%",
+                    marginLeft: "10px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    borderRadius: "15%",
                   }}
+                  onClick={() => handleClickOpen()}
                 >
-                  <Box
-                    style={{
-                      marginLeft: "auto",
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "15px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      paddingLeft: "2%",
-                      paddingRight: "2%",
-                      backgroundColor: "white",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleClickOpen()}
-                  >
-                    <ShareIcon
-                      style={{ fontSize: "1.5rem", color: "#a36e29" }}
-                    />
-                  </Box>
+                  <ShareIcon style={{ fontSize: "1.2rem", color: "#a36e29" }} />
                 </Box>
               </Box>
-              <Grid container spacing={3} style={{ marginTop: "2%" }}>
+              <Grid container spacing={3} style={{ marginTop: "1%" }}>
                 <Grid item xs={6} className="customization-grid">
                   {customizationOptions.metal.length > 0 &&
                     customizationOptions.diamondQuality.length > 0 &&
@@ -747,11 +760,13 @@ function ProductDetail() {
                       <Box>
                         <Box sx={{ marginBottom: 2 }}>
                           <Typography
-                            variant="subtitle1"
                             sx={{
                               display: "flex",
                               alignItems: "start",
                               color: "#666",
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.8rem",
+                              fontWeight: "500",
                             }}
                           >
                             Select Size
@@ -760,13 +775,14 @@ function ProductDetail() {
                           <Box
                             onClick={handleDrawerOpen}
                             style={{
-                              width: "325px",
-                              height: "55px",
+                              width: "20rem",
+                              height: "2.5rem",
                               backgroundColor: "white",
                               display: "flex",
                               justifyContent: "flex-start",
                               paddingLeft: "10px",
                               paddingRight: "10px",
+                              marginTop: "5px",
                               alignItems: "center",
                               border: "2px solid #e1e1e1",
                               borderRadius: "10px",
@@ -775,11 +791,13 @@ function ProductDetail() {
                             {selectedSize ? (
                               <Box
                                 style={{
-                                  borderRadius: "10px",
+                                  borderRadius: "20px",
                                   width: "max-content",
                                   paddingLeft: "10px",
                                   paddingRight: "10px",
-                                  height: "35px",
+                                  marginTop: "5px",
+                                  marginBottom: "5px",
+                                  height: "25px",
                                   backgroundColor: "#A36E29",
                                   color: "white",
                                   display: "flex",
@@ -787,7 +805,13 @@ function ProductDetail() {
                                   alignItems: "center",
                                 }}
                               >
-                                <Typography style={{ fontWeight: "bold" }}>
+                                <Typography
+                                  style={{
+                                    fontFamily: '"Open Sans", sans-serif',
+                                    fontSize: "0.8rem",
+                                    fontWeight: "600",
+                                  }}
+                                >
                                   {selectedSize}
                                 </Typography>
                               </Box>
@@ -803,11 +827,13 @@ function ProductDetail() {
                         </Box>
                         <Box sx={{ marginBottom: 2 }}>
                           <Typography
-                            variant="subtitle1"
                             sx={{
                               display: "flex",
                               alignItems: "start",
                               color: "#666",
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.8rem",
+                              fontWeight: "500",
                             }}
                           >
                             Select Customization
@@ -815,13 +841,14 @@ function ProductDetail() {
                           <Box
                             onClick={handleDrawerOpen}
                             style={{
-                              width: "325px",
-                              height: "55px",
+                              width: "20rem",
+                              height: "2.5rem",
                               backgroundColor: "white",
                               display: "flex",
                               justifyContent: "flex-start",
                               paddingLeft: "10px",
                               paddingRight: "10px",
+                              marginTop: "5px",
                               alignItems: "center",
                               border: "2px solid #e1e1e1",
                               borderRadius: "10px",
@@ -830,20 +857,28 @@ function ProductDetail() {
                             {selectedMetal ? (
                               <Box
                                 style={{
-                                  borderRadius: "10px",
+                                  borderRadius: "20px",
                                   width: "max-content",
                                   paddingLeft: "10px",
                                   paddingRight: "10px",
-                                  marginRight: "10px",
-                                  height: "35px",
+                                  marginTop: "5px",
+                                  marginBottom: "5px",
+                                  height: "25px",
                                   backgroundColor: "#A36E29",
                                   color: "white",
                                   display: "flex",
                                   justifyContent: "space-around",
                                   alignItems: "center",
+                                  marginRight: "8px",
                                 }}
                               >
-                                <Typography style={{ fontWeight: "bold" }}>
+                                <Typography
+                                  style={{
+                                    fontFamily: '"Open Sans", sans-serif',
+                                    fontSize: "0.8rem",
+                                    fontWeight: "600",
+                                  }}
+                                >
                                   {selectedMetal}
                                 </Typography>
                               </Box>
@@ -851,19 +886,28 @@ function ProductDetail() {
                             {selectedDiamondType ? (
                               <Box
                                 style={{
-                                  borderRadius: "10px",
+                                  borderRadius: "20px",
                                   width: "max-content",
                                   paddingLeft: "10px",
                                   paddingRight: "10px",
-                                  height: "35px",
+                                  marginTop: "5px",
+                                  marginBottom: "5px",
+                                  height: "25px",
                                   backgroundColor: "#A36E29",
                                   color: "white",
                                   display: "flex",
                                   justifyContent: "space-around",
                                   alignItems: "center",
+                                  marginRight: "8px",
                                 }}
                               >
-                                <Typography style={{ fontWeight: "bold" }}>
+                                <Typography
+                                  style={{
+                                    fontFamily: '"Open Sans", sans-serif',
+                                    fontSize: "0.8rem",
+                                    fontWeight: "600",
+                                  }}
+                                >
                                   {selectedDiamondType}
                                 </Typography>
                               </Box>
@@ -882,15 +926,115 @@ function ProductDetail() {
                           open={drawerOpen}
                           onClose={handleDrawerClose}
                         >
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "1.6rem",
+                              fontWeight: "600",
+                              backgroundColor: "#E0B872",
+                              color: "white",
+                              padding: "18px",
+                              paddingLeft: "25px",
+                            }}
+                          >
+                            Select Customization
+                          </div>
+
                           <Box
                             sx={{
-                              padding: 2,
-                              width: 500,
+                              padding: "18px",
+                              paddingLeft: "25px",
+                              width: "30vw",
                             }}
                           >
                             <Typography
-                              variant="h6"
-                              style={{ fontWeight: "bold" }}
+                              sx={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontSize: "1.2rem",
+                                fontWeight: "600",
+                                marginBottom: "10px",
+                              }}
+                            >
+                              Size
+                            </Typography>
+                            <Grid container>
+                              {customizationOptions.size.map((size, index) => (
+                                <Grid item xs={3} key={index}>
+                                  <Button
+                                    variant="outlined"
+                                    sx={{
+                                      height: "8rem",
+                                      width: "8rem",
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      textAlign: "center",
+                                      borderColor:
+                                        selectedSize === size
+                                          ? "#a36e29"
+                                          : "divider",
+                                      borderRadius: "15px",
+                                      boxShadow: 2,
+                                      marginRight: "15px",
+                                      marginBottom: "15px",
+
+                                      "&:hover": {
+                                        borderColor: "#a36e29",
+                                        backgroundColor:
+                                          "rgba(163, 110, 41, 0.05)",
+                                      },
+                                    }}
+                                    onClick={() => handleSizeSelect(size)}
+                                  >
+                                    <Typography
+                                      sx={{
+                                        fontFamily: '"Open Sans", sans-serif',
+                                        fontSize: "0.85rem",
+                                        fontWeight: "600",
+                                        color: "black",
+                                      }}
+                                    >
+                                      {size}
+                                    </Typography>
+                                    <Box
+                                      style={{
+                                        backgroundColor:
+                                          selectedSize === size
+                                            ? "#a36e29"
+                                            : "transparent",
+                                        border: "1px solid #a36e29",
+                                        padding: "4px 10px",
+                                        borderRadius: "10px",
+                                        marginTop: "8px",
+                                      }}
+                                    >
+                                      <Typography
+                                        sx={{
+                                          color:
+                                            selectedSize === size
+                                              ? "white"
+                                              : "#a36e29",
+                                          fontFamily: '"Open Sans", sans-serif',
+                                          fontSize: "0.75rem",
+                                          textTransform: "none",
+                                          fontWeight: "600",
+                                        }}
+                                      >
+                                        Made On Order
+                                      </Typography>
+                                    </Box>
+                                  </Button>
+                                </Grid>
+                              ))}
+                            </Grid>
+
+                            <Typography
+                              sx={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontSize: "1.2rem",
+                                fontWeight: "600",
+                                marginBottom: "10px",
+                                marginTop: "10px",
+                              }}
                             >
                               Choice of Metal
                             </Typography>
@@ -898,40 +1042,39 @@ function ProductDetail() {
                             <Grid container>
                               {customizationOptions.metal.map(
                                 (metalOption, index) => (
-                                  <Grid item xs={4} key={index}>
+                                  <Grid item xs={3} key={index}>
                                     <Button
                                       variant="outlined"
                                       sx={{
-                                        margin: 1,
-                                        padding: 2,
+                                        height: "8rem",
+                                        width: "8rem",
                                         display: "flex",
                                         flexDirection: "column",
                                         textAlign: "center",
-                                        border: 1,
-                                        borderColor: "divider",
-                                        borderRadius: 1,
-                                        boxShadow: 1,
-                                        // "&.selected": {
-                                        //   backgroundColor: "primary.main",
-                                        //   color: "primary.contrastText",
-                                        //   "&:hover": {
-                                        //     backgroundColor: "#a36e29",
-                                        //   },
-                                        // },
+                                        borderColor:
+                                          selectedMetal === metalOption
+                                            ? "#a36e29"
+                                            : "divider",
+                                        borderRadius: "15px",
+                                        boxShadow: 2,
+                                        marginRight: "15px",
+                                        marginBottom: "15px",
+
+                                        "&:hover": {
+                                          borderColor: "#a36e29",
+                                          backgroundColor:
+                                            "rgba(163, 110, 41, 0.05)",
+                                        },
                                       }}
                                       onClick={() =>
                                         handleCustomizationSelect(metalOption)
                                       }
-                                      className={
-                                        selectedSize === metalOption
-                                          ? "selected"
-                                          : ""
-                                      }
                                     >
                                       <Typography
-                                        variant="caption"
                                         sx={{
-                                          fontWeight: "bold",
+                                          fontFamily: '"Open Sans", sans-serif',
+                                          fontSize: "0.85rem",
+                                          fontWeight: "600",
                                           color: "black",
                                         }}
                                       >
@@ -941,19 +1084,28 @@ function ProductDetail() {
                                         style={{
                                           backgroundColor:
                                             selectedMetal === metalOption
-                                              ? "#e0b872"
+                                              ? "#a36e29"
                                               : "transparent",
-
-                                          border: "3px solid #a36e29",
-                                          padding: "2px",
+                                          border: "1px solid #a36e29",
+                                          padding: "4px 10px",
                                           borderRadius: "10px",
+                                          marginTop: "8px",
                                         }}
                                       >
                                         <Typography
-                                          variant="caption"
-                                          sx={{ color: "#a36e29" }}
+                                          sx={{
+                                            color:
+                                              selectedMetal === metalOption
+                                                ? "white"
+                                                : "#a36e29",
+                                            fontFamily:
+                                              '"Open Sans", sans-serif',
+                                            fontSize: "0.75rem",
+                                            textTransform: "none",
+                                            fontWeight: "600",
+                                          }}
                                         >
-                                          Made on Order
+                                          Made On Order
                                         </Typography>
                                       </Box>
                                     </Button>
@@ -963,8 +1115,13 @@ function ProductDetail() {
                             </Grid>
 
                             <Typography
-                              variant="h6"
-                              sx={{ marginTop: 2, fontWeight: "bold" }}
+                              sx={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontSize: "1.2rem",
+                                fontWeight: "600",
+                                marginBottom: "10px",
+                                marginTop: "10px",
+                              }}
                             >
                               Diamond Type
                             </Typography>
@@ -972,40 +1129,39 @@ function ProductDetail() {
                             <Grid container>
                               {customizationOptions.diamondQuality.map(
                                 (diamondOption, index) => (
-                                  <Grid item xs={4} key={index}>
+                                  <Grid item xs={3} key={index}>
                                     <Button
                                       variant="outlined"
                                       sx={{
-                                        margin: 1,
-                                        padding: 2,
+                                        height: "8rem",
+                                        width: "8rem",
                                         display: "flex",
                                         flexDirection: "column",
                                         textAlign: "center",
-                                        border: 1,
-                                        borderColor: "divider",
-                                        borderRadius: 1,
-                                        boxShadow: 1,
-                                        "&.selected": {
-                                          backgroundColor: "primary.main",
-                                          color: "primary.contrastText",
-                                          "&:hover": {
-                                            backgroundColor: "primary.dark",
-                                          },
+                                        borderColor:
+                                          selectedDiamondType === diamondOption
+                                            ? "#a36e29"
+                                            : "divider",
+                                        borderRadius: "15px",
+                                        boxShadow: 2,
+                                        marginRight: "15px",
+                                        marginBottom: "15px",
+
+                                        "&:hover": {
+                                          borderColor: "#a36e29",
+                                          backgroundColor:
+                                            "rgba(163, 110, 41, 0.05)",
                                         },
                                       }}
                                       onClick={() =>
                                         handleDiamondTypeSelect(diamondOption)
                                       }
-                                      className={
-                                        selectedSize === diamondOption
-                                          ? "selected"
-                                          : ""
-                                      }
                                     >
                                       <Typography
-                                        variant="caption"
                                         sx={{
-                                          fontWeight: "bold",
+                                          fontFamily: '"Open Sans", sans-serif',
+                                          fontSize: "0.85rem",
+                                          fontWeight: "600",
                                           color: "black",
                                         }}
                                       >
@@ -1016,18 +1172,29 @@ function ProductDetail() {
                                           backgroundColor:
                                             selectedDiamondType ===
                                             diamondOption
-                                              ? "#e0b872"
+                                              ? "#a36e29"
                                               : "transparent",
-                                          border: "3px solid #a36e29",
-                                          padding: "2px",
+                                          border: "1px solid #a36e29",
+                                          padding: "4px 10px",
                                           borderRadius: "10px",
+                                          marginTop: "8px",
                                         }}
                                       >
                                         <Typography
-                                          variant="caption"
-                                          sx={{ color: "#a36e29" }}
+                                          sx={{
+                                            color:
+                                              selectedDiamondType ===
+                                              diamondOption
+                                                ? "white"
+                                                : "#a36e29",
+                                            fontFamily:
+                                              '"Open Sans", sans-serif',
+                                            fontSize: "0.75rem",
+                                            textTransform: "none",
+                                            fontWeight: "600",
+                                          }}
                                         >
-                                          Made on Order
+                                          Made On Order
                                         </Typography>
                                       </Box>
                                     </Button>
@@ -1035,151 +1202,90 @@ function ProductDetail() {
                                 )
                               )}
                             </Grid>
-
-                            <Typography
-                              variant="h6"
-                              sx={{ marginTop: 2, fontWeight: "bold" }}
-                            >
-                              Select Size
-                            </Typography>
-                            <Grid container>
-                              {customizationOptions.size.map((size, index) => (
-                                <Grid item xs={4} key={index}>
-                                  <Button
-                                    variant="outlined"
-                                    sx={{
-                                      margin: 1,
-                                      padding: 2,
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      textAlign: "center",
-                                      border: 1,
-                                      borderColor: "divider",
-                                      borderRadius: 1,
-                                      boxShadow: 1,
-                                      // "&.selected": {
-                                      //   backgroundColor: "primary.main",
-                                      //   color: "primary.contrastText",
-                                      //   "&:hover": {
-                                      //     backgroundColor: "primary.dark",
-                                      //   },
-                                      // },
-                                    }}
-                                    onClick={() => handleSizeSelect(size)}
-                                    className={
-                                      selectedSize === size ? "selected" : ""
-                                    }
-                                  >
-                                    <Typography
-                                      variant="caption"
-                                      sx={{
-                                        fontWeight: "bold",
-                                        color: "black",
-                                      }}
-                                    >
-                                      {size}
-                                    </Typography>
-                                    <Box
-                                      style={{
-                                        backgroundColor:
-                                          selectedSize === size
-                                            ? "#e0b872"
-                                            : "transparent",
-                                        border: "3px solid #a36e29",
-                                        padding: "2px",
-                                        borderRadius: "10px",
-                                      }}
-                                    >
-                                      <Typography
-                                        variant="caption"
-                                        sx={{ color: "#a36e29" }}
-                                      >
-                                        Made On Order
-                                      </Typography>
-                                    </Box>
-                                  </Button>
-                                </Grid>
-                              ))}
-                            </Grid>
                           </Box>
                         </Drawer>
                         {/* Additional code for customization drawer will be similar to size drawer */}
                       </Box>
                     )}
                   <div className="price-section">
-                    <Typography variant="h4" component="p" className="price">
+                    <Typography className="price">
                       ₹{selectedVariantPrice || productDetail.price}
                     </Typography>
-                    <Typography variant="body1" className="original-price">
+                    <Typography className="original-price">
                       MRP ₹9,010
                     </Typography>
                   </div>
-                  <Typography
-                    variant="body1"
-                    className="discount"
-                    style={{ fontWeight: "bold" }}
-                  >
+                  <Typography className="discount">
                     Flat 50% off on Making Charges
                   </Typography>
-                  <div style={{ width: "max-content" }}>
-                    <Button
-                      variant="contained"
-                      className="button"
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    style={{
+                      width: "325px",
+                      padding: "10px",
+                      fontWeight: "bold",
+                      background:
+                        "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                    }}
+                    onClick={addToCartHandler}
+                  >
+                    {productDetail.exists_in_cart
+                      ? "Go to Cart"
+                      : "Add to Cart"}
+                    <ShoppingCartOutlined
                       style={{
-                        width: "325px",
-                        padding: "10px",
-                        fontWeight: "bold",
-                        background:
-                          "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                        marginLeft: "10px",
                       }}
-                      fullWidth
-                      onClick={addToCartHandler}
-                    >
-                      {productDetail.exists_in_cart
-                        ? "Go to Cart"
-                        : "Add to Cart"}
-                      <ShoppingCart className="button-icon" />
-                    </Button>
-                  </div>
+                    />
+                  </Button>
                 </Grid>
 
                 <Grid item xs={6} className="location-grid">
-                  <Typography style={{ color: "gray" }}>Pincodee</Typography>
+                  <Typography
+                    sx={{
+                      display: "flex",
+                      alignItems: "start",
+                      color: "#666",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Enter your Pincode
+                  </Typography>
                   <div
                     style={{
-                      width: "100%",
-                      height: "55px",
-                      padding: 0,
-                      top: 0,
+                      width: "20rem",
+                      height: "2.5rem",
+                      backgroundColor: "white",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      paddingLeft: "10px",
+                      paddingRight: "10px",
+                      marginTop: "5px",
+                      alignItems: "center",
+                      border: "2px solid #e1e1e1",
+                      borderRadius: "10px",
+                      marginBottom: "20px",
                     }}
                     onClick={() => setLocationModalOpen(true)}
-                  >
-                    <Input
-                      variant="solid"
-                      className="pincode"
-                      value={pincode}
-                      size="lg"
+                  />
+                  <Typography className="delivery-info">
+                    <LocalShippingOutlined className="delivery-icon" />
+                    <span
                       style={{
-                        backgroundColor: "white",
-                        height: "55px",
-                        color: "black",
-                        border: "1ps solid #a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                        fontWeight: "500",
+                        color: "grey",
                       }}
-                      disabled
-                      endDecorator={
-                        <LocationOnOutlined
-                          onClick={() => setLocationModalOpen(true)}
-                        />
-                      }
-                      fullWidth
-                    />
-                  </div>
-                  <Typography variant="body" className="delivery-info">
-                    <LocalShippingOutlined className="delivery-icon" /> Free
-                    Delivery by 24th Feb
-                  </Typography>
-                  <Typography variant="subtitle" style={{ color: "gray" }}>
-                    Order in 12hr : 20 mins
+                    >
+                      Free Delivery by 24th Feb
+                    </span>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} className="detail-grid">
@@ -1334,7 +1440,7 @@ function ProductDetail() {
           </div>
         </div>
         {productDetail.recommended && productDetail.recommended.length > 0 && (
-          <div className="container-similar" style={{ marginTop: "10%" }}>
+          <div className="container-similar">
             <div className="similar-product-section">
               <Typography
                 variant="h5"

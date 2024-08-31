@@ -31,6 +31,7 @@
       .product-detail-section {
         flex: 1;
         max-width: 50%;
+        margin-bottom: 20px;
 
         .title {
           margin: 20px 0px;
@@ -38,37 +39,11 @@
           align-items: start;
         }
 
-        .rating-reviews {
-          font-size: 1.2rem;
-          margin-bottom: 20px;
-          width: 7rem;
-
-          align-items: center;
-          justify-content: flex-start;
-          padding: 4px 12px;
-          border: 1px solid #d0d0d0;
-          background-color: #f8f8f8;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: background-color 0.3s, transform 0.3s;
-          box-sizing: border-box;
-          text-align: left;
-          
-          &:hover {
-            background-color: #ececec;
-            transform: scale(1.02);
-          }
-        }
-
         .customization-grid {
           padding-right: 30px;
         }
 
         .location-grid {
-          display: flex;
-          flex-direction: column;
-          align-items: start;
-          padding-left: 30px;
           .label {
             font-weight: 400;
             margin-bottom: 10px;
@@ -87,8 +62,10 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+
             .delivery-icon {
-              margin-right: 20px;
+              margin-right: 10px;
+              color: grey;
             }
           }
         }
@@ -140,45 +117,32 @@
           display: flex;
           flex-direction: row;
           align-items: center;
+
           .price {
+            font-family: "Open Sans", sans-serif;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #a36e29;
             margin-right: 10px;
             margin-top: 10px;
           }
+
           .original-price {
+            font-family: "Open Sans", sans-serif;
+            font-size: 1rem;
             margin-top: 10px;
             text-decoration: line-through;
             color: #666;
           }
         }
+
         .discount {
           display: flex;
-          margin-top: 10px;
           color: #e53935;
-        }
-        .actions {
-          margin-top: 20px;
-
-          .button {
-            margin-right: 2vw;
-            height: 50px;
-            background-color: #a36e29;
-            color: white;
-            text-transform: none;
-            font-family: "Work Sans", sans-serif;
-            font-size: 1rem;
-
-            .button-icon {
-              margin-left: 10px;
-            }
-
-            &:hover {
-              background-color: white;
-              color: #a36e29;
-              border: 1px solid #a36e29;
-            }
-          }
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.95rem;
+          font-weight: 600;
+          margin-bottom: 20px;
         }
       }
 
@@ -213,14 +177,12 @@
         .products-scroll-container {
           display: flex;
           overflow-x: auto;
-          padding: 16px 0; // Adjust padding as needed
-
-          // Hide scrollbar for different browsers
+          padding: 16px 0;
           &::-webkit-scrollbar {
             display: none;
           }
-          -ms-overflow-style: none; // IE and Edge
-          scrollbar-width: none; // Firefox
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       }
     }
@@ -313,29 +275,7 @@
           margin-top: 10px;
           color: #e53935;
         }
-        .actions {
-          margin-top: 20px;
 
-          .button {
-            margin-right: 2vw;
-            height: 50px;
-            background-color: #a36e29;
-            color: white;
-            text-transform: none;
-            font-family: "Work Sans", sans-serif;
-            font-size: 1rem;
-
-            .button-icon {
-              margin-left: 10px;
-            }
-
-            &:hover {
-              background-color: white;
-              color: #a36e29;
-              border: 1px solid #a36e29;
-            }
-          }
-        }
         .label {
           display: flex;
           align-items: start;

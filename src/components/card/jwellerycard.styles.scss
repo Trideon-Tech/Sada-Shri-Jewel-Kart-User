@@ -4,7 +4,6 @@
   .web {
     cursor: pointer;
     width: calc(((100vw * 9 / 12) / 4) - 50px);
-    // width: 300px;
     min-height: 380px;
     margin-right: 20px;
     background: #ffffff;
@@ -44,11 +43,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 1; // Limit to two lines of text
+        -webkit-line-clamp: 1; 
         -webkit-box-orient: vertical;
-        line-height: 1.2em; // Adjust line height to ensure two lines are displayed
-        height: 2.1em; // Based on the line-height * number of lines you want to show
-        //margin-bottom: 4px;
+        line-height: 1.2em; 
+        height: 2.1em; 
         color: #333;
       }
 
