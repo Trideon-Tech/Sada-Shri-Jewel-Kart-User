@@ -1,4 +1,5 @@
 import {
+  Close,
   FavoriteBorderOutlined,
   LocalShippingOutlined,
   LocationOnOutlined,
@@ -11,14 +12,12 @@ import PurityIcon from "@mui/icons-material/CheckCircleOutline";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
 import WeightIcon from "@mui/icons-material/ScaleOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import Modal from "@mui/joy/Modal";
-import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
 import {
@@ -420,8 +419,7 @@ function ProductDetail() {
       >
         <ModalOverflow>
           <ModalDialog
-            aria-labelledby="modal-dialog-overflow"
-            style={{ width: "500px", height: "600px", padding: "30px" }}
+            style={{ width: "30vw", height: "25vw", padding: "30px" }}
           >
             <div
               style={{
@@ -437,12 +435,25 @@ function ProductDetail() {
                   height: "max-content",
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <p style={{ fontSize: "1.5rem", fontWeight: 600, margin: 0 }}>
-                  Locate me now
+                <p
+                  style={{
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
+                    margin: 0,
+                    padding: 0,
+                  }}
+                >
+                  Locate Me now
                 </p>
-                <ModalClose />
+                <Close
+                  onClick={() => {
+                    setLocationModalOpen(false);
+                  }}
+                />
               </div>
               <div
                 style={{
@@ -456,32 +467,51 @@ function ProductDetail() {
                 }}
               >
                 <PinDropOutlinedIcon
-                  style={{ fontSize: "5rem", color: "#a36e29" }}
+                  style={{ fontSize: "4.5rem", color: "#a36e29" }}
                 />
                 <p
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: "1rem",
                     textAlign: "center",
-                    width: "300px",
-                    fontWeight: 600,
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
                   }}
                 >
-                  Add your Pincode to Browse Better
+                  Add your Pincode to
+                  <br />
+                  Browse Better
                 </p>
               </div>
               <div style={{ width: "100%", height: "max-content" }}>
                 <Input
                   sx={{
                     width: "100%",
-                    height: "60px",
+                    height: "3rem",
                     backgroundColor: "#F9F5EC",
                     border: 0,
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
                   }}
-                  placeholder="Enter your Pincode"
+                  placeholder="Enter your pincode"
                   inputProps={{ "aria-label": "Enter your Pincode" }}
-                  startDecorator={<MyLocationIcon />}
+                  startDecorator={
+                    <MyLocationIcon
+                      style={{
+                        paddingRight: "10px",
+                      }}
+                    />
+                  }
                   endDecorator={
-                    <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
+                    <p
+                      style={{
+                        fontWeight: 600,
+                        color: "#A36E29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      }}
+                    >
+                      Add
+                    </p>
                   }
                   onChange={(event) => {
                     setPincode(event.target.value);
@@ -496,43 +526,65 @@ function ProductDetail() {
                     justifyContent: "flex-start",
                     alignItems: "center",
                     color: "#A36E29",
-                    fontWeight: 600,
                     paddingLeft: "20px",
+                    paddingTop: "12px",
+                    paddingBottom: "20px",
                   }}
                 >
-                  <LocalShippingOutlinedIcon />
-                  <p>{"  "}Estimated delivery by 12 July</p>
+                  <LocalShippingOutlined />
+                  <span
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Estimated delivery by 24th Feb, 2024
+                  </span>
                 </div>
               </div>
               <Card
                 elevation={4}
                 sx={{
                   width: "calc(100% - 40px)",
-                  height: "60px",
+                  height: "3rem",
                   display: "flex",
                   borderRadius: "10px",
                   padding: "20px",
                 }}
               >
-                <div style={{ width: "70%", height: "100%" }}>
-                  <h4
+                <div>
+                  <div
                     style={{
-                      fontWeight: 600,
-                      margin: 0,
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                      marginBottom: "3px",
                     }}
                   >
                     City Location
-                  </h4>
-                  <p style={{ margin: 0, color: "gray", fontWeight: 600 }}>
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      marginTop: "3px",
+                      color: "grey",
+                    }}
+                  >
                     Jamshedpur, Jharkhand
-                  </p>
+                  </div>
                 </div>
                 <div
                   style={{ marginLeft: "auto", width: "30%", height: "100%" }}
                 >
                   <p
                     style={{
-                      fontWeight: 600,
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.85rem",
+                      fontWeight: "bold",
                       color: "#A36E29",
                       textAlign: "right ",
                     }}
