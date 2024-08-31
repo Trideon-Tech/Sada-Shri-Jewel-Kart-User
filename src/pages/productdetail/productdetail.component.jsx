@@ -24,7 +24,6 @@ import {
   Box,
   Button,
   Card,
-  createTheme,
   Dialog,
   DialogActions,
   DialogContent,
@@ -52,16 +51,6 @@ import Navbar from "../../components/navbar/navbar.component";
 import Reviews from "../../components/reviews/reviews.component";
 import { useRefresh } from "../../RefreshContent";
 import ImageVideoCarousel from "./carousal.component";
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#a36e29",
-    },
-  },
-  typography: {
-    fontFamily: '"Work Sans", sans-serif',
-  },
-});
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -162,6 +151,10 @@ function ProductDetail() {
   const [selectedVariantPrice, setSelectedVariantPrice] = useState(""); //for variant price
   const [pincode, setPincode] = useState("");
   const [locationModalOpen, setLocationModalOpen] = useState();
+  const [currentPosition, setCurrentPosition] = useState([]);
+  const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
+  const [currentPositionPincode, setCurrentPositionPincode] = useState("");
+  const [eta, setETA] = useState("");
 
   const updateSelectedVariantPrice = () => {
     const selectedOptions = [selectedMetal, selectedDiamondType, selectedSize];
@@ -196,8 +189,6 @@ function ProductDetail() {
 
   useEffect(() => {
     updateSelectedVariantPrice();
-    const pinCode = localStorage.getItem("default_pincode");
-    setPincode(pinCode);
   }, [selectedMetal, selectedDiamondType, selectedSize]);
 
   const getJwelleryDetail = () => {
@@ -225,7 +216,7 @@ function ProductDetail() {
           setVideo(fetchedVideo);
         }
 
-        setProductDetail(detail);
+        setProductDetail((_) => detail);
         setCustomizationOptions({
           metal:
             detail?.customizations.options_per_field["Choice Of Metal"] || [],
@@ -301,8 +292,7 @@ function ProductDetail() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("productDetails", productDetail);
-    console.log("productDetail id", productDetail.id);
+
     getWishListItemsNonAuth();
     if (!productDetail.id) return;
     axios
@@ -317,7 +307,6 @@ function ProductDetail() {
       )
       .then((response) => {
         console.log("response", response?.data?.response?.totalPages);
-        // setTotalPages(response?.data?.response?.totalPages > 1 Number(response?.data?.response?.totalPages));
         setTotalReviewsCount(
           response?.data?.response?.totalPages > 1
             ? Number(response?.data?.response?.totalPages) * 5
@@ -405,6 +394,107 @@ function ProductDetail() {
       const filteredItems = items?.filter((item) => !item === productDetail.id);
       localStorage.setItem(filteredItems.join(","));
     }
+  };
+
+  const openLocationModal = async () => {
+    if (pincode === "") {
+      if ("geolocation" in navigator) {
+        await navigator.geolocation.getCurrentPosition(async function (
+          position
+        ) {
+          setCurrentPosition([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+
+          let locationResponse = await axios.get(
+            `https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&api_key=66d34ff0b8bdb852964430lcwc30d15`
+          );
+
+          setCurrentPositionAddresss(locationResponse.data.display_name);
+          setCurrentPositionPincode(locationResponse.data.address.postcode);
+
+          console.log("Comes here");
+          console.log(locationResponse.data.address.postcode);
+          getETA(locationResponse.data.address.postcode, productDetail.id);
+        });
+      }
+    }
+
+    setLocationModalOpen(true);
+  };
+
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split("-");
+    const date = new Date(`${year}-${month}-${day}`);
+
+    const dayOfMonth = date.getDate();
+    const daySuffix = (day) => {
+      if (day > 3 && day < 21) return "th"; // covers 11th, 12th, 13th, etc.
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    };
+
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    return `${dayOfMonth}${daySuffix(dayOfMonth)} ${
+      monthNames[date.getMonth()]
+    }, ${date.getFullYear()}`;
+  };
+
+  const getETA = async (pincode, id) => {
+    let etaResponse = await axios.get(
+      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+    );
+
+    setETA(() => formatDate(etaResponse.data.response.data.estimated_delivery));
+  };
+
+  const getETAFromInput = async (pincode, id) => {
+    let etaResponse = await axios.get(
+      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+    );
+
+    // Getting lat lng from Pincode
+    let latLngResponse = await axios.get(
+      `https://geocode.maps.co/search?q=${pincode}&api_key=66d34ff0b8bdb852964430lcwc30d15`
+    );
+
+    const timer = setTimeout(async () => {
+      // Getting add from lat lng
+      let addResponse = await axios.get(
+        `https://geocode.maps.co/reverse?lat=${latLngResponse.data[0].lat}&lon=${latLngResponse.data[0].lon}&api_key=66d34ff0b8bdb852964430lcwc30d15`
+      );
+
+      setCurrentPositionAddresss(addResponse.data.display_name);
+      setCurrentPositionPincode(addResponse.data.address.postcode);
+      setETA(() =>
+        formatDate(etaResponse.data.response.data.estimated_delivery)
+      );
+    }, 1000);
+
+    return () => clearTimeout(timer);
   };
 
   return (
@@ -508,14 +598,31 @@ function ProductDetail() {
                         color: "#A36E29",
                         fontFamily: '"Open Sans", sans-serif',
                         fontSize: "0.8rem",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        if (pincode == 6) {
+                          setPincode(pincode);
+                          localStorage.setItem("default_pincode", pincode);
+                          setLocationModalOpen(false);
+                        }
                       }}
                     >
                       Add
                     </p>
                   }
                   onChange={(event) => {
-                    setPincode(event.target.value);
-                    localStorage.setItem("default_pincode", event.target.value);
+                    console.log(event.target.value);
+                    if (event.target.value.length == 6) {
+                      setPincode(event.target.value);
+                      localStorage.setItem(
+                        "default_pincode",
+                        event.target.value
+                      );
+                      console.log("Sending");
+                      console.log(event.target.value);
+                      getETAFromInput(event.target.value, productDetail.id);
+                    }
                   }}
                 />
                 <div
@@ -540,7 +647,9 @@ function ProductDetail() {
                       marginLeft: "10px",
                     }}
                   >
-                    Estimated delivery by 24th Feb, 2024
+                    {eta === ""
+                      ? "Calculating Estimated Date of Delivery"
+                      : `Estimated delivery by ${eta}`}
                   </span>
                 </div>
               </div>
@@ -552,6 +661,7 @@ function ProductDetail() {
                   display: "flex",
                   borderRadius: "10px",
                   padding: "20px",
+                  paddingBottom: "25px",
                 }}
               >
                 <div>
@@ -563,18 +673,20 @@ function ProductDetail() {
                       marginBottom: "3px",
                     }}
                   >
-                    City Location
+                    City Located
                   </div>
                   <div
                     style={{
                       fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
+                      fontSize: "0.6rem",
                       fontWeight: "bold",
                       marginTop: "3px",
                       color: "grey",
                     }}
                   >
-                    Jamshedpur, Jharkhand
+                    {currentPositionAddress.length > 0
+                      ? currentPositionAddress
+                      : "Detecting your location"}
                   </div>
                 </div>
                 <div
@@ -587,6 +699,15 @@ function ProductDetail() {
                       fontWeight: "bold",
                       color: "#A36E29",
                       textAlign: "right ",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setPincode(currentPositionPincode);
+                      localStorage.setItem(
+                        "default_pincode",
+                        currentPositionPincode
+                      );
+                      setLocationModalOpen(false);
                     }}
                   >
                     Submit
@@ -1323,22 +1444,30 @@ function ProductDetail() {
                       border: "2px solid #e1e1e1",
                       borderRadius: "10px",
                       marginBottom: "20px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      color: "#A36E29",
                     }}
-                    onClick={() => setLocationModalOpen(true)}
-                  />
-                  <Typography className="delivery-info">
-                    <LocalShippingOutlined className="delivery-icon" />
-                    <span
-                      style={{
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "0.8rem",
-                        fontWeight: "500",
-                        color: "grey",
-                      }}
-                    >
-                      Free Delivery by 24th Feb
-                    </span>
-                  </Typography>
+                    onClick={openLocationModal}
+                  >
+                    {pincode}
+                  </div>
+                  {currentPosition.length > 0 ? (
+                    <Typography className="delivery-info">
+                      <LocalShippingOutlined className="delivery-icon" />
+                      <span
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                          fontWeight: "500",
+                          color: "grey",
+                        }}
+                      >
+                        {`Free delivery by ${eta}`}
+                      </span>
+                    </Typography>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} className="detail-grid">
                   <Card className="card" style={{ backgroundColor: "white" }}>
