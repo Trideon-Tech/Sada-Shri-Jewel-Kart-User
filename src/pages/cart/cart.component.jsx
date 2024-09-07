@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
-import "./cart.styles.scss";
-import Navbar from "../../components/navbar/navbar.component";
-import {
-  Grid,
-  Box,
-  Divider,
-  Typography,
-  Card,
-  Button,
-  useMediaQuery,
-} from "@mui/material";
-import CartItem from "./cartItem.component";
-import CartTotal from "./cartTotal.component";
-import axios from "axios";
+import { Input } from "@mui/joy";
 import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
-import { Input, Textarea } from "@mui/joy";
+import { Box, Button, Card, Grid, useMediaQuery } from "@mui/material";
+import axios from "axios";
+import Lottie from "lottie-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../../components/navbar/navbar.component";
+import CartItem from "./cartItem.component";
+import CartTotal from "./cartTotal.component";
+import emptyCartAnimation from "./empty_cart.json";
 
 const CouponCard = ({
   item,
@@ -30,9 +24,9 @@ const CouponCard = ({
     localStorage.setItem("selected_coupon", item.id);
     handleClose(false);
     couponSelectHandler(item.id);
-    console.log("=======", item.code);
     couponCodeSelector(item.code);
   };
+
   return (
     <Card
       elevation={4}
@@ -115,6 +109,7 @@ const CouponCard = ({
 };
 
 const Cart = () => {
+  const navigate = useNavigate();
   const couponList_dummy = [
     {
       id: 1,
@@ -254,8 +249,9 @@ const Cart = () => {
       })
       .catch((error) => console.log("Error while removing  card items", error));
   };
+
   return (
-    <div style={{ width: "100vw", height: "90vh" }}>
+    <div style={{ width: "100vw", height: "max-content" }}>
       <Navbar />
       <Modal
         open={modalOpen}
@@ -332,7 +328,6 @@ const Cart = () => {
           height: "100%",
           display: "flex",
           justifyContent: "space-around",
-          backgroundColor: "#f5f5f5",
         }}
       >
         {cartItems?.length > 0 ? (
@@ -369,19 +364,51 @@ const Cart = () => {
         ) : (
           <Box
             style={{
-              width: "100%",
-              height: "100%",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "space-around",
             }}
           >
-            <Typography
-              variant="h2"
-              style={{ fontWeight: "bold", color: "lightgray" }}
+            <Lottie animationData={emptyCartAnimation} loop={true} />
+            <div
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.2rem",
+                fontWeight: "bold",
+              }}
             >
-              Nothing In the Cart yet !!!
-            </Typography>
+              There's nothing here!
+            </div>
+            <div
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+                marginTop: "10px",
+              }}
+            >
+              Let's do some retail therapy.
+            </div>
+            <div
+              onClick={() => navigate("/")}
+              style={{
+                width: "325px",
+                padding: "10px",
+                fontWeight: "bold",
+                background:
+                  "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "bold",
+                marginTop: "20px",
+                textAlign: "center",
+                color: "white",
+                borderRadius: "10px",
+                cursor: "pointer",
+              }}
+            >
+              Continue Shopping
+            </div>
           </Box>
         )}
       </Box>

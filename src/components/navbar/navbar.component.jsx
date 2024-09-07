@@ -275,7 +275,6 @@ const Navbar = () => {
     <div
       className="navbar"
       style={{
-        height: "max-content",
         marginBottom: matches ? "100px" : "0px",
         width: "100%",
       }}
