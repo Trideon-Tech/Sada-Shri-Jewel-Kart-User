@@ -11,43 +11,20 @@ import {
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { generalToastStyle } from "../../utils/toast.styles";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import OverAllRating from "./subComponents/overAllRating.component";
-import { DeleteForever, Height, Remove } from "@mui/icons-material";
-import CustomerLikePills from "./subComponents/customerLikePills.component";
-import RatingImages from "./subComponents/ratingImages.component";
-import ReviewList from "./subComponents/reviewList.component";
+import { AddAPhoto, DeleteForever } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/joy/Button";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
-import DialogTitle from "@mui/joy/DialogTitle";
-import DialogContent from "@mui/joy/DialogContent";
-import Stack from "@mui/joy/Stack";
-import Add from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import Radio from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import Sheet from "@mui/joy/Sheet";
-import { useEffect, useState } from "react";
-import Textarea from "@mui/joy/Textarea";
-import {
-  Search,
-  Edit,
-  Delete,
-  AddAPhoto,
-  Done,
-  Restore,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-} from "@mui/icons-material";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { generalToastStyle } from "../../utils/toast.styles";
+import OverAllRating from "./subComponents/overAllRating.component";
+import ReviewList from "./subComponents/reviewList.component";
 
-const Reviews = ({ productDetails }) => {
+const Reviews = ({ productDetails, rating, reviewsCount }) => {
   const matches = useMediaQuery("(min-width:600px)");
   // console.log("produce Details ", productDetails);
   const [open, setOpen] = useState(false);
@@ -120,10 +97,9 @@ const Reviews = ({ productDetails }) => {
   return (
     <Box
       style={{
-        width: "80%",
-        padding: "10%",
-        overFlowX: "scroll",
-        backgroundColor: "white",
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        paddingTop: "3%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
@@ -148,15 +124,21 @@ const Reviews = ({ productDetails }) => {
           <Box style={{ width: "100%", height: "50px", display: "flex" }}>
             <CloseIcon
               style={{
-                fontSize: "1.5rem",
+                fontSize: "1.2rem",
                 color: "#707070",
                 marginLeft: "auto",
               }}
               onClick={() => setOpen(false)}
             />
           </Box>
-          <Typography style={{ fontSize: "1.7rem", color: "#707070" }}>
-            Margirita Dimond And Silver
+          <Typography
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              fontFamily: '"Open Sans", sans-serif',
+            }}
+          >
+            {productDetails.name}
           </Typography>
           <Rating
             name="size-large"
@@ -166,7 +148,12 @@ const Reviews = ({ productDetails }) => {
               setReviewRating(parseInt(event.target.value));
             }}
           />
-          <Typography style={{ fontSize: "0.7rem" }}>
+          <Typography
+            style={{
+              fontSize: "0.7rem",
+              fontFamily: '"Open Sans", sans-serif',
+            }}
+          >
             {" "}
             Tap on the stars to rate your experience
           </Typography>
@@ -257,24 +244,75 @@ const Reviews = ({ productDetails }) => {
             ))}
           </ImageList>
           <TextField
-            fullWidth
-            style={{ width: matches ? "50%" : "100%", marginTop: "2%" }}
-            id="outlined-controlled"
-            label="Title"
+            sx={{
+              width: matches ? "50%" : "100%",
+              fontSize: "0.8rem",
+              height: "22px",
+              marginTop: "2%",
+              "& input": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "rgba(0, 0, 0, 0.23)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "rgba(0, 0, 0, 0.23)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#a36e29",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                color: "#00000",
+              },
+            }}
             value={reviewTitle}
             onChange={(event) => {
               setReviewTitle(event.target.value);
             }}
+            label="Title"
           />
-          <Typography>Write Your Review Below</Typography>
-          <Textarea
+
+          <TextField
             onChange={(event) => {
               setReviewContent(event.target.value);
             }}
             autoFocus
-            minRows={4}
-            maxRows={4}
-            style={{ width: matches ? "50%" : "100%", marginTop: "2%" }}
+            multiline
+            rows={3}
+            sx={{
+              width: matches ? "50%" : "100%",
+              marginTop: "5%",
+              "& .MuiInputBase-root": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+              "& textarea": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "rgba(0, 0, 0, 0.23)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "rgba(0, 0, 0, 0.23)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#a36e29",
+                },
+              },
+              "& .MuiInputLabel-root": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                color: "#5a5a5a",
+              },
+            }}
+            label="Message"
           />
           <Button
             fullWidth
@@ -282,6 +320,8 @@ const Reviews = ({ productDetails }) => {
               width: "50%",
               background:
                 "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
             }}
             onClick={() => addReviewHandler()}
           >
@@ -292,7 +332,8 @@ const Reviews = ({ productDetails }) => {
       <Typography
         style={{
           fontWeight: "bold",
-          fontSize: "2rem",
+          fontFamily: '"Open Sans", sans-serif',
+          fontSize: "1.2rem",
           marginRight: "auto",
         }}
       >
@@ -302,27 +343,18 @@ const Reviews = ({ productDetails }) => {
         style={{
           width: "100%",
           display: "flex",
-
           flexDirection: matches ? "row" : "column",
           justifyContent: "space-between",
           alignItems: matches ? "flex-start" : "center",
-          marginTop: "5%",
+          marginTop: "1%",
+          marginBottom: "1%",
         }}
       >
-        <OverAllRating openModal={openModal} />
-        {/* {!matches ? (
-          <Divider
-            style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
-          />
-        ) : null}
-        <CustomerLikePills />
-        {!matches ? (
-          <Divider
-            style={{ width: "100%", marginTop: "10%", marginBottom: "10%" }}
-          />
-        ) : null}
-
-        <RatingImages mobileView={!matches} /> */}
+        <OverAllRating
+          openModal={openModal}
+          rating={rating}
+          reviewsCount={reviewsCount}
+        />
       </Box>
       <Divider style={{ width: "100%" }} />
       <ReviewList reviewsData={reviewsData} totalpages={totalPages} />

@@ -1471,147 +1471,93 @@ function ProductDetail() {
                 </Grid>
                 <Grid item xs={12} className="detail-grid">
                   <Card className="card" style={{ backgroundColor: "white" }}>
-                    <Typography variant="subtitle2" className="sku">
-                      {productDetail.hash}
+                    <Typography className="sku">
+                      #{productDetail.hash?.toUpperCase()}
                     </Typography>
-                    <Typography variant="h5" className="title">
-                      Product Details
-                    </Typography>
-                    <Typography variant="body1" className="desc">
+                    <Typography className="title">Product Details</Typography>
+                    <Typography className="desc">
                       {typeof productDetail.description !== "undefined"
                         ? parse(productDetail.description)
                         : ""}
                     </Typography>
 
-                    <Grid container spacing={0} justifyContent="center">
+                    <Grid
+                      container
+                      spacing={0}
+                      justifyContent="left"
+                      rowSpacing={1}
+                    >
                       <Grid item xs={4}>
-                        <Box
+                        <Typography
                           style={{
-                            width: "90%",
-                            height: "15vh",
-                            backgroundColor: "#E0B872",
-                            borderRadius: "10px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-around",
-                            alignItems: "center",
-                            color: "white",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
                           }}
                         >
-                          <Box
+                          Weight :-
+                          <br />
+                          <span
                             style={{
-                              width: "100%",
-                              height: "10%",
-                              display: "flex",
-                              justifyContent: "center",
-                              color: "white",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Typography>Weight </Typography>
-                            <WeightIcon />
-                          </Box>
-                          <Box
-                            style={{
-                              width: "80%",
-                              textAlign: "left",
-                              height: "50%",
                               fontWeight: "bold",
                             }}
                           >
-                            <Typography>
-                              Gross:
-                              {productDetail.weight} g
-                            </Typography>
-                          </Box>
-                        </Box>
+                            Gross: {productDetail.weight} g
+                          </span>
+                        </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Box
+                        <Typography
                           style={{
-                            width: "90%",
-                            height: "15vh",
-                            backgroundColor: "#E0B872",
-                            borderRadius: "10px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-around",
-                            alignItems: "center",
-                            color: "white",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
                           }}
                         >
-                          <Box
+                          Purity :-
+                          <br />
+                          <span
                             style={{
-                              width: "100%",
-                              height: "10%",
-                              display: "flex",
-                              justifyContent: "center",
-                              color: "white",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Typography>Purity </Typography>
-                            <PurityIcon />
-                          </Box>
-                          <Box
-                            style={{
-                              width: "80%",
-                              textAlign: "left",
-                              height: "50%",
                               fontWeight: "bold",
                             }}
                           >
-                            <Typography>
-                              Purity:
-                              {productDetail.purity} KT
-                            </Typography>
-                          </Box>
-                        </Box>
+                            {productDetail.purity} KT
+                          </span>
+                        </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Box
+                        <Typography
                           style={{
-                            width: "90%",
-                            height: "15vh",
-                            backgroundColor: "#E0B872",
-                            borderRadius: "10px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-around",
-                            alignItems: "center",
-                            color: "white",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
                           }}
                         >
-                          <Box
+                          Width :-
+                          <br />
+                          <span
                             style={{
-                              width: "100%",
-                              height: "10%",
-                              display: "flex",
-                              justifyContent: "center",
-                              color: "white",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Typography>Dimensions </Typography>
-                            <DimensionsIcon />
-                          </Box>
-                          <Box
-                            style={{
-                              width: "80%",
-                              textAlign: "left",
-                              height: "50%",
                               fontWeight: "bold",
                             }}
                           >
-                            <Typography>
-                              Width : {productDetail.width} mm
-                            </Typography>
-                            <Typography>
-                              Height : {productDetail.height} mm
-                            </Typography>
-                            <Typography>Size : 12 (51.8 mm)</Typography>
-                          </Box>
-                        </Box>
+                            {productDetail.width} mm
+                          </span>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          Height :-
+                          <br />
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {productDetail.height} mm
+                          </span>
+                        </Typography>
                       </Grid>
                     </Grid>
                   </Card>
@@ -1628,11 +1574,14 @@ function ProductDetail() {
                 style={{
                   textAlign: "left",
                   fontWeight: "bold",
-                  marginTop: "2%",
+                  marginTop: "5%",
+                  marginBottom: "2%",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.2rem",
                 }}
               >
-                You May Also{" "}
-                <span style={{ color: "#A36E29" }}> {` Like `}</span> These
+                You may also{" "}
+                <span style={{ color: "#A36E29" }}> {` like `}</span> these
               </Typography>
 
               <div className="products-scroll-container">
@@ -1650,10 +1599,13 @@ function ProductDetail() {
             </div>
           </div>
         )}
-        <div>
-          <div style={{ width: "100%", height: "100vh" }}>
-            <Reviews productDetails={productDetail} />
-          </div>
+
+        <div className="container-similar">
+          <Reviews
+            productDetails={productDetail}
+            rating={averageRating}
+            reviewsCount={totalReviewsCount}
+          />
         </div>
       </div>
       <div className="mobile">

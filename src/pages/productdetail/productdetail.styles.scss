@@ -71,7 +71,6 @@
         }
 
         .detail-grid {
-          margin-top: 20px;
           .card {
             background-color: #e8e8e8;
             display: flex;
@@ -80,20 +79,24 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 16px;
             padding: 20px;
-            margin: 5px;
 
             .sku {
               color: #666;
-              //margin-bottom: 5px;
+              font-family: "Open Sans", sans-serif;
+              font-size: 0.8rem;
             }
+
             .title {
               font-weight: bold;
-              color: #a36e29;
-              margin-bottom: 10px;
+              font-family: "Open Sans", sans-serif;
+              font-size: 1.2rem;
+              margin: 0;
             }
+
             .desc {
               color: #666;
-              margin-bottom: 20px;
+              font-family: "Open Sans", sans-serif;
+              font-size: 0.8rem;
             }
 
             .icon {
