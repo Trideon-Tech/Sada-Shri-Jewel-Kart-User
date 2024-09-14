@@ -1,7 +1,7 @@
-import React from "react";
-import { Stepper, Step, StepLabel, StepConnector, styled } from "@mui/material";
-import { CheckCircleOutline } from "@mui/icons-material";
+import { Done } from "@mui/icons-material";
+import { Step, StepConnector, StepLabel, Stepper, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import React from "react";
 
 import { stepConnectorClasses } from "@mui/material/StepConnector";
 const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
@@ -9,8 +9,8 @@ const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
     theme.palette.mode === "dark" ? theme.palette.grey[800] : "#ccc",
   zIndex: 1,
   color: "#fff",
-  width: 50,
-  height: 50,
+  width: 45,
+  height: 45,
   display: "flex",
   borderRadius: "50%",
   justifyContent: "center",
@@ -35,7 +35,7 @@ function ColorlibStepIcon(props) {
       ownerState={{ active, completed }}
       className={className}
     >
-      {completed ? <CheckCircleOutline /> : <div>{props.icon}</div>}
+      {completed ? <Done /> : <div>{props.icon}</div>}
     </ColorlibStepIconRoot>
   );
 }
@@ -81,13 +81,18 @@ const CheckoutProgressBar = ({ activeStep }) => {
             sx={{
               "& .MuiStepLabel-label": {
                 color: (theme) =>
-                  activeStep === index
-                    ? "#A36E29" // Active step label color
-                    : grey[400], // Inactive step label color
+                  activeStep === index ? "#A36E29" : grey[400],
               },
             }}
           >
-            <strong>{label}</strong>
+            <span
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
+              {label}
+            </span>
           </StepLabel>
         </Step>
       ))}

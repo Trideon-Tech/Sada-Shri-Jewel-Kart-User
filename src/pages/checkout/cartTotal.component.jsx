@@ -1,19 +1,8 @@
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
-import RemoveIcon from "@mui/icons-material/Remove";
-import React, { useEffect, useState } from "react";
-import BalanceIcon from "@mui/icons-material/Balance";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { Divider, CardContent } from "@mui/material";
-import PinDropIcon from "@mui/icons-material/PinDrop";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 export default function CartTotal({ items, coinValueDiscount }) {
   const totalPrice = items
@@ -74,21 +63,17 @@ export default function CartTotal({ items, coinValueDiscount }) {
     <Box
       style={{
         width: "100%",
-        height: "50vh",
         display: "flex",
         flexDirection: "column",
-        marginTop: "10%",
-        justifyContent: "space-between",
+        marginTop: "3%",
       }}
     >
       <Card
         style={{
           width: "90%",
-          minHeight: 250,
-          height: "max-content",
           borderRadius: "10px",
           backgroundColor: "white",
-          padding: "5%",
+          padding: "3%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-around",
@@ -96,15 +81,16 @@ export default function CartTotal({ items, coinValueDiscount }) {
           marginBottom: "5%",
           textAlign: "left",
         }}
-        elevation={4}
+        elevation={1}
       >
         <Typography
-          variant="h6"
           style={{
             textAlign: "left",
             fontWeight: "bold",
             color: "#505050",
-            marginBottom: "5%",
+            marginBottom: "1%",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1rem",
           }}
         >
           Order Summary
@@ -113,14 +99,25 @@ export default function CartTotal({ items, coinValueDiscount }) {
           style={{
             width: "100%",
             display: "flex",
-            marginTop: "3%",
             alignItems: "center",
             justifyContent: "space-between",
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>Subtotal:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            Subtotal:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
             ₹ {Number(totalPrice).toLocaleString()}
           </Typography>
         </Box>
@@ -130,12 +127,26 @@ export default function CartTotal({ items, coinValueDiscount }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginTop: "3%",
+            marginTop: "1%",
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>You Saved:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 0</Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            You Saved:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            ₹ 0
+          </Typography>
         </Box>
         <Box
           style={{
@@ -143,12 +154,24 @@ export default function CartTotal({ items, coinValueDiscount }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginTop: "3%",
+            marginTop: "1%",
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>Dicount:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            Dicount:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
             ₹ {Number(discountValue).toLocaleString()}
           </Typography>
         </Box>
@@ -163,10 +186,20 @@ export default function CartTotal({ items, coinValueDiscount }) {
               color: "gray",
             }}
           >
-            <Typography style={{ fontSize: "1.1rem" }}>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
               Redeemed Coins:
             </Typography>
-            <Typography style={{ fontSize: "1.1rem" }}>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
               ₹ {Number(coinValueDiscount).toLocaleString()}
             </Typography>
           </Box>
@@ -178,12 +211,25 @@ export default function CartTotal({ items, coinValueDiscount }) {
             alignItems: "center",
             justifyContent: "space-between",
             color: "#050505",
+            marginTop: "1%",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              fontWeight: "bold",
+            }}
+          >
             Total:
           </Typography>
-          <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              fontWeight: "bold",
+            }}
+          >
             ₹
             {(
               Number(totalPrice) -

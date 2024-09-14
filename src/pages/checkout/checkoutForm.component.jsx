@@ -1,37 +1,16 @@
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/joy/Typography";
-import * as React from "react";
-import Avatar from "@mui/joy/Avatar";
-import FormLabel from "@mui/joy/FormLabel";
-import Radio, { radioClasses } from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import Sheet from "@mui/joy/Sheet";
-import Card from "@mui/joy/Card";
-import Divider from "@mui/material/Divider";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import Chip from "@mui/joy/Chip";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
 import Button from "@mui/joy/Button";
-import Stepper from "@mui/joy/Stepper";
-import Step from "@mui/joy/Step";
-import StepButton from "@mui/joy/StepButton";
-import StepIndicator from "@mui/joy/StepIndicator";
-import Check from "@mui/icons-material/Check";
-import Input from "@mui/joy/Input";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import axios from "axios";
-import AddressPanel from "./addressPanel.component";
-import CheckoutProgressBar from "../../components/checkoutProgress/checkoutProgress.component";
-import PaymentMethod from "./paymentMethod.component";
-import { generalToastStyle } from "../../utils/toast.styles";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import Typography from "@mui/joy/Typography";
 import { useMediaQuery } from "@mui/material";
+import Box from "@mui/material/Box";
+import axios from "axios";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CheckoutProgressBar from "../../components/checkoutProgress/checkoutProgress.component";
+import { generalToastStyle } from "../../utils/toast.styles";
+import AddressPanel from "./addressPanel.component";
+import PaymentMethod from "./paymentMethod.component";
 const steps = ["Login", "Shipping", "Payment"];
 
 const SelectAddressStep = ({
@@ -50,20 +29,19 @@ const SelectAddressStep = ({
   return (
     <Box
       style={{
-        width: matches ? "60%" : "100%",
+        width: matches ? "50%" : "100%",
         marginTop: "5%",
         height: "max-content",
         marginBottom: "5%",
       }}
     >
       <Typography
-        variant="h5"
         style={{
-          fontSize: "1.5rem",
-          color: "#505050",
+          color: "black",
           fontWeight: "bold",
-          marginTop: "5%",
           marginBottom: "3%",
+          fontFamily: '"Open Sans", sans-serif',
+          fontSize: "1.2rem",
         }}
       >
         Shipping Address
@@ -76,7 +54,9 @@ const SelectAddressStep = ({
       <Button
         fullWidth
         style={{
-          minHeight: 50,
+          fontFamily: '"Open Sans", sans-serif',
+          fontSize: "1rem",
+          fontWeight: "bold",
           background:
             "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
         }}
@@ -219,7 +199,6 @@ const CheckoutForm = ({ cartItems }) => {
       return;
     }
 
-    console.log(orderCreatedData);
     const options = {
       key: "rzp_test_u3HTPcwIbGNSAp", // Enter the Key ID generated from the Dashboard
       amount: orderCreatedData.amount_due.toString(),

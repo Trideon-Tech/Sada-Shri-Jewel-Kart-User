@@ -260,7 +260,7 @@ const Cart = () => {
   };
 
   return (
-    <div style={{ width: "100vw", height: "max-content", overflowX: "none" }}>
+    <div style={{ width: "100vw", height: "100vh", overflowX: "none" }}>
       <Navbar />
       <Modal
         open={modalOpen}

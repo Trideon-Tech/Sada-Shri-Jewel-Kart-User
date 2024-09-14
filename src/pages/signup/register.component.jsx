@@ -64,8 +64,8 @@ const Register = () => {
 
   const handleRegister = () => {
     const formData = new FormData();
-    formData.append("mobile", `91${mobile}`);
-    localStorage.setItem("mobile", `91${mobile}`);
+    formData.append("mobile", mobile);
+    localStorage.setItem("mobile", mobile);
     navigate("/user-details");
   };
 
@@ -73,8 +73,8 @@ const Register = () => {
     const formData = new FormData();
     setotpSent(true);
     formData.append("type", "generate_otp");
-    formData.append("mobile", `91${mobile}`);
-    localStorage.setItem("mobile", `91${mobile}`);
+    formData.append("mobile", mobile);
+    localStorage.setItem("mobile", mobile);
 
     //call API for OTP verification
     axios
@@ -95,21 +95,10 @@ const Register = () => {
   };
 
   const verifyOTPHandler = () => {
-    const formData = new FormData();
-    setotpSent(true);
-    formData.append("type", "verify_otp");
-    formData.append("mobile", `91${mobile}`);
-    formData.append("otp", otp);
-
     //call API for OTP verification
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${`91${mobile}`}`,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${mobile}`
       )
       .then((response) => {
         console.log("userdata=====================================", response);

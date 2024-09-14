@@ -1,33 +1,17 @@
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/joy/Typography";
-import * as React from "react";
-import Avatar from "@mui/joy/Avatar";
-import FormLabel from "@mui/joy/FormLabel";
-import Radio, { radioClasses } from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import Sheet from "@mui/joy/Sheet";
-import Card from "@mui/joy/Card";
-import Divider from "@mui/material/Divider";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import Chip from "@mui/joy/Chip";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
-import Button from "@mui/joy/Button";
-import Stepper from "@mui/joy/Stepper";
-import Step from "@mui/joy/Step";
-import StepButton from "@mui/joy/StepButton";
-import StepIndicator from "@mui/joy/StepIndicator";
-import Check from "@mui/icons-material/Check";
-import Input from "@mui/joy/Input";
-import Grid from "@mui/material/Grid";
-import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import EditIcon from "@mui/icons-material/Edit";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import Option from "@mui/joy/Option";
+import Select from "@mui/joy/Select";
+import Typography from "@mui/joy/Typography";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import * as React from "react";
 import { useState } from "react";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   const [editing, setEditing] = useState(false);
@@ -111,6 +95,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
       {!addresses ? null : (
         <Box>
           <Select
+            placeholder="Select Address"
             defaultValue={selectedAddress}
             value={selectedAddress?.add_line_1}
             slotProps={{
@@ -122,28 +107,51 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
             }}
             sx={{
               marginTop: "3%",
-              minHeight: 60,
+              minHeight: 50,
               boxShadow: "0 2px 3px 0px #666666",
-              minWidth: 240,
+              minWidth: 220,
+              backgroundColor: "white",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
             }}
             onChange={(e, newValue) => {
               if (newValue) setSelectedAddress(newValue);
             }}
           >
             {addresses?.map((data, index) => (
-              <Option
-                style={{ height: "100px" }}
-                key={data.id}
-                value={data}
-                label={data.add_line_1}
-              >
+              <Option key={data.id} value={data} label={data.add_line_1}>
                 <Box component="span" sx={{ display: "block" }}>
-                  <Typography component="span" level="title-sm">
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                    }}
+                  >
                     {data.add_line_1}
                   </Typography>
-                  <Typography level="body-xs">{data.add_line_2}</Typography>
-                  <Typography level="subtitle">{data.city}</Typography>
-                  <Typography level="subtitle">{`${data.state} - ${data.pincode}`}</Typography>
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    {data.add_line_2}
+                  </Typography>
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    {data.city}
+                  </Typography>
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >{`${data.state} - ${data.pincode}`}</Typography>
                 </Box>
               </Option>
             ))}
@@ -153,7 +161,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
             size="sm"
             variant="soft"
             style={{
-              padding: "30px",
+              padding: "20px",
               backgroundColor: "white",
               boxShadow: "0 0 3px 0 #555555",
               marginTop: "5%",
@@ -174,29 +182,60 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   }}
                 >
                   <Typography
-                    level="body-lg"
-                    style={{ fontWeight: "bold" }}
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                    }}
                   >{`${selectedAddress?.name}`}</Typography>
                   <EditIcon
-                    style={{ marginLeft: "auto", marginRight: "2%" }}
+                    style={{
+                      marginLeft: "auto",
+                      cursor: "pointer",
+                      fontSize: "1rem",
+                      color: "#a36e29",
+                    }}
                     onClick={() => handleEditCreateAddress(true)}
                   />
-                  <CloseIcon />
                 </Box>
-                <Typography level="body-lg">
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
                   {selectedAddress?.add_line_1}
                 </Typography>
-                <Typography level="body-lg">
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
                   {selectedAddress?.add_line_2}
                 </Typography>
-                <Typography level="body-lg">{`${selectedAddress?.city} ,${selectedAddress?.state}`}</Typography>
-                <Typography level="body-lg">
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >{`${selectedAddress?.city} ,${selectedAddress?.state}`}</Typography>
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
                   Pincode : {`${selectedAddress?.pincode}`}
                 </Typography>
 
-                <Typography level="body-lg">
-                  {" "}
-                  Phone :{selectedAddress?.mobile}
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Phone : {selectedAddress?.mobile}
                 </Typography>
               </>
             ) : (
@@ -211,86 +250,212 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography variant="body" style={{ fontWeight: "bold" }}>
+                  <Typography
+                    style={{
+                      fontWeight: "bold",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "1rem",
+                    }}
+                  >
                     Edit Address
                   </Typography>
                   <CloseIcon onClick={() => setEditing(false)} />
                 </Box>
                 <Grid item xs={6}>
                   <TextField
-                    fullWidth
-                    label="First Name"
-                    id="standard-size-small"
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
+                    placeholder="First Name"
                     defaultValue={editAddress.name}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    fullWidth
-                    label="Last Name"
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
+                    placeholder="Last Name"
                     id="standard-size-small"
                     defaultValue={editAddress.lastName}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
                     fullWidth
-                    style={{ width: "100%" }}
-                    label="Address Line 1"
-                    id="standard-size-small"
+                    placeholder="Address Line 1"
                     defaultValue={editAddress.add_line_1}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => setAdd_line1(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
                     fullWidth
-                    style={{ width: "100%" }}
-                    label="Address Line 2"
-                    id="standard-size-small"
+                    placeholder="Address Line 2"
                     defaultValue={editAddress.add_line_2}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => setAdd_line2(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    fullWidth
-                    label="City"
-                    id="standard-size-small"
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
+                    placeholder="City"
                     defaultValue={editAddress.city}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => setCity(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    fullWidth
-                    label="State"
-                    id="standard-size-small"
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
+                    placeholder="State"
                     defaultValue={editAddress.state}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => setState(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    fullWidth
-                    label="Pincode"
-                    id="standard-size-small"
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
+                    placeholder="Pincode"
                     defaultValue={editAddress.pincode}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => {
                       if (e.target.value) setPincode(e.target.value);
@@ -299,11 +464,28 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
-                    fullWidth
-                    label="Mobile"
-                    id="standard-size-small"
+                    sx={{
+                      width: "100%",
+                      height: "22px",
+                      "& input": {
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "rgba(0, 0, 0, 0.23)",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#a36e29",
+                        },
+                      },
+                    }}
+                    placeholder="Mobile"
                     defaultValue={editAddress.mobile}
-                    size="large"
+                    size="small"
                     variant="outlined"
                     onChange={(e) => {
                       if (e.target.value.length <= 10)
@@ -312,32 +494,43 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <Button
-                    variant="solid"
-                    size="md"
-                    sx={{
-                      marginLeft: "20%",
-                      fontWeight: 600,
-                      backgroundColor: "#a36e29",
+                  <div
+                    style={{
+                      textAlign: "center",
+                      background:
+                        "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                      color: "white",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      paddingTop: "8px",
+                      paddingBottom: "8px",
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                      fontWeight: "bold",
                     }}
                     onClick={addNewAddress}
                   >
                     Save
-                  </Button>
+                  </div>
                 </Grid>
                 <Grid item xs={6}>
-                  <Button
-                    variant="outlined"
-                    size="md"
-                    sx={{
-                      marginRight: "20%",
-                      fontWeight: 600,
+                  <div
+                    style={{
+                      textAlign: "center",
+                      border: "1px solid #a36e29",
                       color: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      paddingTop: "8px",
+                      paddingBottom: "8px",
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                      fontWeight: "bold",
                     }}
                     onClick={() => setEditing(false)}
                   >
                     Cancel
-                  </Button>
+                  </div>
                 </Grid>
               </Grid>
             )}
@@ -363,102 +556,251 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
           <Box
             style={{
               width: "100%",
-              height: "max-content",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <Typography variant="body" style={{ fontWeight: "bold" }}>
+            <Typography
+              style={{
+                fontWeight: "bold",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+              }}
+            >
               Add New Address
             </Typography>
-            <CloseIcon onClick={() => setAddingNew(false)} />
+            <CloseIcon
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => setAddingNew(false)}
+            />
           </Box>
-          <Grid container spacing={3} style={{ marginTop: "2%" }}>
+          <Grid container spacing={3} style={{ marginTop: "1%" }}>
             <Grid item xs={6}>
               <TextField
-                fullWidth
-                label="First Name"
-                id="standard-size-small"
-                defaultValue={editAddress.firstName}
-                size="large"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
                 variant="outlined"
+                size="small"
+                placeholder="First Name"
+                defaultValue={editAddress.firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                fullWidth
-                label="Last Name"
-                id="standard-size-small"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Last Name"
                 defaultValue={editAddress.lastName}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setLastName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
                 fullWidth
-                label="Address Line 1"
-                id="standard-size-small"
+                placeholder="Address Line 1"
                 defaultValue={editAddress.addressLine1}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setAdd_line1(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
                 fullWidth
-                label="Address Line 2"
-                id="standard-size-small"
+                placeholder="Address Line 2"
                 defaultValue={editAddress.addressLine2}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setAdd_line2(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                fullWidth
-                label="City"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="City"
                 id="standard-size-small"
                 defaultValue={editAddress.city}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setCity(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                fullWidth
-                label="State"
-                id="standard-size-small"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="State"
                 defaultValue={editAddress.state}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setState(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                fullWidth
-                label="Pincode"
-                id="standard-size-small"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Pincode"
                 defaultValue={editAddress.pin}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setPincode(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                fullWidth
-                label="Phone"
-                id="standard-size-small"
+                sx={{
+                  width: "100%",
+                  height: "22px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Phone"
                 defaultValue={editAddress.mobile}
-                size="large"
+                size="small"
                 variant="outlined"
                 onChange={(e) => setMobile(e.target.value)}
               />
@@ -469,7 +811,8 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                 size="md"
                 sx={{
                   fontWeight: 600,
-                  minHeight: 50,
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
                   background:
                     "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
                 }}
@@ -486,7 +829,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
           variant="soft"
           style={{
             display: "flex",
-            minHeight: 30,
+            minHeight: 20,
             paddingLeft: "30px",
             paddingRight: "30px",
             marginTop: "3%",
@@ -498,12 +841,23 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="body" style={{ fontWeight: "bold" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              fontWeight: "bold",
+            }}
+          >
             Add New Address
           </Typography>
           <ControlPointIcon
             onClick={() => setAddingNew(true)}
-            style={{ fontSize: "1.7rem", marginLeft: "auto", color: "#A36E29" }}
+            style={{
+              fontSize: "1.2rem",
+              marginLeft: "auto",
+              color: "#A36E29",
+              cursor: "pointer",
+            }}
           />
         </Card>
       )}
