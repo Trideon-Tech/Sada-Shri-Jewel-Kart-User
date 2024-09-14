@@ -81,20 +81,19 @@ const SelectPaymentMethodStep = ({
   return (
     <Box
       style={{
-        width: matches ? "60%" : "100%",
+        width: matches ? "50%" : "100%",
         marginTop: "5%",
         height: "max-content",
         marginBottom: "5%",
       }}
     >
       <Typography
-        variant="h5"
         style={{
-          fontSize: "1.5rem",
-          color: "#505050",
+          color: "black",
           fontWeight: "bold",
-          marginTop: "5%",
           marginBottom: "3%",
+          fontFamily: '"Open Sans", sans-serif',
+          fontSize: "1.2rem",
         }}
       >
         Continue To Payment
@@ -109,20 +108,20 @@ const SelectPaymentMethodStep = ({
       <Box
         style={{
           width: "100%",
-          height: "max-content",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
         <Button
-          fullWidth
           variant="outlined"
           style={{
-            color: "black",
+            color: "rgba(163,110,41,1)",
             width: "47%",
             minHeight: 50,
             border: "2px solid rgba(163,110,41,1)",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1rem",
           }}
           onClick={() => setActiveStep(activeStep - 1)}
         >
@@ -133,6 +132,8 @@ const SelectPaymentMethodStep = ({
           style={{
             width: "47%",
             minHeight: 50,
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1rem",
             background:
               "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
           }}
