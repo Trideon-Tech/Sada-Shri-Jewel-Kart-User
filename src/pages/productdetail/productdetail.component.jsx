@@ -219,10 +219,10 @@ function ProductDetail() {
         setProductDetail((_) => detail);
         setCustomizationOptions({
           metal:
-            detail?.customizations.options_per_field["Choice Of Metal"] || [],
+            detail?.customizations?.options_per_field["Choice Of Metal"] || [],
           diamondQuality:
-            detail?.customizations.options_per_field["Diamond Quality"] || [],
-          size: detail?.customizations.options_per_field["Select Size"] || [],
+            detail?.customizations?.options_per_field["Diamond Quality"] || [],
+          size: detail?.customizations?.options_per_field["Select Size"] || [],
         });
 
         setVariants(detail?.customizations.variants.options);

@@ -1,9 +1,8 @@
-import { Input } from "@mui/joy";
+import { Close } from "@mui/icons-material";
 import Modal from "@mui/joy/Modal";
-import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
-import { Box, Button, Card, Grid, useMediaQuery } from "@mui/material";
+import { Box, Card, Grid, TextField, useMediaQuery } from "@mui/material";
 import axios from "axios";
 import Lottie from "lottie-react";
 import React, { useEffect, useState } from "react";
@@ -29,11 +28,10 @@ const CouponCard = ({
 
   return (
     <Card
-      elevation={4}
+      elevation={1}
       sx={{
         marginTop: "20px",
-        width: "100%",
-        height: "120px",
+        height: "100px",
         display: "flex",
         borderRadius: "10px",
       }}
@@ -62,10 +60,12 @@ const CouponCard = ({
           style={{
             height: "max-content",
             fontSize: "1.4rem",
-            writingMode: "vertical-rl",
             color: "white",
             textAlign: "center",
             fontWeight: 600,
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.2rem",
+            transform: "rotate(270deg)",
           }}
         >
           {item.coupon_text.substring(0, 7)}
@@ -78,30 +78,39 @@ const CouponCard = ({
           padding: "20px",
         }}
       >
-        <h3
+        <div
           style={{
-            fontWeight: 600,
-            margin: 0,
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.1rem",
+            fontWeight: "bold",
           }}
         >
           {item.code}
-        </h3>
-        <p style={{ margin: 0, color: "#00000060", fontWeight: 600 }}>
+        </div>
+        <p
+          style={{
+            margin: 0,
+            color: "#00000060",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
+          }}
+        >
           Valid till {item.coupon_validity}
         </p>
-        <div style={{ display: "flex" }}>
-          <Button
-            style={{
-              backgroundColor: "transparent",
-              marginLeft: "auto",
-              fontSize: "1.2rem",
-              fontWeight: 600,
-              color: "#A36E29",
-            }}
-            onClick={() => handleSelectedCoupon()}
-          >
-            Apply
-          </Button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            cursor: "pointer",
+            backgroundColor: "transparent",
+            fontWeight: "bold",
+            color: "#A36E29",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1rem",
+          }}
+          onClick={() => handleSelectedCoupon()}
+        >
+          APPLY
         </div>
       </div>
     </Card>
@@ -251,7 +260,7 @@ const Cart = () => {
   };
 
   return (
-    <div style={{ width: "100vw", height: "max-content" }}>
+    <div style={{ width: "100vw", height: "max-content", overflowX: "none" }}>
       <Navbar />
       <Modal
         open={modalOpen}
@@ -262,7 +271,7 @@ const Cart = () => {
         <ModalOverflow>
           <ModalDialog
             aria-labelledby="modal-dialog-overflow"
-            style={{ width: "500px", height: "600px", padding: "30px" }}
+            style={{ width: "450px", height: "600px", padding: "30px" }}
           >
             <div
               style={{
@@ -280,30 +289,69 @@ const Cart = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <p style={{ fontSize: "1.5rem", fontWeight: 600, margin: 0 }}>
+                <p
+                  style={{
+                    fontSize: "1.2rem",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontWeight: "bold",
+                    margin: 0,
+                  }}
+                >
                   Apply Coupon
                 </p>
-                <ModalClose />
+                <Close
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setModalOpen(false);
+                  }}
+                />
               </div>
               <div
                 style={{
                   width: "100%",
                   height: "max-content",
-                  marginTop: "50px",
+                  marginTop: "30px",
                 }}
               >
-                <Input
+                <TextField
                   sx={{
                     width: "100%",
-                    height: "60px",
-                    backgroundColor: "#F9F5EC",
-                    border: 0,
+                    "& input": {
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      backgroundColor: "#f9f5ec",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#a36e29",
+                      },
+                    },
                   }}
                   placeholder="Enter Coupon Code"
-                  inputProps={{ "aria-label": "Enter Coupon Code" }}
-                  endDecorator={
-                    <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
-                  }
+                  InputProps={{
+                    endAdornment: (
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                          color: "#A36E29",
+                          fontWeight: "bold",
+                          paddingLeft: "10px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        ADD
+                      </div>
+                    ),
+                  }}
                 />
               </div>
               <div
@@ -328,13 +376,15 @@ const Cart = () => {
           height: "100%",
           display: "flex",
           justifyContent: "space-around",
+          overflowX: "hidden",
+          backgroundColor: "rgba(163,110,41,0.08)",
         }}
       >
         {cartItems?.length > 0 ? (
-          <Box style={{ width: "70%" }}>
+          <Box style={{ width: "65%" }}>
             <Grid container spacing={6}>
               <Grid item xs={matches ? 8 : 12}>
-                <Box style={{ height: "60%", marginTop: "6.8%" }}>
+                <Box style={{ height: "60%", marginTop: "2rem" }}>
                   {cartItems?.map((item) => (
                     <CartItem
                       moveToWishlistHandler={moveToWishlistHandler}
@@ -368,6 +418,8 @@ const Cart = () => {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "space-around",
+              backgroundColor: "white",
+              width: "100vw",
             }}
           >
             <Lottie animationData={emptyCartAnimation} loop={true} />

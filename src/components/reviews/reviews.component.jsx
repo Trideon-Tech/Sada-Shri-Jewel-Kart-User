@@ -1,3 +1,8 @@
+import { AddAPhoto, DeleteForever } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/joy/Button";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
 import {
   Box,
   Divider,
@@ -10,14 +15,9 @@ import {
   Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-import { AddAPhoto, DeleteForever } from "@mui/icons-material";
-import CloseIcon from "@mui/icons-material/Close";
-import Button from "@mui/joy/Button";
-import Modal from "@mui/joy/Modal";
-import ModalDialog from "@mui/joy/ModalDialog";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { generalToastStyle } from "../../utils/toast.styles";
@@ -25,6 +25,7 @@ import OverAllRating from "./subComponents/overAllRating.component";
 import ReviewList from "./subComponents/reviewList.component";
 
 const Reviews = ({ productDetails, rating, reviewsCount }) => {
+  const navigate = useNavigate();
   const matches = useMediaQuery("(min-width:600px)");
   // console.log("produce Details ", productDetails);
   const [open, setOpen] = useState(false);
@@ -36,8 +37,15 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
   const [totalPages, setTotalPages] = useState(1);
 
   const openModal = () => {
-    setOpen(true);
+    if (localStorage.getItem("mobile") == null) {
+      navigate(
+        `/signin?redirect_to=/item/${productDetails?.category}/${productDetails?.name}-${productDetails?.hash}`
+      );
+    } else {
+      setOpen(true);
+    }
   };
+
   const addReviewHandler = () => {
     const formData = new FormData();
     formData.append("type", "post_reviews");

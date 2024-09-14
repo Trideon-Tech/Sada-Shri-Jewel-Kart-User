@@ -1,20 +1,12 @@
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import RemoveIcon from "@mui/icons-material/Remove";
-import React, { useEffect, useState } from "react";
-import BalanceIcon from "@mui/icons-material/Balance";
-import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
-import IndeterminateCheckBoxRoundedIcon from "@mui/icons-material/IndeterminateCheckBoxRounded";
-import Select from "@mui/joy/Select";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Option from "@mui/joy/Option";
 import { useMediaQuery } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import React from "react";
 
 export default function CartItem({
   item,
@@ -22,34 +14,23 @@ export default function CartItem({
   readOnly,
   moveToWishlistHandler,
 }) {
-  const [quantity, setQuantity] = useState(1);
   const matches = useMediaQuery("(min-width:600px)");
-
-  const theme = useTheme();
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  };
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
 
   return (
     <Card
       sx={{
-        borderRadius: "20px",
+        borderRadius: "10px",
         display: "flex",
         padding: "3%",
-        width: "93%",
-        height: matches ? "max-content" : "500px",
+        width: "90%",
+        height: matches ? "max-content" : "300px",
         aspectRatio: "4/1",
-        marginBottom: "5%",
+        marginBottom: "3%",
         justifyContent: "space-between",
         alignItems: "center",
         flexDirection: matches ? "row" : "column",
       }}
-      elevation={4}
+      elevation={1}
     >
       <Box
         style={{
@@ -63,8 +44,7 @@ export default function CartItem({
         {item?.images ? (
           <img
             src={`https://api.sadashrijewelkart.com/assets/${item?.images[0]?.file}`}
-            // src="https://api.sadashrijewelkart.com/assets/company/NewJwellers/products/webp/Faria%20Diamond%20Band-1706799778.webp"
-            style={{ height: "100%", width: "100%", objectFit: "contain" }}
+            style={{ height: "100%", width: "100%", objectFit: "cover" }}
           />
         ) : null}
       </Box>
@@ -76,20 +56,23 @@ export default function CartItem({
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
+          marginLeft: "20px",
         }}
       >
         <Typography
-          variant="h6"
-          gutterBottom
-          color="#505050"
-          style={{ textAlign: "left", fontWeight: "bold" }}
+          style={{
+            textAlign: "left",
+            fontWeight: "bold",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1rem",
+          }}
         >
           {item?.name}
         </Typography>
         <Box
           style={{
             width: "100%",
-            marginTop: "5%",
+            marginTop: "2%",
             height: "max-content",
             display: "flex",
             justifyContent: "flex-start",
@@ -106,22 +89,35 @@ export default function CartItem({
             }}
           >
             <Typography
-              variant="subtitle2"
-              style={{ color: "gray", fontSize: "1rem" }}
-              gutterBottom
+              style={{
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
             >
               Size :
             </Typography>
-            <Select
+            <Typography
+              style={{
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginLeft: "10px",
+              }}
+            >
+              {item.customization == -1 ? "Default" : ""}
+            </Typography>
+            {/* <Select
               placeholder="Select size"
               required
-              sx={{ width: 150, border: 0 }}
+              sx={{ width: "150px", border: 0, marginLeft: "10px" }}
+              disabled
             >
               <Option value="15cm">15cm</Option>
               <Option value="16cm">16cm</Option>
               <Option value="17cm">17cm</Option>
               <Option value="18cm">18cm</Option>
-            </Select>
+            </Select> */}
           </Box>
           <Box
             style={{
@@ -134,40 +130,36 @@ export default function CartItem({
             }}
           >
             <Typography
-              variant="subtitle2"
-              style={{ color: "gray", fontSize: "1rem" }}
-              gutterBottom
+              style={{
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
             >
               Quantity :
             </Typography>
-            <Select
-              value={quantity}
-              defaultValue={1}
-              onChange={(newValue) => setQuantity(newValue)}
-              required
-              sx={{ width: 150, border: 0 }}
+            <Typography
+              style={{
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginLeft: "10px",
+              }}
             >
-              <Option value={1}>1</Option>
-              <Option value={2}>2</Option>
-              <Option value={3}>3</Option>
-              <Option value={4}>4</Option>
-            </Select>
+              1 Pcs.
+            </Typography>
           </Box>
         </Box>
         <Typography
-          variant="subtitle2"
-          style={{ marginTop: "2%", fontSize: "1rem", fontWeight: "bold" }}
-          gutterBottom
+          style={{
+            marginTop: "2%",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            fontFamily: '"Open Sans", sans-serif',
+          }}
         >
-          <span style={{ fontWeight: "normal" }}>Price:</span> ₹
+          <span style={{ fontWeight: "normal" }}>Price :</span> ₹
           {parseFloat(item?.price).toLocaleString()}
-        </Typography>
-        <Typography
-          variant="subtitle2"
-          style={{ marginTop: "2%", color: "gray", fontSize: "1rem" }}
-          gutterBottom
-        >
-          Deliver By : 3rd September, 2024
         </Typography>
       </Box>
       {!readOnly ? (
@@ -195,13 +187,23 @@ export default function CartItem({
             style={{ marginTop: matches ? "auto" : 0 }}
             onClick={() => moveToWishlistHandler(item?.id, item?.cart_id)}
           >
-            <FavoriteIcon
-              fontSize="large"
-              style={{
-                color: item?.exists_in_wishlist ? "#A36E29" : "gray",
-                marginBottom: "auto",
-              }}
-            />
+            {item?.exists_in_wishlist ? (
+              <FavoriteIcon
+                fontSize="large"
+                style={{
+                  color: item?.exists_in_wishlist ? "#A36E29" : "gray",
+                  marginBottom: "auto",
+                }}
+              />
+            ) : (
+              <FavoriteBorderOutlined
+                fontSize="large"
+                style={{
+                  marginBottom: "auto",
+                  color: "#bfbfbf",
+                }}
+              />
+            )}
           </Button>
         </Box>
       ) : null}

@@ -10,12 +10,15 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
 
 import "../signin/signin.styles.scss";
 
 const Register = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  console.log(queryParams.get("redirect_to"));
   const isSignUp = window.location.pathname === "/signup";
   const matches = useMediaQuery("(min-width:600px)");
   let navigate = useNavigate();
@@ -135,7 +138,11 @@ const Register = () => {
               "user_data",
               response.data.response.user_details.user_details
             );
-            navigate("/");
+            if (queryParams.get("redirect_to") == null) {
+              navigate("/");
+            } else {
+              navigate(`${queryParams.get("redirect_to")}?drawer=close`);
+            }
           } else {
             navigate("/user-details");
           }

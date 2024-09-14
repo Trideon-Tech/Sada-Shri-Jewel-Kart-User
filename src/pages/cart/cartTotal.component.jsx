@@ -1,29 +1,22 @@
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import RemoveIcon from "@mui/icons-material/Remove";
-import React, { useEffect, useState } from "react";
-import BalanceIcon from "@mui/icons-material/Balance";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { Divider, CardContent, CircularProgress } from "@mui/material";
-import PinDropIcon from "@mui/icons-material/PinDrop";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
-import { Input, Textarea } from "@mui/joy";
-import MyLocationIcon from "@mui/icons-material/MyLocation";
+import { Close, LocalShippingOutlined } from "@mui/icons-material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CloseIcon from "@mui/icons-material/Close";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import MonetizationOnRoundedIcon from "@mui/icons-material/MonetizationOnRounded";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
+import PinDropIcon from "@mui/icons-material/PinDrop";
+import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
+import { Input } from "@mui/joy";
 import Modal from "@mui/joy/Modal";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
-import MonetizationOnRoundedIcon from "@mui/icons-material/MonetizationOnRounded";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function CartTotal({
   items,
@@ -95,6 +88,11 @@ export default function CartTotal({
   const [estimatedDelivery, setEstimatedDelivery] = useState("");
   const [inputPinCode, setInputPinCode] = useState(0);
   const [loadingEstimation, setLoadingEstimation] = useState(false);
+  const [pincode, setPincode] = useState("");
+  const [currentPosition, setCurrentPosition] = useState([]);
+  const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
+  const [currentPositionPincode, setCurrentPositionPincode] = useState("");
+  const [eta, setETA] = useState("");
 
   useEffect(() => {
     handleDeliveryEstimation();
@@ -127,6 +125,107 @@ export default function CartTotal({
     }
   };
 
+  const openLocationModal = async () => {
+    if (pincode === "") {
+      if ("geolocation" in navigator) {
+        await navigator.geolocation.getCurrentPosition(async function (
+          position
+        ) {
+          setCurrentPosition([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+
+          let locationResponse = await axios.get(
+            `https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&api_key=66d34ff0b8bdb852964430lcwc30d15`
+          );
+
+          setCurrentPositionAddresss(locationResponse.data.display_name);
+          setCurrentPositionPincode(locationResponse.data.address.postcode);
+
+          console.log("Comes here");
+          console.log(locationResponse.data.address.postcode);
+          getETA(locationResponse.data.address.postcode, items[0]["id"]);
+        });
+      }
+    }
+
+    setLocationModalOpen(true);
+  };
+
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split("-");
+    const date = new Date(`${year}-${month}-${day}`);
+
+    const dayOfMonth = date.getDate();
+    const daySuffix = (day) => {
+      if (day > 3 && day < 21) return "th"; // covers 11th, 12th, 13th, etc.
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    };
+
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    return `${dayOfMonth}${daySuffix(dayOfMonth)} ${
+      monthNames[date.getMonth()]
+    }, ${date.getFullYear()}`;
+  };
+
+  const getETA = async (pincode, id) => {
+    let etaResponse = await axios.get(
+      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+    );
+
+    setETA(() => formatDate(etaResponse.data.response.data.estimated_delivery));
+  };
+
+  const getETAFromInput = async (pincode, id) => {
+    let etaResponse = await axios.get(
+      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+    );
+
+    // Getting lat lng from Pincode
+    let latLngResponse = await axios.get(
+      `https://geocode.maps.co/search?q=${pincode}&api_key=66d34ff0b8bdb852964430lcwc30d15`
+    );
+
+    const timer = setTimeout(async () => {
+      // Getting add from lat lng
+      let addResponse = await axios.get(
+        `https://geocode.maps.co/reverse?lat=${latLngResponse.data[0].lat}&lon=${latLngResponse.data[0].lon}&api_key=66d34ff0b8bdb852964430lcwc30d15`
+      );
+
+      setCurrentPositionAddresss(addResponse.data.display_name);
+      setCurrentPositionPincode(addResponse.data.address.postcode);
+      setETA(() =>
+        formatDate(etaResponse.data.response.data.estimated_delivery)
+      );
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  };
+
   return (
     <Box
       style={{
@@ -146,8 +245,7 @@ export default function CartTotal({
       >
         <ModalOverflow>
           <ModalDialog
-            aria-labelledby="modal-dialog-overflow"
-            style={{ width: "500px", height: "600px", padding: "30px" }}
+            style={{ width: "30vw", height: "25vw", padding: "30px" }}
           >
             <div
               style={{
@@ -163,12 +261,25 @@ export default function CartTotal({
                   height: "max-content",
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <p style={{ fontSize: "1.5rem", fontWeight: 600, margin: 0 }}>
-                  Locate me now
+                <p
+                  style={{
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
+                    margin: 0,
+                    padding: 0,
+                  }}
+                >
+                  Locate Me now
                 </p>
-                <ModalClose />
+                <Close
+                  onClick={() => {
+                    setLocationModalOpen(false);
+                  }}
+                />
               </div>
               <div
                 style={{
@@ -182,37 +293,72 @@ export default function CartTotal({
                 }}
               >
                 <PinDropOutlinedIcon
-                  style={{ fontSize: "5rem", color: "#a36e29" }}
+                  style={{ fontSize: "4.5rem", color: "#a36e29" }}
                 />
                 <p
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: "1rem",
                     textAlign: "center",
-                    width: "300px",
-                    fontWeight: 600,
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
                   }}
                 >
-                  Add your Pincode to Browse Better
+                  Add your Pincode to
+                  <br />
+                  Browse Better
                 </p>
               </div>
               <div style={{ width: "100%", height: "max-content" }}>
                 <Input
                   sx={{
                     width: "100%",
-                    height: "60px",
+                    height: "3rem",
                     backgroundColor: "#F9F5EC",
                     border: 0,
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
                   }}
-                  placeholder="Enter your Pincode"
+                  placeholder="Enter your pincode"
                   inputProps={{ "aria-label": "Enter your Pincode" }}
-                  startDecorator={<MyLocationIcon />}
+                  startDecorator={
+                    <MyLocationIcon
+                      style={{
+                        paddingRight: "10px",
+                      }}
+                    />
+                  }
                   endDecorator={
-                    <p style={{ fontWeight: 600, color: "#A36E29" }}>ADD</p>
+                    <p
+                      style={{
+                        fontWeight: 600,
+                        color: "#A36E29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        if (pincode == 6) {
+                          setPincode(pincode);
+                          localStorage.setItem("default_pincode", pincode);
+                          setLocationModalOpen(false);
+                        }
+                      }}
+                    >
+                      Add
+                    </p>
                   }
                   onChange={(event) => {
-                    setInputPinCode(event.target.value);
-                    handleDeliveryEstimation();
-                    localStorage.setItem("default_pincode", event.target.value);
+                    console.log(event.target.value);
+                    if (event.target.value.length == 6) {
+                      setPincode(event.target.value);
+                      localStorage.setItem(
+                        "default_pincode",
+                        event.target.value
+                      );
+                      console.log("Sending");
+                      console.log(event.target.value);
+                      getETAFromInput(event.target.value, items[0]["id"]);
+                    }
                   }}
                 />
                 <div
@@ -223,69 +369,81 @@ export default function CartTotal({
                     justifyContent: "flex-start",
                     alignItems: "center",
                     color: "#A36E29",
-                    fontWeight: 600,
                     paddingLeft: "20px",
+                    paddingTop: "12px",
+                    paddingBottom: "20px",
                   }}
                 >
-                  <LocalShippingOutlinedIcon />
-                  {!loadingEstimation ? (
-                    <p>
-                      {"  "}Estimated delivery by {estimatedDelivery}
-                    </p>
-                  ) : (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        paddingTop: "15px",
-                        paddingBottom: "15px",
-                      }}
-                    >
-                      {"  "}Estimated delivery by
-                      <CircularProgress
-                        color="success"
-                        style={{
-                          color: "#A36E29",
-                          height: "20px",
-                          width: "20px",
-                        }}
-                      />
-                    </div>
-                  )}
+                  <LocalShippingOutlined />
+                  <span
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {eta === ""
+                      ? "Calculating Estimated Date of Delivery"
+                      : `Estimated delivery by ${eta}`}
+                  </span>
                 </div>
               </div>
               <Card
                 elevation={4}
                 sx={{
                   width: "calc(100% - 40px)",
-                  height: "60px",
+                  height: "3rem",
                   display: "flex",
                   borderRadius: "10px",
                   padding: "20px",
+                  paddingBottom: "25px",
                 }}
               >
-                <div style={{ width: "70%", height: "100%" }}>
-                  <h4
+                <div>
+                  <div
                     style={{
-                      fontWeight: 600,
-                      margin: 0,
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                      marginBottom: "3px",
                     }}
                   >
-                    City Location
-                  </h4>
-                  <p style={{ margin: 0, color: "gray", fontWeight: 600 }}>
-                    Jamshedpur, Jharkhand
-                  </p>
+                    City Located
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.6rem",
+                      fontWeight: "bold",
+                      marginTop: "3px",
+                      color: "grey",
+                    }}
+                  >
+                    {currentPositionAddress.length > 0
+                      ? currentPositionAddress
+                      : "Detecting your location"}
+                  </div>
                 </div>
                 <div
                   style={{ marginLeft: "auto", width: "30%", height: "100%" }}
                 >
                   <p
                     style={{
-                      fontWeight: 600,
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.85rem",
+                      fontWeight: "bold",
                       color: "#A36E29",
                       textAlign: "right ",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setPincode(currentPositionPincode);
+                      localStorage.setItem(
+                        "default_pincode",
+                        currentPositionPincode
+                      );
+                      setLocationModalOpen(false);
                     }}
                   >
                     Submit
@@ -310,24 +468,37 @@ export default function CartTotal({
           alignItems: "center",
           marginBottom: "5%",
         }}
-        elevation={4}
+        elevation={1}
       >
         <MonetizationOnRoundedIcon
           style={{ fontSize: "2rem", color: "#A36E29" }}
         />
         <Typography
-          style={{ marginLeft: "2%", fontWeight: "bold", marginRight: "auto" }}
+          style={{
+            marginLeft: "2%",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
+            marginRight: "auto",
+          }}
         >
-          Coins Available : {coinsRedeem}
+          Coins Available :{" "}
+          <span
+            style={{
+              fontWeight: "bold",
+            }}
+          >
+            {coinsRedeem}
+          </span>
         </Typography>
         <Button
           variant="outlined"
           style={{
             border: 0,
-            fontSize: "0.7rem",
+            fontSize: "0.8rem",
             color: "#A36E29",
             fontWeight: "bold",
-            marginRight: 0,
+            textTransform: "none",
+            fontFamily: '"Open Sans", sans-serif',
           }}
           onClick={() => {
             localStorage.setItem("coins_applied", !coinsApplied);
@@ -351,24 +522,37 @@ export default function CartTotal({
           alignItems: "center",
           marginBottom: "5%",
         }}
-        elevation={4}
+        elevation={1}
       >
         <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
         <Typography
-          style={{ fontWeight: "bold", marginRight: "auto", marginLeft: "2%" }}
+          style={{
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
+            marginRight: "auto",
+            marginLeft: "2%",
+          }}
         >
-          Delivering to : {localStorage.getItem("default_pincode")}
+          Delivering to :{" "}
+          <span
+            style={{
+              fontWeight: "bold",
+            }}
+          >
+            {localStorage.getItem("default_pincode")}
+          </span>
         </Typography>
         <Button
           variant="outlined"
           style={{
             border: 0,
-            fontSize: "0.7rem",
+            fontSize: "0.8rem",
             color: "#A36E29",
             fontWeight: "bold",
-            marginRight: 0,
+            textTransform: "none",
+            fontFamily: '"Open Sans", sans-serif',
           }}
-          onClick={() => setLocationModalOpen(true)}
+          onClick={openLocationModal}
         >
           Change Pincode
         </Button>
@@ -388,15 +572,17 @@ export default function CartTotal({
           marginBottom: "5%",
           textAlign: "left",
         }}
-        elevation={4}
+        elevation={1}
       >
         <LocalOfferIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
         <Typography
           style={{
             marginLeft: "5%",
             marginRight: "auto",
-            fontWeight: "bold",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
             color: selectedCouponCode ? "#A36E29" : "black",
+            fontWeight: selectedCouponCode ? "bold" : "normal",
           }}
         >
           {selectedCouponCode
@@ -414,11 +600,12 @@ export default function CartTotal({
       <Card
         style={{
           width: "90%",
-          minHeight: 250,
+          minHeight: 200,
           height: "max-content",
           borderRadius: "10px",
           backgroundColor: "white",
           padding: "5%",
+          paddingTop: "3%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-around",
@@ -426,15 +613,14 @@ export default function CartTotal({
           marginBottom: "5%",
           textAlign: "left",
         }}
-        elevation={4}
+        elevation={1}
       >
         <Typography
-          variant="h6"
           style={{
             textAlign: "left",
             fontWeight: "bold",
-            color: "#505050",
-            marginBottom: "5%",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.2rem",
           }}
         >
           Order Summary
@@ -443,14 +629,27 @@ export default function CartTotal({
           style={{
             width: "100%",
             display: "flex",
-            marginTop: "3%",
             alignItems: "center",
             justifyContent: "space-between",
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>Subtotal:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            Subtotal:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
             ₹ {Number(totalPrice).toLocaleString()}
           </Typography>
         </Box>
@@ -460,12 +659,27 @@ export default function CartTotal({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginTop: "3%",
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>You Saved:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>₹ 0</Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            You Saved:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            ₹ 0
+          </Typography>
         </Box>
         <Box
           style={{
@@ -473,12 +687,25 @@ export default function CartTotal({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginTop: "3%",
             color: "gray",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem" }}>Discount:</Typography>
-          <Typography style={{ fontSize: "1.1rem" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            Discount:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
             ₹ {Number(discountValue).toLocaleString()}
           </Typography>
         </Box>
@@ -489,7 +716,6 @@ export default function CartTotal({
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              marginTop: "3%",
               color: "gray",
             }}
           >
@@ -510,10 +736,24 @@ export default function CartTotal({
             color: "#050505",
           }}
         >
-          <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
             Total:
           </Typography>
-          <Typography style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.1rem",
+              color: "#A36E29",
+              fontWeight: "bold",
+            }}
+          >
             ₹{" "}
             {(
               Number(totalPrice) -
@@ -527,11 +767,12 @@ export default function CartTotal({
         variant="contained"
         style={{
           marginBottom: "5%",
-
-          minHeight: 65,
           backgroundColor: "#a36e29",
-          height: "10%",
           borderRadius: "10px",
+          elevation: "0",
+          fontFamily: '"Open Sans", sans-serif',
+          fontSize: "1rem",
+          fontWeight: "600",
           background:
             "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
         }}
