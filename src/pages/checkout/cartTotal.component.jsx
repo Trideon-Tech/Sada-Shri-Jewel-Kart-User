@@ -137,33 +137,6 @@ export default function CartTotal({ items, coinValueDiscount }) {
               fontSize: "0.8rem",
             }}
           >
-            You Saved:
-          </Typography>
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-          >
-            ₹ 0
-          </Typography>
-        </Box>
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: "1%",
-            color: "gray",
-          }}
-        >
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-          >
             Dicount:
           </Typography>
           <Typography
@@ -182,7 +155,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              marginTop: "3%",
+              marginTop: "1%",
               color: "gray",
             }}
           >

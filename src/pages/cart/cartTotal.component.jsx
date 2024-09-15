@@ -719,10 +719,22 @@ export default function CartTotal({
               color: "gray",
             }}
           >
-            <Typography style={{ fontSize: "1.1rem" }}>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
               Coins Redeemed:
             </Typography>
-            <Typography style={{ fontSize: "1.1rem" }}>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
               ₹ {coinsRedeem}
             </Typography>
           </Box>

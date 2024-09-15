@@ -205,7 +205,7 @@ const CheckoutForm = ({ cartItems }) => {
       amount: orderCreatedData.amount_due.toString(),
       currency: orderCreatedData.currency,
       name: "Sada Shri",
-      description: "Test Transaction",
+      description: "Payment Request",
       image: {
         logo: "https://source.unsplash.com/random/1280x720?jewellery&sig=1",
       },
@@ -243,13 +243,9 @@ const CheckoutForm = ({ cartItems }) => {
             toast.error(error.response.data.message, generalToastStyle);
           });
       },
-      prefill: {
-        name: "Soumya Dey",
-        email: "SoumyaDey@example.com",
-        contact: "9999999999",
-      },
       notes: {
-        address: "Soumya Dey Corporate Office",
+        address:
+          "Building No./Flat No.: NO 1323/1324Road/Street: 16TH B CROSS HOUSING BOARD COLONY EWS 3RD PHASE Locality/Sub Locality: Yelahanka New TownCity/Town/ Village: Bengaluru District: Bengaluru UrbanState: Karnataka PIN Code: 560064",
       },
       theme: {
         color: "#a36e29",
@@ -268,6 +264,9 @@ const CheckoutForm = ({ cartItems }) => {
     formData.append("user_id", localStorage.getItem("user_id"));
     formData.append("user_address_id", selectedAddress.id);
     formData.append("payment_status", "pending");
+    // TODO - Update
+    formData.append("coupon_id", "9");
+    formData.append("wallet_amount", "1620");
     // formData.append("amount", 4210);
     const orderList = cartItems?.map((item) => {
       return {

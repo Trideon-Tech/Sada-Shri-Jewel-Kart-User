@@ -1,32 +1,13 @@
-import * as React from "react";
-import { Box, Typography, useMediaQuery } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Avatar from "@mui/joy/Avatar";
-import FormLabel from "@mui/joy/FormLabel";
-import Radio, { radioClasses } from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import Sheet from "@mui/joy/Sheet";
-import Card from "@mui/joy/Card";
-import Divider from "@mui/material/Divider";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import Chip from "@mui/joy/Chip";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
-import Button from "@mui/joy/Button";
-import Stepper from "@mui/joy/Stepper";
-import Step from "@mui/joy/Step";
-import StepButton from "@mui/joy/StepButton";
-import StepIndicator from "@mui/joy/StepIndicator";
-import Check from "@mui/icons-material/Check";
-import Input from "@mui/joy/Input";
-import Grid from "@mui/material/Grid";
-import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import { Box, Typography, useMediaQuery } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import * as React from "react";
 import { useState } from "react";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
 const AddressTile = ({ address }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -68,15 +49,13 @@ const AddressTile = ({ address }) => {
   };
   return (
     <Card
-      elevation={3}
+      elevation={1}
       style={{
         width: "96%",
         height: isEditing ? "80%" : "40%",
         minWidth: matches ? "830px" : "300px",
         minHeight: "200px",
         backgroundColor: "white",
-        boxShadow: "0 0 3px 0 #555555",
-        marginTop: "2%",
         marginBottom: "3%",
         display: "flex",
         flexDirection: "column",
@@ -91,12 +70,14 @@ const AddressTile = ({ address }) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "2%",
             }}
           >
             <Typography
-              level="body-lg"
-              style={{ fontWeight: "bold", fontSize: "1.3rem" }}
+              style={{
+                fontWeight: "bold",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.2rem",
+              }}
             >
               {`${address?.name}`}
             </Typography>
@@ -108,23 +89,43 @@ const AddressTile = ({ address }) => {
             <CloseIcon />
           </Box>
           <Typography
-            style={{ fontWeight: 600, color: "#00000060" }}
-            level="body-lg"
+            style={{
+              fontWeight: 600,
+              color: "#00000060",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
           >
             {address?.add_line_1}
           </Typography>
           <Typography
-            style={{ fontWeight: 600, color: "#00000060" }}
-            level="body-lg"
+            style={{
+              fontWeight: 600,
+              color: "#00000060",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
           >
             {address?.add_line_2}{" "}
             {`${address?.add_line_2} - ${address?.city} ,${address?.state}`}
           </Typography>
-          <Typography level="body-lg">
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
+          >
             Pincode : {`${address?.pincode}`}
           </Typography>
 
-          <Typography level="body-lg"> Phone : {address?.mobile}</Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
+          >
+            Phone : {address?.mobile}
+          </Typography>
         </>
       ) : (
         <Box style={{ width: "100%" }}>
@@ -137,7 +138,13 @@ const AddressTile = ({ address }) => {
               marginBottom: "2%",
             }}
           >
-            <Typography style={{ fontSize: "1.2rem", fontWeight: 600 }}>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "bold",
+              }}
+            >
               Edit Address
             </Typography>
             <CloseIcon onClick={() => setIsEditing(false)} />
@@ -145,7 +152,27 @@ const AddressTile = ({ address }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                label="Name"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Name"
                 fullWidth
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -153,7 +180,27 @@ const AddressTile = ({ address }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Address Line 1"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Address Line 1"
                 value={add_line_1}
                 fullWidth
                 onChange={(e) => setAdd_line1(e.target.value)}
@@ -161,7 +208,27 @@ const AddressTile = ({ address }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Address Line 2"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Address Line 2"
                 value={add_line_2}
                 fullWidth
                 onChange={(e) => setAdd_line2(e.target.value)}
@@ -169,7 +236,27 @@ const AddressTile = ({ address }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="City"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="City"
                 value={city}
                 fullWidth
                 onChange={(e) => setCity(e.target.value)}
@@ -177,7 +264,27 @@ const AddressTile = ({ address }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="State"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="State"
                 fullWidth
                 value={state}
                 onChange={(e) => setState(e.target.value)}
@@ -185,7 +292,27 @@ const AddressTile = ({ address }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Phone"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Phone"
                 fullWidth
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
@@ -193,24 +320,59 @@ const AddressTile = ({ address }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
                 value={pincode}
-                label="Pincode"
+                placeholder="Pincode"
                 fullWidth
                 onChange={(e) => setPincode(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <Button
-                size="lg"
                 variant="outlined"
                 fullWidth
-                style={{ border: "3px solid #A36E29", color: "#A36E29" }}
+                style={{
+                  border: "1px solid #A36E29",
+                  color: "#A36E29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  marginTop: "20px",
+                }}
               >
                 Cancel
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button size="lg" fullWidth style={{ background: "#A36E29" }}>
+              <Button
+                fullWidth
+                style={{
+                  background: "#A36E29",
+                  border: "1px solid #A36E29",
+                  color: "white",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  marginTop: "20px",
+                }}
+              >
                 Save
               </Button>
             </Grid>

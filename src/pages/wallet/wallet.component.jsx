@@ -1,36 +1,19 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Paper,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Button, Paper, Typography, useMediaQuery } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const HistoryInfo = ({ logData, orderDetail }) => {
+  console.log("hhh", logData);
   return (
     <div
       style={{
         width: "100%",
-        minHeight: "100px",
+        minHeight: "90px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <div
-        style={{
-          width: "56px",
-          height: "56px",
-          flex: "none",
-          borderRadius: "100px",
-          backgroundColor: "#D9D9D9",
-        }}
-      >
-        <img src="" alt="" />
-      </div>
       <div
         style={{
           width: "100%",
@@ -49,11 +32,24 @@ const HistoryInfo = ({ logData, orderDetail }) => {
             justifyContent: "space-between",
           }}
         >
-          <p style={{ margin: 0, fontSize: "16px" }}>
-            {" "}
-            <b>{logData?.order_details[0]?.product_name}</b>
+          <p
+            style={{
+              margin: 0,
+              fontSize: "16px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              fontWeight: "bold",
+            }}
+          >
+            {logData?.order_details[0]?.product_name}
           </p>
-          <p style={{ margin: 0, fontSize: "16px" }}>
+          <p
+            style={{
+              margin: 0,
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
+          >
             <b>₹ {logData?.amount}</b>
           </p>
         </div>
@@ -69,22 +65,24 @@ const HistoryInfo = ({ logData, orderDetail }) => {
             style={{
               margin: 0,
               color: "#00000060",
-              fontWeight: 700,
               fontSize: "14px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
             }}
           >
             {" "}
-            {logData?.created_at} Pm
+            {logData?.created_at}
           </p>
           <p
             style={{
               margin: 0,
               color: "#00000060",
-              fontWeight: 700,
               fontSize: "14px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
             }}
           >
-            <b>Paid against order #{logData.order_details[0].public_id}</b>
+            Paid against order #{logData.order_details[0].public_id}
           </p>
         </div>
       </div>
@@ -161,7 +159,6 @@ const Wallet = () => {
     <Box
       style={{
         width: "100%",
-        padding: matches ? "1%" : 0,
         height: "100%",
         overflowY: "scroll",
         display: "flex",
@@ -175,19 +172,19 @@ const Wallet = () => {
         style={{
           width: matches ? "80%" : "100%",
           margin: "auto",
+          marginTop: "20px",
           textAlign: "left",
-          marginTop: "30px",
         }}
       >
         <Typography
           style={{
-            marginTop: "2.5%",
-            fontSize: "2rem",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.4rem",
             fontWeight: "bold",
-            marginLeft: matches ? 0 : "10px",
+            marginBottom: "30px",
           }}
         >
-          Your Wallet
+          Wallet
         </Typography>
 
         <Paper
@@ -196,12 +193,12 @@ const Wallet = () => {
             minHeight: "500px",
             padding: matches ? "50px" : "10px",
             paddingTop: "30px",
+            marginBottom: "30px",
           }}
         >
           <div
             style={{
               width: "calc(100% - 70px)",
-              height: "300px",
               borderRadius: "10px",
               display: "flex",
               justifyContent: "space-around",
@@ -213,18 +210,17 @@ const Wallet = () => {
             <div
               style={{
                 width: "300px",
-                height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                alignContent: "center",
               }}
             >
               <p
                 style={{
+                  fontFamily: '"Open Sans", sans-serif',
                   fontSize: "1.4rem",
                   fontWeight: 600,
                   color: "white",
-                  margin: 0,
-                  marginTop: "auto",
                 }}
               >
                 Available Balance
@@ -233,6 +229,7 @@ const Wallet = () => {
                 style={{
                   margin: 0,
                   marginBottom: "auto",
+                  fontFamily: '"Open Sans", sans-serif',
                   fontSize: "5rem",
                   fontWeight: 500,
                   color: "white",
@@ -256,6 +253,7 @@ const Wallet = () => {
             style={{
               width: "100%",
               marginTop: "30px",
+              marginBottom: "30px",
               height: "max-content",
               display: "flex",
               alignItems: "center",
@@ -271,6 +269,8 @@ const Wallet = () => {
                 border: "2px solid #A36E29",
                 fontWeight: 600,
                 borderRadius: "10px",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
               }}
               onClick={() => setShowDebit(false)}
             >
@@ -287,22 +287,15 @@ const Wallet = () => {
                 border: "2px solid #A36E29",
                 fontWeight: 600,
                 borderRadius: "10px",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
               }}
               onClick={() => setShowDebit(true)}
             >
               Debit History
             </Button>
           </div>
-          <div
-            style={{ width: "100%", height: "max-content", minHeight: "300px" }}
-          >
-            <div
-              style={{ width: "100%", display: "flex", alignItems: "center" }}
-            >
-              <p>Today</p>
-              <Divider style={{ width: "90%", marginLeft: "auto" }} />
-            </div>
-
+          <div style={{ width: "100%", height: "max-content" }}>
             {showDebit
               ? debitLog.map((item) => (
                   <HistoryInfo

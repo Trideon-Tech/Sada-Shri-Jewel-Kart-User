@@ -377,7 +377,8 @@ const Cart = () => {
           display: "flex",
           justifyContent: "space-around",
           overflowX: "hidden",
-          backgroundColor: "rgba(163,110,41,0.08)",
+          backgroundColor:
+            cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
         }}
       >
         {cartItems?.length > 0 ? (
@@ -420,6 +421,7 @@ const Cart = () => {
               justifyContent: "space-around",
               backgroundColor: "white",
               width: "100vw",
+              height: "300px",
             }}
           >
             <Lottie animationData={emptyCartAnimation} loop={true} />

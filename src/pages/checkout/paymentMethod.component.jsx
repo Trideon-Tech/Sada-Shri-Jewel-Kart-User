@@ -1,4 +1,5 @@
 import { Box, Card, Typography } from "@mui/material";
+
 const PaymentMethod = ({
   setPaymentMethod,
   paymentMethod,

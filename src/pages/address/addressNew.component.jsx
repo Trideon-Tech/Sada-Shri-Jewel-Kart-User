@@ -1,32 +1,14 @@
-import * as React from "react";
-import { Box, Typography, useMediaQuery } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Avatar from "@mui/joy/Avatar";
-import FormLabel from "@mui/joy/FormLabel";
-import Radio, { radioClasses } from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import Sheet from "@mui/joy/Sheet";
-import Card from "@mui/joy/Card";
-import Divider from "@mui/material/Divider";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import Chip from "@mui/joy/Chip";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
-import Button from "@mui/joy/Button";
-import Stepper from "@mui/joy/Stepper";
-import Step from "@mui/joy/Step";
-import StepButton from "@mui/joy/StepButton";
-import StepIndicator from "@mui/joy/StepIndicator";
-import Check from "@mui/icons-material/Check";
-import Input from "@mui/joy/Input";
-import Grid from "@mui/material/Grid";
-import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import { Box, Typography, useMediaQuery } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import * as React from "react";
 import { useState } from "react";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
+
 const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -70,14 +52,13 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
   };
   return (
     <Card
-      elevation={3}
+      elevation={1}
       style={{
         width: "95%",
         height: isEditing ? "90%" : "25%",
         minWidth: matches ? "700px" : "250px",
         minHeight: "10px",
         backgroundColor: "white",
-        boxShadow: "0 0 3px 0 #555555",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -88,6 +69,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
         <Box
           style={{
             width: "100%",
+            height: "22px",
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center",
@@ -96,7 +78,8 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
           <Typography
             style={{
               fontWeight: "bold",
-              fontSize: "1.3rem",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
               color: "#00000060",
             }}
           >
@@ -104,7 +87,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
           </Typography>
           <ControlPointIcon
             onClick={() => setIsEditing(true)}
-            style={{ fontSize: "2rem", marginLeft: "auto", color: "#A36E29" }}
+            style={{ fontSize: "1.2rem", marginLeft: "auto", color: "#A36E29" }}
           />
         </Box>
       ) : (
@@ -118,7 +101,13 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
               marginBottom: "2%",
             }}
           >
-            <Typography style={{ fontSize: "1.2rem", fontWeight: 600 }}>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+                fontWeight: 600,
+              }}
+            >
               Edit Address
             </Typography>
             <CloseIcon onClick={() => setIsEditing(false)} />
@@ -126,7 +115,26 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                label="Name"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Name"
                 fullWidth
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -134,58 +142,178 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Address Line 1"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Address Line 1"
                 value={add_line_1}
-                fullWidth
                 onChange={(e) => setAdd_line1(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Address Line 2"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Address Line 2"
                 value={add_line_2}
-                fullWidth
                 onChange={(e) => setAdd_line2(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="City"
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="City"
                 value={city}
-                fullWidth
                 onChange={(e) => setCity(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="State"
-                fullWidth
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="State"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Phone"
-                fullWidth
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
+                placeholder="Phone"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
+                sx={{
+                  width: "100%",
+                  height: "35px",
+                  marginTop: "20px",
+                  "& input": {
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
                 value={pincode}
-                label="Pincode"
-                fullWidth
+                placeholder="Pincode"
                 onChange={(e) => setPincode(e.target.value)}
               />
             </Grid>
             <Grid item xs={6}>
               <Button
-                size="lg"
-                variant="outlined"
                 fullWidth
-                style={{ border: "2px solid #A36E29", color: "#A36E29" }}
+                variant="outlined"
+                style={{
+                  border: "2px solid #A36E29",
+                  color: "#A36E29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  marginTop: "20px",
+                  height: "50px",
+                }}
               >
                 Cancel
               </Button>
@@ -193,9 +321,16 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
             <Grid item xs={6}>
               <Button
                 onClick={() => addNewAddress()}
-                size="lg"
                 fullWidth
-                style={{ background: "#A36E29" }}
+                style={{
+                  border: "2px solid #A36E29",
+                  color: "white",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  marginTop: "20px",
+                  height: "50px",
+                  backgroundColor: "#A36E29",
+                }}
               >
                 Save
               </Button>

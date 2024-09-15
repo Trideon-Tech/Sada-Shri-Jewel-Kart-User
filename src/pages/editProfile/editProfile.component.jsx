@@ -3,16 +3,10 @@ import {
   Box,
   Button,
   Card,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Input,
+  Grid,
   TextField,
   Typography,
 } from "@mui/material";
-import Slide from "@mui/material/Slide";
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -58,8 +52,7 @@ const EditProfile = () => {
     <Box
       style={{
         width: "100%",
-        height: "100%",
-        overflowY: "scroll",
+        overflowY: "hidden",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
@@ -70,12 +63,16 @@ const EditProfile = () => {
         style={{
           width: "70%",
           margin: "auto",
+          marginTop: "20px",
           textAlign: "left",
-          marginTop: "30px",
         }}
       >
         <Typography
-          style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
+          style={{
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+          }}
         >
           Edit Profile
         </Typography>
@@ -83,140 +80,213 @@ const EditProfile = () => {
       <Card
         style={{
           margin: "auto",
+          marginTop: "50px",
+          marginBottom: "20px",
           width: "70%",
-          minHeight: "600px",
-          height: "max-content",
-          paddingBottom: "20px",
+          paddingBottom: "40px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
           paddingTop: "20px",
-          marginTop: "20px",
         }}
-        elevation={3}
+        elevation={1}
       >
         <Avatar
           sx={{
-            width: "130px",
-            height: "130px",
-            fontSize: "3.5rem",
+            width: "100px",
+            height: "100px",
+            fontSize: "2.7rem",
             background:
               "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
           }}
         >
           {firstName.charAt(0)}
         </Avatar>
-        <Box
+        <Grid
+          container
+          spacing={2}
+          rowSpacing={3}
           style={{
             marginTop: "30px",
             width: "80%",
-            height: "70%",
-            minHeight: "200px",
-
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "center",
           }}
         >
-          <Box
-            style={{
-              width: "100%",
-              height: "max-content",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <Grid item xs={6}>
             <TextField
+              sx={{
+                width: "100%",
+                height: "35px",
+                "& input": {
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#a36e29",
+                  },
+                },
+              }}
               value={firstName}
-              variant="outlined"
-              label="First Name*"
-              fullWidth
-              style={{ width: "45%" }}
+              placeholder="First Name"
               onChange={(event) => {
                 setFirstName(event.target.value);
               }}
             />
+          </Grid>
+          <Grid item xs={6}>
             <TextField
+              sx={{
+                width: "100%",
+                height: "35px",
+                "& input": {
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#a36e29",
+                  },
+                },
+              }}
               value={lastName}
-              variant="outlined"
-              label="Last Name*"
-              fullWidth
-              style={{ width: "45%" }}
+              placeholder="Last Name"
               onChange={(event) => {
                 setLastName(event.target.value);
               }}
             />
-          </Box>
-
-          <TextField
-            value={email}
-            variant="outlined"
-            label="Enter Email Id"
-            fullWidth
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-          />
-          <TextField
-            value={mobile}
-            label="Phone*"
-            fullWidth
-            onChange={(event) => {
-              if (Number.isInteger(Number(event.target.value)))
-                if (event.target.value.length <= 12)
-                  setMobile(event.target.value);
-            }}
-          />
-          <TextField
-            value={pincode}
-            variant="outlined"
-            label="Default Pincode*"
-            fullWidth
-            onChange={(event) => {
-              setPincode(event.target.value);
-              localStorage.setItem("default_pincode", event.target.value);
-            }}
-          />
-          <Box
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              sx={{
+                width: "100%",
+                height: "35px",
+                marginTop: '10px',
+                "& input": {
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#a36e29",
+                  },
+                },
+              }}
+              value={email}
+              placeholder="Enter Email Id"
+              fullWidth
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              sx={{
+                width: "100%",
+                height: "35px",
+                marginTop: '10px',
+                "& input": {
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#a36e29",
+                  },
+                },
+              }}
+              value={mobile}
+              placeholder="Phone*"
+              fullWidth
+              onChange={(event) => {
+                if (Number.isInteger(Number(event.target.value)))
+                  if (event.target.value.length <= 12)
+                    setMobile(event.target.value);
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              sx={{
+                width: "100%",
+                height: "35px",
+                marginTop: '10px',
+                "& input": {
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#a36e29",
+                  },
+                },
+              }}
+              value={pincode}
+              placeholder="Default Pincode*"
+              fullWidth
+              onChange={(event) => {
+                setPincode(event.target.value);
+                localStorage.setItem("default_pincode", event.target.value);
+              }}
+            />
+          </Grid>
+        </Grid>
+        <div
+          style={{
+            width: "80%",
+            display: "flex",
+            justifyContent: "end",
+            marginTop: "30px",
+            marginRight: "10px",
+          }}
+        >
+          <Button
+            size="medium"
+            variant="contained"
             style={{
-              width: "100%",
-              height: "max-content",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              width: "25%",
+              background:
+                "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              textTransform: "none",
             }}
+            onClick={() => updateProfile()}
           >
-            {" "}
-            <Button
-              variant="outlined"
-              size="large"
-              style={{
-                marginLeft: "auto",
-                width: "25%",
-                border: "2px solid #a36e29",
-                color: "#a36e29",
-                marginRight: "20px",
-              }}
-            >
-              Cancel Canges
-            </Button>
-            <Button
-              size="large"
-              variant="contained"
-              style={{
-                width: "25%",
-                background:
-                  "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
-              }}
-              onClick={() => updateProfile()}
-            >
-              Save Canges
-            </Button>
-          </Box>
-        </Box>
+            Save Changes
+          </Button>
+        </div>
       </Card>
     </Box>
   );

@@ -17,14 +17,13 @@ const OrderItem = ({
     <Card
       style={{
         minWidth: matches ? "837px" : "100%",
-        minHeight: "331px",
         width: "95%",
         height: matches ? "10%" : "max-content",
         padding: "2.5%",
         borderRadius: "10px",
         marginBottom: "50px",
       }}
-      elevation={2}
+      elevation={1}
       onClick={() => {
         handleCancelOrder(true);
         selectHandler(orderInfo.id);
@@ -42,8 +41,9 @@ const OrderItem = ({
         <Typography
           style={{
             fontWeight: "bold",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.2rem",
             color: titleColors[titleColorType],
-            fontSize: "1.4rem",
           }}
         >
           Arriving Tomorrow
@@ -56,20 +56,26 @@ const OrderItem = ({
             alignItems: "flex-start",
           }}
         >
-          <Typography style={{ color: "#7e7e7e" }}>
+          <Typography
+            style={{
+              color: "#7e7e7e",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
             Order ID: #{orderInfo?.public_id}
           </Typography>
-          <Button
+          <div
             style={{
-              padding: 0,
-              fontSize: "0.7rem",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
               fontWeight: "bold",
               color: "#a36e29",
-              backgroundColor: "white",
+              textAlign: "end",
             }}
           >
             Write us a Review
-          </Button>
+          </div>
         </Box>
       </Box>
       <Box
@@ -77,7 +83,7 @@ const OrderItem = ({
           display: "flex",
           width: "100%",
           height: "60%",
-          marginTop: "2%",
+          marginTop: "1%",
           justifyContent: "space-between",
           flexDirection: matches ? "row" : "column",
           alignItems: "center",
@@ -110,18 +116,6 @@ const OrderItem = ({
             alignItems: "flex-start",
           }}
         >
-          <Typography
-            variant="h6"
-            gutterBottom
-            color="#505050"
-            style={{
-              textAlign: "left",
-              fontWeight: "bold",
-              fontSize: "1.6rem",
-            }}
-          >
-            {orderInfo?.name}
-          </Typography>
           <Box
             style={{
               width: "100%",
@@ -135,23 +129,6 @@ const OrderItem = ({
             <Box
               style={{
                 display: "flex",
-                width: "max-content",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                variant="subtitle2"
-                style={{ color: "gray", fontSize: "1.2rem" }}
-                gutterBottom
-              >
-                Size : 20in
-              </Typography>
-            </Box>
-            <Box
-              style={{
-                display: "flex",
-                marginLeft: "10%",
                 marginRight: "auto",
                 width: "max-content",
                 justifyContent: "space-evenly",
@@ -159,33 +136,41 @@ const OrderItem = ({
               }}
             >
               <Typography
-                variant="subtitle2"
-                style={{ color: "gray", fontSize: "1.2rem" }}
+                style={{
+                  color: "gray",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                }}
                 gutterBottom
               >
-                Quantity : 1
+                Quantity : 1pcs
               </Typography>
             </Box>
           </Box>
           <Typography
-            variant="subtitle2"
             style={{
               marginTop: "2%",
-              fontSize: "1.2rem",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
               color: "gray",
             }}
             gutterBottom
           >
-            Price:{" "}
+            Price :{" "}
             <span style={{ color: "black", fontWeight: "bold" }}>
               ₹ {parseFloat(Number(orderInfo?.price)).toLocaleString()}
             </span>{" "}
           </Typography>
           <Typography
-            variant="subtitle2"
-            style={{ marginTop: "2%", color: "gray", fontSize: "1.2rem" }}
+            style={{
+              marginTop: "2%",
+              color: "gray",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+            }}
             gutterBottom
           >
+            {/* TODO - Chenge */}
             Order Placed : 3rd September, 2024
           </Typography>
         </Box>
@@ -195,7 +180,7 @@ const OrderItem = ({
           width: "100%",
           height: "15%",
           display: "flex",
-          marginTop: "2%",
+          marginTop: "3%",
           justifyContent: "space-between",
           alignItems: "center",
         }}
@@ -209,6 +194,8 @@ const OrderItem = ({
             border: "2px solid #a36e29",
             color: "#a36e29",
             fontWeight: "bold",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
           }}
         >
           Need Help?
@@ -222,6 +209,8 @@ const OrderItem = ({
             border: "2px solid #a36e29",
             fontWeight: "bold",
             color: "#a36e29",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
           }}
         >
           {titleColorType === "arriving" ? "Cancel " : "Return Order"}
@@ -235,6 +224,8 @@ const OrderItem = ({
             height: "100%",
             background:
               "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
           }}
         >
           Track Order

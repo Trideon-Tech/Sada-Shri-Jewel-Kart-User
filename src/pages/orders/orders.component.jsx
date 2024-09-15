@@ -1,21 +1,19 @@
 import {
   Box,
-  Button,
-  Card,
   TextareaAutosize,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 
-import Tabs from "@mui/joy/Tabs";
-import TabList from "@mui/joy/TabList";
-import Tab, { tabClasses } from "@mui/joy/Tab";
-import OrderItem from "./orderItem.component";
 import { TabPanel } from "@mui/joy";
-import { useEffect, useState } from "react";
+import Tab, { tabClasses } from "@mui/joy/Tab";
+import TabList from "@mui/joy/TabList";
+import Tabs from "@mui/joy/Tabs";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import CartItem from "../cart/cartItem.component";
+import OrderItem from "./orderItem.component";
 const Orders = () => {
   const [orderList, setOrderList] = useState([]);
 
@@ -82,10 +80,8 @@ const Orders = () => {
     <Box
       style={{
         width: "100%",
-        padding: "1%",
         paddingRight: matches ? "14%" : "5%",
         maxHeight: "100%",
-        height: "max-content",
         overflowY: "scroll",
         display: "flex",
         marginLeft: "auto",
@@ -135,11 +131,15 @@ const Orders = () => {
           width: "70%",
           margin: "auto",
           textAlign: "left",
-          marginTop: "30px",
         }}
       >
         <Typography
-          style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
+          style={{
+            marginTop: "20px",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+          }}
         >
           Orders and Returns
         </Typography>
@@ -165,6 +165,8 @@ const Orders = () => {
             bgcolor: "#f7f7f7",
             color: "#00000090",
             fontWeight: "bold",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
 
             [`& .${tabClasses.root}[aria-selected="true"]`]: {
               boxShadow: "sm",

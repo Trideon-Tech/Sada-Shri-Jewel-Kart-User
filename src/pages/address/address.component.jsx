@@ -1,10 +1,10 @@
-import * as React from "react";
 import { Box, Typography, useMediaQuery } from "@mui/material";
+import * as React from "react";
 
 import axios from "axios";
 import { useState } from "react";
-import AddressTile from "./addressTile.component";
 import AddressNew from "./addressNew.component";
+import AddressTile from "./addressTile.component";
 
 const Address = () => {
   const matches = useMediaQuery("(min-width:600px)");
@@ -35,7 +35,6 @@ const Address = () => {
       style={{
         width: "100%",
 
-        height: "100%",
         overflowY: "scroll",
         display: "flex",
         flexDirection: "column",
@@ -44,18 +43,21 @@ const Address = () => {
         paddingBottom: "30px",
       }}
     >
-      {" "}
       <Box
         style={{
           width: matches ? "70%" : "100%",
-          margin: "auto",
           marginBottom: "20px",
-          marginTop: "30px",
+          marginTop: "20px",
           textAlign: "left",
         }}
       >
         <Typography
-          style={{ marginTop: "2.5%", fontSize: "2rem", fontWeight: "bold" }}
+          style={{
+            marginTop: "20px",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+          }}
         >
           Saved Addresses
         </Typography>
