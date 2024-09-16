@@ -1,392 +1,447 @@
-import React, { useState } from "react";
+import { Button, Card, Grid, Paper } from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
-import { Button, Paper } from "@mui/material";
-import CartItem from "../cart/cartItem.component";
-import { useNavigate } from "react-router-dom";
-
-const productData = {
-  id: "7",
-  name: "Margerit Splendid Diamond Band",
-  hash: "D2A3F7",
-  description:
-    '<p><span style="color: rgb(79, 50, 103);">Set in 14 KT Rose Gold(1.230 g) with diamonds (0.100 ct ,IJ-SI)</span></p>',
-  category: "Rings",
-  sub_category: "Engagement",
-  price: "16827",
-  cart_id: "7",
-  customization_applied: true,
-  customization: {
-    fields: ["Choice Of Metal", "Diamond Quality", "Select Size"],
-    variant: [
-      {
-        id: "1",
-        created_at: "2024-02-04 06:17:00",
-        updated_at: "0000-00-00 00:00:00",
-        product: "7",
-        for_customization_options: ["14 KT Rose Gold", "GH-SI", "5 / 44.8mm"],
-        price: "18266",
-        made_on_order: "1",
-        for_customization_fields: [
-          "Choice Of Metal",
-          "Diamond Quality",
-          "Select Size",
-        ],
-      },
-    ],
-  },
-  images: [
-    {
-      id: "19",
-      created_at: "2024-02-04 06:17:00",
-      updated_at: "0000-00-00 00:00:00",
-      product: "7",
-      is_primary: "0",
-      type: "img",
-      file: "company/NewJwellers/products/webp/Margerit Splendid Diamond Band-1707027420.webp",
-    },
-    {
-      id: "20",
-      created_at: "2024-02-04 06:17:00",
-      updated_at: "0000-00-00 00:00:00",
-      product: "7",
-      is_primary: "0",
-      type: "img",
-      file: "company/NewJwellers/products/webp/Margerit Splendid Diamond Band-1707027420.webp",
-    },
-    {
-      id: "21",
-      created_at: "2024-02-04 06:17:00",
-      updated_at: "0000-00-00 00:00:00",
-      product: "7",
-      is_primary: "0",
-      type: "img",
-      file: "company/NewJwellers/products/webp/Margerit Splendid Diamond Band-1707027420.webp",
-    },
-  ],
-};
-
-const OrderConfirmation3 = () => {
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "#F8F8F8",
-        display: "flex",
-        paddingTop: "100px",
-        justifyContent: "center",
-      }}
-    >
-      <Navbar />
-    </div>
-  );
-};
 
 const OrderConfirmation = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [orderDetails, setOrderDetails] = useState();
+  const [companyName, setCompanyName] = useState();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=order_confirmation_details&order_record_id=${searchParams.get(
+          "order_record_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("orders", response.data.response);
+        setOrderDetails(response.data.response);
+
+        const uniqueCompanyNames = [
+          ...new Set(
+            response.data.response["order_details"].map(
+              (order) => order.company_name
+            )
+          ),
+        ];
+
+        const formattedNames =
+          uniqueCompanyNames.length > 1
+            ? uniqueCompanyNames.slice(0, -1).join(", ") +
+              " and " +
+              uniqueCompanyNames.slice(-1)
+            : uniqueCompanyNames[0];
+
+        setCompanyName(formattedNames);
+      })
+      .catch((error) =>
+        console.log("Error while fetching order details", error)
+      );
+  }, []);
+
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "#F8F8F8",
-        display: "flex",
-        paddingTop: "100px",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <div>
       <Navbar />
-      <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "#F8F8F8",
-          display: "flex",
-          paddingTop: "100px",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ width: "70%", height: "100%" }}>
-          <div
-            style={{
-              width: "100%",
-              height: "max-content",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <p style={{ fontSize: "2rem", fontWeight: 600 }}>
-              Thanks you for your order #1232143545
-            </p>
-            <Button
-              style={{
-                borderRadius: "10px",
-                border: "2px solid #a36e29",
-                width: "200px",
-                backgroundColor: "white",
-                height: "57px",
-                color: "#a36e29",
-              }}
-              onClick={() => navigate("/jwellery/Rings/1/false")}
-            >
-              Continue Shopping
-            </Button>
-          </div>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-start",
-            }}
-          >
-            <p style={{ fontSize: "2rem" }}>
-              Congratulations you have received ₹
-              <span style={{ fontWeight: 600, color: "#a36e29" }}>345</span> in
-              your wallet{" "}
-            </p>
-          </div>
-          <div
-            style={{
-              width: "100%",
-              height: "max-content",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}
-          >
+      {typeof orderDetails === "undefined" ? (
+        <div>Loading</div>
+      ) : (
+        <div
+          style={{
+            width: "100vw",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ width: "70%" }}>
             <div
               style={{
-                width: "60%",
-                height: "max-content",
+                width: "100%",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <p
+                style={{
+                  fontWeight: 600,
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.4rem",
+                }}
+              >
+                Thanks you for your order #
+                {orderDetails["order_record"]["public_id"]}
+              </p>
+              <Button
+                style={{
+                  borderRadius: "10px",
+                  border: "2px solid #a36e29",
+                  width: "200px",
+                  backgroundColor: "white",
+                  color: "#a36e29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+                onClick={() => navigate("/")}
+              >
+                Continue Shopping
+              </Button>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
                 alignItems: "flex-start",
               }}
             >
               <div
                 style={{
-                  width: "100%",
-                  height: "max-content",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
+                  width: "30vw",
                 }}
               >
                 <div
                   style={{
-                    width: "50%",
-                    height: "max-content",
-                    textAlign: "left",
+                    display: "flex",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    color: "grey",
                   }}
                 >
-                  <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
-                  <p style={{ fontWeight: 600 }}>Value Shipping</p>
-                  <p style={{ fontWeight: 600 }}>Arriving By 7th May 10</p>
-                  <p style={{ fontWeight: 600, color: "gray" }}>
-                    Sold by Sada Shri Jewel Kart
-                  </p>
-                  <p style={{ fontWeight: 600, color: "gray" }}>
-                    Order #1234562343567
-                  </p>
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/coins.png"}
+                    height={40}
+                    style={{
+                      marginRight: "12px",
+                    }}
+                  />
+                  <>
+                    Congratulations you have received&nbsp;
+                    <span style={{ fontWeight: 600, color: "#a36e29" }}>
+                      {`₹${
+                        orderDetails["wallet_transaction"].find(
+                          (transaction) =>
+                            transaction.transaction_type === "credit"
+                        )["amount"]
+                      }`}
+                    </span>
+                    &nbsp;in your wallet
+                  </>
                 </div>
                 <div
                   style={{
-                    width: "50%",
                     height: "max-content",
-                    textAlign: "left",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
                   }}
                 >
-                  <p style={{ fontWeight: 600, color: "gray" }}>
-                    Shipping Address
-                  </p>
-                  <p style={{ fontWeight: 600, color: "gray" }}>JP Singh</p>
-                  <p style={{ width: "200px", fontWeight: 600, color: "gray" }}>
-                    92, South Park Street, Bangalore, India-843212
-                    xyz@gmail.com +91-7250516843
-                  </p>
-                  <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontWeight: 600,
+                          color: "gray",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "1rem",
+                        }}
+                      >
+                        Order Placed
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "10px",
+                        }}
+                      >
+                        Standard Shipping
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "10px",
+                        }}
+                      >
+                        Arriving By 7th May 10
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "10px",
+                          color: "gray",
+                        }}
+                      >
+                        Sold by {companyName}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontWeight: 600,
+                          color: "gray",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "1rem",
+                        }}
+                      >
+                        Shipping Address
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "10px",
+                        }}
+                      >
+                        {orderDetails["user_address"]["name"]}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "10px",
+                        }}
+                      >
+                        {`${orderDetails["user_address"]["add_line_1"]}`}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {`${orderDetails["user_address"]["add_line_2"]}`}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {`${orderDetails["user_address"]["city"]}, ${orderDetails["user_address"]["state"]}`}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          marginTop: "5px",
+                        }}
+                      >
+                        {`${orderDetails["user_address"]["pincode"]}`}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "max-content",
+                      marginTop: "30px",
+                    }}
+                  >
+                    {orderDetails["order_details"].map((o) => (
+                      <Card
+                        sx={{
+                          padding: "3%",
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "20px",
+                        }}
+                        elevation={1}
+                      >
+                        <img
+                          src={`https://api.sadashrijewelkart.com/assets/${o?.images[0]?.file}`}
+                          height={150}
+                          style={{
+                            borderRadius: "10px",
+                          }}
+                        />
+                        <div
+                          style={{
+                            marginLeft: "20px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "1.1rem",
+                              fontWeight: "600",
+                            }}
+                          >
+                            {o["product_name"]}
+                          </div>
+
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                              marginTop: "18px",
+                            }}
+                          >
+                            Qty: 1pcs
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                              marginTop: "8px",
+                            }}
+                          >
+                            Price:{" "}
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                              }}
+                            >
+                              ₹{o["price"]}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                              marginTop: "8px",
+                            }}
+                          >
+                            Delivery by Tommorow
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <Paper
+                        style={{
+                          borderRadius: "5px",
+                          padding: "10px",
+                          paddingLeft: "20px",
+                          paddingRight: "20px",
+                        }}
+                        elevation={1}
+                      >
+                        <div
+                          style={{
+                            fontWeight: 600,
+                            textAlign: "left",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                          }}
+                        >
+                          Order Summary
+                        </div>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Paper
+                        style={{
+                          borderRadius: "5px",
+                          padding: "20px",
+                          paddingLeft: "40px",
+                          paddingRight: "40px",
+                        }}
+                        elevation={1}
+                      >
+                        <div
+                          style={{
+                            fontWeight: 600,
+                            textAlign: "left",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                          }}
+                        >
+                          Billing Address
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                            marginTop: "30px",
+                          }}
+                        >
+                          {orderDetails["user_address"]["name"]}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                            marginTop: "10px",
+                          }}
+                        >
+                          {`${orderDetails["user_address"]["add_line_1"]}`}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                            marginTop: "5px",
+                          }}
+                        >
+                          {`${orderDetails["user_address"]["add_line_2"]}`}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                            marginTop: "5px",
+                          }}
+                        >
+                          {`${orderDetails["user_address"]["city"]}, ${orderDetails["user_address"]["state"]}`}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.9rem",
+                            marginTop: "5px",
+                          }}
+                        >
+                          {`${orderDetails["user_address"]["pincode"]}`}
+                        </div>
+                      </Paper>
+                    </Grid>
+                  </Grid>
                 </div>
               </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "max-content",
-                  minHeight: "200px",
-                }}
-              >
-                <CartItem
-                  moveToWishlistHandler={() => {}}
-                  key={"someId"}
-                  item={productData}
-                  removeHandler={() => {}}
-                />
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "max-content",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Paper
-                  style={{
-                    width: "35%",
-                    minHeight: "300px",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    paddingLeft: "20px",
-                    paddingRight: "20px",
-                  }}
-                  elevation={5}
-                >
-                  <p style={{ fontWeight: 600, textAlign: "left" }}>
-                    Order Summary
-                  </p>
-                </Paper>
-                <Paper
-                  style={{
-                    width: "35%",
-                    minHeight: "300px",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    paddingLeft: "20px",
-                    paddingRight: "20px",
-                  }}
-                  elevation={5}
-                >
-                  <p style={{ fontWeight: 600, textAlign: "left" }}>
-                    Billing Address
-                  </p>
-                </Paper>
-              </div>
-            </div>
-            <div
-              style={{
-                width: "40%",
-                height: "max-content",
-                minHeight: "100px",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const OrderConfirmation1 = () => {
-  //   useState();
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "#F8F8F8",
-        display: "flex",
-        paddingTop: "100px",
-        justifyContent: "center",
-      }}
-    >
-      <Navbar />
-      <div style={{ width: "70%", height: "100%" }}>
-        <div
-          style={{
-            width: "100%",
-            height: "max-content",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <p style={{ fontSize: "2rem", fontWeight: 600 }}>
-            Thanks you for your order #1232143545
-          </p>
-          <Button
-            style={{
-              borderRadius: "10px",
-              border: "2px solid #a36e29",
-              width: "200px",
-              backgroundColor: "white",
-              height: "57px",
-              color: "#a36e29",
-            }}
-          >
-            Continue Shopping
-          </Button>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
-        >
-          <p style={{ fontSize: "2rem" }}>
-            Congratulations you have received{" "}
-            <span style={{ fontWeight: 600, color: "#a36e29" }}>345</span> in
-            your wallet{" "}
-          </p>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            height: "max-content",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "60%",
-              height: "max-content",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <div
-              style={{ width: "50%", height: "max-content", textAlign: "left" }}
-            >
-              <p style={{ fontWeight: 600, color: "gray" }}>Order Placed</p>
-              <p style={{ fontWeight: 600 }}>Value Shipping</p>
-              <p style={{ fontWeight: 600 }}>Arriving By 7th May 10</p>
-              <p style={{ fontWeight: 600, color: "gray" }}>
-                Sold by Sada Shri Jewel Kart
-              </p>
-              <p style={{ fontWeight: 600, color: "gray" }}>
-                Order #1234562343567
-              </p>
-            </div>
-            <div
-              style={{ width: "50%", height: "max-content", textAlign: "left" }}
-            >
-              <p style={{ fontWeight: 600, color: "gray" }}>Shipping Address</p>
-              <p style={{ fontWeight: 600, color: "gray" }}>JP Singh</p>
-              <p style={{ width: "200px", fontWeight: 600, color: "gray" }}>
-                92, South Park Street, Bangalore, India-843212
-                xyz@gmail.com +91-7250516843
-              </p>
-              <p>Order Placed</p>
+              <img
+                src={process.env.PUBLIC_URL + "/assets/anim.png"}
+                height={500}
+              />
             </div>
           </div>
-          <div>
-            <CartItem
-              moveToWishlistHandler={() => {}}
-              key={"someId"}
-              item={{ name: "Diamond Jewellery" }}
-              removeHandler={() => {}}
-            />
-          </div>
-
-          <div style={{ width: "40%", height: "max-content" }}></div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

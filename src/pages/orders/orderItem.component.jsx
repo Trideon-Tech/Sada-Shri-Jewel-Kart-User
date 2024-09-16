@@ -22,10 +22,11 @@ const OrderItem = ({
         padding: "2.5%",
         borderRadius: "10px",
         marginBottom: "50px",
+        cursor: "pointer",
       }}
       elevation={1}
       onClick={() => {
-        handleCancelOrder(true);
+        // handleCancelOrder(true);
         selectHandler(orderInfo.id);
       }}
     >

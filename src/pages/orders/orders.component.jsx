@@ -1,3 +1,7 @@
+import { TabPanel } from "@mui/joy";
+import Tab, { tabClasses } from "@mui/joy/Tab";
+import TabList from "@mui/joy/TabList";
+import Tabs from "@mui/joy/Tabs";
 import {
   Box,
   TextareaAutosize,
@@ -5,16 +9,15 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
-
-import { TabPanel } from "@mui/joy";
-import Tab, { tabClasses } from "@mui/joy/Tab";
-import TabList from "@mui/joy/TabList";
-import Tabs from "@mui/joy/Tabs";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CartItem from "../cart/cartItem.component";
 import OrderItem from "./orderItem.component";
+
 const Orders = () => {
+  const navigate = useNavigate();
+
   const [orderList, setOrderList] = useState([]);
 
   const matches = useMediaQuery("(min-width:600px)");
@@ -183,13 +186,22 @@ const Orders = () => {
         </TabList>
         <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
-            {openOrdersList.map((order) => (
-              <OrderItem
-                orderInfo={order}
-                selectHandler={setSelectedOrderId}
-                handleCancelOrder={setModalOpen}
-              />
-            ))}
+            {openOrdersList
+              .sort(
+                (a, b) =>
+                  parseInt(b.order_record_id) - parseInt(a.order_record_id)
+              )
+              .map((order) => (
+                <OrderItem
+                  orderInfo={order}
+                  selectHandler={() => {
+                    navigate(
+                      `/order-confirmation?order_record_id=${order.order_record_id}`
+                    );
+                  }}
+                  handleCancelOrder={setModalOpen}
+                />
+              ))}
           </Box>
         </TabPanel>
         <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>
