@@ -47,6 +47,7 @@ import "./productdetail.styles.scss";
 
 import { Input } from "@mui/joy";
 import JwelleryCard from "../../components/card/jwellerycard.component";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 import Reviews from "../../components/reviews/reviews.component";
 import { useRefresh } from "../../RefreshContent";
@@ -1607,6 +1608,8 @@ function ProductDetail() {
             reviewsCount={totalReviewsCount}
           />
         </div>
+
+        <Footer />
       </div>
       <div className="mobile">
         <div className="container">

@@ -236,7 +236,9 @@ const CheckoutForm = ({ cartItems }) => {
           .then((response) => {
             console.log("order created", response);
             toast.info("Payment Verified", generalToastStyle);
-            navigate("/order-confirmation");
+            navigate(
+              `/order-confirmation?order_record_id=${response.data.response["order_record"]["id"]}`
+            );
           })
           .catch((error) => {
             console.error("Error:", error);

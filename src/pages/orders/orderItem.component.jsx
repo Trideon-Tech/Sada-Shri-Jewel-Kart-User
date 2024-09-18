@@ -5,6 +5,7 @@ const OrderItem = ({
   orderInfo,
   selectHandler,
   handleCancelOrder,
+  writeReview,
 }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -13,6 +14,55 @@ const OrderItem = ({
     delivered: "#33A329",
     cancelled: "#f7333f",
   };
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    // Check if the date is today, tomorrow, or yesterday
+    if (date.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      return "Tomorrow";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    }
+
+    // Format for other dates
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const dayOfMonth = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `on ${dayOfMonth}${
+      dayOfMonth === 1
+        ? "st"
+        : dayOfMonth === 2
+        ? "nd"
+        : dayOfMonth === 3
+        ? "rd"
+        : "th"
+    } ${month} ${year}`;
+  }
+
   return (
     <Card
       style={{
@@ -22,13 +72,8 @@ const OrderItem = ({
         padding: "2.5%",
         borderRadius: "10px",
         marginBottom: "50px",
-        cursor: "pointer",
       }}
       elevation={1}
-      onClick={() => {
-        // handleCancelOrder(true);
-        selectHandler(orderInfo.id);
-      }}
     >
       <Box
         style={{
@@ -47,7 +92,7 @@ const OrderItem = ({
             color: titleColors[titleColorType],
           }}
         >
-          Arriving Tomorrow
+          Arriving {formatDate(orderInfo["estimated_date"])}
         </Typography>
         <Box
           style={{
@@ -73,7 +118,9 @@ const OrderItem = ({
               fontWeight: "bold",
               color: "#a36e29",
               textAlign: "end",
+              cursor: "pointer",
             }}
+            onClick={writeReview}
           >
             Write us a Review
           </div>
@@ -88,6 +135,10 @@ const OrderItem = ({
           justifyContent: "space-between",
           flexDirection: matches ? "row" : "column",
           alignItems: "center",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          selectHandler(orderInfo.id);
         }}
       >
         <Box
@@ -169,10 +220,9 @@ const OrderItem = ({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
             }}
-            gutterBottom
           >
             {/* TODO - Chenge */}
-            Order Placed : 3rd September, 2024
+            Order placed {formatDate(orderInfo["order_created_date"])}
           </Typography>
         </Box>
       </Box>
@@ -212,6 +262,9 @@ const OrderItem = ({
             color: "#a36e29",
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "0.8rem",
+          }}
+          onClick={() => {
+            if (titleColorType === "arriving") handleCancelOrder(true);
           }}
         >
           {titleColorType === "arriving" ? "Cancel " : "Return Order"}

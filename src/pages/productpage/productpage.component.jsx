@@ -19,6 +19,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import JwelleryCard from "../../components/card/jwellerycard.component";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
 import "./productpage.styles.scss";
@@ -330,6 +331,7 @@ function Productpage() {
             </Grid>
           </Grid>
         </div>
+        <Footer />
       </div>
       <div className="mobile" style={{ height: "max-content" }}>
         <div className="block-with-background">

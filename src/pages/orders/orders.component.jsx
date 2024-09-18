@@ -29,6 +29,8 @@ const Orders = () => {
   const [completedOrdersList, setCompletedOrderList] = useState([]);
   const [cancelledOrdersList, setCancelledOrderList] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [categories, setCategories] = useState();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -47,6 +49,7 @@ const Orders = () => {
       )
       .then((response) => {
         console.log("orders", response.data.response);
+
         setOrderList(response.data.response);
         setOpenOrderList(
           response.data.response.filter(
@@ -78,7 +81,25 @@ const Orders = () => {
     backgroundColor: "white",
     p: 4,
   };
+
   const [modalOpen, setModalOpen] = useState(false);
+
+  const writeReview = (item) => {
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
+      .then((response) => {
+        setCategories(response.data.response.categories);
+
+        navigate(
+          `/item/${
+            response.data.response.categories.find(
+              (c) => c.id === item.product_categories
+            )["name"]
+          }/${item["product_name"]}-${item["product_hash"]}?drawer=open`
+        );
+      });
+  };
+
   return (
     <Box
       style={{
@@ -98,8 +119,6 @@ const Orders = () => {
         onClose={() => {
           setModalOpen(false);
         }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography
@@ -200,6 +219,7 @@ const Orders = () => {
                     );
                   }}
                   handleCancelOrder={setModalOpen}
+                  writeReview={() => writeReview(order)}
                 />
               ))}
           </Box>

@@ -48,7 +48,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://sadashrijewelkart.com/",
+  "homepage": "https://stage.sadashrijewelkart.com/",
   "browserslist": {
     "production": [
       ">0.2%",
