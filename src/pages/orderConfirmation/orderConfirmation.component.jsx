@@ -1,7 +1,8 @@
-import { Button, Card, Grid, Paper } from "@mui/material";
+import { Button, Card, Divider, Grid, Paper } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 
 const OrderConfirmation = () => {
@@ -187,15 +188,6 @@ const OrderConfirmation = () => {
                           fontFamily: '"Open Sans", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "10px",
-                        }}
-                      >
-                        Arriving By 7th May 10
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: '"Open Sans", sans-serif',
-                          fontSize: "0.9rem",
-                          marginTop: "10px",
                           color: "gray",
                         }}
                       >
@@ -346,9 +338,10 @@ const OrderConfirmation = () => {
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: "10px",
+                          padding: "20px",
                           paddingLeft: "20px",
                           paddingRight: "20px",
+                          marginBottom: "50px",
                         }}
                         elevation={1}
                       >
@@ -361,6 +354,117 @@ const OrderConfirmation = () => {
                           }}
                         >
                           Order Summary
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginTop: "30px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                            }}
+                          >
+                            Subtotal
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹ {orderDetails["order_record"]["sub_total_amount"]}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                            }}
+                          >
+                            Coins Redeemed
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              orderDetails["wallet_transaction"].find(
+                                (transaction) =>
+                                  transaction.transaction_type === "credit"
+                              )["amount"]
+                            }
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                            }}
+                          >
+                            Discount
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹ {orderDetails["order_record"]["discount_amount"]}
+                          </div>
+                        </div>
+                        <Divider />
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+                            }}
+                          >
+                            Net Total
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.9rem",
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹ {orderDetails["order_record"]["amount"]}
+                          </div>
                         </div>
                       </Paper>
                     </Grid>
@@ -442,6 +546,7 @@ const OrderConfirmation = () => {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 };
