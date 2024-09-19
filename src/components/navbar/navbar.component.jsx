@@ -1,17 +1,15 @@
 import {
   AccountCircleOutlined,
   FavoriteBorderOutlined,
+  MenuOutlined,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/joy/Badge";
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
@@ -28,7 +26,6 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  ListItemText,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -480,6 +477,7 @@ const Navbar = () => {
           </Toolbar>
         </AppBar>
       </div>
+      {/* MobileUI */}
       <div className="mobile">
         <Drawer
           className="drawer"
@@ -488,8 +486,20 @@ const Navbar = () => {
           onClose={() => setOpenDrawer(false)}
         >
           <List>
-            <ListItem>
-              <ListItemText primary="Welcome, User" />
+            <ListItem
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                Welcome, User
+              </div>
               <IconButton onClick={() => setOpenDrawer(false)}>
                 <CloseIcon />
               </IconButton>
@@ -497,7 +507,6 @@ const Navbar = () => {
             {menuItems.map((category) => (
               <ListItem
                 key={category.id}
-                button
                 onClick={() => handleMenuItemClick(category)}
               >
                 <ListItemAvatar>
@@ -506,7 +515,14 @@ const Navbar = () => {
                     src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
                   />
                 </ListItemAvatar>
-                <ListItemText primary={category.name} />
+                <div
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  {category.name}
+                </div>
               </ListItem>
             ))}
           </List>
@@ -518,6 +534,7 @@ const Navbar = () => {
               alt="logo"
               className="logo"
               src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
+              onClick={() => navigate("/")}
             />
             <div className="search">
               <div className="search-icon">
@@ -527,34 +544,61 @@ const Navbar = () => {
                     slotProps={{ root: { variant: "plain", color: "neutral" } }}
                     sx={{ borderRadius: 40 }}
                   >
-                    <AccountCircleIcon style={{ color: "#a36e29" }} />
+                    <AccountCircleOutlined style={{ color: "#a36e29" }} />
                   </MenuButton>
                   <Menu
                     style={{
-                      width: "40vw",
                       height: "max-content",
                     }}
                   >
                     {localStorage.getItem("token") ? (
                       <MenuItem component={Link} to="/my-account">
-                        <AccountCircleIcon style={{ color: "#a36e29" }} />
-                        <Typography>My Account</Typography>
+                        <AccountCircleOutlined style={{ color: "#a36e29" }} />
+                        <Typography
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          My Account
+                        </Typography>
                       </MenuItem>
                     ) : (
                       <MenuItem component={Link} to="/signup">
                         <HowToRegRoundedIcon style={{ color: "#a36e29" }} />
-                        <Typography>Register</Typography>
+                        <Typography
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          Register
+                        </Typography>
                       </MenuItem>
                     )}
                     {localStorage.getItem("token") ? (
                       <MenuItem onClick={handleLogout}>
                         <ExitToAppRoundedIcon style={{ color: "#a36e29" }} />
-                        <Typography>Logout</Typography>
+                        <Typography
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          Logout
+                        </Typography>
                       </MenuItem>
                     ) : (
                       <MenuItem component={Link} to="/signin">
                         <LoginRoundedIcon style={{ color: "#a36e29" }} />
-                        <Typography>SignIn</Typography>
+                        <Typography
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          SignIn
+                        </Typography>
                       </MenuItem>
                     )}
                   </Menu>
@@ -562,23 +606,35 @@ const Navbar = () => {
 
                 <IconButton color="inherit" component={Link} to="/wishlist">
                   <Badge
-                    badgeContent={4}
-                    sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
+                    badgeContent={wishListItems}
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        backgroundColor: "#a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                    }}
                   >
-                    <FavoriteIcon />
+                    <FavoriteBorderOutlined />
                   </Badge>
                 </IconButton>
                 <IconButton color="inherit" component={Link} to="/cart">
                   <Badge
                     badgeContent={cartLength}
-                    sx={{ "& .MuiBadge-badge": { backgroundColor: "#a36e29" } }}
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        backgroundColor: "#a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                      },
+                    }}
                   >
-                    <ShoppingCartIcon />
+                    <ShoppingCartOutlined />
                   </Badge>
                 </IconButton>
                 <IconButton>
-                  <MenuIcon
-                    style={{ fontSize: "2rem", color: "#a36e29" }}
+                  <MenuOutlined
+                    style={{ color: "#a36e29" }}
                     onClick={() => setOpenDrawer(true)}
                   />
                 </IconButton>

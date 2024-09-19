@@ -1,7 +1,10 @@
 import { Box, Container, Divider, Grid, Typography } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
 
 function Footer() {
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <Box
       component="footer"
@@ -15,23 +18,25 @@ function Footer() {
         <Grid container spacing={2}>
           <Grid
             item
-            xs={6}
+            xs={matches ? 6 : 12}
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent: `${matches ? "left" : "center"}`,
+              marginBottom: "20px",
             }}
           >
             <img
               src={process.env.PUBLIC_URL + "/assets/logo_dark.png"}
-              width={220}
+              width={matches ? 220 : 180}
             />
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={matches ? 3 : 12}>
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1.2rem",
+                fontSize: `${matches ? "1.2rem" : "1rem"}`,
                 fontWeight: "bold",
               }}
             >
@@ -40,7 +45,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 marginTop: "10px",
               }}
@@ -50,7 +55,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
             >
@@ -59,7 +64,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
             >
@@ -68,7 +73,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
             >
@@ -77,11 +82,11 @@ function Footer() {
           </Grid>
 
           {/* Column 3 */}
-          <Grid item xs={3}>
+          <Grid item xs={matches ? 3 : 12}>
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1.2rem",
+                fontSize: `${matches ? "1.2rem" : "1rem"}`,
                 fontWeight: "bold",
               }}
             >
@@ -90,7 +95,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 marginTop: "10px",
               }}
@@ -102,7 +107,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
               align="left"
@@ -112,7 +117,7 @@ function Footer() {
             <Typography
               style={{
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.9rem",
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
               align="left"
@@ -125,7 +130,7 @@ function Footer() {
         <Typography
           style={{
             fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.9rem",
+            fontSize: `${matches ? "0.9rem" : "0.6rem"}`,
             color: "grey",
             marginTop: "10px",
             paddingBottom: "50px",

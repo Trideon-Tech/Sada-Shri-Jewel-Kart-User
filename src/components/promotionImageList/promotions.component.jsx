@@ -1,9 +1,8 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { Grid } from "@mui/material";
+import Box from "@mui/material/Box";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import * as React from "react";
+
 export default function PromotionImageList() {
   const matches = useMediaQuery("(min-width:600px)");
   return (

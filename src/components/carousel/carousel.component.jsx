@@ -72,13 +72,14 @@ function CarouselPanel() {
                   height: "70vh",
                   overflow: "hidden",
                   width: "100%",
+                  backgroundColor: "pink",
                 }}
               >
                 <img
                   style={{
-                    objectFit: "contain",
+                    objectFit: "cover",
                     width: "100%",
-                    height: "auto",
+                    height: "70vh",
                   }}
                   src={process.env.PUBLIC_URL + step.imgPath}
                   alt={step.label}
