@@ -133,13 +133,6 @@ function Productpage() {
     const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
 
     const response = await axios.get(apiUrl, { params });
-    // setJwellery([
-    //   ...response?.data?.response,
-    //   ...response?.data?.response,
-    //   ...response?.data?.response,
-    //   ...response?.data?.response,
-    //   ...response?.data?.response,
-    // ]);
     setJwellery(response?.data?.response);
     console.log(response?.data?.response);
     setProductsLoaded(true);

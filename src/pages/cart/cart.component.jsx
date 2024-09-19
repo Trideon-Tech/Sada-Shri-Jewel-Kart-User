@@ -20,7 +20,6 @@ const CouponCard = ({
   couponCodeSelector,
 }) => {
   const handleSelectedCoupon = () => {
-    localStorage.setItem("selected_coupon", item.id);
     handleClose(false);
     couponSelectHandler(item.id);
     couponCodeSelector(item.code);

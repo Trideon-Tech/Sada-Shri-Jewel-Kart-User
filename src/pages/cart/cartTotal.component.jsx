@@ -50,7 +50,6 @@ export default function CartTotal({
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    // if (!sessionStorage.getItem("cart")) {
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
@@ -69,7 +68,6 @@ export default function CartTotal({
       .catch((error) => console.log("Error while fetching wallet info", error));
   }, []);
   useEffect(() => {
-    console.log("couponData", couponData);
     if (!selectedCouponId) {
       setDiscountValue(0);
     }
@@ -99,7 +97,6 @@ export default function CartTotal({
   }, [inputPinCode]);
 
   const handleDeliveryEstimation = () => {
-    const token = localStorage.getItem("token");
     const pinCode = localStorage.getItem("default_pincode");
     console.log(pinCode);
     if (pinCode && pinCode.length > 5) {
@@ -112,12 +109,7 @@ export default function CartTotal({
           setEstimatedDelivery(
             `${response?.data?.response?.data?.estimated_delivery}  ${response?.data?.response?.data?.estimated_day}`
           );
-          console.log(
-            response?.data?.response?.data.estimated_delivery,
-            response?.data?.response?.data.estimated_day
-          );
           setLoadingEstimation(false);
-          // setCoinsRedeem(response?.data?.response[0].balance);
         })
         .catch((error) =>
           console.log("Error while fetching wallet info", error)
@@ -501,7 +493,6 @@ export default function CartTotal({
             fontFamily: '"Open Sans", sans-serif',
           }}
           onClick={() => {
-            localStorage.setItem("coins_applied", !coinsApplied);
             setCoinsApplied(!coinsApplied);
           }}
         >
@@ -653,34 +644,7 @@ export default function CartTotal({
             ₹ {Number(totalPrice).toLocaleString()}
           </Typography>
         </Box>
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "gray",
-          }}
-        >
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-          >
-            You Saved:
-          </Typography>
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-              color: "black",
-              fontWeight: "bold",
-            }}
-          >
-            ₹ 0
-          </Typography>
-        </Box>
+
         <Box
           style={{
             width: "100%",
@@ -745,6 +709,34 @@ export default function CartTotal({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            color: "gray",
+          }}
+        >
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            You Saved:
+          </Typography>
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            ₹ {Number(discountValue) + (coinsApplied ? Number(coinsRedeem) : 0)}
+          </Typography>
+        </Box>
+        <Box
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
             color: "#050505",
           }}
         >
@@ -789,7 +781,13 @@ export default function CartTotal({
             "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
         }}
         component={Link}
-        to={localStorage.getItem("token") ? "/checkout" : "/signin"}
+        to={
+          localStorage.getItem("token")
+            ? `/checkout?discount=${selectedCouponId}&coins=${
+                coinsApplied ? coinsRedeem : 0
+              }`
+            : "/signin"
+        }
         fullWidth
       >
         {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}

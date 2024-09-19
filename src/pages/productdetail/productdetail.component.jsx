@@ -1,5 +1,6 @@
 import {
   Close,
+  CloseSharp,
   FavoriteBorderOutlined,
   LocalShippingOutlined,
   LocationOnOutlined,
@@ -26,7 +27,6 @@ import {
   Card,
   Dialog,
   DialogActions,
-  DialogContent,
   DialogTitle,
   Drawer,
   Grid,
@@ -721,7 +721,6 @@ function ProductDetail() {
       </Modal>
       <Dialog
         open={openShareDialog}
-        maxWidth={200}
         style={{
           borderRadius: "20px",
           margin: "auto",
@@ -730,10 +729,30 @@ function ProductDetail() {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>Share product</DialogTitle>
-        <DialogContent></DialogContent>
+        <DialogTitle
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+            }}
+          >
+            Share Product
+          </div>
+          <CloseSharp
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={handleClose}
+          />
+        </DialogTitle>
         <DialogActions
           style={{
             display: "flex",
@@ -755,18 +774,22 @@ function ProductDetail() {
               padding: "10px",
             }}
           >
-            <Typography style={{ color: "#707070" }}>
-              Share On WhatsApp
+            <Typography
+              style={{
+                color: "#707070",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+            >
+              Via WhatsApp
             </Typography>
             <Button
               style={{
                 width: "50px",
                 height: "50px",
-                backgroundColor: "#e7e7e7",
               }}
             >
               <WhatsappShareButton
-                title={`Sharing ${productDetail.name}`}
+                title={`${productDetail.name} from Sada Shri Jewel Kart`}
                 round={true}
                 url={window.location}
               >
@@ -787,12 +810,18 @@ function ProductDetail() {
               borderRadius: "5px",
             }}
           >
-            <Typography style={{ color: "#707070" }}>Click To Copy</Typography>
+            <Typography
+              style={{
+                color: "#707070",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+            >
+              Copy URL
+            </Typography>
             <Button
               style={{
                 width: "50px",
                 height: "50px",
-                backgroundColor: "#e7e7e7",
               }}
               onClick={() => navigator.clipboard.writeText(window.location)}
             >
@@ -920,6 +949,7 @@ function ProductDetail() {
                     paddingLeft: "10px",
                     paddingRight: "10px",
                     borderRadius: "15%",
+                    cursor: "pointer",
                   }}
                   onClick={() => handleClickOpen()}
                 >

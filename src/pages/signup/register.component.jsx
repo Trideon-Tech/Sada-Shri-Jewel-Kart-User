@@ -18,7 +18,6 @@ import "../signin/signin.styles.scss";
 const Register = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  console.log(queryParams.get("redirect_to"));
   const isSignUp = window.location.pathname === "/signup";
   const matches = useMediaQuery("(min-width:600px)");
   let navigate = useNavigate();

@@ -7,7 +7,6 @@ import CartTotal from "./cartTotal.component";
 import CheckoutForm from "./checkoutForm.component";
 
 const Checkout = () => {
-  const [editing, setEditing] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [refreshCart, setRefreshCart] = useState(1);
   const [coinsRedeem, setCoinsRedeem] = useState(0);
@@ -72,13 +71,13 @@ const Checkout = () => {
           <Grid item xs={!matches ? 12 : 6}>
             <CheckoutForm cartItems={cartItems} />
           </Grid>
-          <Grid item xs={!matches ? 12 : 6}>
+          <Grid item xs={!matches ? 12 : 5}>
             <Box
               style={{
                 padding: "3%",
                 paddingRight: 0,
-                height: "max-content",
-                backgroundColor: "#ececec",
+                height: "100%",
+                backgroundColor: "#f8f8f8",
               }}
             >
               <Typography

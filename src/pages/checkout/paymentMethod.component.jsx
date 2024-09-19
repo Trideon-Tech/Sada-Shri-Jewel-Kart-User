@@ -5,7 +5,6 @@ const PaymentMethod = ({
   paymentMethod,
   selectedAddress,
 }) => {
-  console.log("selectedAddress", selectedAddress);
   return (
     <Box>
       <Card

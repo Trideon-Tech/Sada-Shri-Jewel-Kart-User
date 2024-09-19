@@ -11,15 +11,13 @@ export default function CartTotal({ items, coinValueDiscount }) {
         .reduce((prev, curr) => prev + curr, 0)
     : 0;
 
-  const [selectedCoupon, setSelectedCoupon] = useState({});
+  const queryParams = new URLSearchParams(window.location.search);
 
   const [discountValue, setDiscountValue] = useState(0);
+  const [discountName, setDiscountName] = useState(0);
   const [coinsApplied, setCoinsApplied] = useState(false);
   useEffect(() => {
-    const coinsApplied = localStorage.getItem("coins_applied");
-    if (coinsApplied !== undefined) {
-      setCoinsApplied(coinsApplied);
-    }
+    setCoinsApplied(queryParams.get("coins"));
     (async () => {
       try {
         const token = localStorage.getItem("token");
@@ -34,23 +32,22 @@ export default function CartTotal({ items, coinValueDiscount }) {
           }
         );
 
-        const couponId = localStorage.getItem("selected_coupon");
-
-        if (!couponId) {
+        if (queryParams.get("discount") == "null") {
           setDiscountValue(0);
-        }
+        } else {
+          const selectedCouponData = data?.response?.filter(
+            (item) => item.id === queryParams.get("discount")
+          )[0];
 
-        const selectedCouponData = data?.response?.filter(
-          (item) => item.id === couponId
-        )[0];
-
-        if (selectedCouponData) {
-          if (selectedCouponData.amount) {
-            setDiscountValue(Number(selectedCouponData.amount));
-          } else if (selectedCouponData.percentage) {
-            setDiscountValue(
-              totalPrice * Number(selectedCouponData.percentage)
-            );
+          if (selectedCouponData) {
+            setDiscountName(selectedCouponData.code);
+            if (selectedCouponData.amount) {
+              setDiscountValue(Number(selectedCouponData.amount));
+            } else if (selectedCouponData.percentage) {
+              setDiscountValue(
+                totalPrice * Number(selectedCouponData.percentage)
+              );
+            }
           }
         }
       } catch (err) {
@@ -137,7 +134,15 @@ export default function CartTotal({ items, coinValueDiscount }) {
               fontSize: "0.8rem",
             }}
           >
-            Dicount:
+            Dicount: (
+            <span
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              {discountName}
+            </span>
+            )
           </Typography>
           <Typography
             style={{

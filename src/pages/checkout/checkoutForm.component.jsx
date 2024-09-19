@@ -148,7 +148,11 @@ const SelectPaymentMethodStep = ({
 
 const CheckoutForm = ({ cartItems }) => {
   const navigate = useNavigate();
-  const [editing, setEditing] = React.useState(false);
+
+  const queryParams = new URLSearchParams(window.location.search);
+  console.log(queryParams.get("discount"));
+  console.log(queryParams.get("coins"));
+
   const [selectedAddress, setSelectedAddress] = React.useState({});
   const [paymentMethod, setPaymentMethod] = React.useState("CREDIT_CARD");
   const [activeStep, setActiveStep] = React.useState(1);
@@ -234,7 +238,6 @@ const CheckoutForm = ({ cartItems }) => {
             }
           )
           .then((response) => {
-            console.log("order created", response);
             toast.info("Payment Verified", generalToastStyle);
             navigate(
               `/order-confirmation?order_record_id=${response.data.response["order_record"]["id"]}`
@@ -266,10 +269,8 @@ const CheckoutForm = ({ cartItems }) => {
     formData.append("user_id", localStorage.getItem("user_id"));
     formData.append("user_address_id", selectedAddress.id);
     formData.append("payment_status", "pending");
-    // TODO - Update
-    formData.append("coupon_id", "9");
-    formData.append("wallet_amount", "1620");
-    // formData.append("amount", 4210);
+    formData.append("coupon_id", queryParams.get("discount"));
+    formData.append("wallet_amount", queryParams.get("coins"));
     const orderList = cartItems?.map((item) => {
       return {
         product_id: parseInt(item.id),
@@ -277,7 +278,6 @@ const CheckoutForm = ({ cartItems }) => {
         quantity: 1,
       };
     });
-    console.log(JSON.stringify(orderList));
     formData.append("ordered_products", JSON.stringify(orderList));
 
     const token = localStorage.getItem("token");

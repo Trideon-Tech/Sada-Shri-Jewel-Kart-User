@@ -39,13 +39,12 @@ const ImageVideoCarousel = ({ images, video }) => {
           <ReactImageMagnify
             {...{
               smallImage: {
-                alt: "Wristwatch by Ted Baker London",
                 isFluidWidth: true,
                 src: images[selectedIndex],
               },
               largeImage: {
                 src: images[selectedIndex],
-                width: 1200,
+                width: 1800,
                 height: 1800,
               },
             }}
