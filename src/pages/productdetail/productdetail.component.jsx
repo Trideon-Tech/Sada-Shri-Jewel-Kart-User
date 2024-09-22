@@ -1,12 +1,12 @@
 import {
-  Close,
-  CloseSharp,
-  FavoriteBorderOutlined,
-  LocalShippingOutlined,
-  LocationOnOutlined,
-  ShoppingCart,
-  ShoppingCartOutlined,
-  StarBorderOutlined,
+    Close,
+    CloseSharp,
+    FavoriteBorderOutlined,
+    LocalShippingOutlined,
+    LocationOnOutlined,
+    ShoppingCart,
+    ShoppingCartOutlined,
+    StarBorderOutlined,
 } from "@mui/icons-material";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
@@ -22,17 +22,17 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
 import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Drawer,
-  Grid,
-  Slide,
-  Typography,
-  useMediaQuery,
+    Box,
+    Button,
+    Card,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    Drawer,
+    Grid,
+    Slide,
+    Typography,
+    useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import parse from "html-react-parser";
@@ -1430,7 +1430,7 @@ function ProductDetail() {
                       padding: "10px",
                       fontWeight: "bold",
                       background:
-                        "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                        "#a36e29",
                       fontFamily: '"Open Sans", sans-serif',
                       fontSize: "1rem",
                       fontWeight: "bold",
@@ -2139,7 +2139,7 @@ function ProductDetail() {
                         padding: "10px",
                         fontWeight: "bold",
                         background:
-                          "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                          "#a36e29",
                       }}
                       fullWidth
                       onClick={addToCartHandler}

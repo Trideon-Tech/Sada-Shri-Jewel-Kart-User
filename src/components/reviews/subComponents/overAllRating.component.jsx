@@ -43,7 +43,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount }) => {
         fullWidth
         style={{
           background:
-            "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+            "#a36e29",
           fontFamily: '"Open Sans", sans-serif',
           fontSize: "0.8rem",
           marginTop: "10px",

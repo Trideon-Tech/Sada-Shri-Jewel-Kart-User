@@ -4,15 +4,15 @@ import Button from "@mui/joy/Button";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import {
-  Box,
-  Divider,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Rating,
-  TextField,
-  Typography,
+    Box,
+    Divider,
+    IconButton,
+    ImageList,
+    ImageListItem,
+    ImageListItemBar,
+    Rating,
+    TextField,
+    Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
@@ -327,7 +327,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
             style={{
               width: "50%",
               background:
-                "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}

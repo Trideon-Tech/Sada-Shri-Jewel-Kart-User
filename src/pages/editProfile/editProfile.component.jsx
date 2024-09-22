@@ -1,11 +1,11 @@
 import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Grid,
-  TextField,
-  Typography,
+    Avatar,
+    Box,
+    Button,
+    Card,
+    Grid,
+    TextField,
+    Typography,
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
@@ -98,7 +98,7 @@ const EditProfile = () => {
             height: "100px",
             fontSize: "2.7rem",
             background:
-              "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+              "#a36e29",
           }}
         >
           {firstName.charAt(0)}
@@ -277,7 +277,7 @@ const EditProfile = () => {
             style={{
               width: "25%",
               background:
-                "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
               textTransform: "none",

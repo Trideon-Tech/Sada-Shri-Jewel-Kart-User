@@ -498,7 +498,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     style={{
                       textAlign: "center",
                       background:
-                        "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                        "#a36e29",
                       color: "white",
                       fontFamily: '"Open Sans", sans-serif',
                       fontSize: "0.8rem",
@@ -814,7 +814,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   fontFamily: '"Open Sans", sans-serif',
                   fontSize: "0.8rem",
                   background:
-                    "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                    "#a36e29",
                 }}
                 onClick={addNewAddress}
                 fullWidth

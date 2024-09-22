@@ -58,7 +58,7 @@ const SelectAddressStep = ({
           fontSize: "1rem",
           fontWeight: "bold",
           background:
-            "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+            "#a36e29",
         }}
         onClick={handleCreateOrder}
       >
@@ -135,7 +135,7 @@ const SelectPaymentMethodStep = ({
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1rem",
             background:
-              "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+              "#a36e29",
           }}
           onClick={handlePaymentRequest}
         >

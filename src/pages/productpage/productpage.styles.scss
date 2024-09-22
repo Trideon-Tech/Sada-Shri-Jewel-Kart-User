@@ -1,5 +1,6 @@
 .product-page {
   overflow-x: hidden;
+
   .web {
     .block-with-background {
       background-color: #f0f0f0;
@@ -106,12 +107,6 @@
         text-align: center;
 
         .page-heading {
-          margin-left: 5vw;
-          margin-top: 20px;
-          text-align: start;
-          font-size: medium;
-          font-weight: bold;
-          color: #a36e29;
         }
 
         .breadcrumbs-container {
@@ -124,27 +119,21 @@
           font-size: small;
           text-decoration: none;
           color: black;
+          font-family: "Open Sans", sans-serif;
+
           &:hover {
             text-decoration: underline;
           }
         }
       }
+
       .product-container {
-        width: 100%; // Ensure it uses the full available width
+        width: 100%; 
         max-width: 100%;
         margin: 0 auto;
         box-sizing: border-box;
         padding: 0 10px;
 
-        .heading {
-          margin-left: 20px;
-          margin-top: 10px;
-          text-align: start;
-          color: #a36e29;
-          font-size: 1.2rem;
-          font-weight: 800;
-          margin-bottom: 10px;
-        }
         .product-card {
           display: flex;
           flex-direction: row;

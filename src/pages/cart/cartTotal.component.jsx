@@ -778,7 +778,7 @@ export default function CartTotal({
           fontSize: "1rem",
           fontWeight: "600",
           background:
-            "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+            "#a36e29",
         }}
         component={Link}
         to={

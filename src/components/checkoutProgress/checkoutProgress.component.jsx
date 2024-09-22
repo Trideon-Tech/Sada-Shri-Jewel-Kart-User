@@ -17,12 +17,12 @@ const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   alignItems: "center",
   ...(ownerState.active && {
     background:
-      "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+      "#a36e29",
     boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
   }),
   ...(ownerState.completed && {
     background:
-      "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+      "#a36e29",
     backgroundColor: "#A36E29",
   }),
 }));
@@ -47,13 +47,13 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       background:
-        "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+        "#a36e29",
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       background:
-        "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+        "#a36e29",
     },
   },
   [`& .${stepConnectorClasses.line}`]: {

@@ -154,7 +154,7 @@ function Productpage() {
     selectedSort,
   ]);
 
-  const handleFilterChange = (selectedRangeLabel) => {};
+  const handleFilterChange = (_selectedRangeLabel) => {};
 
   const isProductInRange = (product) => {
     // Convert product price to a number by removing currency symbol and commas
@@ -173,34 +173,6 @@ function Productpage() {
         return price >= low && price <= high;
       }
     });
-  };
-
-  // Filtered jwellery based on the selected price ranges
-  const filteredJwellery =
-    selectedPriceRanges.length > 0
-      ? jwellery.filter(isProductInRange)
-      : jwellery;
-
-  const getProduct = () => {
-    let userId = localStorage.getItem("user_id")
-      ? localStorage.getItem("user_id")
-      : -1;
-
-    console.log(isSubCategory, "isSubCategory");
-
-    const endpoint = isSubCategory
-      ? `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}&user_id=${userId}`
-      : `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}&user_id=${userId}`;
-
-    axios
-      .get(endpoint)
-      .then((response) => {
-        setJwellery(response.data.response);
-        setProductsLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   return (
@@ -304,7 +276,7 @@ function Productpage() {
                     }}
                   />
                 ) : (
-                  jwellery.map((item, index) => (
+                  jwellery.map((item, _index) => (
                     <Grid item xs={3} className="product-card">
                       <JwelleryCard
                         id={item.id}
@@ -326,9 +298,18 @@ function Productpage() {
         </div>
         <Footer />
       </div>
+      {/* Mobile UI */}
       <div className="mobile" style={{ height: "max-content" }}>
         <div className="block-with-background">
-          <Typography variant="h4" className="page-heading">
+          <Typography
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.4rem",
+              fontWeight: "bold",
+              color: "#a36e29",
+            }}
+            className="page-heading"
+          >
             {menuItemName}
           </Typography>
 
@@ -347,14 +328,26 @@ function Productpage() {
           </div>
         </div>
         <div className="product-container">
-          <div className="heading">Products</div>
+          <div
+            style={{
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.3rem",
+              fontWeight: "bold",
+              color: "#a36e29",
+              marginLeft: "4vw",
+              paddingTop: "12px",
+              paddingBottom: "12px",
+            }}
+          >
+            Products
+          </div>
           <Grid container spacing={2}>
             {productsLoaded === false ? (
               <CircularProgress
                 style={{ margin: "auto", display: "flex", height: "100%" }}
               />
             ) : (
-              jwellery.map((item, index) => (
+              jwellery.map((item, _index) => (
                 <Grid item xs={6} sm={4} md={3} key={item.id}>
                   <JwelleryCard
                     id={item.id}
@@ -384,7 +377,7 @@ function Productpage() {
               <BottomNavigation
                 showLabels
                 value={value}
-                onChange={(event, newValue) => {
+                onChange={(_event, newValue) => {
                   setValue(newValue);
                 }}
               >

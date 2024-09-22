@@ -449,7 +449,7 @@ const Cart = () => {
                 padding: "10px",
                 fontWeight: "bold",
                 background:
-                  "linear-gradient(90deg, rgba(163,110,41,1) 0%, rgba(224,184,114,1) 100%)",
+                  "#a36e29",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "1rem",
                 fontWeight: "bold",
