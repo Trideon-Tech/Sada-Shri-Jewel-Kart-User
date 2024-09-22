@@ -15,7 +15,6 @@ const Checkout = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    // if (!sessionStorage.getItem("cart")) {
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(

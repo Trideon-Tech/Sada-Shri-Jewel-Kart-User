@@ -220,7 +220,7 @@ const JwelleryCard = ({
                 fontSize: "1rem",
               }}
             >
-              ₹{price}
+              ₹{price * 1.2}
             </Typography>
           </Box>
           <Typography
@@ -241,8 +241,7 @@ const JwelleryCard = ({
               fontWeight: "bold",
               marginTop: "3%",
               marginBottom: "3%",
-              background:
-                "#a36e29",
+              background: "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
@@ -252,6 +251,7 @@ const JwelleryCard = ({
           </Button>
         </div>
       </div>
+      {/* Mobile UI */}
       <div className="mobile" style={{ padding: "5px", height: "max-content" }}>
         <div className="card-image-container" style={{ position: "relative" }}>
           <div
@@ -276,7 +276,7 @@ const JwelleryCard = ({
             >
               <FavoriteIcon
                 style={{
-                  fontSize: "2.5rem",
+                  fontSize: "1.8rem",
                   marginLeft: "auto",
                   marginRight: "5%",
                   marginTop: "5%",
@@ -317,42 +317,52 @@ const JwelleryCard = ({
             }}
           >
             <Typography
-              variant="h5"
-              style={{ fontWeight: "bold", color: "#a36e29" }}
+              style={{
+                fontWeight: "bold",
+                color: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1rem",
+              }}
             >
               ₹{price}
             </Typography>
             <Typography
-              variant="h6"
               style={{
                 marginRight: "auto",
                 marginLeft: "3%",
                 color: "gray",
                 textDecoration: "line-through",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
               }}
             >
-              ₹{price}
+              ₹{price * 1.2}
             </Typography>
           </Box>
           <Typography
-            variant="subtitle"
-            style={{ marginBottom: "3%", color: "gray", fontWeight: "bold" }}
+            style={{
+              marginBottom: "3%",
+              color: "gray",
+              fontWeight: "bold",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
           >
-            {name.substring(0, 23)}
+            {name.length > 16 ? `${name.substring(0, 16)}...` : name}
           </Typography>
           <Button
             variant="contained"
             style={{
               width: "100%",
-              borderRadius: "50px",
               fontWeight: "bold",
               marginTop: "3%",
-              background:
-                "#a36e29",
+              background: "#a36e29",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
             }}
             onClick={() => clickHandler(name, hash, true)}
           >
-            Add to Cart
+            {isInCart ? "Go to Cart" : "Add to Cart"}
           </Button>
         </div>
       </div>

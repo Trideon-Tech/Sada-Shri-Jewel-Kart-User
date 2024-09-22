@@ -1,12 +1,13 @@
 import {
-    Close,
-    CloseSharp,
-    FavoriteBorderOutlined,
-    LocalShippingOutlined,
-    LocationOnOutlined,
-    ShoppingCart,
-    ShoppingCartOutlined,
-    StarBorderOutlined,
+  Close,
+  CloseSharp,
+  FavoriteBorderOutlined,
+  LocalShippingOutlined,
+  LocationOnOutlined,
+  ShoppingBagOutlined,
+  ShoppingCart,
+  ShoppingCartOutlined,
+  StarBorderOutlined,
 } from "@mui/icons-material";
 import DimensionsIcon from "@mui/icons-material/AspectRatio";
 import PurityIcon from "@mui/icons-material/CheckCircleOutline";
@@ -22,17 +23,17 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
 import {
-    Box,
-    Button,
-    Card,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    Drawer,
-    Grid,
-    Slide,
-    Typography,
-    useMediaQuery,
+  Box,
+  Button,
+  Card,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Drawer,
+  Grid,
+  Slide,
+  Typography,
+  useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import parse from "html-react-parser";
@@ -1422,30 +1423,61 @@ function ProductDetail() {
                   <Typography className="discount">
                     Flat 50% off on Making Charges
                   </Typography>
-                  <Button
-                    variant="contained"
-                    fullWidth
+                  <div
                     style={{
-                      width: "325px",
-                      padding: "10px",
-                      fontWeight: "bold",
-                      background:
-                        "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "1rem",
-                      fontWeight: "bold",
+                      display: "flex",
                     }}
-                    onClick={addToCartHandler}
                   >
-                    {productDetail.exists_in_cart
-                      ? "Go to Cart"
-                      : "Add to Cart"}
-                    <ShoppingCartOutlined
+                    <Button
+                      variant="contained"
+                      fullWidth
                       style={{
-                        marginLeft: "10px",
+                        width: "325px",
+                        padding: "10px",
+                        fontWeight: "bold",
+                        background: "#a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                        marginRight: "5px",
                       }}
-                    />
-                  </Button>
+                      onClick={addToCartHandler}
+                    >
+                      {productDetail.exists_in_cart
+                        ? "Go to Cart"
+                        : "Add to Cart"}
+                      <ShoppingCartOutlined
+                        style={{
+                          marginLeft: "10px",
+                        }}
+                      />
+                    </Button>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        width: "325px",
+                        padding: "10px",
+                        fontWeight: "bold",
+                        color: "#a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                        marginLeft: "5px",
+                        background: "transparent",
+                        border: "2px solid #a36e29",
+                      }}
+                      // onClick={addToCartHandler}
+                    >
+                      Buy Now
+                      <ShoppingBagOutlined
+                        style={{
+                          marginLeft: "10px",
+                          color: "#a36e29",
+                        }}
+                      />
+                    </Button>
+                  </div>
                 </Grid>
 
                 <Grid item xs={6} className="location-grid">
@@ -2138,8 +2170,7 @@ function ProductDetail() {
                         width: "90%",
                         padding: "10px",
                         fontWeight: "bold",
-                        background:
-                          "#a36e29",
+                        background: "#a36e29",
                       }}
                       fullWidth
                       onClick={addToCartHandler}

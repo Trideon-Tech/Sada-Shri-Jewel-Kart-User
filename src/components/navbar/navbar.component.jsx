@@ -528,7 +528,7 @@ const Navbar = () => {
           </List>
         </Drawer>
 
-        <AppBar elevation={0} position="static" className="appbar">
+        <AppBar elevation={0} position="fixed" className="appbar">
           <Toolbar variant="dense" className="toolbar">
             <img
               alt="logo"

@@ -341,11 +341,26 @@ function Productpage() {
           >
             Products
           </div>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            style={{
+              paddingBottom: "55px",
+              marginBottom: "55px",
+            }}
+          >
             {productsLoaded === false ? (
-              <CircularProgress
-                style={{ margin: "auto", display: "flex", height: "100%" }}
-              />
+              <div
+                style={{
+                  width: "100%",
+                  height: "80vh",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CircularProgress style={{ color: "#a36e29" }} />
+              </div>
             ) : (
               jwellery.map((item, _index) => (
                 <Grid item xs={6} sm={4} md={3} key={item.id}>
@@ -357,6 +372,7 @@ function Productpage() {
                     hash={item.hash}
                     price={item.price}
                     isWishlisted={item.exists_in_wishlist}
+                    isInCart={item.exists_in_cart}
                     clickHandler={handleCardClick}
                   />
                 </Grid>
@@ -366,6 +382,7 @@ function Productpage() {
           <div className="bottom-navigation">
             <Paper
               sx={{
+                height: "55px",
                 position: "fixed",
                 bottom: 0,
                 left: 0,
@@ -383,7 +400,15 @@ function Productpage() {
               >
                 <BottomNavigationAction
                   label={
-                    <span style={{ display: "flex", alignItems: "center" }}>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                        color: "#a36e29",
+                      }}
+                    >
                       Filter
                       <FilterListIcon style={{ marginLeft: "5px" }} />
                     </span>
@@ -392,7 +417,15 @@ function Productpage() {
                 />
                 <BottomNavigationAction
                   label={
-                    <span style={{ display: "flex", alignItems: "center" }}>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                        color: "#a36e29",
+                      }}
+                    >
                       Sort
                       <SortIcon style={{ marginLeft: "5px" }} />
                     </span>

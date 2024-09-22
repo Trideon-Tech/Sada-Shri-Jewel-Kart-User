@@ -101,13 +101,13 @@
 
     .mobile {
       display: block;
+
       .block-with-background {
         background-color: #f0f0f0;
         padding: 5px;
         text-align: center;
-
-        .page-heading {
-        }
+        margin-top: 8vh;
+        height: 12vh;
 
         .breadcrumbs-container {
           margin-left: 5vw;
@@ -128,8 +128,9 @@
       }
 
       .product-container {
-        width: 100%; 
+        width: 100%;
         max-width: 100%;
+        height: calc(80vh - 55px);
         margin: 0 auto;
         box-sizing: border-box;
         padding: 0 10px;
