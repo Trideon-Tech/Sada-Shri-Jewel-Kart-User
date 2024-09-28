@@ -171,6 +171,7 @@
         width: 90%;
         overflow: hidden;
         .title {
+          padding-top: 20px;
           font-size: larger;
           margin: 20px;
           display: flex;
@@ -190,6 +191,7 @@
       }
     }
   }
+
   .mobile {
     display: none;
   }
@@ -201,25 +203,23 @@
 
     .mobile {
       display: block;
-      .breadcrumbs-container {
-        padding: 20px;
-        background-color: #fffbc8;
-        margin-bottom: 10px;
-      }
+
       .container {
         width: 100%;
+
         .product-content {
           display: flex;
-          //flex-direction: column;
           flex-wrap: wrap;
           justify-content: space-around;
-          margin: 10px;
         }
 
         .product-image-section {
-          //background-color: aquamarine;
           flex: 1;
           max-width: 100%;
+          padding-top: 8vh;
+          background-color: white;
+          padding-bottom: 20px;
+
           .product-image {
             width: 100%;
             height: auto;
@@ -229,14 +229,11 @@
         .product-detail-section {
           flex: 1;
           max-width: 100%;
-          .title {
-            margin: 20px;
-            display: flex;
-            align-items: start;
-          }
+          margin: 20px;
+
           .rating-reviews {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.8rem;
             display: inline-flex;
 
             align-items: center;
@@ -249,29 +246,37 @@
             transition: background-color 0.3s, transform 0.3s;
             box-sizing: border-box;
             text-align: left;
+
             &:hover {
               background-color: #ececec;
               transform: scale(1.02);
             }
           }
         }
+
         .price-section {
-          margin-left: 20px;
           display: flex;
           flex-direction: row;
           align-items: center;
+
           .price {
             font-weight: bold;
             color: #a36e29;
             margin-right: 10px;
             margin-top: 10px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 1.2rem;
           }
+
           .original-price {
             margin-top: 10px;
             text-decoration: line-through;
             color: #666;
+            font-family: "Open Sans", sans-serif;
+            font-size: 1rem;
           }
         }
+
         .discount {
           margin-left: 20px;
           display: flex;

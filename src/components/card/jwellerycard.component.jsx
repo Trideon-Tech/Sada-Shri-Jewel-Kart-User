@@ -252,7 +252,7 @@ const JwelleryCard = ({
         </div>
       </div>
       {/* Mobile UI */}
-      <div className="mobile" style={{ padding: "5px", height: "max-content" }}>
+      <div className="mobile">
         <div className="card-image-container" style={{ position: "relative" }}>
           <div
             style={{
@@ -274,15 +274,27 @@ const JwelleryCard = ({
                 handleCreateWishList();
               }}
             >
-              <FavoriteIcon
-                style={{
-                  fontSize: "1.8rem",
-                  marginLeft: "auto",
-                  marginRight: "5%",
-                  marginTop: "5%",
-                  color: isWishlisted || wishListed ? "#a36e29" : "#bfbfbf",
-                }}
-              />
+              {isWishlisted || wishListed ? (
+                <FavoriteIcon
+                  style={{
+                    fontSize: "1.8rem",
+                    marginLeft: "auto",
+                    marginRight: "5%",
+                    marginTop: "5%",
+                    color: "#a36e29",
+                  }}
+                />
+              ) : (
+                <FavoriteBorderOutlined
+                  style={{
+                    fontSize: "1.8rem",
+                    marginLeft: "auto",
+                    marginRight: "5%",
+                    marginTop: "5%",
+                    color: "#bfbfbf",
+                  }}
+                />
+              )}
             </Button>
           </div>
           {image?.length ? (

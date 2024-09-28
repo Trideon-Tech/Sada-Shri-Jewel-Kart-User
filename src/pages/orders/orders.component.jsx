@@ -1,9 +1,12 @@
+import { AddPhotoAlternateOutlined } from "@mui/icons-material";
 import { TabPanel } from "@mui/joy";
 import Tab, { tabClasses } from "@mui/joy/Tab";
 import TabList from "@mui/joy/TabList";
 import Tabs from "@mui/joy/Tabs";
 import {
   Box,
+  Button,
+  Card,
   TextareaAutosize,
   Typography,
   useMediaQuery,
@@ -12,7 +15,6 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CartItem from "../cart/cartItem.component";
 import OrderItem from "./orderItem.component";
 
 const Orders = () => {
@@ -28,7 +30,7 @@ const Orders = () => {
   const [openOrdersList, setOpenOrderList] = useState([]);
   const [completedOrdersList, setCompletedOrderList] = useState([]);
   const [cancelledOrdersList, setCancelledOrderList] = useState([]);
-  const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState();
   const [categories, setCategories] = useState();
 
   useEffect(() => {
@@ -75,9 +77,10 @@ const Orders = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    borderRadius: "10px",
 
     width: 800,
-    height: 700,
+    height: 780,
     backgroundColor: "white",
     p: 4,
   };
@@ -122,30 +125,178 @@ const Orders = () => {
       >
         <Box sx={style}>
           <Typography
-            id="modal-modal-title"
-            variant="h5"
-            component="h2"
-            style={{ fontWeight: 700, marginBottom: "50px" }}
+            style={{
+              fontWeight: 700,
+              marginBottom: "20px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.2rem",
+            }}
           >
             Cancel/Return order
           </Typography>
-          <CartItem
-            readOnly={true}
-            item={openOrdersList?.filter(
-              (item) => (item.id === selectedOrderId)[0]
-            )}
-          />
+          <Card
+            sx={{
+              borderRadius: "10px",
+              display: "flex",
+              padding: "3%",
+              width: "90%",
+              height: matches ? "max-content" : "300px",
+              aspectRatio: "4/1",
+              marginBottom: "3%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: matches ? "row" : "column",
+            }}
+            elevation={1}
+          >
+            <Box
+              style={{
+                border: "2px solid #e7e7e7",
+                borderRadius: "10px",
+                height: matches ? "100%" : "max-content",
+                aspectRatio: "1/1",
+                overflow: "hidden",
+              }}
+            >
+              {selectedOrder?.images ? (
+                <img
+                  src={`https://api.sadashrijewelkart.com/assets/${selectedOrder?.images[0]?.file}`}
+                  style={{ height: "100%", width: "100%", objectFit: "cover" }}
+                />
+              ) : null}
+            </Box>
+            <Box
+              style={{
+                height: "100%",
+                width: "70%",
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                marginLeft: "20px",
+              }}
+            >
+              <Typography
+                style={{
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                }}
+              >
+                {selectedOrder?.product_name}
+              </Typography>
+              <Box
+                style={{
+                  width: "100%",
+                  marginTop: "2%",
+                  height: "max-content",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  flexDirection: matches ? "row" : "column",
+                  alignItems: matches ? "center" : "flex-start",
+                }}
+              >
+                <Box
+                  style={{
+                    display: "flex",
+                    marginRight: "auto",
+                    width: "max-content",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      color: "gray",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    Quantity :
+                  </Typography>
+                  <Typography
+                    style={{
+                      color: "gray",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    1 Pcs.
+                  </Typography>
+                </Box>
+              </Box>
+              <Typography
+                style={{
+                  marginTop: "2%",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  fontFamily: '"Open Sans", sans-serif',
+                }}
+              >
+                <span style={{ fontWeight: "normal" }}>Price :</span> ₹
+                {parseFloat(selectedOrder?.price).toLocaleString()}
+              </Typography>
+            </Box>
+          </Card>
           <Typography
-            id="modal-modal-title"
-            variant="p"
-            component="h4"
-            style={{ marginBottom: "50px" }}
+            style={{
+              marginBottom: "20px",
+              fontWeight: "bold",
+              fontFamily: '"Open Sans", sans-serif',
+              fontWeight: "1rem",
+            }}
           >
             Cancellation/Return reason
           </Typography>
+          <div
+            style={{
+              height: "100px",
+              width: "100px",
+              border: "1px solid #e7e7e7",
+              marginBottom: "20px",
+              borderRadius: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <AddPhotoAlternateOutlined />
+          </div>
           <TextareaAutosize
-            style={{ width: "100%", height: "250px" }}
+            style={{
+              width: "100%",
+              height: "250px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontWeight: "0.8rem",
+              borderColor: "#e7e7e7",
+              marginBottom: "20px",
+            }}
+            placeholder=" Type your message here!"
           ></TextareaAutosize>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: "20px",
+            }}
+          >
+            <Button
+              fullWidth
+              variant="contained"
+              style={{
+                width: "32%",
+                fontWeight: "bold",
+                background: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
+              Track Order
+            </Button>
+          </div>
         </Box>
       </Modal>
       <Box
@@ -218,7 +369,11 @@ const Orders = () => {
                       `/order-confirmation?order_record_id=${order.order_record_id}`
                     );
                   }}
-                  handleCancelOrder={setModalOpen}
+                  handleCancelOrder={() => {
+                    console.log(order.order_record_id);
+                    setSelectedOrder(order);
+                    setModalOpen(true);
+                  }}
                   writeReview={() => writeReview(order)}
                 />
               ))}

@@ -101,31 +101,12 @@ function Productpage() {
     "Review | Top": { param: "review_sort", order: "DESC" },
     "Review | Low": { param: "review_sort", order: "ASC" },
   };
-  const [weightFilter, setWeightFilter] = useState([0, 100]);
-  const [purityFilter, setPurityFilter] = useState([0, 24]);
-  const [heightFilter, setHeightFilter] = useState([0, 50]);
-  const [widthFilter, setWidthFilter] = useState([0, 50]);
   const [selectedSort, setSelectedSort] = useState("Review | Top");
 
   const handleFetchFilteredData = async () => {
     if (!menuItemId) return;
     const params = {};
     params.user_id = localStorage.getItem("user_id") || -1;
-
-    params.min_height = heightFilter[0];
-    params.max_height = heightFilter[1];
-
-    params.min_width = widthFilter[0];
-    params.max_width = widthFilter[1];
-
-    params.min_price = selectedPriceRange.low || 0;
-    params.max_price = selectedPriceRange.high || 1000000000;
-
-    params.min_weight = weightFilter[0];
-    params.max_weight = weightFilter[1];
-
-    params.min_purity = purityFilter[0];
-    params.max_purity = purityFilter[1];
 
     if (selectedSort !== "Featured" && selectedSort)
       params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
@@ -142,38 +123,9 @@ function Productpage() {
     (async () => {
       await handleFetchFilteredData();
     })();
-  }, [
-    refresh,
-    weightFilter,
-    purityFilter,
-    heightFilter,
-    widthFilter,
-    selectedPriceRange,
-    menuItemId,
-    isSubCategory,
-    selectedSort,
-  ]);
+  }, [refresh, selectedPriceRange, menuItemId, isSubCategory, selectedSort]);
 
   const handleFilterChange = (_selectedRangeLabel) => {};
-
-  const isProductInRange = (product) => {
-    // Convert product price to a number by removing currency symbol and commas
-    const price = Number(product.price.replace(/[₹,]/g, ""));
-
-    return selectedPriceRanges.some((rangeLabel) => {
-      if (rangeLabel.startsWith("Over")) {
-        // Extract the number after "Over ₹", remove commas and convert to Number
-        const overPrice = Number(rangeLabel.replace(/[^\d]/g, ""));
-        return price > overPrice;
-      } else {
-        // Extract the lower and upper bounds of the price range
-        const [lowStr, highStr] = rangeLabel.split(" - ");
-        const low = Number(lowStr.replace(/[₹,]/g, ""));
-        const high = Number(highStr.replace(/[₹,]/g, ""));
-        return price >= low && price <= high;
-      }
-    });
-  };
 
   return (
     <div className="product-page">
@@ -462,14 +414,6 @@ function Productpage() {
                 selectedPriceRanges={selectedPriceRanges}
                 handleSelectedPriceRange={setSelectedPriceRange}
                 onFilterChange={handleFilterChange}
-                weightFilter={weightFilter}
-                purityFilter={purityFilter}
-                heightFilter={heightFilter}
-                widthFilter={widthFilter}
-                handleWeightFilter={setWeightFilter}
-                handlePurityFilter={setPurityFilter}
-                handleHeightFilter={setHeightFilter}
-                handleWidthFilter={setWidthFilter}
               />
             </div>
           </Drawer>

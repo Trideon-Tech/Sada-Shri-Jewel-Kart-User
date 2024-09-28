@@ -264,7 +264,7 @@ const OrderItem = ({
             fontSize: "0.8rem",
           }}
           onClick={() => {
-            if (titleColorType === "arriving") handleCancelOrder(true);
+            if (titleColorType === "arriving") handleCancelOrder();
           }}
         >
           {titleColorType === "arriving" ? "Cancel " : "Return Order"}
@@ -276,8 +276,7 @@ const OrderItem = ({
             width: "32%",
             fontWeight: "bold",
             height: "100%",
-            background:
-              "#a36e29",
+            background: "#a36e29",
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "0.8rem",
           }}

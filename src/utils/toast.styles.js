@@ -18,8 +18,8 @@ export const generalToastStyle = {
     />
   ),
   style: {
-    fontFamily: '"Work Sans", sans-serif',
-    fontSize: "0.9rem",
+    fontFamily: '"Open Sans", sans-serif',
+    fontSize: "0.8rem",
     fontWeight: 600,
   },
 };

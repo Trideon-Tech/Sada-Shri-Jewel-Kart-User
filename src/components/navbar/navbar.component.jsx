@@ -317,10 +317,6 @@ const Navbar = () => {
                                   />
                                   <Button
                                     key={subCategory.id}
-                                    //component={Link}
-                                    // to={`/jwellery/${
-                                    //   category.name + "+" + subCategory.name
-                                    // }`}
                                     className="sub-category"
                                     onClick={() =>
                                       handleSubMenuItemClick(

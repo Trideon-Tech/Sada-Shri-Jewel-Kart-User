@@ -1,24 +1,22 @@
-import { BrowserRouter, Route, Routes, Outlet, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import Address from "./pages/address/address.component";
+import Cart from "./pages/cart/cart.component";
+import Checkout from "./pages/checkout/checkout.component";
+import EditProfile from "./pages/editProfile/editProfile.component";
 import LandingPage from "./pages/landingpage/landingpage.component";
+import MyAccount from "./pages/myAccount/myAccount.component";
+import OrderDetails from "./pages/order-details/orderDetails.component";
+import OrderConfirmation from "./pages/orderConfirmation/orderConfirmation.component";
+import Orders from "./pages/orders/orders.component";
 import ProductDetail from "./pages/productdetail/productdetail.component";
 import Productpage from "./pages/productpage/productpage.component";
-import Cart from "./pages/cart/cart.component";
-import MyOrders from "./pages/my-orders/myOrders.component";
-import TrackOrder from "./pages/track-order/trackOrder.component";
-import OrderDetails from "./pages/order-details/orderDetails.component";
-import Checkout from "./pages/checkout/checkout.component";
-import Wishlist from "./pages/wishlist/wishList.component";
-import MyAccount from "./pages/myAccount/myAccount.component";
-import Register from "./pages/signup/register.component";
-import SignIn from "./pages/signin/signin.component";
-import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
-import Orders from "./pages/orders/orders.component";
-import Address from "./pages/address/address.component";
-import EditProfile from "./pages/editProfile/editProfile.component";
 import SearchProductpage from "./pages/searchProductPage/searchProductPage.component";
+import Register from "./pages/signup/register.component";
+import TrackOrder from "./pages/track-order/trackOrder.component";
+import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 import Wallet from "./pages/wallet/wallet.component";
-import OrderConfirmation from "./pages/orderConfirmation/orderConfirmation.component";
+import Wishlist from "./pages/wishlist/wishList.component";
 import { RefreshProvider } from "./RefreshContent";
 
 function App() {
@@ -38,7 +36,6 @@ function App() {
               element={<ProductDetail />}
             />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/my-orders" element={<MyOrders />} />
             <Route path="/track-order" element={<TrackOrder />} />
             <Route path="/order-details" element={<OrderDetails />} />
             <Route path="/checkout" element={<Checkout />} />
