@@ -57,8 +57,7 @@ const SelectAddressStep = ({
           fontFamily: '"Open Sans", sans-serif',
           fontSize: "1rem",
           fontWeight: "bold",
-          background:
-            "#a36e29",
+          background: "#a36e29",
         }}
         onClick={handleCreateOrder}
       >
@@ -134,8 +133,7 @@ const SelectPaymentMethodStep = ({
             minHeight: 50,
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1rem",
-            background:
-              "#a36e29",
+            background: "#a36e29",
           }}
           onClick={handlePaymentRequest}
         >
@@ -274,7 +272,8 @@ const CheckoutForm = ({ cartItems }) => {
     const orderList = cartItems?.map((item) => {
       return {
         product_id: parseInt(item.id),
-        // customization_id: -1,
+        customization_id:
+          item.customization == -1 ? -1 : item.customization.variant[0].id,
         quantity: 1,
       };
     });

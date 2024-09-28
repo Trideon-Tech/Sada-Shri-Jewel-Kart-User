@@ -6,10 +6,12 @@ import React, { useEffect, useState } from "react";
 
 export default function CartTotal({ items, coinValueDiscount }) {
   const totalPrice = items
-    ? items
-        .map((item) => parseInt(item.price))
-        .reduce((prev, curr) => prev + curr, 0)
-    : 0;
+    .map((item) =>
+      item.customization === "-1"
+        ? parseFloat(item.price)
+        : parseFloat(item.customization.variant[0].price)
+    )
+    .reduce((prev, curr) => prev + curr, 0);
 
   const queryParams = new URLSearchParams(window.location.search);
 

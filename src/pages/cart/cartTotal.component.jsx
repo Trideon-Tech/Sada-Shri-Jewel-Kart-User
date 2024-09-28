@@ -29,7 +29,11 @@ export default function CartTotal({
   couponList,
 }) {
   const totalPrice = items
-    .map((item) => parseInt(item.price))
+    .map((item) =>
+      item.customization === "-1"
+        ? parseFloat(item.price)
+        : parseFloat(item.customization.variant[0].price)
+    )
     .reduce((prev, curr) => prev + curr, 0);
 
   const [discountValue, setDiscountValue] = useState(0);
@@ -777,8 +781,7 @@ export default function CartTotal({
           fontFamily: '"Open Sans", sans-serif',
           fontSize: "1rem",
           fontWeight: "600",
-          background:
-            "#a36e29",
+          background: "#a36e29",
         }}
         component={Link}
         to={

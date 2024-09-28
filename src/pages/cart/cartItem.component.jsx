@@ -83,46 +83,6 @@ export default function CartItem({
           <Box
             style={{
               display: "flex",
-              width: "max-content",
-              justifyContent: "space-evenly",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              style={{
-                color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              }}
-            >
-              Size :
-            </Typography>
-            <Typography
-              style={{
-                color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-                marginLeft: "10px",
-              }}
-            >
-              {item.customization == -1 ? "Default" : ""}
-            </Typography>
-            {/* <Select
-              placeholder="Select size"
-              required
-              sx={{ width: "150px", border: 0, marginLeft: "10px" }}
-              disabled
-            >
-              <Option value="15cm">15cm</Option>
-              <Option value="16cm">16cm</Option>
-              <Option value="17cm">17cm</Option>
-              <Option value="18cm">18cm</Option>
-            </Select> */}
-          </Box>
-          <Box
-            style={{
-              display: "flex",
-              marginLeft: matches ? "10%" : 0,
               marginRight: "auto",
               width: "max-content",
               justifyContent: "space-evenly",
@@ -150,6 +110,75 @@ export default function CartItem({
             </Typography>
           </Box>
         </Box>
+        {item.customization === "-1" ? null : (
+          <Box
+            style={{
+              width: "100%",
+              marginTop: "2%",
+              height: "max-content",
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: matches ? "row" : "column",
+              alignItems: matches ? "center" : "flex-start",
+            }}
+          >
+            <Box
+              style={{
+                display: "flex",
+                marginRight: "auto",
+                width: "max-content",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                style={{
+                  color: "gray",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  marginRight: "10px",
+                }}
+              >
+                Customization :
+              </Typography>
+              {Object.keys(
+                item.customization.variant[0].for_customization_options
+              ).map((ind) => (
+                <Box
+                  style={{
+                    borderRadius: "20px",
+                    width: "max-content",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    marginTop: "5px",
+                    marginBottom: "5px",
+                    height: "25px",
+                    backgroundColor: "#A36E29",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    marginRight: "8px",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {
+                      item.customization.variant[0].for_customization_options[
+                        ind
+                      ]
+                    }
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
         <Typography
           style={{
             marginTop: "2%",
@@ -159,7 +188,9 @@ export default function CartItem({
           }}
         >
           <span style={{ fontWeight: "normal" }}>Price :</span> ₹
-          {parseFloat(item?.price).toLocaleString()}
+          {item.customization === "-1"
+            ? parseFloat(item?.price).toLocaleString()
+            : item.customization.variant[0].price}
         </Typography>
       </Box>
       {!readOnly ? (
