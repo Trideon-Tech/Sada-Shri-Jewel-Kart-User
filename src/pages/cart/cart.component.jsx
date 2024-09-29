@@ -369,33 +369,137 @@ const Cart = () => {
           </ModalDialog>
         </ModalOverflow>
       </Modal>
-      <Box
+      {/* Web */}
+      <div
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "space-around",
-          overflowX: "hidden",
-          backgroundColor:
-            cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
+          display: matches ? "block" : "none",
+          height: "calc(100vh - 6rem - 8px)",
         }}
       >
-        {cartItems?.length > 0 ? (
-          <Box style={{ width: "65%" }}>
-            <Grid container spacing={6}>
-              <Grid item xs={matches ? 8 : 12}>
-                <Box style={{ height: "60%", marginTop: "2rem" }}>
-                  {cartItems?.map((item) => (
-                    <CartItem
-                      moveToWishlistHandler={moveToWishlistHandler}
-                      key={item.cart_id}
-                      item={item}
-                      removeHandler={removeCartItemHandler}
-                    />
-                  ))}
-                </Box>
+        <Box
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "space-around",
+            overflowX: "hidden",
+            backgroundColor:
+              cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
+          }}
+        >
+          {cartItems?.length > 0 ? (
+            <Box style={{ width: "65%" }}>
+              <Grid container spacing={6}>
+                <Grid item xs={matches ? 8 : 12}>
+                  <Box style={{ height: "60%", marginTop: "2rem" }}>
+                    {cartItems?.map((item) => (
+                      <CartItem
+                        moveToWishlistHandler={moveToWishlistHandler}
+                        key={item.cart_id}
+                        item={item}
+                        removeHandler={removeCartItemHandler}
+                      />
+                    ))}
+                  </Box>
+                </Grid>
+                <Grid item xs={matches ? 4 : 12}>
+                  <CartTotal
+                    selectedCouponCode={selectedCouponCode}
+                    selectedCouponId={selectedCouponId}
+                    items={cartItems}
+                    openModal={setModalOpen}
+                    couponData={
+                      couponList.filter(
+                        (item) => item.id === selectedCouponId
+                      )[0]
+                    }
+                    couponList={couponList}
+                    setSelectedCouponId={setSelectedCouponId}
+                    setSelectedCouponCode={setSelectedCouponCode}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={matches ? 4 : 12}>
+            </Box>
+          ) : (
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-around",
+                backgroundColor: "white",
+                width: "100vw",
+                height: "300px",
+              }}
+            >
+              <Lottie animationData={emptyCartAnimation} loop={true} />
+              <div
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                }}
+              >
+                There's nothing here!
+              </div>
+              <div
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  marginTop: "10px",
+                }}
+              >
+                Let's do some retail therapy.
+              </div>
+              <div
+                onClick={() => navigate("/")}
+                style={{
+                  width: "325px",
+                  padding: "10px",
+                  fontWeight: "bold",
+                  background: "#a36e29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  marginTop: "20px",
+                  textAlign: "center",
+                  color: "white",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                }}
+              >
+                Continue Shopping
+              </div>
+            </Box>
+          )}
+        </Box>
+      </div>
+      {/* Mobile */}
+      <div
+        style={{
+          display: matches ? "none" : "block",
+        }}
+      >
+        <Box
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
+            backgroundColor:
+              cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
+          }}
+        >
+          {cartItems?.length > 0 ? (
+            <>
+              <Box
+                style={{
+                  width: "90%",
+                  marginTop: "8vh",
+                }}
+              >
                 <CartTotal
                   selectedCouponCode={selectedCouponCode}
                   selectedCouponId={selectedCouponId}
@@ -408,63 +512,78 @@ const Cart = () => {
                   setSelectedCouponId={setSelectedCouponId}
                   setSelectedCouponCode={setSelectedCouponCode}
                 />
-              </Grid>
-            </Grid>
-          </Box>
-        ) : (
-          <Box
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "space-around",
-              backgroundColor: "white",
-              width: "100vw",
-              height: "300px",
-            }}
-          >
-            <Lottie animationData={emptyCartAnimation} loop={true} />
-            <div
+              </Box>
+              <>
+                {cartItems?.map((item) => (
+                  <Box
+                    style={{
+                      width: "90%",
+                    }}
+                  >
+                    <CartItem
+                      moveToWishlistHandler={moveToWishlistHandler}
+                      key={item.cart_id}
+                      item={item}
+                      removeHandler={removeCartItemHandler}
+                    />
+                  </Box>
+                ))}
+              </>
+            </>
+          ) : (
+            <Box
               style={{
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1.2rem",
-                fontWeight: "bold",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "white",
+                width: "100vw",
+                height: "100vh",
               }}
             >
-              There's nothing here!
-            </div>
-            <div
-              style={{
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1rem",
-                marginTop: "10px",
-              }}
-            >
-              Let's do some retail therapy.
-            </div>
-            <div
-              onClick={() => navigate("/")}
-              style={{
-                width: "325px",
-                padding: "10px",
-                fontWeight: "bold",
-                background:
-                  "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1rem",
-                fontWeight: "bold",
-                marginTop: "20px",
-                textAlign: "center",
-                color: "white",
-                borderRadius: "10px",
-                cursor: "pointer",
-              }}
-            >
-              Continue Shopping
-            </div>
-          </Box>
-        )}
-      </Box>
+              <Lottie animationData={emptyCartAnimation} loop={true} />
+              <div
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                }}
+              >
+                There's nothing here!
+              </div>
+              <div
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  marginTop: "10px",
+                }}
+              >
+                Let's do some retail therapy.
+              </div>
+              <div
+                onClick={() => navigate("/")}
+                style={{
+                  width: "325px",
+                  padding: "10px",
+                  fontWeight: "bold",
+                  background: "#a36e29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  marginTop: "20px",
+                  textAlign: "center",
+                  color: "white",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                }}
+              >
+                Continue Shopping
+              </div>
+            </Box>
+          )}
+        </Box>
+      </div>
     </div>
   );
 };

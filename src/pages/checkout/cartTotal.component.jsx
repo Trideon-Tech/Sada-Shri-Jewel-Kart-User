@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
@@ -58,6 +59,8 @@ export default function CartTotal({ items, coinValueDiscount }) {
     })();
   }, []);
 
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <Box
       style={{
@@ -69,7 +72,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
     >
       <Card
         style={{
-          width: "90%",
+          width: matches ? "90%" : "",
           borderRadius: "10px",
           backgroundColor: "white",
           padding: "3%",

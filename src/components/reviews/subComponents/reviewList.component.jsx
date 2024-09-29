@@ -137,7 +137,12 @@ const ReviewList = ({ reviewsData, totalPages }) => {
         </Box>
       ))}
       <Pagination
-        style={{ marginTop: "2%", marginBottom: '2%' }}
+        style={{
+          marginTop: "2%",
+          marginBottom: "2%",
+          fontFamily: '"Open Sans", sans-serif',
+          fontSize: "0.8rem",
+        }}
         count={totalPages}
         variant="outlined"
         shape="rounded"

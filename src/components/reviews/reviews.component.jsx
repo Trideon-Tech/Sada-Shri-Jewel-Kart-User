@@ -4,15 +4,15 @@ import Button from "@mui/joy/Button";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import {
-    Box,
-    Divider,
-    IconButton,
-    ImageList,
-    ImageListItem,
-    ImageListItemBar,
-    Rating,
-    TextField,
-    Typography,
+  Box,
+  Divider,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  Rating,
+  TextField,
+  Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
@@ -294,7 +294,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
             rows={3}
             sx={{
               width: matches ? "50%" : "100%",
-              marginTop: "5%",
+              marginTop: matches ? "5%" : "10%",
               "& .MuiInputBase-root": {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
@@ -326,8 +326,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
             fullWidth
             style={{
               width: "50%",
-              background:
-                "#a36e29",
+              background: "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}

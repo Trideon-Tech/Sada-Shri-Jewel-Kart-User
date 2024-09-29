@@ -258,6 +258,8 @@
           display: flex;
           flex-direction: row;
           align-items: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
 
           .price {
             font-weight: bold;
@@ -265,7 +267,7 @@
             margin-right: 10px;
             margin-top: 10px;
             font-family: "Open Sans", sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
           }
 
           .original-price {
@@ -312,6 +314,7 @@
         }
         .product-detail-grid {
           margin-top: 20px;
+
           .card {
             background-color: #fffbc8;
             display: flex;
@@ -360,13 +363,13 @@
       }
       .container-similar {
         background-color: #f5f5f5;
+
         .similar-product-section {
           max-width: 90vw;
           margin: 0 auto;
-          margin-top: 20px;
-
           width: 100%;
           overflow: hidden;
+          
           .title {
             font-size: larger;
             margin: 20px;
@@ -377,14 +380,13 @@
           .products-scroll-container {
             display: flex;
             overflow-x: auto;
-            padding: 16px 0; // Adjust padding as needed
+            padding: 16px 0;
 
-            // Hide scrollbar for different browsers
             &::-webkit-scrollbar {
               display: none;
             }
-            -ms-overflow-style: none; // IE and Edge
-            scrollbar-width: none; // Firefox
+            -ms-overflow-style: none;
+            scrollbar-width: none;
           }
           .jwellery-card {
             flex: 0 0 auto;
@@ -392,8 +394,6 @@
             background: #fff;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 200px; // Fixed width for all cards
-            height: 300px; // Fixed height for all cards
             display: flex;
             flex-direction: column;
 

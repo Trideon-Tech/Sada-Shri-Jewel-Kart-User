@@ -62,10 +62,15 @@ const Checkout = () => {
         justifyContent: "space-around",
         alignItems: "center",
         backgroundColor: "white",
+        marginTop: matches ? "" : "6rem",
       }}
     >
       <Navbar />
-      <Box style={{ width: !matches ? "90%" : "100%" }}>
+      <Box
+        style={{
+          width: !matches ? "90%" : "100%",
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item xs={!matches ? 12 : 6}>
             <CheckoutForm cartItems={cartItems} />
@@ -73,15 +78,15 @@ const Checkout = () => {
           <Grid item xs={!matches ? 12 : 5}>
             <Box
               style={{
-                padding: "3%",
+                padding: !matches ? "0%" : "3%",
                 paddingRight: 0,
                 height: "100%",
-                backgroundColor: "#f8f8f8",
+                backgroundColor: !matches ? "white" : "#f8f8f8",
               }}
             >
               <Typography
                 style={{
-                  textAlign: "center",
+                  textAlign: !matches ? "left" : "center",
                   fontWeight: "bold",
                   color: "black",
                   marginBottom: "3%",

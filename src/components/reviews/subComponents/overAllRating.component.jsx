@@ -1,14 +1,17 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 
 import Rating from "@mui/material/Rating";
+
 const OverAllRating = ({ openModal, rating, reviewsCount }) => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <Box
       style={{
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        maxWidth: "300px",
+        maxWidth: matches ? "300px" : "",
       }}
     >
       <Box
@@ -42,11 +45,11 @@ const OverAllRating = ({ openModal, rating, reviewsCount }) => {
         variant="contained"
         fullWidth
         style={{
-          background:
-            "#a36e29",
+          background: "#a36e29",
           fontFamily: '"Open Sans", sans-serif',
           fontSize: "0.8rem",
           marginTop: "10px",
+          marginBottom: "10px",
         }}
         onClick={() => openModal(true)}
       >

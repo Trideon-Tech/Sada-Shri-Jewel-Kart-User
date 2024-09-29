@@ -10,6 +10,7 @@ import { Input } from "@mui/joy";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
+import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -50,7 +51,9 @@ export default function CartTotal({
       openModal(true);
     }
   };
+
   const [coinsRedeem, setCoinsRedeem] = useState(0);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -71,6 +74,7 @@ export default function CartTotal({
       })
       .catch((error) => console.log("Error while fetching wallet info", error));
   }, []);
+
   useEffect(() => {
     if (!selectedCouponId) {
       setDiscountValue(0);
@@ -222,17 +226,10 @@ export default function CartTotal({
     return () => clearTimeout(timer);
   };
 
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
-    <Box
-      style={{
-        width: "100%",
-        height: "30vh",
-        display: "flex",
-        flexDirection: "column",
-        marginTop: "10%",
-        justifyContent: "space-between",
-      }}
-    >
+    <div>
       <Modal
         open={locationModalOpen}
         onClose={() => {
@@ -450,351 +447,736 @@ export default function CartTotal({
           </ModalDialog>
         </ModalOverflow>
       </Modal>
-      <Card
+      {/* Web */}
+      <div
         style={{
-          width: "90%",
-          minHeight: 65,
-          height: "7vh",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "5%",
+          display: matches ? "block" : "none",
         }}
-        elevation={1}
       >
-        <MonetizationOnRoundedIcon
-          style={{ fontSize: "2rem", color: "#A36E29" }}
-        />
-        <Typography
-          style={{
-            marginLeft: "2%",
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.8rem",
-            marginRight: "auto",
-          }}
-        >
-          Coins Available :{" "}
-          <span
-            style={{
-              fontWeight: "bold",
-            }}
-          >
-            {coinsRedeem}
-          </span>
-        </Typography>
-        <Button
-          variant="outlined"
-          style={{
-            border: 0,
-            fontSize: "0.8rem",
-            color: "#A36E29",
-            fontWeight: "bold",
-            textTransform: "none",
-            fontFamily: '"Open Sans", sans-serif',
-          }}
-          onClick={() => {
-            setCoinsApplied(!coinsApplied);
-          }}
-        >
-          {coinsApplied ? "Remove" : "Apply"}
-        </Button>
-      </Card>
-      <Card
-        style={{
-          width: "90%",
-          minHeight: 65,
-          height: "7vh",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "5%",
-        }}
-        elevation={1}
-      >
-        <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
-        <Typography
-          style={{
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.8rem",
-            marginRight: "auto",
-            marginLeft: "2%",
-          }}
-        >
-          Delivering to :{" "}
-          <span
-            style={{
-              fontWeight: "bold",
-            }}
-          >
-            {localStorage.getItem("default_pincode")}
-          </span>
-        </Typography>
-        <Button
-          variant="outlined"
-          style={{
-            border: 0,
-            fontSize: "0.8rem",
-            color: "#A36E29",
-            fontWeight: "bold",
-            textTransform: "none",
-            fontFamily: '"Open Sans", sans-serif',
-          }}
-          onClick={openLocationModal}
-        >
-          Change Pincode
-        </Button>
-      </Card>
-      <Card
-        style={{
-          width: "90%",
-          minHeight: 65,
-          height: "7vh",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "5%",
-          textAlign: "left",
-        }}
-        elevation={1}
-      >
-        <LocalOfferIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
-        <Typography
-          style={{
-            marginLeft: "5%",
-            marginRight: "auto",
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.8rem",
-            color: selectedCouponCode ? "#A36E29" : "black",
-            fontWeight: selectedCouponCode ? "bold" : "normal",
-          }}
-        >
-          {selectedCouponCode
-            ? `Applied ${selectedCouponCode}`
-            : "Apply Coupon"}
-        </Typography>
-        <Button
-          variant="outlined"
-          style={{ border: 0, color: "#A36E29", fontWeight: "bold" }}
-          onClick={() => handleCouponChange()}
-        >
-          {!selectedCouponCode ? <ArrowForwardIosIcon /> : <CloseIcon />}
-        </Button>
-      </Card>
-      <Card
-        style={{
-          width: "90%",
-          minHeight: 200,
-          height: "max-content",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          padding: "5%",
-          paddingTop: "3%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          alignItems: "flex-start",
-          marginBottom: "5%",
-          textAlign: "left",
-        }}
-        elevation={1}
-      >
-        <Typography
-          style={{
-            textAlign: "left",
-            fontWeight: "bold",
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "1.2rem",
-          }}
-        >
-          Order Summary
-        </Typography>
         <Box
           style={{
             width: "100%",
+            height: "30vh",
             display: "flex",
-            alignItems: "center",
+            flexDirection: "column",
+            marginTop: "10%",
             justifyContent: "space-between",
-            color: "gray",
           }}
         >
-          <Typography
+          <Card
             style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-          >
-            Subtotal:
-          </Typography>
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-              color: "black",
-              fontWeight: "bold",
-            }}
-          >
-            ₹ {Number(totalPrice).toLocaleString()}
-          </Typography>
-        </Box>
-
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "gray",
-          }}
-        >
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-          >
-            Discount:
-          </Typography>
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-              color: "black",
-              fontWeight: "bold",
-            }}
-          >
-            ₹ {Number(discountValue).toLocaleString()}
-          </Typography>
-        </Box>
-        {coinsApplied ? (
-          <Box
-            style={{
-              width: "100%",
+              width: "90%",
+              minHeight: 65,
+              height: "7vh",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              paddingLeft: "5%",
+              paddingRight: "5%",
               display: "flex",
-              alignItems: "center",
               justifyContent: "space-between",
-              color: "gray",
+              alignItems: "center",
+              marginBottom: "5%",
             }}
+            elevation={1}
           >
+            <MonetizationOnRoundedIcon
+              style={{ fontSize: "2rem", color: "#A36E29" }}
+            />
             <Typography
               style={{
+                marginLeft: "2%",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
+                marginRight: "auto",
               }}
             >
-              Coins Redeemed:
+              Coins Available :{" "}
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {coinsRedeem}
+              </span>
             </Typography>
-            <Typography
+            <Button
+              variant="outlined"
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                border: 0,
                 fontSize: "0.8rem",
-                color: "black",
+                color: "#A36E29",
                 fontWeight: "bold",
+                textTransform: "none",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+              onClick={() => {
+                setCoinsApplied(!coinsApplied);
               }}
             >
-              ₹ {coinsRedeem}
+              {coinsApplied ? "Remove" : "Apply"}
+            </Button>
+          </Card>
+          <Card
+            style={{
+              width: "90%",
+              minHeight: 65,
+              height: "7vh",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              paddingLeft: "5%",
+              paddingRight: "5%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "5%",
+            }}
+            elevation={1}
+          >
+            <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginRight: "auto",
+                marginLeft: "2%",
+              }}
+            >
+              Delivering to :{" "}
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {localStorage.getItem("default_pincode")}
+              </span>
             </Typography>
-          </Box>
-        ) : null}
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "gray",
-          }}
-        >
-          <Typography
+            <Button
+              variant="outlined"
+              style={{
+                border: 0,
+                fontSize: "0.8rem",
+                color: "#A36E29",
+                fontWeight: "bold",
+                textTransform: "none",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+              onClick={openLocationModal}
+            >
+              Change Pincode
+            </Button>
+          </Card>
+          <Card
             style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
+              width: "90%",
+              minHeight: 65,
+              height: "7vh",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              paddingLeft: "5%",
+              paddingRight: "5%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "5%",
+              textAlign: "left",
             }}
+            elevation={1}
           >
-            You Saved:
-          </Typography>
-          <Typography
+            <LocalOfferIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
+            <Typography
+              style={{
+                marginLeft: "5%",
+                marginRight: "auto",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                color: selectedCouponCode ? "#A36E29" : "black",
+                fontWeight: selectedCouponCode ? "bold" : "normal",
+              }}
+            >
+              {selectedCouponCode
+                ? `Applied ${selectedCouponCode}`
+                : "Apply Coupon"}
+            </Typography>
+            <Button
+              variant="outlined"
+              style={{ border: 0, color: "#A36E29", fontWeight: "bold" }}
+              onClick={() => handleCouponChange()}
+            >
+              {!selectedCouponCode ? <ArrowForwardIosIcon /> : <CloseIcon />}
+            </Button>
+          </Card>
+          <Card
             style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-              color: "black",
-              fontWeight: "bold",
+              width: "90%",
+              minHeight: 200,
+              height: "max-content",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              padding: "5%",
+              paddingTop: "3%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              alignItems: "flex-start",
+              marginBottom: "5%",
+              textAlign: "left",
             }}
+            elevation={1}
           >
-            ₹ {Number(discountValue) + (coinsApplied ? Number(coinsRedeem) : 0)}
-          </Typography>
-        </Box>
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "#050505",
-          }}
-        >
-          <Typography
+            <Typography
+              style={{
+                textAlign: "left",
+                fontWeight: "bold",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.2rem",
+              }}
+            >
+              Order Summary
+            </Typography>
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "gray",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                Subtotal:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹ {Number(totalPrice).toLocaleString()}
+              </Typography>
+            </Box>
+
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "gray",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                Discount:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹ {Number(discountValue).toLocaleString()}
+              </Typography>
+            </Box>
+            {coinsApplied ? (
+              <Box
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  color: "gray",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Coins Redeemed:
+                </Typography>
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  ₹ {coinsRedeem}
+                </Typography>
+              </Box>
+            ) : null}
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "gray",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                You Saved:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹{" "}
+                {Number(discountValue) +
+                  (coinsApplied ? Number(coinsRedeem) : 0)}
+              </Typography>
+            </Box>
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "#050505",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Total:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.1rem",
+                  color: "#A36E29",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹{" "}
+                {(
+                  Number(totalPrice) -
+                  discountValue -
+                  (coinsApplied ? coinsRedeem : 0)
+                ).toLocaleString()}
+              </Typography>
+            </Box>
+          </Card>
+          <Button
+            variant="contained"
             style={{
+              marginBottom: "5%",
+              backgroundColor: "#a36e29",
+              borderRadius: "10px",
+              elevation: "0",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
-              color: "black",
-              fontWeight: "bold",
+              fontWeight: "600",
+              background: "#a36e29",
             }}
+            component={Link}
+            to={
+              localStorage.getItem("token")
+                ? `/checkout?discount=${selectedCouponId}&coins=${
+                    coinsApplied ? coinsRedeem : 0
+                  }`
+                : "/signin"
+            }
+            fullWidth
           >
-            Total:
-          </Typography>
-          <Typography
-            style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1.1rem",
-              color: "#A36E29",
-              fontWeight: "bold",
-            }}
-          >
-            ₹{" "}
-            {(
-              Number(totalPrice) -
-              discountValue -
-              (coinsApplied ? coinsRedeem : 0)
-            ).toLocaleString()}
-          </Typography>
+            {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}
+          </Button>
         </Box>
-      </Card>
-      <Button
-        variant="contained"
+      </div>
+      {/* Mobile */}
+      <div
         style={{
-          marginBottom: "5%",
-          backgroundColor: "#a36e29",
-          borderRadius: "10px",
-          elevation: "0",
-          fontFamily: '"Open Sans", sans-serif',
-          fontSize: "1rem",
-          fontWeight: "600",
-          background: "#a36e29",
+          display: matches ? "none" : "block",
         }}
-        component={Link}
-        to={
-          localStorage.getItem("token")
-            ? `/checkout?discount=${selectedCouponId}&coins=${
-                coinsApplied ? coinsRedeem : 0
-              }`
-            : "/signin"
-        }
-        fullWidth
       >
-        {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}
-      </Button>
-    </Box>
+        <Box
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "5%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            style={{
+              marginBottom: "5%",
+              backgroundColor: "#a36e29",
+              borderRadius: "10px",
+              elevation: "0",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              fontWeight: "600",
+              background: "#a36e29",
+            }}
+            component={Link}
+            to={
+              localStorage.getItem("token")
+                ? `/checkout?discount=${selectedCouponId}&coins=${
+                    coinsApplied ? coinsRedeem : 0
+                  }`
+                : "/signin"
+            }
+            fullWidth
+          >
+            {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}
+          </Button>
+          <Card
+            style={{
+              width: "90%",
+              minHeight: 65,
+              height: "7vh",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              paddingLeft: "5%",
+              paddingRight: "5%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "5%",
+            }}
+            elevation={1}
+          >
+            <MonetizationOnRoundedIcon
+              style={{ fontSize: "2rem", color: "#A36E29" }}
+            />
+            <Typography
+              style={{
+                marginLeft: "2%",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginRight: "auto",
+              }}
+            >
+              Coins Available :{" "}
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {coinsRedeem}
+              </span>
+            </Typography>
+            <Button
+              variant="outlined"
+              style={{
+                border: 0,
+                fontSize: "0.8rem",
+                color: "#A36E29",
+                fontWeight: "bold",
+                textTransform: "none",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+              onClick={() => {
+                setCoinsApplied(!coinsApplied);
+              }}
+            >
+              {coinsApplied ? "Remove" : "Apply"}
+            </Button>
+          </Card>
+          <Card
+            style={{
+              width: "90%",
+              minHeight: 65,
+              height: "7vh",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              paddingLeft: "5%",
+              paddingRight: "5%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "5%",
+            }}
+            elevation={1}
+          >
+            <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginRight: "auto",
+                marginLeft: "2%",
+              }}
+            >
+              Delivering to :{" "}
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {localStorage.getItem("default_pincode")}
+              </span>
+            </Typography>
+            <Button
+              variant="outlined"
+              style={{
+                border: 0,
+                fontSize: "0.8rem",
+                color: "#A36E29",
+                fontWeight: "bold",
+                textTransform: "none",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+              onClick={openLocationModal}
+            >
+              Change Pincode
+            </Button>
+          </Card>
+          <Card
+            style={{
+              width: "90%",
+              minHeight: 65,
+              height: "7vh",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              paddingLeft: "5%",
+              paddingRight: "5%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "5%",
+              textAlign: "left",
+            }}
+            elevation={1}
+          >
+            <LocalOfferIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
+            <Typography
+              style={{
+                marginLeft: "5%",
+                marginRight: "auto",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                color: selectedCouponCode ? "#A36E29" : "black",
+                fontWeight: selectedCouponCode ? "bold" : "normal",
+              }}
+            >
+              {selectedCouponCode
+                ? `Applied ${selectedCouponCode}`
+                : "Apply Coupon"}
+            </Typography>
+            <Button
+              variant="outlined"
+              style={{ border: 0, color: "#A36E29", fontWeight: "bold" }}
+              onClick={() => handleCouponChange()}
+            >
+              {!selectedCouponCode ? <ArrowForwardIosIcon /> : <CloseIcon />}
+            </Button>
+          </Card>
+          <Card
+            style={{
+              width: "90%",
+              minHeight: 200,
+              height: "max-content",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              padding: "5%",
+              paddingTop: "3%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              alignItems: "flex-start",
+              marginBottom: "5%",
+              textAlign: "left",
+            }}
+            elevation={1}
+          >
+            <Typography
+              style={{
+                textAlign: "left",
+                fontWeight: "bold",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.2rem",
+              }}
+            >
+              Order Summary
+            </Typography>
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "gray",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                Subtotal:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹ {Number(totalPrice).toLocaleString()}
+              </Typography>
+            </Box>
+
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "gray",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                Discount:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹ {Number(discountValue).toLocaleString()}
+              </Typography>
+            </Box>
+            {coinsApplied ? (
+              <Box
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  color: "gray",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Coins Redeemed:
+                </Typography>
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  ₹ {coinsRedeem}
+                </Typography>
+              </Box>
+            ) : null}
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "gray",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                You Saved:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹{" "}
+                {Number(discountValue) +
+                  (coinsApplied ? Number(coinsRedeem) : 0)}
+              </Typography>
+            </Box>
+            <Box
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "#050505",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Total:
+              </Typography>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.1rem",
+                  color: "#A36E29",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹{" "}
+                {(
+                  Number(totalPrice) -
+                  discountValue -
+                  (coinsApplied ? coinsRedeem : 0)
+                ).toLocaleString()}
+              </Typography>
+            </Box>
+          </Card>
+        </Box>
+      </div>
+    </div>
   );
 }
