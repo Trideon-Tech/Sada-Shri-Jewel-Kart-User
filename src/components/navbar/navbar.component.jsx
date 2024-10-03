@@ -526,6 +526,12 @@ const Navbar = () => {
 
         <AppBar elevation={0} position="fixed" className="appbar">
           <Toolbar variant="dense" className="toolbar">
+            <IconButton>
+              <MenuOutlined
+                style={{ color: "#a36e29", margin: "0px" }}
+                onClick={() => setOpenDrawer(true)}
+              />
+            </IconButton>
             <img
               alt="logo"
               className="logo"
@@ -627,12 +633,6 @@ const Navbar = () => {
                   >
                     <ShoppingCartOutlined />
                   </Badge>
-                </IconButton>
-                <IconButton>
-                  <MenuOutlined
-                    style={{ color: "#a36e29" }}
-                    onClick={() => setOpenDrawer(true)}
-                  />
                 </IconButton>
               </div>
             </div>

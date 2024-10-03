@@ -9,6 +9,7 @@ function Footer() {
     <Box
       component="footer"
       style={{
+        marginTop: "80px",
         paddingTop: "50px",
         margin: 0,
         backgroundColor: "rgba(163,110,41,0.08)",

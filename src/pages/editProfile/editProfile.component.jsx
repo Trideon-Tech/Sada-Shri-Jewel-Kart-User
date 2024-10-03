@@ -1,11 +1,12 @@
 import {
-    Avatar,
-    Box,
-    Button,
-    Card,
-    Grid,
-    TextField,
-    Typography,
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Grid,
+  TextField,
+  Typography,
+  useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
@@ -19,6 +20,8 @@ const EditProfile = () => {
   const [pincode, setPincode] = useState(
     localStorage.getItem("default_pincode")
   );
+
+  const matches = useMediaQuery("(min-width:600px)");
 
   const updateProfile = () => {
     const formData = new FormData();
@@ -97,8 +100,7 @@ const EditProfile = () => {
             width: "100px",
             height: "100px",
             fontSize: "2.7rem",
-            background:
-              "#a36e29",
+            background: "#a36e29",
           }}
         >
           {firstName.charAt(0)}
@@ -173,7 +175,7 @@ const EditProfile = () => {
               sx={{
                 width: "100%",
                 height: "35px",
-                marginTop: '10px',
+                marginTop: "10px",
                 "& input": {
                   fontFamily: '"Open Sans", sans-serif',
                   fontSize: "0.8rem",
@@ -203,7 +205,7 @@ const EditProfile = () => {
               sx={{
                 width: "100%",
                 height: "35px",
-                marginTop: '10px',
+                marginTop: "10px",
                 "& input": {
                   fontFamily: '"Open Sans", sans-serif',
                   fontSize: "0.8rem",
@@ -235,7 +237,7 @@ const EditProfile = () => {
               sx={{
                 width: "100%",
                 height: "35px",
-                marginTop: '10px',
+                marginTop: "10px",
                 "& input": {
                   fontFamily: '"Open Sans", sans-serif',
                   fontSize: "0.8rem",
@@ -276,8 +278,7 @@ const EditProfile = () => {
             variant="contained"
             style={{
               width: "25%",
-              background:
-                "#a36e29",
+              background: "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
               textTransform: "none",

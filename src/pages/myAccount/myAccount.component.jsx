@@ -342,7 +342,8 @@ export default function MyAccount() {
                 <Typography
                   style={{
                     fontWeight: "bold",
-                    fontSize: "1.5rem",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
                     marginTop: "10%",
                   }}
                 >
@@ -353,24 +354,25 @@ export default function MyAccount() {
                     fontWeight: "bold",
                     fontSize: "1rem",
                     marginTop: "20%",
+                    fontFamily: '"Open Sans", sans-serif',
                   }}
                 >
                   {localStorage.getItem("user_name")}
                 </Typography>
                 <Typography
                   style={{
-                    fontSize: "1rem",
-                    marginTop: "5%",
+                    fontSize: "0.9rem",
                     color: "#00000090",
+                    fontFamily: '"Open Sans", sans-serif',
                   }}
                 >
                   {localStorage.getItem("user_email")}
                 </Typography>
                 <Typography
                   style={{
-                    fontSize: "1rem",
-                    marginTop: "5%",
+                    fontSize: "0.9rem",
                     color: "#00000090",
+                    fontFamily: '"Open Sans", sans-serif',
                   }}
                 >
                   <u>+{localStorage.getItem("mobile")}</u>
@@ -382,7 +384,9 @@ export default function MyAccount() {
                       fontWeight: "bold",
                       color: "#a36e29",
                       padding: 0,
-                      marginTop: "5%",
+                      marginTop: "10%",
+                      fontSize: "0.8rem",
+                      fontFamily: '"Open Sans", sans-serif',
                     }}
                     onClick={() => setDrawerOpen(false)}
                   >
@@ -403,6 +407,8 @@ export default function MyAccount() {
                       color: "#a36e29",
                       padding: 0,
                       marginTop: "5%",
+                      fontSize: "0.8rem",
+                      fontFamily: '"Open Sans", sans-serif',
                     }}
                     onClick={() => setDrawerOpen(false)}
                   >
@@ -416,6 +422,8 @@ export default function MyAccount() {
                       color: "#a36e29",
                       padding: 0,
                       marginTop: "5%",
+                      fontSize: "0.8rem",
+                      fontFamily: '"Open Sans", sans-serif',
                     }}
                     onClick={() => setDrawerOpen(false)}
                   >
@@ -429,6 +437,8 @@ export default function MyAccount() {
                       color: "#a36e29",
                       padding: 0,
                       marginTop: "5%",
+                      fontSize: "0.8rem",
+                      fontFamily: '"Open Sans", sans-serif',
                     }}
                     onClick={() => setDrawerOpen(false)}
                   >
@@ -444,11 +454,14 @@ export default function MyAccount() {
                 />
                 <Button
                   style={{
-                    fontSize: "0.8rem",
                     fontWeight: "bold",
                     color: "#00000090",
                     padding: 0,
+                    fontWeight: "bold",
                     marginTop: "5%",
+                    fontSize: "0.8rem",
+                    fontFamily: '"Open Sans", sans-serif',
+                    textAlign: "left",
                   }}
                   onClick={() => {
                     localStorage.clear();
@@ -459,12 +472,14 @@ export default function MyAccount() {
                 </Button>
                 <Button
                   style={{
-                    fontSize: "0.8rem",
                     fontWeight: "bold",
                     color: "#00000090",
                     padding: 0,
+                    marginBottom: "10%",
+                    fontWeight: "bold",
                     marginTop: "5%",
-                    marginBottom: "20%",
+                    fontSize: "0.8rem",
+                    fontFamily: '"Open Sans", sans-serif',
                   }}
                   onClick={() => handleClickOpen()}
                 >

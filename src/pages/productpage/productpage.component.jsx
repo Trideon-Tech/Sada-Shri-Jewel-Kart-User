@@ -419,8 +419,6 @@ function Productpage() {
           </Drawer>
         </div>
       </div>
-
-      {/* <Footer /> */}
     </div>
   );
 }

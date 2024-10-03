@@ -1,6 +1,7 @@
 import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "../cart/cartItem.component";
 import CartTotal from "./cartTotal.component";
@@ -54,68 +55,72 @@ const Checkout = () => {
   }, [refreshCart]);
 
   return (
-    <Box
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        backgroundColor: "white",
-        marginTop: matches ? "" : "6rem",
-      }}
-    >
-      <Navbar />
+    <>
       <Box
         style={{
-          width: !matches ? "90%" : "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
+          backgroundColor: "white",
+          marginTop: matches ? "" : "6rem",
         }}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={!matches ? 12 : 6}>
-            <CheckoutForm cartItems={cartItems} />
-          </Grid>
-          <Grid item xs={!matches ? 12 : 5}>
-            <Box
-              style={{
-                padding: !matches ? "0%" : "3%",
-                paddingRight: 0,
-                height: "100%",
-                backgroundColor: !matches ? "white" : "#f8f8f8",
-              }}
-            >
-              <Typography
+        <Navbar />
+        <Box
+          style={{
+            width: !matches ? "90%" : "100%",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={!matches ? 12 : 6}>
+              <CheckoutForm cartItems={cartItems} />
+            </Grid>
+            <Grid item xs={!matches ? 12 : 5}>
+              <Box
                 style={{
-                  textAlign: !matches ? "left" : "center",
-                  fontWeight: "bold",
-                  color: "black",
-                  marginBottom: "3%",
-                  fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "1rem",
+                  padding: !matches ? "0%" : "3%",
+                  paddingRight: 0,
+                  height: "95%",
+                  backgroundColor: !matches ? "white" : "#f8f8f8",
                 }}
               >
-                Order Summary
-              </Typography>
-              {cartItems?.map((item) => (
-                <CartItem
-                  key={item.cart_id}
-                  item={item}
-                  itemName={item.name}
-                  weight={item.weight}
-                  price={item.price}
-                  readOnly={true}
+                <Typography
+                  style={{
+                    textAlign: !matches ? "left" : "center",
+                    fontWeight: "bold",
+                    color: "black",
+                    marginBottom: "3%",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1rem",
+                  }}
+                >
+                  Order Summary
+                </Typography>
+                {cartItems?.map((item) => (
+                  <CartItem
+                    key={item.cart_id}
+                    item={item}
+                    itemName={item.name}
+                    weight={item.weight}
+                    price={item.price}
+                    readOnly={true}
+                  />
+                ))}
+                <Divider />
+                <CartTotal
+                  items={cartItems}
+                  coinValueDiscount={Number(coinsRedeem)}
                 />
-              ))}
-              <Divider />
-              <CartTotal
-                items={cartItems}
-                coinValueDiscount={Number(coinsRedeem)}
-              />
-            </Box>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </Box>
+      <Footer
+      />
+    </>
   );
 };
 export default Checkout;

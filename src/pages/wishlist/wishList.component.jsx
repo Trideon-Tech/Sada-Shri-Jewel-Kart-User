@@ -66,7 +66,6 @@ const Wishlist = () => {
       <Box
         style={{
           width: "100vw",
-
           height: "max-content",
         }}
       >
@@ -91,6 +90,7 @@ const Wishlist = () => {
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1.4rem",
             marginTop: "10px",
+            marginBottom: '10px'
           }}
         >
           Your Wishlist

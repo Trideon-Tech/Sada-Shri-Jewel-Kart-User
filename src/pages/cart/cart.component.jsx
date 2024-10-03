@@ -8,6 +8,7 @@ import Lottie from "lottie-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "./cartItem.component";
 import CartTotal from "./cartTotal.component";
@@ -584,6 +585,7 @@ const Cart = () => {
           )}
         </Box>
       </div>
+      <Footer />
     </div>
   );
 };

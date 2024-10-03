@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 
 import "../signin/signin.styles.scss";
@@ -100,7 +101,6 @@ const Register = () => {
         `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${mobile}`
       )
       .then((response) => {
-        console.log("userdata=====================================", response);
         if (
           response.data.success === 1 &&
           response?.data?.response?.user_details
@@ -356,6 +356,7 @@ const Register = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
