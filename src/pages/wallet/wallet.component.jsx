@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const HistoryInfo = ({ logData, orderDetail }) => {
-  console.log("hhh", logData);
   return (
     <div
       style={{
@@ -71,7 +70,7 @@ const HistoryInfo = ({ logData, orderDetail }) => {
             }}
           >
             {" "}
-            {logData?.created_at}
+            {Date(logData?.updated_at).toLocaleString()}
           </p>
           <p
             style={{

@@ -222,7 +222,6 @@ function ProductDetail() {
     if (
       customizationTypes.length === Object.keys(selectedCustomization).length
     ) {
-      // Continue
       let options = Object.values(selectedCustomization);
       let variant;
 
@@ -257,6 +256,8 @@ function ProductDetail() {
   const [averageRating, setAverageRating] = useState(0);
 
   const [localWishlisted, setLocalWishlisted] = useState(false);
+  const [buyNowDrawer, setBuyNowDrawer] = useState(false);
+  const [addresses, setAddresses] = useState();
 
   const getWishListItemsNonAuth = () => {
     const wishListExists = localStorage.getItem("wish_list");
@@ -471,6 +472,32 @@ function ProductDetail() {
     }, 1000);
 
     return () => clearTimeout(timer);
+  };
+
+  const buyNow = async () => {
+    if (
+      customizationTypes.length === Object.keys(selectedCustomization).length
+    ) {
+      const userId = localStorage.getItem("user_id")
+        ? localStorage.getItem("user_id")
+        : -1;
+
+      if (userId !== -1) {
+        // getAddress();
+        // setBuyNowDrawer(true);
+        navigate(
+          `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
+            productDetail?.hash
+          }&customization=${selctedVariantId || -1}`
+        );
+      } else {
+        navigate(
+          `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
+        );
+      }
+    } else {
+      toast("Select Customization", generalToastStyle);
+    }
   };
 
   return (
@@ -1022,6 +1049,27 @@ function ProductDetail() {
           </Box>
         </DialogActions>
       </Dialog>
+      <Drawer
+        open={buyNowDrawer}
+        onClose={() => {
+          setBuyNowDrawer(false);
+        }}
+        anchor="right"
+      >
+        <div
+          style={{
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "1.6rem",
+            fontWeight: "600",
+            backgroundColor: "#E0B872",
+            color: "white",
+            padding: "18px",
+            paddingLeft: "25px",
+          }}
+        >
+          Select Address
+        </div>
+      </Drawer>
 
       <div className="web">
         <div className="container">
@@ -1410,7 +1458,7 @@ function ProductDetail() {
                         background: "transparent",
                         border: "2px solid #a36e29",
                       }}
-                      // onClick={addToCartHandler}
+                      onClick={buyNow}
                     >
                       Buy Now
                       <ShoppingBagOutlined
@@ -1798,7 +1846,7 @@ function ProductDetail() {
                     background: "transparent",
                     border: "2px solid #a36e29",
                   }}
-                  // onClick={addToCartHandler}
+                  onClick={buyNow}
                 >
                   Buy Now
                   <ShoppingBagOutlined
@@ -1810,7 +1858,7 @@ function ProductDetail() {
                 </Button>
               </div>
               <Grid container spacing={3}>
-                {/* // CUstomization */}
+                {/* Customization */}
 
                 {hasCustomization ? (
                   <>

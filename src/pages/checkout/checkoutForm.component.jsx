@@ -213,7 +213,7 @@ const CheckoutForm = ({ cartItems }) => {
       },
       order_id: orderCreatedData.id,
       handler: async function (response) {
-        console.log(response);
+        console.log("SSSSSSSSSSSSSSSSF" + response);
         const token = localStorage.getItem("token");
         const formData = new FormData();
         console.log("orderCreatedData::::", orderCreatedData);
@@ -223,6 +223,8 @@ const CheckoutForm = ({ cartItems }) => {
         formData.append("razorpay_signature", response.razorpay_signature);
         formData.append("order_id", response.razorpay_order_id);
         formData.append("payment_method", "UPI");
+        formData.append("wallet_amount", queryParams.get("coins"));
+        formData.append("coupon_id", queryParams.get("discount"));
         axios
           .post(
             "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",

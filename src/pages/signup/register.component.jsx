@@ -5,8 +5,7 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  TextField,
-  useMediaQuery,
+  TextField
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -20,7 +19,6 @@ const Register = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const isSignUp = window.location.pathname === "/signup";
-  const matches = useMediaQuery("(min-width:600px)");
   let navigate = useNavigate();
   const [mobile, setMobile] = useState();
   const [otp, setOTP] = useState();
