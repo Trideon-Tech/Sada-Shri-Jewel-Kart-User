@@ -138,7 +138,7 @@ function Footer() {
           }}
           align="center"
         >
-          Copyright © {new Date().getFullYear()} Sada Shri Ventures Private
+          Copyright © {new Date().getFullYear()} SadāShri Ventures Private
           Limited. All rights reserved.
         </Typography>
       </Container>

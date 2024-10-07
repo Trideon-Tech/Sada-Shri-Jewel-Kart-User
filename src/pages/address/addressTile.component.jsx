@@ -51,7 +51,7 @@ const AddressTile = ({ address }) => {
     <Card
       elevation={1}
       style={{
-        width: "96%",
+        width: matches ? "96%" : "90%",
         height: isEditing ? "80%" : "40%",
         minWidth: matches ? "830px" : "300px",
         minHeight: "200px",

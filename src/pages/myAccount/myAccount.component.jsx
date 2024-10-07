@@ -7,9 +7,8 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
-  Drawer,
   Typography,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 import * as React from "react";
 import Navbar from "../../components/navbar/navbar.component";
@@ -316,7 +315,7 @@ export default function MyAccount() {
               </Button>
             </Box>
           ) : null}
-          {!matches ? (
+          {/* {!matches ? (
             <Drawer
               anchor={"left"}
               open={drawerOpen}
@@ -487,7 +486,7 @@ export default function MyAccount() {
                 </Button>
               </Box>
             </Drawer>
-          ) : null}
+          ) : null} */}
         </Box>
         <Box
           style={{

@@ -54,7 +54,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
     <Card
       elevation={1}
       style={{
-        width: "95%",
+        width: matches ? "95%" : "90%",
         height: isEditing ? "90%" : "25%",
         minWidth: matches ? "700px" : "250px",
         minHeight: "10px",
