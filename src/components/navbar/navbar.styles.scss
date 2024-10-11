@@ -12,6 +12,13 @@
         width: 90%;
 
         .logo {
+          height: 120px;
+          margin-right: 0.5rem;
+          vertical-align: middle;
+          cursor: pointer;
+        }
+        
+        .sub-logo {
           height: 60px;
           margin-right: 0.5rem;
           vertical-align: middle;
@@ -148,11 +155,12 @@
           width: 90%;
 
           .logo {
-            height: 40px;
+            height: 80px;
             margin-right: 0.5rem;
             vertical-align: middle;
             cursor: pointer;
           }
+          
           .search {
             margin-left: auto;
             margin-right: 0px;

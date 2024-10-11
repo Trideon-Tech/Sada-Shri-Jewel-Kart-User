@@ -99,6 +99,7 @@ export default function CartTotal({
   const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
   const [currentPositionPincode, setCurrentPositionPincode] = useState("");
   const [eta, setETA] = useState("");
+  const [mobileLocationModalOpen, setMobileLocationModalOpen] = useState();
 
   useEffect(() => {
     handleDeliveryEstimation();
@@ -230,6 +231,7 @@ export default function CartTotal({
 
   return (
     <div>
+      {/* Web */}
       <Modal
         open={locationModalOpen}
         onClose={() => {
@@ -437,6 +439,220 @@ export default function CartTotal({
                         currentPositionPincode
                       );
                       setLocationModalOpen(false);
+                    }}
+                  >
+                    Submit
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </ModalDialog>
+        </ModalOverflow>
+      </Modal>
+      {/* Mobile */}
+      <Modal
+        open={mobileLocationModalOpen}
+        onClose={() => {
+          setMobileLocationModalOpen(false);
+        }}
+      >
+        <ModalOverflow>
+          <ModalDialog style={{ padding: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "max-content",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
+                    margin: 0,
+                    padding: 0,
+                  }}
+                >
+                  Locate Me now
+                </p>
+                <Close
+                  onClick={() => {
+                    setMobileLocationModalOpen(false);
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  height: "30%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50px",
+                }}
+              >
+                <PinDropOutlinedIcon
+                  style={{ fontSize: "4.5rem", color: "#a36e29" }}
+                />
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    fontFamily: '"Open Sans", sans-serif',
+                  }}
+                >
+                  Add your Pincode to
+                  <br />
+                  Browse Better
+                </p>
+              </div>
+              <div style={{ width: "100%", height: "max-content" }}>
+                <Input
+                  sx={{
+                    width: "100%",
+                    height: "3rem",
+                    backgroundColor: "#F9F5EC",
+                    border: 0,
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                  }}
+                  placeholder="Enter your pincode"
+                  inputProps={{ "aria-label": "Enter your Pincode" }}
+                  startDecorator={
+                    <MyLocationIcon
+                      style={{
+                        paddingRight: "10px",
+                      }}
+                    />
+                  }
+                  endDecorator={
+                    <p
+                      style={{
+                        fontWeight: 600,
+                        color: "#A36E29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        if (pincode == 6) {
+                          setPincode(pincode);
+                          localStorage.setItem("default_pincode", pincode);
+                          setMobileLocationModalOpen(false);
+                        }
+                      }}
+                    >
+                      Add
+                    </p>
+                  }
+                  onChange={(event) => {
+                    console.log(event.target.value);
+                    if (event.target.value.length == 6) {
+                      setPincode(event.target.value);
+                      localStorage.setItem(
+                        "default_pincode",
+                        event.target.value
+                      );
+                      getETAFromInput(event.target.value, items[0]["id"]);
+                    }
+                  }}
+                />
+                <div
+                  style={{
+                    width: "100%",
+                    height: "max-content",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    color: "#A36E29",
+                    paddingLeft: "20px",
+                    paddingTop: "12px",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <LocalShippingOutlined />
+                  <span
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    {eta === ""
+                      ? "Calculating Estimated Date of Delivery"
+                      : `Estimated delivery by ${eta}`}
+                  </span>
+                </div>
+              </div>
+              <Card
+                elevation={4}
+                sx={{
+                  width: "calc(100% - 40px)",
+                  height: "3rem",
+                  display: "flex",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  paddingBottom: "25px",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                      marginBottom: "3px",
+                    }}
+                  >
+                    City Located
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.6rem",
+                      fontWeight: "bold",
+                      marginTop: "3px",
+                      color: "grey",
+                    }}
+                  >
+                    {currentPositionAddress.length > 0
+                      ? currentPositionAddress
+                      : "Detecting your location"}
+                  </div>
+                </div>
+                <div
+                  style={{ marginLeft: "auto", width: "30%", height: "100%" }}
+                >
+                  <p
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.85rem",
+                      fontWeight: "bold",
+                      color: "#A36E29",
+                      textAlign: "right ",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setPincode(currentPositionPincode);
+                      localStorage.setItem(
+                        "default_pincode",
+                        currentPositionPincode
+                      );
+                      setMobileLocationModalOpen(false);
                     }}
                   >
                     Submit
@@ -949,7 +1165,7 @@ export default function CartTotal({
                 textTransform: "none",
                 fontFamily: '"Open Sans", sans-serif',
               }}
-              onClick={openLocationModal}
+              onClick={() => setMobileLocationModalOpen(true)}
             >
               Change Pincode
             </Button>

@@ -1,4 +1,11 @@
-import { Button, Card, Divider, Grid, Paper } from "@mui/material";
+import {
+  Button,
+  Card,
+  Divider,
+  Grid,
+  Paper,
+  useMediaQuery,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -10,6 +17,8 @@ const OrderConfirmation = () => {
   const [searchParams] = useSearchParams();
   const [orderDetails, setOrderDetails] = useState();
   const [companyName, setCompanyName] = useState();
+
+  const matches = useMediaQuery("(min-width:600px)");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -63,22 +72,24 @@ const OrderConfirmation = () => {
             width: "100vw",
             display: "flex",
             justifyContent: "center",
+            marginTop: matches ? "" : "10vh",
           }}
         >
-          <div style={{ width: "70%" }}>
+          <div style={{ width: matches ? "70%" : "80%" }}>
             <div
               style={{
                 width: "100%",
                 display: "flex",
-                alignItems: "center",
+                alignItems: matches ? "center" : "flex-start",
                 justifyContent: "space-between",
+                flexDirection: matches ? "row" : "column",
               }}
             >
               <p
                 style={{
                   fontWeight: 600,
                   fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "1.4rem",
+                  fontSize: matches ? "1.4rem" : "1.2rem",
                 }}
               >
                 Thanks you for your order #
@@ -93,6 +104,7 @@ const OrderConfirmation = () => {
                   color: "#a36e29",
                   fontFamily: '"Open Sans", sans-serif',
                   fontSize: "0.8rem",
+                  marginBottom: matches ? "" : "20px",
                 }}
                 onClick={() => navigate("/")}
               >
@@ -108,39 +120,47 @@ const OrderConfirmation = () => {
             >
               <div
                 style={{
-                  width: "30vw",
+                  width: matches ? "30vw" : "",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1.2rem",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    color: "grey",
-                  }}
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/coins.png"}
-                    height={40}
+                {matches ? (
+                  <div
                     style={{
-                      marginRight: "12px",
+                      display: "flex",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: matches ? "1.2rem" : "1rem",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      color: "grey",
                     }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/coins.png"}
+                      height={matches ? 40 : 30}
+                      style={{
+                        marginRight: "12px",
+                      }}
+                    />
+                    <>
+                      Congratulations you have received&nbsp;
+                      <span style={{ fontWeight: 600, color: "#a36e29" }}>
+                        {`₹${
+                          orderDetails["wallet_transaction"].find(
+                            (transaction) =>
+                              transaction.transaction_type === "credit"
+                          )["amount"]
+                        }`}
+                      </span>
+                      &nbsp;in your wallet
+                    </>
+                  </div>
+                ) : null}
+                {matches ? null : (
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/anim.png"}
+                    height={300}
                   />
-                  <>
-                    Congratulations you have received&nbsp;
-                    <span style={{ fontWeight: 600, color: "#a36e29" }}>
-                      {`₹${
-                        orderDetails["wallet_transaction"].find(
-                          (transaction) =>
-                            transaction.transaction_type === "credit"
-                        )["amount"]
-                      }`}
-                    </span>
-                    &nbsp;in your wallet
-                  </>
-                </div>
+                )}
                 <div
                   style={{
                     height: "max-content",
@@ -317,7 +337,7 @@ const OrderConfirmation = () => {
                                 fontWeight: "bold",
                               }}
                             >
-                              ₹{o["price"]}
+                              ₹{o["amount_paid"]}
                             </span>
                           </div>
                           <div
@@ -338,7 +358,7 @@ const OrderConfirmation = () => {
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: "20px",
+                          padding: matches ? "20px" : "8px",
                           paddingLeft: "20px",
                           paddingRight: "20px",
                           marginBottom: "50px",
@@ -404,12 +424,12 @@ const OrderConfirmation = () => {
                               fontWeight: "bold",
                             }}
                           >
-                            {
+                            {`₹ ${
                               orderDetails["wallet_transaction"].find(
                                 (transaction) =>
-                                  transaction.transaction_type === "credit"
-                              )["amount"]
-                            }
+                                  transaction.transaction_type === "debit"
+                              )?.amount || 0
+                            }`}
                           </div>
                         </div>
                         <div
@@ -472,7 +492,7 @@ const OrderConfirmation = () => {
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: "20px",
+                          padding: matches ? "20px" : "8px",
                           paddingLeft: "40px",
                           paddingRight: "40px",
                         }}
@@ -538,10 +558,12 @@ const OrderConfirmation = () => {
                   </Grid>
                 </div>
               </div>
-              <img
-                src={process.env.PUBLIC_URL + "/assets/anim.png"}
-                height={500}
-              />
+              {matches ? (
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/anim.png"}
+                  height={500}
+                />
+              ) : null}
             </div>
           </div>
         </div>

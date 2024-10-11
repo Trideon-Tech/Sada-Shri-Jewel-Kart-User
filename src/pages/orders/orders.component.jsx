@@ -4,6 +4,8 @@ import Tab, { tabClasses } from "@mui/joy/Tab";
 import TabList from "@mui/joy/TabList";
 import Tabs from "@mui/joy/Tabs";
 import {
+  BottomNavigation,
+  BottomNavigationAction,
   Box,
   Button,
   Card,
@@ -103,7 +105,7 @@ const Orders = () => {
       });
   };
 
-  return (
+  return matches ? (
     <Box
       style={{
         width: "100%",
@@ -408,11 +410,199 @@ const Orders = () => {
           </Box>
         </TabPanel>
       </Tabs>
-      {/* <OrderItem />
-        <OrderItem />
-        <OrderItem />
-        <OrderItem /> */}
     </Box>
+  ) : (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        style={{
+          width: "90%",
+          overflowY: "scroll",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
+          height: "90%",
+        }}
+      >
+        <Box
+          style={{
+            width: "90%",
+            marginBottom: "20px",
+            marginTop: "20px",
+            textAlign: "left",
+          }}
+        >
+          <Typography
+            style={{
+              marginTop: "20px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+            }}
+          >
+            Orders and Returns
+          </Typography>
+        </Box>
+        <Tabs
+          aria-label="tabs"
+          defaultValue={0}
+          style={{
+            width: "90%",
+            margin: "auto",
+          }}
+        >
+          <TabList
+            sx={{
+              p: 0,
+              gap: 0,
+              borderRadius: "5px",
+              width: "max-content",
+              border: "1px solid #a7a7a7",
+              bgcolor: "#f7f7f7",
+              color: "#00000090",
+              fontWeight: "bold",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+
+              [`& .${tabClasses.root}[aria-selected="true"]`]: {
+                boxShadow: "sm",
+                border: "2px solid #a36e29",
+                bgcolor: "white",
+                color: "#a36e29",
+                fontWeight: "bold",
+              },
+            }}
+          >
+            <Tab disableIndicator>In Progress</Tab>
+            <Tab disableIndicator>Completed</Tab>
+            <Tab disableIndicator>Cancelled</Tab>
+          </TabList>
+          <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
+            <Box
+              style={{
+                width: "95%",
+                height: "100%",
+              }}
+            >
+              {openOrdersList
+                .sort(
+                  (a, b) =>
+                    parseInt(b.order_record_id) - parseInt(a.order_record_id)
+                )
+                .map((order) => (
+                  <OrderItem
+                    orderInfo={order}
+                    selectHandler={() => {
+                      navigate(
+                        `/order-confirmation?order_record_id=${order.order_record_id}`
+                      );
+                    }}
+                    handleCancelOrder={() => {
+                      console.log(order.order_record_id);
+                      setSelectedOrder(order);
+                      setModalOpen(true);
+                    }}
+                    writeReview={() => writeReview(order)}
+                  />
+                ))}
+            </Box>
+          </TabPanel>
+          <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>
+            <Box style={{ width: "100%", height: "100%" }}>
+              {completedOrdersList.map((order) => (
+                <OrderItem
+                  orderInfo={order}
+                  titleColorType="delivered"
+                  selectHandler={(id) => {
+                    return;
+                  }}
+                />
+              ))}
+            </Box>
+          </TabPanel>
+          <TabPanel value={2} style={{ padding: 0, paddingTop: "20px" }}>
+            <Box style={{ width: "100%", height: "100%" }}>
+              <Box style={{ width: "100%", height: "100%" }}>
+                {cancelledOrdersList.map((order) => (
+                  <OrderItem
+                    orderInfo={order}
+                    titleColorType="cancelled"
+                    selectHandler={(id) => {
+                      return;
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+          </TabPanel>
+        </Tabs>
+      </Box>
+      {!matches ? (
+        <BottomNavigation
+          showLabels
+          style={{
+            background: "rgba(163,110,41,0.08)",
+            marginTop: "auto",
+            border: "1px solid #a36e29",
+            borderRadius: "50px",
+            height: "40px",
+          }}
+        >
+          <BottomNavigationAction
+            label="Profile"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account")}
+          />
+          <BottomNavigationAction
+            label="Orders"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "600",
+                color: "#a36e29",
+                textDecoration: "underline",
+              },
+            }}
+            onClick={() => navigate("/my-account/orders")}
+          />
+          <BottomNavigationAction
+            label="Address"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/address")}
+          />
+          <BottomNavigationAction
+            label="Wallet"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/wallet")}
+          />
+        </BottomNavigation>
+      ) : null}
+    </div>
   );
 };
 export default Orders;

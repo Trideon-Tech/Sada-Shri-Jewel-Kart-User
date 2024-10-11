@@ -238,9 +238,11 @@ const CheckoutForm = ({ cartItems }) => {
             }
           )
           .then((response) => {
+            console.log("payment success response");
+            console.log(response);
             toast.info("Payment Verified", generalToastStyle);
             navigate(
-              `/order-confirmation?order_record_id=${response.data.response["order_record"]["id"]}`
+              `/order-confirmation?order_record_id=${response.data.response["order_record"][0]["id"]}`
             );
           })
           .catch((error) => {
@@ -282,6 +284,7 @@ const CheckoutForm = ({ cartItems }) => {
     formData.append("ordered_products", JSON.stringify(orderList));
 
     const token = localStorage.getItem("token");
+    // TODO - API that takes time, we need to add loader for
     axios
       .post(
         "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",
@@ -296,7 +299,9 @@ const CheckoutForm = ({ cartItems }) => {
       )
       .then((response) => {
         console.log("order created", response);
-        setOrderCreatedData(response.data.response);
+        setOrderCreatedData(() => response.data.response);
+
+        handlePaymentRequest();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -333,7 +338,7 @@ const CheckoutForm = ({ cartItems }) => {
           setActiveStep={setActiveStep}
           setSelectedAddress={setSelectedAddress}
           selectedAddress={selectedAddress}
-          createOrderHandler={createOrderHandler}
+          createOrderHandler={() => {}}
         />
       ) : activeStep === 2 ? (
         <SelectPaymentMethodStep
@@ -344,7 +349,7 @@ const CheckoutForm = ({ cartItems }) => {
           selectedAddress={selectedAddress}
           paymentMethod={paymentMethod}
           setPaymentMethod={setPaymentMethod}
-          handlePaymentRequest={handlePaymentRequest}
+          handlePaymentRequest={createOrderHandler}
         />
       ) : null}
     </Box>

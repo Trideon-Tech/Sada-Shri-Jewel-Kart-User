@@ -82,13 +82,14 @@ const OrderItem = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
+          flexDirection: matches ? "row" : "column",
         }}
       >
         <Typography
           style={{
             fontWeight: "bold",
             fontFamily: '"Open Sans", sans-serif',
-            fontSize: "1.2rem",
+            fontSize: matches ? "1.2rem" : "1rem",
             color: titleColors[titleColorType],
           }}
         >
@@ -97,9 +98,10 @@ const OrderItem = ({
         <Box
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: matches ? "column" : "row",
             justifyContent: "space-between",
             alignItems: "flex-start",
+            marginBottom: matches ? "" : "18px",
           }}
         >
           <Typography
@@ -119,6 +121,7 @@ const OrderItem = ({
               color: "#a36e29",
               textAlign: "end",
               cursor: "pointer",
+              marginLeft: matches ? "" : "10px",
             }}
             onClick={writeReview}
           >
@@ -191,7 +194,7 @@ const OrderItem = ({
                 style={{
                   color: "gray",
                   fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "1rem",
+                  fontSize: matches ? "1rem" : "0.8rem",
                 }}
                 gutterBottom
               >
@@ -203,14 +206,14 @@ const OrderItem = ({
             style={{
               marginTop: "2%",
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: matches ? "1rem" : "0.8rem",
               color: "gray",
             }}
             gutterBottom
           >
             Price :{" "}
             <span style={{ color: "black", fontWeight: "bold" }}>
-              ₹ {parseFloat(Number(orderInfo?.price)).toLocaleString()}
+              ₹ {parseFloat(Number(orderInfo?.amount_paid)).toLocaleString()}
             </span>{" "}
           </Typography>
           <Typography
@@ -218,72 +221,137 @@ const OrderItem = ({
               marginTop: "2%",
               color: "gray",
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: matches ? "1rem" : "0.8rem",
             }}
           >
-            {/* TODO - Chenge */}
             Order placed {formatDate(orderInfo["order_created_date"])}
           </Typography>
         </Box>
       </Box>
-      <Box
-        style={{
-          width: "100%",
-          height: "15%",
-          display: "flex",
-          marginTop: "3%",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Button
-          fullWidth
-          variant="outlined"
+      {matches ? (
+        <Box
           style={{
-            width: "32%",
-            height: "100%",
-            border: "2px solid #a36e29",
-            color: "#a36e29",
-            fontWeight: "bold",
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.8rem",
+            width: "100%",
+            height: "15%",
+            display: "flex",
+            marginTop: "3%",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          Need Help?
-        </Button>
-        <Button
-          fullWidth
-          variant="outlined"
-          style={{
-            width: "32%",
-            height: "100%",
-            border: "2px solid #a36e29",
-            fontWeight: "bold",
-            color: "#a36e29",
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.8rem",
-          }}
-          onClick={() => {
-            if (titleColorType === "arriving") handleCancelOrder();
-          }}
-        >
-          {titleColorType === "arriving" ? "Cancel " : "Return Order"}
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          style={{
-            width: "32%",
-            fontWeight: "bold",
-            height: "100%",
-            background: "#a36e29",
-            fontFamily: '"Open Sans", sans-serif',
-            fontSize: "0.8rem",
-          }}
-        >
-          Track Order
-        </Button>
-      </Box>
+          <Button
+            fullWidth
+            variant="outlined"
+            style={{
+              width: "32%",
+              height: "100%",
+              border: "2px solid #a36e29",
+              color: "#a36e29",
+              fontWeight: "bold",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            Need Help?
+          </Button>
+          <Button
+            fullWidth
+            variant="outlined"
+            style={{
+              width: "32%",
+              height: "100%",
+              border: "2px solid #a36e29",
+              fontWeight: "bold",
+              color: "#a36e29",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+            onClick={() => {
+              if (titleColorType === "arriving") handleCancelOrder();
+            }}
+          >
+            {titleColorType === "arriving" ? "Cancel " : "Return Order"}
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            style={{
+              width: "32%",
+              fontWeight: "bold",
+              height: "100%",
+              background: "#a36e29",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+            }}
+          >
+            Track Order
+          </Button>
+        </Box>
+      ) : (
+        <>
+          <Box
+            style={{
+              width: "100%",
+              height: "15%",
+              display: "flex",
+              marginTop: "3%",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              fullWidth
+              variant="outlined"
+              style={{
+                width: "50%",
+                height: "100%",
+                border: "2px solid #a36e29",
+                color: "#a36e29",
+                fontWeight: "bold",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginRight: "5px",
+              }}
+            >
+              Need Help?
+            </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              style={{
+                width: "50%",
+                height: "100%",
+                border: "2px solid #a36e29",
+                fontWeight: "bold",
+                color: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginLeft: "5px",
+              }}
+              onClick={() => {
+                if (titleColorType === "arriving") handleCancelOrder();
+              }}
+            >
+              {titleColorType === "arriving" ? "Cancel " : "Return Order"}
+            </Button>
+          </Box>
+          <Button
+            fullWidth
+            variant="contained"
+            style={{
+              width: "100%",
+              fontWeight: "bold",
+              height: "100%",
+              background: "#a36e29",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              marginTop: "10px",
+            }}
+          >
+            Track Order
+          </Button>
+        </>
+      )}
     </Card>
   );
 };

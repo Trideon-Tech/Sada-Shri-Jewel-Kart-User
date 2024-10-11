@@ -282,7 +282,7 @@ const Navbar = () => {
             <img
               alt="logo"
               className="logo"
-              src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
+              src={process.env.PUBLIC_URL + "/assets/logo_dark.png"}
               onClick={() => navigate(`/`)}
             />
             <div className="menu-items">
@@ -309,7 +309,7 @@ const Navbar = () => {
                                 <div style={{ display: "flex" }}>
                                   <img
                                     alt="logo"
-                                    className="logo"
+                                    className="sub-logo"
                                     src={
                                       process.env.PUBLIC_URL +
                                       "/assets/logoNew.png"
@@ -341,7 +341,7 @@ const Navbar = () => {
                                 <div style={{ display: "flex" }}>
                                   <img
                                     alt="logo"
-                                    className="logo"
+                                    className="sub-logo"
                                     src={
                                       process.env.PUBLIC_URL +
                                       "/assets/logoNew.png"
@@ -535,7 +535,7 @@ const Navbar = () => {
             <img
               alt="logo"
               className="logo"
-              src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
+              src={process.env.PUBLIC_URL + "/assets/logo_dark.png"}
               onClick={() => navigate("/")}
             />
             <div className="search">

@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
+
 const AddressTile = ({ address }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -76,7 +77,7 @@ const AddressTile = ({ address }) => {
               style={{
                 fontWeight: "bold",
                 fontFamily: '"Open Sans", sans-serif',
-                fontSize: "1.2rem",
+                fontSize: matches ? "1.2rem" : "1rem",
               }}
             >
               {`${address?.name}`}
@@ -93,7 +94,7 @@ const AddressTile = ({ address }) => {
               fontWeight: 600,
               color: "#00000060",
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: matches ? "1rem" : "0.8rem",
             }}
           >
             {address?.add_line_1}
@@ -103,7 +104,7 @@ const AddressTile = ({ address }) => {
               fontWeight: 600,
               color: "#00000060",
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: matches ? "1rem" : "0.8rem",
             }}
           >
             {address?.add_line_2}{" "}
@@ -112,7 +113,7 @@ const AddressTile = ({ address }) => {
           <Typography
             style={{
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: matches ? "1rem" : "0.8rem",
             }}
           >
             Pincode : {`${address?.pincode}`}
@@ -121,7 +122,7 @@ const AddressTile = ({ address }) => {
           <Typography
             style={{
               fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
+              fontSize: matches ? "1rem" : "0.8rem",
             }}
           >
             Phone : {address?.mobile}

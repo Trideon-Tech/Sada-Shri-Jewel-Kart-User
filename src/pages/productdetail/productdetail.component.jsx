@@ -1792,7 +1792,10 @@ function ProductDetail() {
                 <Typography className="price">
                   ₹{selectedCustomizationPrice || productDetail.price}
                 </Typography>
-                <Typography className="original-price">MRP ₹9,010</Typography>
+                <Typography className="original-price">
+                  MRP ₹
+                  {(selectedCustomizationPrice || productDetail.price) * 1.2}
+                </Typography>
               </div>
               <Typography
                 style={{
@@ -1948,16 +1951,32 @@ function ProductDetail() {
                     >
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
-                          fontSize: "1.6rem",
-                          fontWeight: "600",
                           backgroundColor: "#E0B872",
-                          color: "white",
-                          padding: "18px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
                           paddingLeft: "25px",
+                          paddingRight: "25px",
                         }}
                       >
-                        Select Customization
+                        <div
+                          style={{
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "1.6rem",
+                            fontWeight: "600",
+
+                            color: "white",
+                            padding: "18px",
+                          }}
+                        >
+                          Select Customization
+                        </div>
+                        <Close
+                          style={{
+                            color: "white",
+                          }}
+                          onClick={handleDrawerClose}
+                        />
                       </div>
 
                       <Box

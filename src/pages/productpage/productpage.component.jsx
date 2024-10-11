@@ -1,17 +1,12 @@
-import FilterListIcon from "@mui/icons-material/FilterList";
-import SortIcon from "@mui/icons-material/Sort";
 import Option from "@mui/joy/Option";
 import Select from "@mui/joy/Select";
 import {
-  BottomNavigation,
-  BottomNavigationAction,
   Box,
   CircularProgress,
   Divider,
   Drawer,
   Grid,
-  Paper,
-  Typography,
+  Typography
 } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
@@ -34,6 +29,7 @@ function Productpage() {
   const [reloadNavbar, setReloadNavbar] = useState(1);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSortDrawerOpen, setSortDrawerOpen] = useState(false);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const [selectedPriceRange, setSelectedPriceRange] = useState({});
@@ -282,16 +278,86 @@ function Productpage() {
         <div className="product-container">
           <div
             style={{
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1.3rem",
-              fontWeight: "bold",
-              color: "#a36e29",
-              marginLeft: "4vw",
-              paddingTop: "12px",
-              paddingBottom: "12px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            Products
+            <div
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.3rem",
+                fontWeight: "bold",
+                color: "#a36e29",
+                marginLeft: "4vw",
+                paddingTop: "12px",
+                paddingBottom: "12px",
+              }}
+            >
+              Products
+            </div>
+            <Box
+              style={{
+                width: "100%",
+                height: "5%",
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "1%",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+              >
+                Sort by
+              </Typography>
+              <Select
+                defaultValue={"Featured"}
+                onChange={(value) => {
+                  setSelectedSort(value?.target?.textContent);
+                }}
+                sx={{
+                  minWidth: "10rem",
+                  background: "none",
+                  border: "none",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+                slotProps={{
+                  listbox: {
+                    sx: {
+                      width: "100%",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    },
+                  },
+                }}
+              >
+                {Object.keys(sortOrders).map((sort) => (
+                  <Option value={sort}>{sort}</Option>
+                ))}
+              </Select>
+            </Box>
+          </div>
+          <div
+            style={{
+              marginLeft: "4vw",
+              marginBottom: "10px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.7rem",
+              color: "#a36e29",
+              textDecoration: "underline",
+            }}
+            onClick={() => {
+              console.log("hey");
+              setIsDrawerOpen(true);
+            }}
+          >
+            Show Filters
           </div>
           <Grid
             container
@@ -331,7 +397,7 @@ function Productpage() {
               ))
             )}
           </Grid>
-          <div className="bottom-navigation">
+          {/* <div className="bottom-navigation">
             <Paper
               sx={{
                 height: "55px",
@@ -361,8 +427,8 @@ function Productpage() {
                         color: "#a36e29",
                       }}
                     >
+                      <FilterListIcon style={{ marginRight: "5px" }} />
                       Filter
-                      <FilterListIcon style={{ marginLeft: "5px" }} />
                     </span>
                   }
                   onClick={toggleDrawer(true)}
@@ -378,15 +444,15 @@ function Productpage() {
                         color: "#a36e29",
                       }}
                     >
+                      <SortIcon style={{ marginRight: "5px" }} />
                       Sort
-                      <SortIcon style={{ marginLeft: "5px" }} />
                     </span>
                   }
+                  onClick={() => setSortDrawerOpen(true)}
                 />
               </BottomNavigation>
             </Paper>
-          </div>
-
+          </div> */}
           <Drawer
             anchor="right"
             open={isDrawerOpen}
