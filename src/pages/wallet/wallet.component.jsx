@@ -1,8 +1,19 @@
-import { Box, Button, Paper, Typography, useMediaQuery } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Box,
+  Button,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HistoryInfo = ({ logData, orderDetail }) => {
+  const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <div
       style={{
@@ -58,6 +69,7 @@ const HistoryInfo = ({ logData, orderDetail }) => {
             height: "max-content",
             display: "flex",
             justifyContent: "space-between",
+            flexDirection: matches ? "row" : "column ",
           }}
         >
           <p
@@ -91,6 +103,7 @@ const HistoryInfo = ({ logData, orderDetail }) => {
 
 const Wallet = () => {
   const matches = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
 
   const [transactions, setTransactions] = useState([]);
   const [creditLog, setCreditLog] = useState([]);
@@ -154,7 +167,7 @@ const Wallet = () => {
       })
       .catch((error) => console.log("Error while fetching wallet info", error));
   }, []);
-  return (
+  return matches ? (
     <Box
       style={{
         width: "100%",
@@ -323,6 +336,242 @@ const Wallet = () => {
         </Paper>
       </Box>
     </Box>
+  ) : (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        style={{
+          width: "90%",
+          overflowY: "scroll",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
+          height: "90%",
+        }}
+      >
+        <Box
+          style={{
+            width: "90%",
+            marginBottom: "20px",
+            marginTop: "20px",
+            textAlign: "left",
+          }}
+        >
+          <Typography
+            style={{
+              marginTop: "20px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+            }}
+          >
+            Wallet
+          </Typography>
+          <Paper
+            style={{
+              width: "95%",
+              minHeight: "500px",
+              padding: matches ? "50px" : "10px",
+              paddingTop: "20px",
+              marginTop: "20px",
+              marginBottom: "30px",
+            }}
+          >
+            <div
+              style={{
+                width: "93%",
+                borderRadius: "10px",
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "flex-start",
+                paddingLeft: "20px",
+                background: "linear-gradient(90deg,#A36E29,#E0B872)",
+              }}
+            >
+              <div
+                style={{
+                  width: "300px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignContent: "center",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: matches ? "1.4rem" : "1.2rem",
+                    fontWeight: 600,
+                    color: "white",
+                    paddingTop: "20px",
+                  }}
+                >
+                  Available Balance
+                </div>
+                <div
+                  style={{
+                    margin: 0,
+                    marginBottom: "auto",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: matches ? "5rem" : "3rem",
+                    fontWeight: 500,
+                    color: "white",
+                  }}
+                >
+                  ₹{creditLog[0]?.balance}
+                </div>
+              </div>
+              {matches ? (
+                <img
+                  style={{
+                    marginRight: 0,
+                    marginLeft: "auto",
+                    marginTop: "auto",
+                  }}
+                  src={process.env.PUBLIC_URL + "/assets/coins.png"}
+                />
+              ) : null}
+            </div>
+            <div
+              style={{
+                width: "100%",
+                marginTop: "30px",
+                marginBottom: "30px",
+                height: "max-content",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
+            >
+              <Button
+                style={{
+                  width: "300px",
+                  height: "50px",
+                  backgroundColor: !showDebit ? "#A36E29" : "white",
+                  color: !showDebit ? "white" : "#A36E29",
+                  border: "2px solid #A36E29",
+                  fontWeight: 600,
+                  borderRadius: "10px",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: matches ? "1rem" : "0.8rem",
+                }}
+                onClick={() => setShowDebit(false)}
+              >
+                Credit History
+              </Button>
+
+              <Button
+                style={{
+                  marginLeft: "20px",
+                  width: "300px",
+                  height: "50px",
+                  backgroundColor: showDebit ? "#A36E29" : "white",
+                  color: showDebit ? "white" : "#A36E29",
+                  border: "2px solid #A36E29",
+                  fontWeight: 600,
+                  borderRadius: "10px",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: matches ? "1rem" : "0.8rem",
+                }}
+                onClick={() => setShowDebit(true)}
+              >
+                Debit History
+              </Button>
+            </div>
+            <div style={{ width: "100%", height: "max-content" }}>
+              {showDebit
+                ? debitLog.map((item) => (
+                    <HistoryInfo
+                      logData={item}
+                      orderDetail={
+                        orderList.filter(
+                          (order) => order.id === item.order_record_id
+                        )[0]
+                      }
+                    />
+                  ))
+                : ""}
+              {!showDebit
+                ? creditLog.map((item) => (
+                    <HistoryInfo
+                      logData={item}
+                      orderDetail={
+                        orderList.filter(
+                          (order) => order.id === item.order_record_id
+                        )[0]
+                      }
+                    />
+                  ))
+                : ""}
+            </div>
+          </Paper>
+        </Box>
+      </Box>
+      {!matches ? (
+        <BottomNavigation
+          showLabels
+          style={{
+            background: "rgba(163,110,41,0.08)",
+            marginTop: "auto",
+            border: "1px solid #a36e29",
+            borderRadius: "50px",
+            height: "40px",
+          }}
+        >
+          <BottomNavigationAction
+            label="Profile"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account")}
+          />
+          <BottomNavigationAction
+            label="Orders"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/orders")}
+          />
+          <BottomNavigationAction
+            label="Address"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/address")}
+          />
+          <BottomNavigationAction
+            label="Wallet"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "600",
+                color: "#a36e29",
+                textDecoration: "underline",
+              },
+            }}
+            onClick={() => navigate("/my-account/wallet")}
+          />
+        </BottomNavigation>
+      ) : null}
+    </div>
   );
 };
 export default Wallet;
