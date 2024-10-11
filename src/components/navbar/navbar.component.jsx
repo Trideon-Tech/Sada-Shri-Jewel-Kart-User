@@ -369,6 +369,14 @@ const Navbar = () => {
                 </div>
               ))}
             </div>
+            <div
+              className="seller"
+              onClick={() =>
+                window.open("https://seller.sadashrijewelkart.com", "_blank")
+              }
+            >
+              Become a Seller
+            </div>
             <div className="search">
               <div className="search-icon">
                 <SearchIcon />
@@ -522,6 +530,24 @@ const Navbar = () => {
               </ListItem>
             ))}
           </List>
+
+          <div
+            style={{
+              marginTop: "auto",
+              marginBottom: "20px",
+              marginLeft: "20px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "0.8rem",
+              color: "#a36e29",
+              textDecoration: "underline",
+              fontWeight: "600",
+            }}
+            onClick={() =>
+              window.open("https://seller.sadashrijewelkart.com", "_blank")
+            }
+          >
+            Become a Seller
+          </div>
         </Drawer>
 
         <AppBar elevation={0} position="fixed" className="appbar">
