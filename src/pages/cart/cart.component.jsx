@@ -506,9 +506,6 @@ const Cart = () => {
                   selectedCouponId={selectedCouponId}
                   items={cartItems}
                   openModal={setModalOpen}
-                  couponData={
-                    couponList.filter((item) => item.id === selectedCouponId)[0]
-                  }
                   couponList={couponList}
                   setSelectedCouponId={setSelectedCouponId}
                   setSelectedCouponCode={setSelectedCouponCode}

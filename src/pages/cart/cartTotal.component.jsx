@@ -22,7 +22,6 @@ import { Link } from "react-router-dom";
 export default function CartTotal({
   items,
   openModal,
-  couponData,
   selectedCouponCode,
   setSelectedCouponId,
   setSelectedCouponCode,
@@ -53,6 +52,15 @@ export default function CartTotal({
   };
 
   const [coinsRedeem, setCoinsRedeem] = useState(0);
+  const [estimatedDelivery, setEstimatedDelivery] = useState("");
+  const [inputPinCode, setInputPinCode] = useState(0);
+  const [loadingEstimation, setLoadingEstimation] = useState(false);
+  const [pincode, setPincode] = useState("");
+  const [currentPosition, setCurrentPosition] = useState([]);
+  const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
+  const [currentPositionPincode, setCurrentPositionPincode] = useState("");
+  const [eta, setETA] = useState("");
+  const [mobileLocationModalOpen, setMobileLocationModalOpen] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -79,27 +87,21 @@ export default function CartTotal({
     if (!selectedCouponId) {
       setDiscountValue(0);
     }
+
     const selectedCouponData = couponList.filter(
       (item) => item.id === selectedCouponId
     )[0];
+
     if (selectedCouponData) {
-      if (selectedCouponData.amount) {
+      if (selectedCouponData.amount !== "0") {
         setDiscountValue(Number(selectedCouponData.amount));
-      } else if (selectedCouponData.percentage) {
-        setDiscountValue(totalPrice * Number(selectedCouponData.percentage));
+      } else {
+        setDiscountValue(
+          totalPrice * (Number(selectedCouponData.percentage) / 100)
+        );
       }
     }
   }, [selectedCouponId]);
-
-  const [estimatedDelivery, setEstimatedDelivery] = useState("");
-  const [inputPinCode, setInputPinCode] = useState(0);
-  const [loadingEstimation, setLoadingEstimation] = useState(false);
-  const [pincode, setPincode] = useState("");
-  const [currentPosition, setCurrentPosition] = useState([]);
-  const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
-  const [currentPositionPincode, setCurrentPositionPincode] = useState("");
-  const [eta, setETA] = useState("");
-  const [mobileLocationModalOpen, setMobileLocationModalOpen] = useState();
 
   useEffect(() => {
     handleDeliveryEstimation();

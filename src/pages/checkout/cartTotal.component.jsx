@@ -19,10 +19,14 @@ export default function CartTotal({ items, coinValueDiscount }) {
   const [discountValue, setDiscountValue] = useState(0);
   const [discountName, setDiscountName] = useState(0);
   const [coinsApplied, setCoinsApplied] = useState(false);
+
   useEffect(() => {
-    setCoinsApplied(queryParams.get("coins"));
     (async () => {
       try {
+        const coins = queryParams.get("coins");
+        setCoinsApplied(coins);
+        console.log(coinsApplied);
+
         const token = localStorage.getItem("token");
         if (!token) return;
         const { data } = await axios.get(
@@ -43,12 +47,12 @@ export default function CartTotal({ items, coinValueDiscount }) {
           )[0];
 
           if (selectedCouponData) {
-            setDiscountName(selectedCouponData.code);
-            if (selectedCouponData.amount) {
-              setDiscountValue(Number(selectedCouponData.amount));
-            } else if (selectedCouponData.percentage) {
+            setDiscountName(() => selectedCouponData.code);
+            if (selectedCouponData.amount !== "0") {
+              setDiscountValue(() => Number(selectedCouponData.amount));
+            } else {
               setDiscountValue(
-                totalPrice * Number(selectedCouponData.percentage)
+                () => totalPrice * (Number(selectedCouponData.percentage) / 100)
               );
             }
           }
@@ -57,7 +61,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
         console.log("fetching coupons failed ", err);
       }
     })();
-  }, []);
+  }, [queryParams, discountValue, coinsApplied]);
 
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -139,7 +143,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
               fontSize: "0.8rem",
             }}
           >
-            Dicount: (
+            Discount: (
             <span
               style={{
                 fontWeight: "bold",
@@ -183,7 +187,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
                 fontSize: "0.8rem",
               }}
             >
-              ₹ {Number(coinValueDiscount).toLocaleString()}
+              ₹ {Number(coinsApplied).toLocaleString()}
             </Typography>
           </Box>
         ) : null}
@@ -217,7 +221,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
             {(
               Number(totalPrice) -
               discountValue -
-              (coinsApplied ? coinValueDiscount : 0)
+              (coinsApplied ? coinsApplied : 0)
             ).toLocaleString()}
           </Typography>
         </Box>
