@@ -192,7 +192,7 @@ const CheckoutForm = ({ cartItems }) => {
     });
   };
 
-  const handlePaymentRequest = async () => {
+  const handlePaymentRequest = async (data) => {
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -203,20 +203,18 @@ const CheckoutForm = ({ cartItems }) => {
     }
 
     const options = {
-      key: "rzp_test_u3HTPcwIbGNSAp", // Enter the Key ID generated from the Dashboard
-      amount: orderCreatedData.amount_due.toString(),
-      currency: orderCreatedData.currency,
+      key: "rzp_test_u3HTPcwIbGNSAp",
+      amount: data.amount_due.toString(),
+      currency: data.currency,
       name: "Sada Shri",
       description: "Payment Request",
       image: {
         logo: "https://source.unsplash.com/random/1280x720?jewellery&sig=1",
       },
-      order_id: orderCreatedData.id,
+      order_id: data.id,
       handler: async function (response) {
-        console.log("SSSSSSSSSSSSSSSSF" + response);
         const token = localStorage.getItem("token");
         const formData = new FormData();
-        console.log("orderCreatedData::::", orderCreatedData);
         formData.append("type", "payment_success");
         formData.append("razorpay_order_id", response.razorpay_order_id);
         formData.append("razorpay_payment_id", response.razorpay_payment_id);
@@ -238,8 +236,6 @@ const CheckoutForm = ({ cartItems }) => {
             }
           )
           .then((response) => {
-            console.log("payment success response");
-            console.log(response);
             toast.info("Payment Verified", generalToastStyle);
             navigate(
               `/order-confirmation?order_record_id=${response.data.response["order_record"][0]["id"]}`
@@ -263,6 +259,7 @@ const CheckoutForm = ({ cartItems }) => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   };
+
   const createOrderHandler = () => {
     const formData = new FormData();
     formData.append("type", "order_request");
@@ -284,7 +281,6 @@ const CheckoutForm = ({ cartItems }) => {
     formData.append("ordered_products", JSON.stringify(orderList));
 
     const token = localStorage.getItem("token");
-    // TODO - API that takes time, we need to add loader for
     axios
       .post(
         "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",
@@ -301,12 +297,13 @@ const CheckoutForm = ({ cartItems }) => {
         console.log("order created", response);
         setOrderCreatedData(() => response.data.response);
 
-        handlePaymentRequest();
+        handlePaymentRequest(response.data.response);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+
   const matches = useMediaQuery("(min-width:600px)");
 
   return (
