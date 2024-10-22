@@ -389,7 +389,7 @@ const Cart = () => {
           }}
         >
           {cartItems?.length > 0 ? (
-            <Box style={{ width: "65%" }}>
+            <Box style={{ width: "65%", marginTop: "30px" }}>
               <Grid container spacing={6}>
                 <Grid item xs={matches ? 8 : 12}>
                   <Box style={{ height: "60%", marginTop: "2rem" }}>
@@ -491,6 +491,7 @@ const Cart = () => {
             alignItems: "center",
             backgroundColor:
               cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
+            marginTop: "12px",
           }}
         >
           {cartItems?.length > 0 ? (

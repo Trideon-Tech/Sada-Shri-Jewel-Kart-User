@@ -1,4 +1,10 @@
-import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  Typography,
+  useMediaQuery
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
