@@ -8,7 +8,7 @@ import {
   DialogTitle,
   Divider,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import * as React from "react";
 import Navbar from "../../components/navbar/navbar.component";
@@ -165,6 +165,7 @@ export default function MyAccount() {
             justifyContent: "flex-start",
             alignItems: "center",
             backgroundColor: "transparent",
+            marginTop: matches ? "40px" : "",
           }}
         >
           {matches ? (
@@ -315,178 +316,6 @@ export default function MyAccount() {
               </Button>
             </Box>
           ) : null}
-          {/* {!matches ? (
-            <Drawer
-              anchor={"left"}
-              open={drawerOpen}
-              style={{ width: "70%" }}
-              PaperProps={{
-                sx: {
-                  width: "70%",
-                },
-              }}
-              onClose={() => setDrawerOpen(false)}
-            >
-              <Box
-                style={{
-                  margin: "auto",
-                  width: "80%",
-                  height: "100%",
-                  textAlign: "left",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1.2rem",
-                    marginTop: "10%",
-                  }}
-                >
-                  My Account
-                </Typography>
-                <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    marginTop: "20%",
-                    fontFamily: '"Open Sans", sans-serif',
-                  }}
-                >
-                  {localStorage.getItem("user_name")}
-                </Typography>
-                <Typography
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "#00000090",
-                    fontFamily: '"Open Sans", sans-serif',
-                  }}
-                >
-                  {localStorage.getItem("user_email")}
-                </Typography>
-                <Typography
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "#00000090",
-                    fontFamily: '"Open Sans", sans-serif',
-                  }}
-                >
-                  <u>+{localStorage.getItem("mobile")}</u>
-                </Typography>
-
-                <Link to={"/my-account"}>
-                  <Button
-                    style={{
-                      fontWeight: "bold",
-                      color: "#a36e29",
-                      padding: 0,
-                      marginTop: "10%",
-                      fontSize: "0.8rem",
-                      fontFamily: '"Open Sans", sans-serif',
-                    }}
-                    onClick={() => setDrawerOpen(false)}
-                  >
-                    Edit Profile
-                  </Button>
-                </Link>
-                <Divider
-                  style={{
-                    width: "100%",
-                    marginTop: "10%",
-                    marginBottom: "10%",
-                  }}
-                />
-                <Link to={"/my-account/orders"}>
-                  <Button
-                    style={{
-                      fontWeight: "bold",
-                      color: "#a36e29",
-                      padding: 0,
-                      marginTop: "5%",
-                      fontSize: "0.8rem",
-                      fontFamily: '"Open Sans", sans-serif',
-                    }}
-                    onClick={() => setDrawerOpen(false)}
-                  >
-                    Orders and Returns
-                  </Button>
-                </Link>
-                <Link to={"/my-account/address"}>
-                  <Button
-                    style={{
-                      fontWeight: "bold",
-                      color: "#a36e29",
-                      padding: 0,
-                      marginTop: "5%",
-                      fontSize: "0.8rem",
-                      fontFamily: '"Open Sans", sans-serif',
-                    }}
-                    onClick={() => setDrawerOpen(false)}
-                  >
-                    Saved Addresses
-                  </Button>
-                </Link>
-                <Link to={"/my-account/wallet"}>
-                  <Button
-                    style={{
-                      fontWeight: "bold",
-                      color: "#a36e29",
-                      padding: 0,
-                      marginTop: "5%",
-                      fontSize: "0.8rem",
-                      fontFamily: '"Open Sans", sans-serif',
-                    }}
-                    onClick={() => setDrawerOpen(false)}
-                  >
-                    Your Wallet
-                  </Button>
-                </Link>
-                <Divider
-                  style={{
-                    width: "100%",
-                    marginTop: "auto",
-                    marginBottom: "10%",
-                  }}
-                />
-                <Button
-                  style={{
-                    fontWeight: "bold",
-                    color: "#00000090",
-                    padding: 0,
-                    fontWeight: "bold",
-                    marginTop: "5%",
-                    fontSize: "0.8rem",
-                    fontFamily: '"Open Sans", sans-serif',
-                    textAlign: "left",
-                  }}
-                  onClick={() => {
-                    localStorage.clear();
-                    navigate("/");
-                  }}
-                >
-                  Logout
-                </Button>
-                <Button
-                  style={{
-                    fontWeight: "bold",
-                    color: "#00000090",
-                    padding: 0,
-                    marginBottom: "10%",
-                    fontWeight: "bold",
-                    marginTop: "5%",
-                    fontSize: "0.8rem",
-                    fontFamily: '"Open Sans", sans-serif',
-                  }}
-                  onClick={() => handleClickOpen()}
-                >
-                  Deactivate Account
-                </Button>
-              </Box>
-            </Drawer>
-          ) : null} */}
         </Box>
         <Box
           style={{

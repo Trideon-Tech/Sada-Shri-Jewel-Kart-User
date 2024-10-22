@@ -184,7 +184,7 @@ const Wallet = () => {
         style={{
           width: matches ? "80%" : "100%",
           margin: "auto",
-          marginTop: "20px",
+          marginTop: "50px",
           textAlign: "left",
         }}
       >

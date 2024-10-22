@@ -26,13 +26,13 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import Marquee from "react-marquee-slider";
+import { Link, useNavigate } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import "./navbar.styles.scss";
 
@@ -42,11 +42,16 @@ const Navbar = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  let categoryName;
   let navigate = useNavigate();
-  const { category } = useParams();
   const [wishListItems, setWishListItems] = useState(0);
   const [cartLength, setCartLength] = useState(0);
+  const [rates, setRates] = useState([
+    ["Today's Gold and Silver Rates", ""],
+    ["Gold 22KT (per 10 gm)", ""],
+    ["Gold 18KT (per 10 gm)", ""],
+    ["Gold 14KT (per 10 gm)", ""],
+    ["Silver (per 10 gm)", ""],
+  ]);
 
   const getCartLengthNonAuth = () => {
     const cartList = localStorage.getItem("cart_list") || "";
@@ -105,35 +110,6 @@ const Navbar = () => {
     }
   };
 
-  const sendCartToAPI = (items) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-    items.forEach((item) => {
-      axios
-        .put(
-          "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            data: {
-              product: item,
-              customization: -1,
-            },
-          }
-        )
-        .then(() => {
-          console.log(`Product with ID ${item} sent to API`);
-        })
-        .catch((error) => {
-          console.error(`Error sending product with ID ${item} to API`, error);
-        });
-    });
-
-    localStorage.removeItem("cart_list");
-  };
-
   useEffect(() => {
     (async () => {
       const token = localStorage.getItem("token");
@@ -175,7 +151,6 @@ const Navbar = () => {
         return;
       }
 
-      console.log("calling from navbar");
       const { data } = await axios.get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
@@ -197,8 +172,16 @@ const Navbar = () => {
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
       .then((response) => {
-        console.log("landing page:: ", response);
         setMenuItems(response?.data?.response?.categories);
+
+        let tempRates = rates;
+
+        tempRates[1][1] = response?.data?.response?.jewellery_inventory?.gold22;
+        tempRates[2][1] = response?.data?.response?.jewellery_inventory?.gold18;
+        tempRates[3][1] = response?.data?.response?.jewellery_inventory?.gold14;
+        tempRates[4][1] = response?.data?.response?.jewellery_inventory?.silver;
+
+        setRates(() => tempRates);
       })
       .catch((error) => console.error("Error fetching menu items:", error));
 
@@ -278,7 +261,25 @@ const Navbar = () => {
     >
       <div className="web">
         <AppBar elevation={0} className="appbar">
-          <Toolbar variant="dense" className="toolbar">
+          <div className="rates">
+            <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
+              {[...rates, ...rates].map((rate, index) => (
+                <div
+                  style={{
+                    marginRight: "50px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "2.5rem",
+                  }}
+                  key={index}
+                >
+                  {rate === rates[0] ? `${rate}` : `${rate[0]}: ₹ ${rate[1]}`}
+                </div>
+              ))}
+            </Marquee>
+          </div>
+          <div variant="dense" className="toolbar">
             <img
               alt="logo"
               className="logo"
@@ -478,7 +479,7 @@ const Navbar = () => {
                 </Badge>
               </IconButton>
             </div>
-          </Toolbar>
+          </div>
         </AppBar>
       </div>
       {/* MobileUI */}
@@ -551,7 +552,26 @@ const Navbar = () => {
         </Drawer>
 
         <AppBar elevation={0} position="fixed" className="appbar">
-          <Toolbar variant="dense" className="toolbar">
+          <div className="rates">
+            <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
+              {rates.map((rate, index) => (
+                <div
+                  style={{
+                    marginRight: "50px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "2rem",
+                    fontSize: "0.8rem",
+                  }}
+                  key={index}
+                >
+                  {rate === rates[0] ? `${rate}` : `${rate[0]}: ₹ ${rate[1]}`}
+                </div>
+              ))}
+            </Marquee>
+          </div>
+          <div variant="dense" className="toolbar">
             <IconButton>
               <MenuOutlined
                 style={{ color: "#a36e29", margin: "0px" }}
@@ -662,7 +682,7 @@ const Navbar = () => {
                 </IconButton>
               </div>
             </div>
-          </Toolbar>
+          </div>
         </AppBar>
       </div>
     </div>

@@ -54,7 +54,7 @@ const Address = () => {
         style={{
           width: matches ? "70%" : "100%",
           marginBottom: "20px",
-          marginTop: "20px",
+          marginTop: "50px",
           textAlign: "left",
         }}
       >

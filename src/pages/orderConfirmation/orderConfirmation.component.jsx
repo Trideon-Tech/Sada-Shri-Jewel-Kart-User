@@ -83,6 +83,7 @@ const OrderConfirmation = () => {
                 alignItems: matches ? "center" : "flex-start",
                 justifyContent: "space-between",
                 flexDirection: matches ? "row" : "column",
+                marginTop: matches ? "20px" : "",
               }}
             >
               <p

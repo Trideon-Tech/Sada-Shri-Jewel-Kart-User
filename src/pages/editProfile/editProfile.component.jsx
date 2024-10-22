@@ -71,7 +71,7 @@ const EditProfile = () => {
         style={{
           width: "70%",
           margin: "auto",
-          marginTop: matches ? "20px" : "50px",
+          marginTop: "50px",
           textAlign: "left",
         }}
       >

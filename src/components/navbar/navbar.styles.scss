@@ -3,13 +3,23 @@
 
   .web {
     .appbar {
-      height: 6rem;
+      height: 8.5rem;
       background-color: #fff;
+
+      .rates {
+        height: 2.5rem;
+        width: 100%;
+        background-color: #a36e29;
+      }
 
       .toolbar {
         position: relative;
         margin: auto;
         width: 90%;
+        height: 6rem;
+
+        display: flex;
+        align-items: center;
 
         .logo {
           height: 120px;
@@ -41,7 +51,6 @@
             .menu-item-btn {
               font-family: "Open Sans", sans-serif;
               color: #a36e29;
-              border: 1px solid #fff;
               font-weight: 600;
               font-size: 0.8rem;
               height: 100%;
@@ -154,14 +163,25 @@
       display: block;
 
       .appbar {
-        height: 8vh;
+        height: 10vh;
         background-color: #fff;
         border-bottom: 2px solid #d3d3d3;
+        width: 100%;
+
+        .rates {
+          height: 2rem;
+          width: 100%;
+          background-color: #a36e29;
+        }
 
         .toolbar {
           position: relative;
           margin: auto;
           width: 90%;
+          height: calc(10vh - 2rem);
+
+          display: flex;
+          align-items: center;
 
           .logo {
             height: 80px;

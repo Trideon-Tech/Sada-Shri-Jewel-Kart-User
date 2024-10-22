@@ -306,6 +306,7 @@ const Orders = () => {
           width: "70%",
           margin: "auto",
           textAlign: "left",
+          marginTop: "50px",
         }}
       >
         <Typography
