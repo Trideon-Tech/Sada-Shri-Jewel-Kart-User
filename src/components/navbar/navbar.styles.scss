@@ -114,6 +114,7 @@
         }
 
         .icons {
+          margin-left: auto;
           color: #a36e29;
 
           .MuiButtonBase-root {
@@ -123,11 +124,12 @@
 
         .search {
           margin-left: 20px;
+          width: 30vw;
           margin-right: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 2px solid #a36e29;
+          border: 1.5px solid #a36e29;
           border-radius: 32px;
 
           .search-icon {
@@ -137,7 +139,7 @@
 
           .input-root {
             color: inherit;
-            width: 200px;
+            width: 30vw;
           }
 
           .input-input {

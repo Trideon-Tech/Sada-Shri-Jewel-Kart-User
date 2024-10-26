@@ -1,5 +1,7 @@
 import {
   AccountCircleOutlined,
+  ExpandLess,
+  ExpandMore,
   FavoriteBorderOutlined,
   MenuOutlined,
   ShoppingCartOutlined,
@@ -18,9 +20,8 @@ import MenuItem from "@mui/joy/MenuItem";
 import {
   AppBar,
   Avatar,
-  Button,
+  Collapse,
   Drawer,
-  Grid,
   IconButton,
   InputBase,
   List,
@@ -41,6 +42,7 @@ const Navbar = () => {
   const matches = useMediaQuery("(min-width:600px)");
   const [menuItems, setMenuItems] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openWebDrawer, setOpenWebDrawer] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   let navigate = useNavigate();
   const [wishListItems, setWishListItems] = useState(0);
@@ -52,6 +54,7 @@ const Navbar = () => {
     ["Gold 14KT (per 10 gm)", ""],
     ["Silver (per 10 gm)", ""],
   ]);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   const getCartLengthNonAuth = () => {
     const cartList = localStorage.getItem("cart_list") || "";
@@ -231,6 +234,7 @@ const Navbar = () => {
   };
   const handleMenuItemClick = (menuItem) => {
     setOpenDrawer(false);
+    setOpenWebDrawer(false);
 
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
@@ -240,6 +244,7 @@ const Navbar = () => {
 
   const handleSubMenuItemClick = (category, menuItem) => {
     setOpenDrawer(false);
+    setOpenWebDrawer(false);
 
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
@@ -280,104 +285,15 @@ const Navbar = () => {
             </Marquee>
           </div>
           <div variant="dense" className="toolbar">
+            <IconButton onClick={() => setOpenWebDrawer(true)}>
+              <MenuOutlined style={{ color: "#a36e29" }} />
+            </IconButton>
             <img
               alt="logo"
               className="logo"
               src={process.env.PUBLIC_URL + "/assets/logo_dark.png"}
               onClick={() => navigate(`/`)}
             />
-            <div className="menu-items">
-              {menuItems.map((category) => (
-                <div key={category.id} className="menu-item">
-                  <Button
-                    className="menu-item-btn"
-                    onClick={() => handleMenuItemClick(category)}
-                  >
-                    {category.name}
-                  </Button>
-
-                  {category.sub_categories && (
-                    <div className="sub-categories">
-                      <Grid container spacing={0}>
-                        <Grid item xs={6}>
-                          <div className="sub-category-column">
-                            {category.sub_categories
-                              .slice(
-                                0,
-                                Math.ceil(category.sub_categories.length / 2)
-                              )
-                              .map((subCategory) => (
-                                <div style={{ display: "flex" }}>
-                                  <img
-                                    alt="logo"
-                                    className="sub-logo"
-                                    src={
-                                      process.env.PUBLIC_URL +
-                                      "/assets/logoNew.png"
-                                    }
-                                  />
-                                  <Button
-                                    key={subCategory.id}
-                                    className="sub-category"
-                                    onClick={() =>
-                                      handleSubMenuItemClick(
-                                        category.name,
-                                        subCategory
-                                      )
-                                    }
-                                  >
-                                    {subCategory.name}
-                                  </Button>
-                                </div>
-                              ))}
-                          </div>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <div className="sub-category-column">
-                            {category.sub_categories
-                              .slice(
-                                Math.ceil(category.sub_categories.length / 2)
-                              )
-                              .map((subCategory) => (
-                                <div style={{ display: "flex" }}>
-                                  <img
-                                    alt="logo"
-                                    className="sub-logo"
-                                    src={
-                                      process.env.PUBLIC_URL +
-                                      "/assets/logoNew.png"
-                                    }
-                                  />
-                                  <Button
-                                    key={subCategory.id}
-                                    className="sub-category"
-                                    onClick={() =>
-                                      handleSubMenuItemClick(
-                                        category.name,
-                                        subCategory
-                                      )
-                                    }
-                                  >
-                                    {subCategory.name}
-                                  </Button>
-                                </div>
-                              ))}
-                          </div>
-                        </Grid>
-                      </Grid>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div
-              className="seller"
-              onClick={() =>
-                window.open("https://seller.sadashrijewelkart.com", "_blank")
-              }
-            >
-              Become a Seller
-            </div>
             <div className="search">
               <div className="search-icon">
                 <SearchIcon />
@@ -481,6 +397,154 @@ const Navbar = () => {
             </div>
           </div>
         </AppBar>
+        <Drawer
+          anchor="left"
+          open={openWebDrawer}
+          onClose={() => setOpenWebDrawer(false)}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              width: "15vw",
+            }}
+          >
+            <List>
+              <ListItem
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Select an item
+                </div>
+                <IconButton onClick={() => setOpenWebDrawer(false)}>
+                  <CloseIcon />
+                </IconButton>
+              </ListItem>
+            </List>
+            <div style={{ flexGrow: 1, overflowY: "auto" }}>
+              <List>
+                {menuItems.map((category, index) => (
+                  <React.Fragment key={category.id}>
+                    <ListItem
+                      button
+                      onClick={() => handleMenuItemClick(category)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          alt={category.name}
+                          src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
+                        />
+                      </ListItemAvatar>
+                      <div
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                          flexGrow: 1,
+                        }}
+                      >
+                        {category.name}
+                      </div>
+                      {category.sub_categories &&
+                        category.sub_categories.length > 0 && (
+                          <IconButton
+                            edge="end"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setExpandedCategory(
+                                expandedCategory === category.id
+                                  ? null
+                                  : category.id
+                              );
+                            }}
+                          >
+                            {expandedCategory === category.id ? (
+                              <ExpandLess />
+                            ) : (
+                              <ExpandMore />
+                            )}
+                          </IconButton>
+                        )}
+                    </ListItem>
+                    {category.sub_categories && (
+                      <Collapse
+                        in={expandedCategory === category.id}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <List component="div" disablePadding>
+                          {category.sub_categories.map((subCategory) => (
+                            <ListItem
+                              button
+                              key={subCategory.id}
+                              onClick={() =>
+                                handleSubMenuItemClick(
+                                  category.name,
+                                  subCategory
+                                )
+                              }
+                              style={{ paddingLeft: 32 }}
+                            >
+                              <ListItemAvatar>
+                                <Avatar
+                                  alt={subCategory.name}
+                                  src={
+                                    subCategory.image_url ||
+                                    process.env.PUBLIC_URL +
+                                      "/assets/logoNew.png"
+                                  }
+                                />
+                              </ListItemAvatar>
+                              <div
+                                style={{
+                                  fontFamily: '"Open Sans", sans-serif',
+                                  fontSize: "0.8rem",
+                                }}
+                              >
+                                {subCategory.name}
+                              </div>
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Collapse>
+                    )}
+                  </React.Fragment>
+                ))}
+              </List>
+            </div>
+            <div style={{ padding: "16px", borderTop: "1px solid #e0e0e0" }}>
+              <ListItem
+                button
+                onClick={() =>
+                  window.open("https://seller.sadashrijewelkart.com", "_blank")
+                }
+              >
+                <div
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                    color: "#a36e29",
+                    textDecoration: "underline",
+                    fontWeight: "600",
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  Become a Seller
+                </div>
+              </ListItem>
+            </div>
+          </div>
+        </Drawer>
       </div>
       {/* MobileUI */}
       <div className="mobile">
