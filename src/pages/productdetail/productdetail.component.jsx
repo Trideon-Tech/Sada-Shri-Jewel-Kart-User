@@ -1076,7 +1076,11 @@ function ProductDetail() {
           <div className="product-content">
             <div
               className="product-image-section"
-              style={{ position: "relative", padding: "20px" }}
+              style={{
+                position: "relative",
+                padding: "20px",
+                marginTop: "30px",
+              }}
             >
               <Box
                 style={{
@@ -1122,10 +1126,10 @@ function ProductDetail() {
               <div className="title">
                 <Typography
                   style={{
-                    marginTop: "2%",
                     fontWeight: "bold",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "1.8rem",
+                    marginTop: "40px",
                   }}
                 >
                   {menuItemName}

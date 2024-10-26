@@ -9,9 +9,10 @@ import Typography from "@mui/joy/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import { Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   const [editing, setEditing] = useState(false);
@@ -29,7 +30,9 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   const [refreshAddresses, setRefreshAddresses] = useState(1);
   const [addingNew, setAddingNew] = useState(false);
 
-  React.useEffect(() => {
+  const autocompleteRef = useRef(null);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     axios
       .get(
@@ -89,6 +92,35 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
       });
     setAddingNew(false);
     setRefreshAddresses(refreshAddresses + 1);
+  };
+
+  const handlePlaceSelect = () => {
+    const place = autocompleteRef.current.getPlace();
+    if (place.address_components) {
+      setAdd_line1(place.name);
+
+      for (let component of place.address_components) {
+        const componentType = component.types[0];
+
+        switch (componentType) {
+          case "street_number":
+            setAdd_line2((prev) => component.long_name + " " + prev);
+            break;
+          case "route":
+            setAdd_line2((prev) => prev + component.short_name);
+            break;
+          case "postal_code":
+            setPincode(component.long_name);
+            break;
+          case "locality":
+            setCity(component.long_name);
+            break;
+          case "administrative_area_level_1":
+            setState(component.long_name);
+            break;
+        }
+      }
+    }
   };
 
   return (
@@ -321,33 +353,40 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      sx={{
-                        width: "100%",
-                        height: "22px",
-                        "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
-                          fontSize: "0.8rem",
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "rgba(0, 0, 0, 0.23)",
+                    <Autocomplete
+                      onLoad={(autocomplete) =>
+                        (autocompleteRef.current = autocomplete)
+                      }
+                      onPlaceChanged={handlePlaceSelect}
+                    >
+                      <TextField
+                        sx={{
+                          width: "100%",
+                          height: "22px",
+                          "& input": {
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: "0.8rem",
                           },
-                          "&:hover fieldset": {
-                            borderColor: "rgba(0, 0, 0, 0.23)",
+                          "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                              borderColor: "rgba(0, 0, 0, 0.23)",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "rgba(0, 0, 0, 0.23)",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: "#a36e29",
+                            },
                           },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "#a36e29",
-                          },
-                        },
-                      }}
-                      fullWidth
-                      placeholder="Address Line 1"
-                      defaultValue={editAddress.add_line_1}
-                      size="small"
-                      variant="outlined"
-                      onChange={(e) => setAdd_line1(e.target.value)}
-                    />
+                        }}
+                        fullWidth
+                        placeholder="Address Line 1"
+                        value={add_line1}
+                        size="small"
+                        variant="outlined"
+                        onChange={(e) => setAdd_line1(e.target.value)}
+                      />
+                    </Autocomplete>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
@@ -372,7 +411,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                       }}
                       fullWidth
                       placeholder="Address Line 2"
-                      defaultValue={editAddress.add_line_2}
+                      value={add_line2}
                       size="small"
                       variant="outlined"
                       onChange={(e) => setAdd_line2(e.target.value)}
@@ -400,7 +439,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         },
                       }}
                       placeholder="City"
-                      defaultValue={editAddress.city}
+                      value={city}
                       size="small"
                       variant="outlined"
                       onChange={(e) => setCity(e.target.value)}
@@ -428,7 +467,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         },
                       }}
                       placeholder="State"
-                      defaultValue={editAddress.state}
+                      value={state}
                       size="small"
                       variant="outlined"
                       onChange={(e) => setState(e.target.value)}
@@ -456,7 +495,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         },
                       }}
                       placeholder="Pincode"
-                      defaultValue={editAddress.pincode}
+                      value={pincode}
                       size="small"
                       variant="outlined"
                       onChange={(e) => {
@@ -639,33 +678,40 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                sx={{
-                  width: "100%",
-                  height: "22px",
-                  "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.8rem",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "rgba(0, 0, 0, 0.23)",
+              <Autocomplete
+                onLoad={(autocomplete) =>
+                  (autocompleteRef.current = autocomplete)
+                }
+                onPlaceChanged={handlePlaceSelect}
+              >
+                <TextField
+                  sx={{
+                    width: "100%",
+                    height: "22px",
+                    "& input": {
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
                     },
-                    "&:hover fieldset": {
-                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#a36e29",
+                      },
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#a36e29",
-                    },
-                  },
-                }}
-                fullWidth
-                placeholder="Address Line 1"
-                defaultValue={editAddress.addressLine1}
-                size="small"
-                variant="outlined"
-                onChange={(e) => setAdd_line1(e.target.value)}
-              />
+                  }}
+                  fullWidth
+                  placeholder="Address Line 1"
+                  value={add_line1}
+                  size="small"
+                  variant="outlined"
+                  onChange={(e) => setAdd_line1(e.target.value)}
+                />
+              </Autocomplete>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -690,7 +736,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                 }}
                 fullWidth
                 placeholder="Address Line 2"
-                defaultValue={editAddress.addressLine2}
+                value={add_line2}
                 size="small"
                 variant="outlined"
                 onChange={(e) => setAdd_line2(e.target.value)}
@@ -718,8 +764,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   },
                 }}
                 placeholder="City"
-                id="standard-size-small"
-                defaultValue={editAddress.city}
+                value={city}
                 size="small"
                 variant="outlined"
                 onChange={(e) => setCity(e.target.value)}
@@ -747,7 +792,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   },
                 }}
                 placeholder="State"
-                defaultValue={editAddress.state}
+                value={state}
                 size="small"
                 variant="outlined"
                 onChange={(e) => setState(e.target.value)}
@@ -775,7 +820,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   },
                 }}
                 placeholder="Pincode"
-                defaultValue={editAddress.pin}
+                value={pincode}
                 size="small"
                 variant="outlined"
                 onChange={(e) => setPincode(e.target.value)}

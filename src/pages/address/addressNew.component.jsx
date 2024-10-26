@@ -5,9 +5,10 @@ import Card from "@mui/joy/Card";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import { Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
   const matches = useMediaQuery("(min-width:600px)");
@@ -20,6 +21,53 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
   const [mobile, setMobile] = useState("");
+  const [autocomplete, setAutocomplete] = useState(null);
+
+  const autocompleteRef = useRef(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2ek0oaYCGCsN7T5MvyV8z-GSXpsLgfg&libraries=places`;
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const onLoad = (autocomplete) => {
+    setAutocomplete(autocomplete);
+  };
+
+  const onPlaceChanged = () => {
+    if (autocomplete !== null) {
+      const place = autocomplete.getPlace();
+      setAdd_line1(place.name);
+
+      for (const component of place.address_components) {
+        const componentType = component.types[0];
+
+        switch (componentType) {
+          case "street_number":
+            setAdd_line2((prev) => component.long_name + " " + prev);
+            break;
+          case "route":
+            setAdd_line2((prev) => prev + component.short_name);
+            break;
+          case "postal_code":
+            setPincode(component.long_name);
+            break;
+          case "locality":
+            setCity(component.long_name);
+            break;
+          case "administrative_area_level_1":
+            setState(component.long_name);
+            break;
+        }
+      }
+    }
+  };
+
   const addNewAddress = () => {
     const formData = new FormData();
     formData.append("key", "address");
@@ -141,31 +189,34 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                sx={{
-                  width: "100%",
-                  height: "35px",
-                  marginTop: "20px",
-                  "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.8rem",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "rgba(0, 0, 0, 0.23)",
+              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                <TextField
+                  sx={{
+                    width: "100%",
+                    height: "35px",
+                    marginTop: "20px",
+                    "& input": {
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
                     },
-                    "&:hover fieldset": {
-                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#a36e29",
+                      },
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#a36e29",
-                    },
-                  },
-                }}
-                placeholder="Address Line 1"
-                value={add_line_1}
-                onChange={(e) => setAdd_line1(e.target.value)}
-              />
+                  }}
+                  placeholder="Address Line 1"
+                  value={add_line_1}
+                  onChange={(e) => setAdd_line1(e.target.value)}
+                  inputRef={autocompleteRef}
+                />
+              </Autocomplete>
             </Grid>
             <Grid item xs={6}>
               <TextField
