@@ -29,8 +29,6 @@ function Productpage() {
   const [reloadNavbar, setReloadNavbar] = useState(1);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isSortDrawerOpen, setSortDrawerOpen] = useState(false);
-  const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const [selectedPriceRange, setSelectedPriceRange] = useState({});
 
@@ -232,7 +230,7 @@ function Productpage() {
                         image={item.images[0].file}
                         name={item.name}
                         hash={item.hash}
-                        price={item.price}
+                        price={item.customizations.variants.options[0].price}
                         isWishlisted={item.exists_in_wishlist}
                         isInCart={item.exists_in_cart}
                         clickHandler={handleCardClick}

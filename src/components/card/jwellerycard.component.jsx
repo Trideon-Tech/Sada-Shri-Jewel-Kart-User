@@ -220,7 +220,7 @@ const JwelleryCard = ({
                 fontSize: "1rem",
               }}
             >
-              ₹{price * 1.2}
+              ₹{(price * 1.2).toFixed(2)}
             </Typography>
           </Box>
           <Typography
