@@ -47,10 +47,10 @@ function Productpage() {
     if (!selectedProduct.customizations) {
       if (cartAdd) addToCartHandler(selectedProduct.id);
       else {
-        navigate(`/item/${menuItemName}/${productName}-${hash}?drawer=open`);
+        navigate(`/item/${menuItemName}/${productName}-${hash}`);
       }
     }
-    navigate(`/item/${menuItemName}/${productName}-${hash}?drawer=open`);
+    navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 
   const addToCartHandler = (id) => {

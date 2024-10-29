@@ -1,10 +1,4 @@
-import {
-  Box,
-  Divider,
-  Grid,
-  Typography,
-  useMediaQuery
-} from "@mui/material";
+import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -21,27 +15,6 @@ const Checkout = () => {
   const [coinsRedeem, setCoinsRedeem] = useState(0);
 
   const matches = useMediaQuery("(min-width:600px)");
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) return;
-  //   axios
-  //     .get(
-  //       `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
-  //         "user_id"
-  //       )}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       setCoinsRedeem(response?.data?.response[0].balance);
-  //     })
-  //     .catch((error) => console.log("Error while fetching wallet info", error));
-  // }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -152,6 +125,7 @@ const Checkout = () => {
                     marginBottom: "3%",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "1rem",
+                    paddingTop: "50px",
                   }}
                 >
                   Order Summary

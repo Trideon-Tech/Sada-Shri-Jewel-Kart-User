@@ -141,6 +141,17 @@ export default function CartItem({
                   marginRight: "10px",
                 }}
               >
+                Size : {item?.size}
+              </Typography>
+
+              {/* <Typography
+                style={{
+                  color: "gray",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                  marginRight: "10px",
+                }}
+              >
                 Customization :
               </Typography>
               {Object.keys(
@@ -177,13 +188,55 @@ export default function CartItem({
                     }
                   </Typography>
                 </Box>
-              ))}
+              ))} */}
             </Box>
           </Box>
         )}
+        <Box
+          style={{
+            width: "100%",
+            marginTop: "2%",
+            height: "max-content",
+            display: "flex",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            style={{
+              display: "flex",
+              marginRight: "auto",
+              width: "max-content",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              style={{
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
+              HSN Code :
+            </Typography>
+            <Typography
+              style={{
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                marginLeft: "10px",
+              }}
+            >
+              {item?.hsn}
+            </Typography>
+          </Box>
+        </Box>
         <Typography
           style={{
-            marginTop: "2%",
+            marginTop: "auto",
+            marginBottom: "10px",
             fontSize: "1rem",
             fontWeight: "bold",
             fontFamily: '"Open Sans", sans-serif',

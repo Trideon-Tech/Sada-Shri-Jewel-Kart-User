@@ -7,7 +7,8 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRefresh } from "../../RefreshContent";
-import "./jwellerycard.styles.scss"; // Ensure this is the path to your SCSS file
+
+import "./jwellerycard.styles.scss";
 
 const JwelleryCard = ({
   id,
@@ -52,7 +53,6 @@ const JwelleryCard = ({
         return;
       }
 
-      console.log(id);
       await axios.delete(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
         {
@@ -77,6 +77,7 @@ const JwelleryCard = ({
       removeFromWishList();
       return;
     }
+
     const token = localStorage.getItem("token");
     if (!token) {
       let wishListItems = localStorage.getItem("wish_list");
@@ -98,6 +99,7 @@ const JwelleryCard = ({
     formData.append("type", "add_item");
     formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
     formData.append("product_id", id);
+
     await axios.post(
       "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
       formData,
@@ -108,6 +110,7 @@ const JwelleryCard = ({
         },
       }
     );
+
     setWishListed(true);
     triggerRefresh();
   };
