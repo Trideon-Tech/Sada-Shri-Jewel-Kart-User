@@ -2,7 +2,6 @@ import {
   Close,
   CloseSharp,
   FavoriteBorderOutlined,
-  KeyboardArrowDownOutlined,
   LocalShippingOutlined,
   ShoppingBagOutlined,
   ShoppingCartOutlined,
@@ -30,7 +29,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
-import parse from "html-react-parser";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { WhatsappIcon, WhatsappShareButton } from "react-share";
@@ -74,6 +72,17 @@ function ProductDetail() {
   const [selctedVariantId, setSelectedVariantId] = useState();
   const [selectedCustomizationPrice, setSelectedCustomizationPrice] =
     useState();
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
+
+  const [pincode, setPincode] = useState("");
+  const [locationModalOpen, setLocationModalOpen] = useState();
+  const [mobileLocationModalOpen, setMobileLocationModalOpen] = useState();
+  const [currentPosition, setCurrentPosition] = useState([]);
+  const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
+  const [currentPositionPincode, setCurrentPositionPincode] = useState("");
+  const [eta, setETA] = useState("");
 
   const addToCartHandler = () => {
     if (productDetail.exists_in_cart) {
@@ -138,16 +147,43 @@ function ProductDetail() {
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   };
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
 
-  const [pincode, setPincode] = useState("");
-  const [locationModalOpen, setLocationModalOpen] = useState();
-  const [mobileLocationModalOpen, setMobileLocationModalOpen] = useState();
-  const [currentPosition, setCurrentPosition] = useState([]);
-  const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
-  const [currentPositionPincode, setCurrentPositionPincode] = useState("");
-  const [eta, setETA] = useState("");
+  const addToCartHandlerForRecommendations = (id) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      let existingList = localStorage.getItem("cart_list") || "";
+      existingList = existingList.split(",");
+      existingList.push(id);
+      existingList = Array.from(new Set(existingList));
+      localStorage.setItem("cart_list", existingList.join(","));
+      triggerRefresh();
+      return;
+    }
+
+    axios
+      .put(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        {
+          product: id,
+          customization:
+            productDetail.recommended.find((item) => item.id === id)
+              ?.customizations?.variants?.options[0]?.id || -1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log(`Product with ID ${id} sent to API`);
+        navigate("/cart");
+      })
+      .catch((error) => {
+        console.error(`Error sending product with ID ${id} to API`, error);
+      });
+  };
 
   const getJwelleryDetail = () => {
     const userId = localStorage.getItem("user_id")
@@ -1076,559 +1112,6 @@ function ProductDetail() {
       </Drawer>
 
       <div className="web">
-        {/* <div className="container">
-          <div className="product-content">
-            <div
-              className="product-image-section"
-              style={{
-                position: "relative",
-                padding: "20px",
-                marginTop: "30px",
-              }}
-            >
-              <Box
-                style={{
-                  position: "absolute",
-                  zIndex: 2,
-                  width: "100%",
-                  display: "flex",
-                  cursor: "pointer",
-                }}
-              >
-                {productDetail.exists_in_wishlist || localWishlisted ? (
-                  <FavoriteIcon
-                    style={{
-                      fontSize: "2.5rem",
-                      marginLeft: "auto",
-                      marginRight: "7%",
-                      marginTop: "5%",
-                      color: "#a36e29",
-                    }}
-                    onClick={() => {
-                      handleWishList();
-                    }}
-                  />
-                ) : (
-                  <FavoriteBorderOutlined
-                    style={{
-                      fontSize: "2.5rem",
-                      marginLeft: "auto",
-                      marginRight: "7%",
-                      marginTop: "5%",
-                      color: "#ffffff",
-                    }}
-                    onClick={() => {
-                      handleWishList();
-                    }}
-                  />
-                )}
-              </Box>
-
-              <ImageVideoCarousel images={images} video={video} />
-            </div>
-            <div className="product-detail-section">
-              <div className="title">
-                <Typography
-                  style={{
-                    fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1.8rem",
-                    marginTop: "40px",
-                  }}
-                >
-                  {menuItemName}
-                </Typography>
-              </div>
-              <Box
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <Box
-                  style={{
-                    height: "2rem",
-                    backgroundColor: "white",
-                    color: "black",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderRadius: "100px",
-                    width: "max-content",
-                    paddingLeft: "2%",
-                    paddingRight: "2%",
-                  }}
-                >
-                  <Typography
-                    style={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      marginRight: "5px",
-                      color: "grey",
-                    }}
-                  >
-                    {averageRating?.toFixed(2)}
-                  </Typography>
-                  <StarBorderOutlined
-                    style={{ fontSize: "1.5rem", color: "orange" }}
-                  />
-                  <Typography
-                    style={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      marginLeft: "5px",
-                      color: "grey",
-                    }}
-                  >
-                    ({totalReviewsCount} reviews)
-                  </Typography>
-                </Box>
-                <Box
-                  style={{
-                    height: "2rem",
-                    display: "flex",
-                    backgroundColor: "white",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginLeft: "10px",
-                    paddingLeft: "10px",
-                    paddingRight: "10px",
-                    borderRadius: "15%",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleClickOpen()}
-                >
-                  <ShareIcon style={{ fontSize: "1.2rem", color: "#a36e29" }} />
-                </Box>
-              </Box>
-              <Grid container spacing={3} style={{ marginTop: "1%" }}>
-                <Grid item xs={6} className="customization-grid">
-                  {hasCustomization ? (
-                    <Box>
-                      <Box sx={{ marginBottom: 2 }}>
-                        <Typography
-                          sx={{
-                            display: "flex",
-                            alignItems: "start",
-                            color: "#666",
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                            fontWeight: "500",
-                          }}
-                        >
-                          Select Customization
-                        </Typography>
-                        <Box
-                          onClick={handleDrawerOpen}
-                          style={{
-                            width: "20rem",
-                            height: "2.5rem",
-                            backgroundColor: "white",
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            paddingLeft: "10px",
-                            paddingRight: "10px",
-                            marginTop: "5px",
-                            alignItems: "center",
-                            border: "2px solid #e1e1e1",
-                            borderRadius: "10px",
-                          }}
-                        >
-                          {Object.keys(selectedCustomization).map((type) => (
-                            <Box
-                              style={{
-                                borderRadius: "20px",
-                                width: "max-content",
-                                paddingLeft: "10px",
-                                paddingRight: "10px",
-                                marginTop: "5px",
-                                marginBottom: "5px",
-                                height: "25px",
-                                backgroundColor: "#A36E29",
-                                color: "white",
-                                display: "flex",
-                                justifyContent: "space-around",
-                                alignItems: "center",
-                                marginRight: "8px",
-                              }}
-                            >
-                              <Typography
-                                style={{
-                                  fontFamily: '"Open Sans", sans-serif',
-                                  fontSize: "0.8rem",
-                                  fontWeight: "600",
-                                }}
-                              >
-                                {selectedCustomization[type]}
-                              </Typography>
-                            </Box>
-                          ))}
-                          <KeyboardArrowDownOutlined
-                            style={{
-                              marginLeft: "auto",
-                              color: "darkgray",
-                              fontSize: "1.5rem",
-                            }}
-                          />
-                        </Box>
-                        {selectedCustomizationPrice === product.price ? (
-                          <div
-                            style={{
-                              fontFamily: '"Open Sans", sans-serif',
-                              fontSize: "0.7rem",
-                              marginTop: "5px",
-                            }}
-                          >
-                            Select all customization to seel the updated price.
-                          </div>
-                        ) : null}
-                      </Box>
-                      <Drawer
-                        anchor="right"
-                        open={drawerOpen}
-                        onClose={handleDrawerClose}
-                      >
-                        <div
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "1.6rem",
-                            fontWeight: "600",
-                            backgroundColor: "#E0B872",
-                            color: "white",
-                            padding: "18px",
-                            paddingLeft: "25px",
-                          }}
-                        >
-                          Select Customization
-                        </div>
-
-                        <Box
-                          sx={{
-                            padding: "18px",
-                            paddingLeft: "25px",
-                            width: "30vw",
-                          }}
-                        >
-                          {customizationTypes.map((type) => (
-                            <>
-                              <Typography
-                                sx={{
-                                  fontFamily: '"Open Sans", sans-serif',
-                                  fontSize: "1.2rem",
-                                  fontWeight: "600",
-                                  marginBottom: "10px",
-                                }}
-                              >
-                                {type}
-                              </Typography>
-                              <Grid container>
-                                {customizationOptions[type].map((option) => (
-                                  <Grid item xs={3} key={option}>
-                                    <Button
-                                      variant="outlined"
-                                      sx={{
-                                        height: "8rem",
-                                        width: "8rem",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        textAlign: "center",
-                                        borderColor:
-                                          selectedCustomization[type] === option
-                                            ? "#a36e29"
-                                            : "divider",
-                                        borderRadius: "15px",
-                                        boxShadow: 2,
-                                        marginRight: "15px",
-                                        marginBottom: "15px",
-
-                                        "&:hover": {
-                                          borderColor: "#a36e29",
-                                          backgroundColor:
-                                            "rgba(163, 110, 41, 0.05)",
-                                        },
-                                      }}
-                                      onClick={() => {
-                                        setSelectedCustomization(
-                                          (prevState) => {
-                                            const newCustomization = {
-                                              ...prevState,
-                                            };
-                                            newCustomization[type] = option;
-                                            return newCustomization;
-                                          }
-                                        );
-
-                                        console.log(selectedCustomization);
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          fontFamily: '"Open Sans", sans-serif',
-                                          fontSize: "0.85rem",
-                                          fontWeight: "600",
-                                          color: "black",
-                                        }}
-                                      >
-                                        {option}
-                                      </Typography>
-                                      <Box
-                                        style={{
-                                          backgroundColor:
-                                            selectedCustomization[type] ===
-                                            option
-                                              ? "#a36e29"
-                                              : "transparent",
-                                          border: "1px solid #a36e29",
-                                          padding: "4px 10px",
-                                          borderRadius: "10px",
-                                          marginTop: "8px",
-                                        }}
-                                      >
-                                        <Typography
-                                          sx={{
-                                            color:
-                                              selectedCustomization[type] ===
-                                              option
-                                                ? "white"
-                                                : "#a36e29",
-                                            fontFamily:
-                                              '"Open Sans", sans-serif',
-                                            fontSize: "0.75rem",
-                                            textTransform: "none",
-                                            fontWeight: "600",
-                                          }}
-                                        >
-                                          Made On Order
-                                        </Typography>
-                                      </Box>
-                                    </Button>
-                                  </Grid>
-                                ))}
-                              </Grid>
-                            </>
-                          ))}
-                        </Box>
-                      </Drawer>
-                    </Box>
-                  ) : null}
-                  <div className="price-section">
-                    <Typography className="price">
-                      ₹{selectedCustomizationPrice || productDetail.price}
-                    </Typography>
-                    <Typography className="original-price">
-                      MRP ₹9,010
-                    </Typography>
-                  </div>
-                  <Typography className="discount">
-                    Flat 50% off on Making Charges
-                  </Typography>
-                  <div
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      style={{
-                        width: "325px",
-                        padding: "10px",
-                        fontWeight: "bold",
-                        background: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "1rem",
-                        fontWeight: "bold",
-                        marginRight: "5px",
-                      }}
-                      onClick={addToCartHandler}
-                    >
-                      {productDetail.exists_in_cart
-                        ? "Go to Cart"
-                        : "Add to Cart"}
-                      <ShoppingCartOutlined
-                        style={{
-                          marginLeft: "10px",
-                        }}
-                      />
-                    </Button>
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      style={{
-                        width: "325px",
-                        padding: "10px",
-                        fontWeight: "bold",
-                        color: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "1rem",
-                        fontWeight: "bold",
-                        marginLeft: "5px",
-                        background: "transparent",
-                        border: "2px solid #a36e29",
-                      }}
-                      onClick={buyNow}
-                    >
-                      Buy Now
-                      <ShoppingBagOutlined
-                        style={{
-                          marginLeft: "10px",
-                          color: "#a36e29",
-                        }}
-                      />
-                    </Button>
-                  </div>
-                </Grid>
-
-                <Grid item xs={6} className="location-grid">
-                  <Typography
-                    sx={{
-                      display: "flex",
-                      alignItems: "start",
-                      color: "#666",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Enter your Pincode
-                  </Typography>
-                  <div
-                    style={{
-                      width: "20rem",
-                      height: "2.5rem",
-                      backgroundColor: "white",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      paddingLeft: "10px",
-                      paddingRight: "10px",
-                      marginTop: "5px",
-                      alignItems: "center",
-                      border: "2px solid #e1e1e1",
-                      borderRadius: "10px",
-                      marginBottom: "20px",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      fontWeight: "bold",
-                      color: "#A36E29",
-                    }}
-                    onClick={openLocationModal}
-                  >
-                    {pincode}
-                  </div>
-                  {currentPosition.length > 0 ? (
-                    <Typography className="delivery-info">
-                      <LocalShippingOutlined className="delivery-icon" />
-                      <span
-                        style={{
-                          fontFamily: '"Open Sans", sans-serif',
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                          color: "grey",
-                        }}
-                      >
-                        {`Free delivery by ${eta}`}
-                      </span>
-                    </Typography>
-                  ) : null}
-                </Grid>
-                <Grid item xs={12} className="detail-grid">
-                  <Card className="card" style={{ backgroundColor: "white" }}>
-                    <Typography className="sku">
-                      #{productDetail.hash?.toUpperCase()}
-                    </Typography>
-                    <Typography className="title">Product Details</Typography>
-                    <Typography className="desc">
-                      {typeof productDetail.description !== "undefined"
-                        ? parse(productDetail.description)
-                        : ""}
-                    </Typography>
-
-                    <Grid
-                      container
-                      spacing={0}
-                      justifyContent="left"
-                      rowSpacing={1}
-                    >
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
-                        >
-                          Weight :-
-                          <br />
-                          <span
-                            style={{
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Gross: {productDetail.weight} g
-                          </span>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
-                        >
-                          Purity :-
-                          <br />
-                          <span
-                            style={{
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {productDetail.purity} KT
-                          </span>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
-                        >
-                          Width :-
-                          <br />
-                          <span
-                            style={{
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {productDetail.width} mm
-                          </span>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
-                        >
-                          Height :-
-                          <br />
-                          <span
-                            style={{
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {productDetail.height} mm
-                          </span>
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Card>
-                </Grid>
-              </Grid>
-            </div>
-          </div>
-        </div> */}
-
         <div>
           <Grid container>
             <Grid item xs={8}>
@@ -2468,12 +1951,16 @@ function ProductDetail() {
               <div className="products-scroll-container">
                 {productDetail.recommended.map((product) => (
                   <JwelleryCard
+                    id={product.id}
                     key={product.id}
                     image={product.images[0].file}
                     name={product.name}
                     hash={product.hash}
                     price={product.customizations?.variants?.options[0]?.price}
+                    isWishlisted={product.exists_in_wishlist}
+                    isInCart={product.exists_in_cart}
                     clickHandler={handleCardClick}
+                    addToCartClick={addToCartHandlerForRecommendations}
                   />
                 ))}
               </div>
@@ -2489,6 +1976,8 @@ function ProductDetail() {
           />
         </div>
       </div>
+
+      {/* Mobile UI */}
       <div className="mobile">
         <div className="container">
           <div className="product-content">
@@ -2606,6 +2095,7 @@ function ProductDetail() {
                       alignItems: "center",
                       cursor: "pointer",
                       marginTop: "100%",
+                      marginBottom: "50%",
                     }}
                     onClick={() => handleClickOpen()}
                   >
@@ -2615,24 +2105,101 @@ function ProductDetail() {
                   </Box>
                 </Box>
               </Box>
-              <div className="price-section">
-                <Typography className="price">
-                  ₹{selectedCustomizationPrice || productDetail.price}
-                </Typography>
-                <Typography className="original-price">
-                  MRP ₹
-                  {(selectedCustomizationPrice || productDetail.price) * 1.2}
-                </Typography>
-              </div>
-              <Typography
+              <div
                 style={{
-                  fontWeight: "bold",
+                  marginTop: "30px",
+                  height: "50px",
+                  background: "white",
+                  border: "1px solid #a36e29",
+                  borderRadius: "10px",
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
                   fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "1.2rem",
                 }}
               >
-                {product.price}
-              </Typography>
+                <div
+                  style={{
+                    width: "100%",
+                    paddingLeft: "10px",
+                  }}
+                >
+                  <div style={{ fontSize: "0.7rem" }}>Size</div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#a36e29",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {productDetail?.size}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    borderRight: "1px solid #a36e29",
+                    height: "100%",
+                  }}
+                />
+                <div
+                  style={{
+                    width: "100%",
+                    paddingLeft: "10px",
+                  }}
+                >
+                  <div style={{ fontSize: "0.7rem" }}>Metal</div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#a36e29",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {
+                      productDetail?.customizations?.variants?.options[0]
+                        ?.metal_info?.display_name
+                    }
+                  </div>
+                </div>
+                <div
+                  style={{
+                    borderRight: "1px solid #a36e29",
+                    height: "100%",
+                  }}
+                />
+                <div
+                  style={{
+                    width: "100%",
+                    paddingLeft: "10px",
+                  }}
+                >
+                  <div style={{ fontSize: "0.7rem" }}>Stone</div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#a36e29",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {
+                      productDetail?.customizations?.variants?.options[0]
+                        ?.stone_info?.display_stone_type
+                    }
+                  </div>
+                </div>
+              </div>
+              <div className="price-section">
+                <Typography className="price">
+                  ₹ {productDetail?.customizations?.variants?.options[0]?.price}
+                </Typography>
+                <Typography className="original-price">
+                  ₹
+                  {(
+                    productDetail?.customizations?.variants?.options[0]?.price *
+                    1.2
+                  ).toFixed(2)}
+                </Typography>
+              </div>
               <div
                 style={{
                   display: "flex",
@@ -2688,228 +2255,6 @@ function ProductDetail() {
                 </Button>
               </div>
               <Grid container spacing={3}>
-                {/* Customization */}
-
-                {hasCustomization ? (
-                  <>
-                    <Grid item xs={12}>
-                      <Typography
-                        sx={{
-                          display: "flex",
-                          alignItems: "start",
-                          color: "#666",
-                          fontFamily: '"Open Sans", sans-serif',
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                          marginTop: "10px",
-                        }}
-                      >
-                        Select Customization
-                      </Typography>
-                      <Box
-                        onClick={handleDrawerOpen}
-                        style={{
-                          width: "20rem",
-                          height: "2.5rem",
-                          backgroundColor: "white",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                          marginTop: "5px",
-                          alignItems: "center",
-                          border: "2px solid #e1e1e1",
-                          borderRadius: "10px",
-                        }}
-                      >
-                        {Object.keys(selectedCustomization).map((type) => (
-                          <Box
-                            style={{
-                              borderRadius: "20px",
-                              width: "max-content",
-                              paddingLeft: "10px",
-                              paddingRight: "10px",
-                              marginTop: "5px",
-                              marginBottom: "5px",
-                              height: "25px",
-                              backgroundColor: "#A36E29",
-                              color: "white",
-                              display: "flex",
-                              justifyContent: "space-around",
-                              alignItems: "center",
-                              marginRight: "8px",
-                            }}
-                          >
-                            <Typography
-                              style={{
-                                fontFamily: '"Open Sans", sans-serif',
-                                fontSize: "0.8rem",
-                                fontWeight: "600",
-                              }}
-                            >
-                              {selectedCustomization[type]}
-                            </Typography>
-                          </Box>
-                        ))}
-                        <KeyboardArrowDownOutlined
-                          style={{
-                            marginLeft: "auto",
-                            color: "darkgray",
-                            fontSize: "1.5rem",
-                          }}
-                        />
-                      </Box>
-                      {selectedCustomizationPrice === product.price ? (
-                        <div
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.7rem",
-                            marginTop: "5px",
-                          }}
-                        >
-                          Select all customization to seel the updated price.
-                        </div>
-                      ) : null}
-                    </Grid>
-                    <Drawer
-                      anchor="bottom"
-                      open={bottomDrawerOpen}
-                      onClose={handleDrawerClose}
-                    >
-                      <div
-                        style={{
-                          backgroundColor: "#E0B872",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          paddingLeft: "25px",
-                          paddingRight: "25px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "1.6rem",
-                            fontWeight: "600",
-
-                            color: "white",
-                            padding: "18px",
-                          }}
-                        >
-                          Select Customization
-                        </div>
-                        <Close
-                          style={{
-                            color: "white",
-                          }}
-                          onClick={handleDrawerClose}
-                        />
-                      </div>
-
-                      <Box
-                        sx={{
-                          padding: "18px",
-                          paddingLeft: "25px",
-                        }}
-                      >
-                        {customizationTypes.map((type) => (
-                          <>
-                            <Typography
-                              sx={{
-                                fontFamily: '"Open Sans", sans-serif',
-                                fontSize: "1.2rem",
-                                fontWeight: "600",
-                                marginBottom: "10px",
-                              }}
-                            >
-                              {type}
-                            </Typography>
-                            <Grid container>
-                              {customizationOptions[type].map((option) => (
-                                <Grid item xs={6} key={option}>
-                                  <Button
-                                    variant="outlined"
-                                    sx={{
-                                      height: "8rem",
-                                      width: "8rem",
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      textAlign: "center",
-                                      borderColor:
-                                        selectedCustomization[type] === option
-                                          ? "#a36e29"
-                                          : "divider",
-                                      borderRadius: "15px",
-                                      boxShadow: 2,
-                                      marginRight: "15px",
-                                      marginBottom: "15px",
-
-                                      "&:hover": {
-                                        borderColor: "#a36e29",
-                                        backgroundColor:
-                                          "rgba(163, 110, 41, 0.05)",
-                                      },
-                                    }}
-                                    onClick={() => {
-                                      setSelectedCustomization((prevState) => {
-                                        const newCustomization = {
-                                          ...prevState,
-                                        };
-                                        newCustomization[type] = option;
-                                        return newCustomization;
-                                      });
-
-                                      console.log(selectedCustomization);
-                                    }}
-                                  >
-                                    <Typography
-                                      sx={{
-                                        fontFamily: '"Open Sans", sans-serif',
-                                        fontSize: "0.85rem",
-                                        fontWeight: "600",
-                                        color: "black",
-                                      }}
-                                    >
-                                      {option}
-                                    </Typography>
-                                    <Box
-                                      style={{
-                                        backgroundColor:
-                                          selectedCustomization[type] === option
-                                            ? "#a36e29"
-                                            : "transparent",
-                                        border: "1px solid #a36e29",
-                                        padding: "4px 10px",
-                                        borderRadius: "10px",
-                                        marginTop: "8px",
-                                      }}
-                                    >
-                                      <Typography
-                                        sx={{
-                                          color:
-                                            selectedCustomization[type] ===
-                                            option
-                                              ? "white"
-                                              : "#a36e29",
-                                          fontFamily: '"Open Sans", sans-serif',
-                                          fontSize: "0.75rem",
-                                          textTransform: "none",
-                                          fontWeight: "600",
-                                        }}
-                                      >
-                                        Made On Order
-                                      </Typography>
-                                    </Box>
-                                  </Button>
-                                </Grid>
-                              ))}
-                            </Grid>
-                          </>
-                        ))}
-                      </Box>
-                    </Drawer>
-                  </>
-                ) : null}
                 <Grid item xs={12} className="location-grid">
                   <Typography
                     sx={{
@@ -2964,125 +2309,477 @@ function ProductDetail() {
                   ) : null}
                 </Grid>
 
-                <Grid item xs={12} className="detail-grid">
-                  <Card
+                <div
+                  style={{
+                    backgroundColor: "white",
+                    marginTop: "20px",
+                    borderRadius: "10px",
+                    padding: "10px 25px",
+                    fontFamily: '"Open Sans", sans-serif',
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                    Product Description
+                  </div>
+                  <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                    #{productDetail.hash?.toUpperCase()}
+                  </Typography>
+                  <div style={{ fontSize: "0.9rem", marginTop: "12px" }}>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </div>
+
+                  <div
                     style={{
-                      backgroundColor: "white",
-                      padding: "10px",
-                      boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                      marginTop: "20px",
+                      borderRadius: "10px",
+                      padding: "10px 20px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      border: "1px solid #e1e1e1",
+                      boxShadow: "0px 0px 5px 0px #a36e29",
                     }}
                   >
-                    <Typography
-                      style={{
-                        color: "#666",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      #{productDetail.hash?.toUpperCase()}
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontWeight: "bold",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      Product Details
-                    </Typography>
-                    <Typography
-                      style={{
-                        color: "#666",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      {typeof productDetail.description !== "undefined"
-                        ? parse(productDetail.description)
-                        : ""}
-                    </Typography>
-
-                    <Grid
-                      container
-                      spacing={0}
-                      justifyContent="left"
-                      rowSpacing={1}
-                    >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Metal Details
+                    </div>
+                    <Grid container spacing={2} style={{ marginTop: "8px" }}>
                       <Grid item xs={4}>
                         <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
+                          style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Weight :-
-                          <br />
-                          <span
+                          Gross Weight
+                          <div
                             style={{
+                              fontSize: "0.9rem",
+                              color: "black",
                               fontWeight: "bold",
                             }}
                           >
-                            Gross: {productDetail.weight} g
-                          </span>
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.gross_wt
+                            }{" "}
+                            g
+                          </div>
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
+                          style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Purity :-
-                          <br />
-                          <span
+                          Net Weight
+                          <div
                             style={{
+                              fontSize: "0.9rem",
+                              color: "black",
                               fontWeight: "bold",
                             }}
                           >
-                            {productDetail.purity} KT
-                          </span>
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.net_wt
+                            }{" "}
+                            g
+                          </div>
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
+                          style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Width :-
-                          <br />
-                          <span
+                          Stone Weight
+                          <div
                             style={{
+                              fontSize: "0.9rem",
+                              color: "black",
                               fontWeight: "bold",
                             }}
                           >
-                            {productDetail.width} mm
-                          </span>
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.stone_wt
+                            }{" "}
+                            g
+                          </div>
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
-                          style={{
-                            fontFamily: '"Open Sans", sans-serif',
-                            fontSize: "0.8rem",
-                          }}
+                          style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Height :-
-                          <br />
-                          <span
+                          Metal
+                          <div
                             style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.metal
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Quality
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
                               fontWeight: "bold",
                             }}
                           >
-                            {productDetail.height} mm
-                          </span>
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.quality
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Wastage
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.wastage_prec
+                            }
+                            %
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Net Weight After Wastage
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.net_wt_after_wastage
+                            }{" "}
+                            g
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Making Charge
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.making_charge_amount
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Stone Amount
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.stone_amount
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Hallmark Charge
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.hallmark_charge
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Rodium Charge
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.rodium_charge
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          GST
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.gst_perc
+                            }
+                            %
+                          </div>
                         </Typography>
                       </Grid>
                     </Grid>
-                  </Card>
-                </Grid>
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      borderRadius: "10px",
+                      padding: "10px 20px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      border: "1px solid #e1e1e1",
+                      boxShadow: "0px 0px 5px 0px #a36e29",
+                    }}
+                  >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Stone Details
+                    </div>
+                    <Grid container spacing={2} style={{ marginTop: "8px" }}>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Stone Type
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.stone_type
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Class
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.class
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Clarity
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.clarity
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Cut
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.cut
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Pieces
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.pieces
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Carat
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.carat
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Stone Weight
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.stone_wt
+                            }{" "}
+                            g
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Stone Rate
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ₹
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.stone_rate
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          GST
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.gst_perc
+                            }
+                            %
+                          </div>
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </div>
               </Grid>
             </div>
           </div>
@@ -3108,11 +2805,15 @@ function ProductDetail() {
                 {productDetail.recommended.map((product) => (
                   <JwelleryCard
                     key={product.id}
+                    id={product.id}
                     image={product.images[0].file}
                     name={product.name}
                     hash={product.hash}
-                    price={product.price}
+                    price={product.customizations?.variants?.options[0]?.price}
+                    isWishlisted={product.exists_in_wishlist}
+                    isInCart={product.exists_in_cart}
                     clickHandler={handleCardClick}
+                    addToCartClick={addToCartHandlerForRecommendations}
                   />
                 ))}
               </div>

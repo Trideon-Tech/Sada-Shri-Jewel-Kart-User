@@ -338,7 +338,7 @@ const OrderConfirmation = () => {
                                 fontWeight: "bold",
                               }}
                             >
-                              ₹{o["amount_paid"]}
+                              ₹{o["price"]}
                             </span>
                           </div>
                           <div

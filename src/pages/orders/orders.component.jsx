@@ -17,6 +17,8 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { generalToastStyle } from "../../utils/toast.styles";
 import OrderItem from "./orderItem.component";
 
 const Orders = () => {
@@ -34,11 +36,12 @@ const Orders = () => {
   const [cancelledOrdersList, setCancelledOrderList] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState();
   const [categories, setCategories] = useState();
+  const [reason, setReason] = useState();
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    // if (!sessionStorage.getItem("cart")) {
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
@@ -82,7 +85,6 @@ const Orders = () => {
     borderRadius: "10px",
 
     width: 800,
-    height: 780,
     backgroundColor: "white",
     p: 4,
   };
@@ -105,6 +107,36 @@ const Orders = () => {
       });
   };
 
+  // TODO - Detail id not present
+  const cancelOrder = () => {
+    console.log("cancel order");
+
+    const formData = new FormData();
+    formData.append("type", "order_cancel");
+    formData.append("order_detail_id", selectedOrder.order_details_id);
+    formData.append("desc", reason);
+    formData.append("cancel_files[]", new File([], ""));
+
+    axios
+      .post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/orders.php",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.success == 1) {
+          toast.success("Order cancelled successfully!", generalToastStyle);
+          setOpenConfirmationModal(false);
+          window.location.reload();
+        }
+      });
+  };
+
   return matches ? (
     <Box
       style={{
@@ -119,6 +151,82 @@ const Orders = () => {
         alignItems: "flex-start",
       }}
     >
+      <ToastContainer />
+      <Modal
+        open={openConfirmationModal}
+        onClose={() => {
+          setOpenConfirmationModal(false);
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "10px",
+            width: 400,
+            backgroundColor: "white",
+            p: 4,
+          }}
+        >
+          <Typography
+            style={{
+              fontWeight: 700,
+              marginBottom: "20px",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.2rem",
+              textAlign: "center",
+            }}
+          >
+            Are you sure you want to cancel this order?
+          </Typography>
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "30px",
+            }}
+          >
+            <Button
+              variant="outlined"
+              style={{
+                width: "48%",
+                fontWeight: "bold",
+                border: "2px solid #a36e29",
+                color: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              onClick={() => {
+                setReason("");
+                setModalOpen(false);
+                setOpenConfirmationModal(false);
+              }}
+            >
+              No, Keep Order
+            </Button>
+            <Button
+              variant="contained"
+              style={{
+                width: "48%",
+                fontWeight: "bold",
+                background: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              onClick={() => {
+                // Handle cancel order logic here
+                setOpenConfirmationModal(false);
+                setModalOpen(false);
+                cancelOrder();
+              }}
+            >
+              Yes, Cancel Order
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
       <Modal
         open={modalOpen}
         onClose={() => {
@@ -134,7 +242,9 @@ const Orders = () => {
               fontSize: "1.2rem",
             }}
           >
-            Cancel/Return order
+            {selectedOrder?.status === "created"
+              ? "Cancel order"
+              : "Return order"}
           </Typography>
           <Card
             sx={{
@@ -242,31 +352,35 @@ const Orders = () => {
               </Typography>
             </Box>
           </Card>
-          <Typography
-            style={{
-              marginBottom: "20px",
-              fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
-              fontWeight: "1rem",
-            }}
-          >
-            Cancellation/Return reason
-          </Typography>
-          <div
-            style={{
-              height: "100px",
-              width: "100px",
-              border: "1px solid #e7e7e7",
-              marginBottom: "20px",
-              borderRadius: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              cursor: "pointer",
-            }}
-          >
-            <AddPhotoAlternateOutlined />
-          </div>
+          {selectedOrder?.status !== "created" ? (
+            <>
+              <Typography
+                style={{
+                  marginBottom: "20px",
+                  fontWeight: "bold",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontWeight: "1rem",
+                }}
+              >
+                Cancellation/Return reason
+              </Typography>
+              <div
+                style={{
+                  height: "100px",
+                  width: "100px",
+                  border: "1px solid #e7e7e7",
+                  marginBottom: "20px",
+                  borderRadius: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <AddPhotoAlternateOutlined />
+              </div>
+            </>
+          ) : null}
           <TextareaAutosize
             style={{
               width: "100%",
@@ -275,9 +389,27 @@ const Orders = () => {
               fontWeight: "0.8rem",
               borderColor: "#e7e7e7",
               marginBottom: "20px",
+              borderRadius: "5px",
+              padding: "10px",
+              "&:focus": {
+                borderColor: "#a36e29",
+                outline: "none",
+                boxShadow: "0 0 0 2px rgba(163,110,41,0.2)",
+              },
+              "&:hover": {
+                borderColor: "#a36e29",
+              },
+              "&:active": {
+                borderColor: "#a36e29",
+              },
+              "&:selected": {
+                borderColor: "#a36e29",
+              },
             }}
             placeholder=" Type your message here!"
-          ></TextareaAutosize>
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
           <div
             style={{
               display: "flex",
@@ -295,8 +427,12 @@ const Orders = () => {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
               }}
+              onClick={() => {
+                console.log(reason);
+                setOpenConfirmationModal(true);
+              }}
             >
-              Track Order
+              Cancel Order
             </Button>
           </div>
         </Box>

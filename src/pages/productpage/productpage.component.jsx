@@ -71,7 +71,9 @@ function Productpage() {
         "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
         {
           product: id,
-          customization: -1,
+          customization:
+            jwellery.find((item) => item.id === id)?.customizations?.variants
+              ?.options[0]?.id || -1,
         },
         {
           headers: {
@@ -255,6 +257,7 @@ function Productpage() {
                         isWishlisted={item.exists_in_wishlist}
                         isInCart={item.exists_in_cart}
                         clickHandler={handleCardClick}
+                        addToCartClick={addToCartHandler}
                       />
                     </Grid>
                   ))

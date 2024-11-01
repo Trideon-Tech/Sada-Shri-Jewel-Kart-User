@@ -6,8 +6,8 @@ import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
-
 import "./jwellerycard.styles.scss";
 
 const JwelleryCard = ({
@@ -19,7 +19,9 @@ const JwelleryCard = ({
   clickHandler,
   isWishlisted,
   isInCart,
+  addToCartClick,
 }) => {
+  const navigate = useNavigate();
   const { triggerRefresh } = useRefresh();
   const [wishListed, setWishListed] = useState(false);
   useEffect(() => {
@@ -248,7 +250,10 @@ const JwelleryCard = ({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
-            onClick={() => clickHandler(name, hash, true)}
+            onClick={() => {
+              if (isInCart) navigate("/cart");
+              else addToCartClick(id);
+            }}
           >
             {isInCart ? "Go to Cart" : "Add to Cart"}
           </Button>
@@ -351,7 +356,7 @@ const JwelleryCard = ({
                 fontSize: "0.8rem",
               }}
             >
-              ₹{price * 1.2}
+              ₹{(price * 1.2).toFixed(2)}
             </Typography>
           </Box>
           <Typography
@@ -375,7 +380,10 @@ const JwelleryCard = ({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
-            onClick={() => clickHandler(name, hash, true)}
+            onClick={() => {
+              if (isInCart) navigate("/cart");
+              else addToCartClick(id);
+            }}
           >
             {isInCart ? "Go to Cart" : "Add to Cart"}
           </Button>
