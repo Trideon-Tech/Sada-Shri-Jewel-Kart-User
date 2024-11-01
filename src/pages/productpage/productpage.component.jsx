@@ -25,6 +25,7 @@ function Productpage() {
   const { menuItemId, category: menuItemName, isSubCategory } = useParams();
 
   const [jwellery, setJwellery] = useState([]);
+  const [filteredJwellery, setFilteredJwellery] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [reloadNavbar, setReloadNavbar] = useState(1);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
@@ -109,6 +110,7 @@ function Productpage() {
 
     const response = await axios.get(apiUrl, { params });
     setJwellery(response?.data?.response);
+    setFilteredJwellery(response?.data?.response);
     console.log(response?.data?.response);
     setProductsLoaded(true);
   };
@@ -117,9 +119,25 @@ function Productpage() {
     (async () => {
       await handleFetchFilteredData();
     })();
-  }, [refresh, selectedPriceRange, menuItemId, isSubCategory, selectedSort]);
+  }, [refresh, menuItemId, isSubCategory, selectedSort]);
 
-  const handleFilterChange = (_selectedRangeLabel) => {};
+  useEffect(() => {
+    if (selectedPriceRange.length > 0) {
+      const filtered = jwellery.filter((item) => {
+        const price = item.customizations.variants.options[0].price;
+        return selectedPriceRange.some(
+          (range) => price >= range.low && price <= range.high
+        );
+      });
+      setFilteredJwellery(filtered);
+    } else {
+      setFilteredJwellery(jwellery);
+    }
+  }, [selectedPriceRange, jwellery]);
+
+  const handleFilterChange = (selectedRanges) => {
+    setSelectedPriceRange(selectedRanges);
+  };
 
   return (
     <div className="product-page">
@@ -153,7 +171,10 @@ function Productpage() {
               <Divider style={{ width: "90%" }} />
               <PriceFilter
                 selectedPriceRange={selectedPriceRange}
-                handleSelectedPriceRange={setSelectedPriceRange}
+                handleSelectedPriceRange={(range) => {
+                  console.log("range", range);
+                  setSelectedPriceRange(range);
+                }}
                 onFilterChange={handleFilterChange}
               />
             </Grid>
@@ -222,7 +243,7 @@ function Productpage() {
                     }}
                   />
                 ) : (
-                  jwellery.map((item, _index) => (
+                  filteredJwellery.map((item, _index) => (
                     <Grid item xs={3} className="product-card">
                       <JwelleryCard
                         id={item.id}
@@ -378,7 +399,7 @@ function Productpage() {
                 <CircularProgress style={{ color: "#a36e29" }} />
               </div>
             ) : (
-              jwellery.map((item, _index) => (
+              filteredJwellery.map((item, _index) => (
                 <Grid item xs={6} sm={4} md={3} key={item.id}>
                   <JwelleryCard
                     id={item.id}
@@ -395,62 +416,6 @@ function Productpage() {
               ))
             )}
           </Grid>
-          {/* <div className="bottom-navigation">
-            <Paper
-              sx={{
-                height: "55px",
-                position: "fixed",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                boxShadow: "0 -2px 10px -2px rgba(0,0,0,0.2)",
-              }}
-              elevation={3}
-            >
-              <BottomNavigation
-                showLabels
-                value={value}
-                onChange={(_event, newValue) => {
-                  setValue(newValue);
-                }}
-              >
-                <BottomNavigationAction
-                  label={
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "0.8rem",
-                        color: "#a36e29",
-                      }}
-                    >
-                      <FilterListIcon style={{ marginRight: "5px" }} />
-                      Filter
-                    </span>
-                  }
-                  onClick={toggleDrawer(true)}
-                />
-                <BottomNavigationAction
-                  label={
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "0.8rem",
-                        color: "#a36e29",
-                      }}
-                    >
-                      <SortIcon style={{ marginRight: "5px" }} />
-                      Sort
-                    </span>
-                  }
-                  onClick={() => setSortDrawerOpen(true)}
-                />
-              </BottomNavigation>
-            </Paper>
-          </div> */}
           <Drawer
             anchor="right"
             open={isDrawerOpen}
