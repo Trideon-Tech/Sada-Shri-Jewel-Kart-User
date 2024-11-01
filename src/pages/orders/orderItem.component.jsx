@@ -251,6 +251,9 @@ const OrderItem = ({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
+            onClick={() => {
+              window.location.href = "mailto:contact@sadashrijewelkart.com";
+            }}
           >
             Need Help?
           </Button>
@@ -311,6 +314,9 @@ const OrderItem = ({
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
                 marginRight: "5px",
+              }}
+              onClick={() => {
+                window.location.href = "mailto:contact@sadashrijewelkart.com";
               }}
             >
               Need Help?

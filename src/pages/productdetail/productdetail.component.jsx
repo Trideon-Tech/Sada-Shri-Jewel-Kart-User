@@ -300,6 +300,7 @@ function ProductDetail() {
   }, [productDetail]);
 
   const handleWishList = async () => {
+    console.log(productDetail.exists_in_wishlist || localWishlisted);
     if (productDetail.exists_in_wishlist || localWishlisted) {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -486,28 +487,20 @@ function ProductDetail() {
   };
 
   const buyNow = async () => {
-    if (
-      customizationTypes.length === Object.keys(selectedCustomization).length
-    ) {
-      const userId = localStorage.getItem("user_id")
-        ? localStorage.getItem("user_id")
-        : -1;
+    const userId = localStorage.getItem("user_id")
+      ? localStorage.getItem("user_id")
+      : -1;
 
-      if (userId !== -1) {
-        // getAddress();
-        // setBuyNowDrawer(true);
-        navigate(
-          `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
-            productDetail?.hash
-          }&customization=${selctedVariantId || -1}`
-        );
-      } else {
-        navigate(
-          `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
-        );
-      }
+    if (userId !== -1) {
+      navigate(
+        `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
+          productDetail?.hash
+        }&customization=${selctedVariantId || -1}`
+      );
     } else {
-      toast("Select Customization", generalToastStyle);
+      navigate(
+        `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
+      );
     }
   };
 
