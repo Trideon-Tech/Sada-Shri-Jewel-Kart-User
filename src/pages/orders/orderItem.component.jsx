@@ -90,10 +90,32 @@ const OrderItem = ({
             fontWeight: "bold",
             fontFamily: '"Open Sans", sans-serif',
             fontSize: matches ? "1.2rem" : "1rem",
-            color: titleColors[titleColorType],
+            color:
+              titleColorType === "cancelled"
+                ? "#FF0000"
+                : titleColorType === "delivered"
+                ? orderInfo["shipment_status"] === "ORDER_RETURN_REQUEST"
+                  ? "#a36e29"
+                  : "green"
+                : "#a36e29",
           }}
         >
-          Arriving {formatDate(orderInfo["estimated_date"])}
+          {orderInfo["shipment_status"] === "ORDER_RETURN_REQUEST"
+            ? "Return Requested"
+            : orderInfo["shipment_status"] === "ORDER_CANCELED"
+            ? "Order Cancelled"
+            : orderInfo["shipment_status"] === "ORDER_DELIVERED"
+            ? "Delivered "
+            : "Arriving "}
+          {orderInfo["shipment_status"] === "ORDER_CREATED" ||
+          orderInfo["shipment_status"] === "SELLER_VERIFIED" ||
+          orderInfo["shipment_status"] === "ADMIN_VERIFIED" ||
+          orderInfo["shipment_status"] === "ADMIN_RECEIVED" ||
+          orderInfo["shipment_status"] === "ADMIN_INSPECTION_FAILED" ||
+          orderInfo["shipment_status"] ===
+            "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER"
+            ? formatDate(orderInfo["estimated_date"])
+            : ""}
         </Typography>
         <Box
           style={{
@@ -228,7 +250,9 @@ const OrderItem = ({
           </Typography>
         </Box>
       </Box>
-      {matches ? (
+      {titleColorType === "cancelled" ? (
+        ""
+      ) : matches ? (
         <Box
           style={{
             width: "100%",
@@ -257,38 +281,42 @@ const OrderItem = ({
           >
             Need Help?
           </Button>
-          <Button
-            fullWidth
-            variant="outlined"
-            style={{
-              width: "32%",
-              height: "100%",
-              border: "2px solid #a36e29",
-              fontWeight: "bold",
-              color: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-            onClick={() => {
-              if (titleColorType === "arriving") handleCancelOrder();
-            }}
-          >
-            {titleColorType === "arriving" ? "Cancel " : "Return Order"}
-          </Button>
-          <Button
-            fullWidth
-            variant="contained"
-            style={{
-              width: "32%",
-              fontWeight: "bold",
-              height: "100%",
-              background: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-          >
-            Track Order
-          </Button>
+          {orderInfo["shipment_status"] !== "ORDER_RETURN_REQUEST" && (
+            <Button
+              fullWidth
+              variant="outlined"
+              style={{
+                width: "32%",
+                height: "100%",
+                border: "2px solid #a36e29",
+                fontWeight: "bold",
+                color: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              onClick={() => {
+                handleCancelOrder();
+              }}
+            >
+              {titleColorType === "arriving" ? "Cancel " : "Return Order"}
+            </Button>
+          )}
+          {titleColorType === "arriving" && (
+            <Button
+              fullWidth
+              variant="contained"
+              style={{
+                width: "32%",
+                fontWeight: "bold",
+                height: "100%",
+                background: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
+              Track Order
+            </Button>
+          )}
         </Box>
       ) : (
         <>
@@ -335,7 +363,7 @@ const OrderItem = ({
                 marginLeft: "5px",
               }}
               onClick={() => {
-                if (titleColorType === "arriving") handleCancelOrder();
+                handleCancelOrder();
               }}
             >
               {titleColorType === "arriving" ? "Cancel " : "Return Order"}

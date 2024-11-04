@@ -20,6 +20,7 @@ import MenuItem from "@mui/joy/MenuItem";
 import {
   AppBar,
   Avatar,
+  ClickAwayListener,
   Collapse,
   Drawer,
   IconButton,
@@ -27,6 +28,7 @@ import {
   List,
   ListItem,
   ListItemAvatar,
+  Paper,
   Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -44,6 +46,9 @@ const Navbar = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openWebDrawer, setOpenWebDrawer] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [searchIndex, setSearchIndex] = useState([]);
   let navigate = useNavigate();
   const [wishListItems, setWishListItems] = useState(0);
   const [cartLength, setCartLength] = useState(0);
@@ -176,6 +181,7 @@ const Navbar = () => {
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
       .then((response) => {
         setMenuItems(response?.data?.response?.categories);
+        setSearchIndex(response?.data?.response?.search_index || []);
 
         let tempRates = rates;
 
@@ -219,10 +225,32 @@ const Navbar = () => {
       .catch((error) => console.error("Error fetching menu items:", error));
   }, [refresh]);
 
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    if (!value) {
+      setSearchResults([]);
+      setShowSearchDropdown(false);
+      return;
+    }
+
+    const filteredResults = searchIndex.filter((item) =>
+      item.toLowerCase().includes(value.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+    setShowSearchDropdown(true);
+  };
+
+  const handleSearchItemClick = (item) => {
+    setSearchTerm(item);
+    setShowSearchDropdown(false);
+    navigate(`/jwellery/search?search=${item}`);
+  };
+
   const handleFuzzySearch = (event) => {
     if (event.key === "Enter") {
       console.log(searchTerm);
       if (searchTerm.length === 0) return;
+      setShowSearchDropdown(false);
       navigate(`/jwellery/search?search=${searchTerm}`);
     }
   };
@@ -294,20 +322,59 @@ const Navbar = () => {
               src={process.env.PUBLIC_URL + "/assets/logo_dark.png"}
               onClick={() => navigate(`/`)}
             />
-            <div className="search">
+            <div className="search" style={{ position: "relative" }}>
               <div className="search-icon">
                 <SearchIcon />
               </div>
-              <InputBase
-                placeholder="Search for Jwellery..."
-                classes={{
-                  root: "input-root",
-                  input: "input-input",
-                }}
-                inputProps={{ "aria-label": "search" }}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                onKeyDown={(event) => handleFuzzySearch(event)}
-              />
+              <ClickAwayListener
+                onClickAway={() => setShowSearchDropdown(false)}
+              >
+                <div style={{ width: "100%" }}>
+                  <InputBase
+                    placeholder="Search for Jwellery..."
+                    classes={{
+                      root: "input-root",
+                      input: "input-input",
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+                    value={searchTerm}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    onKeyDown={handleFuzzySearch}
+                  />
+                  {showSearchDropdown && searchResults.length > 0 && (
+                    <Paper
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        right: 0,
+                        zIndex: 1000,
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                      }}
+                    >
+                      <List>
+                        {searchResults.map((result, index) => (
+                          <ListItem
+                            button
+                            key={index}
+                            onClick={() => handleSearchItemClick(result)}
+                          >
+                            <Typography
+                              style={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontSize: "0.8rem",
+                              }}
+                            >
+                              {result}
+                            </Typography>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Paper>
+                  )}
+                </div>
+              </ClickAwayListener>
             </div>
             <div className="icons">
               <Dropdown>
@@ -442,7 +509,11 @@ const Navbar = () => {
                       <ListItemAvatar>
                         <Avatar
                           alt={category.name}
-                          src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
+                          src={
+                            category.image
+                              ? `https://api.sadashrijewelkart.com/assets/${category.image}`
+                              : process.env.PUBLIC_URL + "/assets/logoNew.png"
+                          }
                         />
                       </ListItemAvatar>
                       <div
@@ -498,9 +569,9 @@ const Navbar = () => {
                                 <Avatar
                                   alt={subCategory.name}
                                   src={
-                                    subCategory.image_url ||
-                                    process.env.PUBLIC_URL +
-                                      "/assets/logoNew.png"
+                                    subCategory.image
+                                      ? `https://api.sadashrijewelkart.com/assets/${subCategory.image}`
+                                      : `${process.env.PUBLIC_URL}/assets/logoNew.png`
                                   }
                                 />
                               </ListItemAvatar>
@@ -614,7 +685,6 @@ const Navbar = () => {
             Become a Seller
           </div>
         </Drawer>
-
         <AppBar elevation={0} position="fixed" className="appbar">
           <div className="rates">
             <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
@@ -649,7 +719,7 @@ const Navbar = () => {
               onClick={() => navigate("/")}
             />
             <div className="search">
-              <div className="search-icon">
+              <div className="search-icon" style={{ backgroundColor: "white", borderRadius: "4px" }}>
                 <Dropdown>
                   <MenuButton
                     slots={{ root: IconButton }}
@@ -745,6 +815,73 @@ const Navbar = () => {
                   </Badge>
                 </IconButton>
               </div>
+            </div>
+          </div>
+          <div
+            className="search"
+            style={{ padding: "10px", position: "relative" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "white",
+                borderRadius: "4px",
+                padding: "5px",
+              }}
+            >
+              <SearchIcon style={{ color: "#a36e29", marginLeft: "10px" }} />
+              <ClickAwayListener
+                onClickAway={() => setShowSearchDropdown(false)}
+              >
+                <div style={{ width: "100%" }}>
+                  <InputBase
+                    placeholder="Search for Jewellery..."
+                    style={{
+                      width: "100%",
+                      marginLeft: "10px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                    value={searchTerm}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    onKeyDown={handleFuzzySearch}
+                  />
+                  {showSearchDropdown && searchResults.length > 0 && (
+                    <Paper
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        right: 0,
+                        zIndex: 1000,
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                        margin: "0 10px",
+                      }}
+                    >
+                      <List>
+                        {searchResults.map((result, index) => (
+                          <ListItem
+                            button
+                            key={index}
+                            onClick={() => handleSearchItemClick(result)}
+                          >
+                            <Typography
+                              style={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontSize: "0.8rem",
+                              }}
+                            >
+                              {result}
+                            </Typography>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Paper>
+                  )}
+                </div>
+              </ClickAwayListener>
             </div>
           </div>
         </AppBar>

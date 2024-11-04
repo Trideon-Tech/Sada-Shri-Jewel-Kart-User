@@ -39,14 +39,24 @@ const ImageVideoCarousel = ({ images, video }) => {
           <ReactImageMagnify
             {...{
               smallImage: {
+                alt: `Product Image ${selectedIndex}`,
                 isFluidWidth: true,
-                src: images[selectedIndex],
+                src: images[selectedIndex]
               },
               largeImage: {
                 src: images[selectedIndex],
-                width: 1800,
-                height: 1800,
+                width: 2400,
+                height: 2400
               },
+              enlargedImagePosition: "over",
+              isHintEnabled: true,
+              shouldHideHintAfterFirstActivation: false,
+              enlargedImageContainerDimensions: {
+                width: '200%',
+                height: '200%'
+              },
+              hoverDelayInMs: 100,
+              hoverOffDelayInMs: 150
             }}
           />
         ) : (

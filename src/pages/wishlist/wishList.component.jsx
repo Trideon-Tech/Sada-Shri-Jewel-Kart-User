@@ -4,12 +4,14 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRefresh } from "../../RefreshContent";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 
 const Wishlist = () => {
   const navigate = useNavigate();
+  const { triggerRefresh } = useRefresh();
   const mediaQuery = useMediaQuery("(min-width:600px)");
   const [wishlistItems, setWishListItems] = useState([]);
 
@@ -27,6 +29,43 @@ const Wishlist = () => {
       }
       setWishListItems(detailsList);
     }
+  };
+
+  const addToCartHandlerForRecommendations = (id) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      let existingList = localStorage.getItem("cart_list") || "";
+      existingList = existingList.split(",");
+      existingList.push(id);
+      existingList = Array.from(new Set(existingList));
+      localStorage.setItem("cart_list", existingList.join(","));
+      triggerRefresh();
+      return;
+    }
+
+    axios
+      .put(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        {
+          product: id,
+          customization:
+            wishlistItems.find((item) => item.product_id === id)?.customizations
+              ?.variants?.options[0]?.id || -1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log(`Product with ID ${id} sent to API`);
+        navigate("/cart");
+      })
+      .catch((error) => {
+        console.error(`Error sending product with ID ${id} to API`, error);
+      });
   };
 
   useEffect(() => {
@@ -90,7 +129,7 @@ const Wishlist = () => {
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1.4rem",
             marginTop: "10px",
-            marginBottom: '10px'
+            marginBottom: "10px",
           }}
         >
           Your Wishlist
@@ -116,14 +155,16 @@ const Wishlist = () => {
             {wishlistItems?.map((item) => (
               <Grid item xs={mediaQuery ? 12 / 5 : 6}>
                 <JwelleryCard
-                  key={item?.id}
-                  id={item?.id}
-                  hash={item?.hash}
+                  id={item?.product_id}
+                  key={item?.product_id}
                   image={item?.images ? item?.images[0]?.file : ""}
                   name={item?.name}
-                  price={item?.price}
-                  clickHandler={handleCardClick}
+                  hash={item?.hash}
+                  price={item?.customizations?.variants?.options[0]?.price}
                   isWishlisted={true}
+                  isInCart={item?.exists_in_cart}
+                  clickHandler={handleCardClick}
+                  addToCartClick={addToCartHandlerForRecommendations}
                 />
               </Grid>
             ))}

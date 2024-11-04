@@ -25,6 +25,12 @@ const Orders = () => {
   const navigate = useNavigate();
 
   const [orderList, setOrderList] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([
+    null,
+    null,
+    null,
+    null,
+  ]);
 
   const matches = useMediaQuery("(min-width:600px)");
   const STATUS_CREATED = "created";
@@ -59,19 +65,41 @@ const Orders = () => {
 
         setOrderList(response.data.response);
         setOpenOrderList(
-          response.data.response.filter(
-            (item) => item.status === STATUS_CREATED
-          )
+          response.data.response
+            .filter(
+              (item) =>
+                item.shipment_status === "ORDER_CREATED" ||
+                item.shipment_status === "SELLER_VERIFIED" ||
+                item.shipment_status === "ADMIN_VERIFIED" ||
+                item.shipment_status === "ADMIN_RECEIVED" ||
+                item.shipment_status === "ADMIN_INSPECTION_FAILED" ||
+                item.shipment_status ===
+                  "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER"
+            )
+            .sort(
+              (a, b) =>
+                new Date(b.order_created_date) - new Date(a.order_created_date)
+            )
         );
         setCompletedOrderList(
-          response.data.response.filter(
-            (item) => item.status === STATUS_COMPLETED
-          )
+          response.data.response
+            .filter(
+              (item) =>
+                item.shipment_status === "ORDER_DELIVERED" ||
+                item.shipment_status === "ORDER_RETURN_REQUEST"
+            )
+            .sort(
+              (a, b) =>
+                new Date(b.order_created_date) - new Date(a.order_created_date)
+            )
         );
         setCancelledOrderList(
-          response.data.response.filter(
-            (item) => item.status === STATUS_CANCELLED
-          )
+          response.data.response
+            .filter((item) => item.shipment_status === "ORDER_CANCELED")
+            .sort(
+              (a, b) =>
+                new Date(b.order_created_date) - new Date(a.order_created_date)
+            )
         );
       })
       .catch((error) => console.log("Error while fetching cart items", error));
@@ -107,10 +135,20 @@ const Orders = () => {
       });
   };
 
-  // TODO - Detail id not present
-  const cancelOrder = () => {
-    console.log("cancel order");
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newImages = [...selectedImages];
+        newImages[index] = reader.result;
+        setSelectedImages(newImages);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
+  const cancelOrder = () => {
     const formData = new FormData();
     formData.append("type", "order_cancel");
     formData.append("order_detail_id", selectedOrder.order_details_id);
@@ -131,6 +169,49 @@ const Orders = () => {
         console.log(response.data);
         if (response.data.success == 1) {
           toast.success("Order cancelled successfully!", generalToastStyle);
+          setOpenConfirmationModal(false);
+          window.location.reload();
+        }
+      });
+  };
+
+  const returnOrder = () => {
+    const formData = new FormData();
+    formData.append("type", "order_returned");
+    formData.append("order_detail_id", selectedOrder.order_details_id);
+    formData.append("desc", reason);
+    selectedImages.forEach((image, index) => {
+      if (image) {
+        // Convert base64 to blob
+        const byteString = atob(image.split(",")[1]);
+        const mimeString = image.split(",")[0].split(":")[1].split(";")[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ab], { type: mimeString });
+        const file = new File([blob], `image${index}.jpg`, {
+          type: mimeString,
+        });
+        formData.append("cancel_files[]", file);
+      }
+    });
+
+    axios
+      .post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/orders.php",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.success == 1) {
+          toast.success("Order returned successfully!", generalToastStyle);
           setOpenConfirmationModal(false);
           window.location.reload();
         }
@@ -219,10 +300,26 @@ const Orders = () => {
                 // Handle cancel order logic here
                 setOpenConfirmationModal(false);
                 setModalOpen(false);
-                cancelOrder();
+                selectedOrder?.shipment_status === "ORDER_CREATED" ||
+                selectedOrder?.shipment_status === "SELLER_VERIFIED" ||
+                selectedOrder?.shipment_status === "ADMIN_VERIFIED" ||
+                selectedOrder?.shipment_status === "ADMIN_RECEIVED" ||
+                selectedOrder?.shipment_status === "ADMIN_INSPECTION_FAILED" ||
+                selectedOrder?.shipment_status ===
+                  "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER"
+                  ? cancelOrder()
+                  : returnOrder();
               }}
             >
-              Yes, Cancel Order
+              {selectedOrder?.shipment_status === "ORDER_CREATED" ||
+              selectedOrder?.shipment_status === "SELLER_VERIFIED" ||
+              selectedOrder?.shipment_status === "ADMIN_VERIFIED" ||
+              selectedOrder?.shipment_status === "ADMIN_RECEIVED" ||
+              selectedOrder?.shipment_status === "ADMIN_INSPECTION_FAILED" ||
+              selectedOrder?.shipment_status ===
+                "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER"
+                ? "Yes, Cancel Order"
+                : "Yes, Return Order"}
             </Button>
           </Box>
         </Box>
@@ -242,7 +339,13 @@ const Orders = () => {
               fontSize: "1.2rem",
             }}
           >
-            {selectedOrder?.status === "created"
+            {selectedOrder?.shipment_status === "ORDER_CREATED" ||
+            selectedOrder?.shipment_status === "SELLER_VERIFIED" ||
+            selectedOrder?.shipment_status === "ADMIN_VERIFIED" ||
+            selectedOrder?.shipment_status === "ADMIN_RECEIVED" ||
+            selectedOrder?.shipment_status === "ADMIN_INSPECTION_FAILED" ||
+            selectedOrder?.shipment_status ===
+              "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER"
               ? "Cancel order"
               : "Return order"}
           </Typography>
@@ -352,7 +455,13 @@ const Orders = () => {
               </Typography>
             </Box>
           </Card>
-          {selectedOrder?.status !== "created" ? (
+          {selectedOrder?.shipment_status !== "ORDER_CREATED" ||
+          selectedOrder?.shipment_status !== "SELLER_VERIFIED" ||
+          selectedOrder?.shipment_status !== "ADMIN_VERIFIED" ||
+          selectedOrder?.shipment_status !== "ADMIN_RECEIVED" ||
+          selectedOrder?.shipment_status !== "ADMIN_INSPECTION_FAILED" ||
+          selectedOrder?.shipment_status !==
+            "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER" ? (
             <>
               <Typography
                 style={{
@@ -364,27 +473,64 @@ const Orders = () => {
               >
                 Cancellation/Return reason
               </Typography>
-              <div
+              <Box
                 style={{
-                  height: "100px",
-                  width: "100px",
-                  border: "1px solid #e7e7e7",
-                  marginBottom: "20px",
-                  borderRadius: "10px",
                   display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  marginBottom: "20px",
                 }}
               >
-                <AddPhotoAlternateOutlined />
-              </div>
+                {[0, 1, 2, 3].map((index) => (
+                  <div
+                    key={index}
+                    style={{
+                      height: "100px",
+                      width: "100px",
+                      border: "1px solid #e7e7e7",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      position: "relative",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageChange(e, index)}
+                      style={{
+                        opacity: 0,
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        cursor: "pointer",
+                      }}
+                    />
+                    {selectedImages[index] ? (
+                      <img
+                        src={selectedImages[index]}
+                        alt={`Selected ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <AddPhotoAlternateOutlined />
+                    )}
+                  </div>
+                ))}
+              </Box>
             </>
           ) : null}
           <TextareaAutosize
             style={{
               width: "100%",
-              height: "250px",
+              height: "100px",
               fontFamily: '"Open Sans", sans-serif',
               fontWeight: "0.8rem",
               borderColor: "#e7e7e7",
@@ -432,7 +578,15 @@ const Orders = () => {
                 setOpenConfirmationModal(true);
               }}
             >
-              Cancel Order
+              {selectedOrder?.shipment_status === "ORDER_CREATED" ||
+              selectedOrder?.shipment_status === "SELLER_VERIFIED" ||
+              selectedOrder?.shipment_status === "ADMIN_VERIFIED" ||
+              selectedOrder?.shipment_status === "ADMIN_RECEIVED" ||
+              selectedOrder?.shipment_status === "ADMIN_INSPECTION_FAILED" ||
+              selectedOrder?.shipment_status ===
+                "INSPECTION_FAILED_ORDER_RECEIVED_BY_SELLER"
+                ? "Cancel Order"
+                : "Return Order"}
             </Button>
           </div>
         </Box>
@@ -491,31 +645,29 @@ const Orders = () => {
         >
           <Tab disableIndicator>In Progress</Tab>
           <Tab disableIndicator>Completed</Tab>
-          <Tab disableIndicator>Cancelled</Tab>
+          <Tab disableIndicator>Cancelled/Returned</Tab>
         </TabList>
         <TabPanel value={0} style={{ padding: 0, paddingTop: "20px" }}>
           <Box style={{ width: "100%", height: "100%" }}>
-            {openOrdersList
-              .sort(
-                (a, b) =>
-                  parseInt(b.order_record_id) - parseInt(a.order_record_id)
-              )
-              .map((order) => (
-                <OrderItem
-                  orderInfo={order}
-                  selectHandler={() => {
-                    navigate(
-                      `/order-confirmation?order_record_id=${order.order_record_id}`
-                    );
-                  }}
-                  handleCancelOrder={() => {
-                    console.log(order.order_record_id);
-                    setSelectedOrder(order);
-                    setModalOpen(true);
-                  }}
-                  writeReview={() => writeReview(order)}
-                />
-              ))}
+            {openOrdersList.map((order) => (
+              <OrderItem
+                orderInfo={order}
+                selectHandler={() => {
+                  navigate(
+                    `/order-confirmation?order_record_id=${order.order_record_id}`
+                  );
+                }}
+                handleCancelOrder={() => {
+                  setSelectedOrder(order);
+                  setModalOpen(true);
+                }}
+                writeReview={() => writeReview(order)}
+                handleReturnOrder={() => {
+                  setSelectedOrder(order);
+                  setModalOpen(true);
+                }}
+              />
+            ))}
           </Box>
         </TabPanel>
         <TabPanel value={1} style={{ padding: 0, paddingTop: "20px" }}>
@@ -524,8 +676,19 @@ const Orders = () => {
               <OrderItem
                 orderInfo={order}
                 titleColorType="delivered"
-                selectHandler={(id) => {
-                  return;
+                selectHandler={() => {
+                  navigate(
+                    `/order-confirmation?order_record_id=${order.order_record_id}`
+                  );
+                }}
+                handleReturnOrder={() => {
+                  setSelectedOrder(order);
+                  setModalOpen(true);
+                }}
+                writeReview={() => writeReview(order)}
+                handleCancelOrder={() => {
+                  setSelectedOrder(order);
+                  setModalOpen(true);
                 }}
               />
             ))}

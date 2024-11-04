@@ -61,6 +61,54 @@ const OrderConfirmation = () => {
       );
   }, []);
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    // Check if the date is today, tomorrow, or yesterday
+    if (date.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      return "Tomorrow";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    }
+
+    // Format for other dates
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const dayOfMonth = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `on ${dayOfMonth}${
+      dayOfMonth === 1
+        ? "st"
+        : dayOfMonth === 2
+        ? "nd"
+        : dayOfMonth === 3
+        ? "rd"
+        : "th"
+    } ${month} ${year}`;
+  }
+
   return (
     <div>
       <Navbar />
@@ -346,9 +394,20 @@ const OrderConfirmation = () => {
                               fontFamily: '"Open Sans", sans-serif',
                               fontSize: "0.9rem",
                               marginTop: "8px",
+                              color:
+                                o["shipment_status"] === "ORDER_CANCELED"
+                                  ? "#f7333f"
+                                  : "gray",
                             }}
                           >
-                            Delivery by Tommorow
+                            {o["shipment_status"] === "ORDER_CREATED"
+                              ? "Arriving "
+                              : o["shipment_status"] === "ORDER_CANCELED"
+                              ? "Order Cancelled"
+                              : "Delivered "}
+                            {o["shipment_status"] === "ORDER_CREATED"
+                              ? formatDate(o["estimated_date"])
+                              : ""}
                           </div>
                         </div>
                       </Card>

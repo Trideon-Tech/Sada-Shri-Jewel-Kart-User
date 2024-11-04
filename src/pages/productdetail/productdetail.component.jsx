@@ -30,6 +30,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ReactImageMagnify from "react-image-magnify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { WhatsappIcon, WhatsappShareButton } from "react-share";
 import { toast, ToastContainer } from "react-toastify";
@@ -246,38 +247,6 @@ function ProductDetail() {
 
     getJwelleryDetail();
   }, []);
-
-  const handleDrawerOpen = () => {
-    mediaQuery ? setDrawerOpen(true) : setBottomDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    mediaQuery ? setDrawerOpen(false) : setBottomDrawerOpen(false);
-
-    // Calculate Variant Price
-    if (
-      customizationTypes.length === Object.keys(selectedCustomization).length
-    ) {
-      let options = Object.values(selectedCustomization);
-      let variant;
-
-      customizationVariants.forEach((o) => {
-        let isMatch =
-          o.for_customization_options.sort().toString() ===
-          options.sort().toString();
-
-        if (isMatch) {
-          variant = o;
-        }
-      });
-
-      console.log(variant);
-      setSelectedVariantId(variant.id);
-      setSelectedCustomizationPrice(variant.price);
-    } else {
-      setSelectedCustomizationPrice(() => product.price);
-    }
-  };
 
   const [openShareDialog, setOpenShareDialog] = React.useState(false);
   const handleClickOpen = () => {
@@ -1119,13 +1088,27 @@ function ProductDetail() {
                 {productDetail.images &&
                   productDetail.images.map((image, index) => (
                     <Grid item xs={6} key={image.id}>
-                      <img
-                        src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
-                        alt={`Product ${index + 1}`}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
+                      <ReactImageMagnify
+                        {...{
+                          smallImage: {
+                            alt: `Product ${index + 1}`,
+                            isFluidWidth: true,
+                            src: `https://api.sadashrijewelkart.com/assets/${image.file}`,
+                          },
+                          largeImage: {
+                            src: `https://api.sadashrijewelkart.com/assets/${image.file}`,
+                            width: 2400,
+                            height: 2400,
+                          },
+                          enlargedImagePosition: "over",
+                          isHintEnabled: false,
+                          shouldHideHintAfterFirstActivation: false,
+                          enlargedImageContainerDimensions: {
+                            width: "200%",
+                            height: "200%",
+                          },
+                          hoverDelayInMs: 100,
+                          hoverOffDelayInMs: 150,
                         }}
                       />
                     </Grid>
