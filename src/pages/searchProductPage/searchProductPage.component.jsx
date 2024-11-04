@@ -1,5 +1,7 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SortIcon from "@mui/icons-material/Sort";
+import Option from "@mui/joy/Option";
+import Select from "@mui/joy/Select";
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -15,15 +17,13 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
 import "./productpage.styles.scss";
 
+import { Button } from "@mui/joy";
 import JwelleryCard from "../../components/card/jwellerycard.component";
+import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 import PriceFilter from "./productFilter.component";
-import { Button } from "@mui/joy";
-import Footer from "../../components/footer/footer.component";
 
 function useQuery() {
   const { search } = useLocation();

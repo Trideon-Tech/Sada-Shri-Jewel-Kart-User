@@ -11,7 +11,7 @@ import {
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import JwelleryCard from "../../components/card/jwellerycard.component";
 import Footer from "../../components/footer/footer.component";
@@ -23,6 +23,10 @@ function Productpage() {
   const { refresh } = useRefresh();
   const { triggerRefresh } = useRefresh();
   const { menuItemId, category: menuItemName, isSubCategory } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchTerm = searchParams.get("search");
+  const isSearchPage = location.pathname.endsWith("search");
 
   const [jwellery, setJwellery] = useState([]);
   const [filteredJwellery, setFilteredJwellery] = useState([]);
@@ -101,32 +105,48 @@ function Productpage() {
   const [selectedSort, setSelectedSort] = useState("Review | Top");
 
   const handleFetchFilteredData = async () => {
-    if (!menuItemId) return;
-    const params = {};
-    params.user_id = localStorage.getItem("user_id") || -1;
+    if (isSearchPage) {
+      // Call search API if on search page
+      const searchEndpoint = `https://api.sadashrijewelkart.com/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
+      const response = await axios.get(searchEndpoint);
+      setJwellery(response?.data?.response);
+      setFilteredJwellery(response?.data?.response);
+      setProductsLoaded(true);
+    } else if (menuItemId) {
+      // Call products API for category pages
+      const params = {};
+      params.user_id = localStorage.getItem("user_id") || -1;
 
-    if (selectedSort !== "Featured" && selectedSort)
-      params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
+      if (selectedSort !== "Featured" && selectedSort)
+        params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
 
-    const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
+      const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
 
-    const response = await axios.get(apiUrl, { params });
-    setJwellery(response?.data?.response);
-    setFilteredJwellery(response?.data?.response);
-    console.log(response?.data?.response);
-    setProductsLoaded(true);
+      const response = await axios.get(apiUrl, { params });
+      setJwellery(response?.data?.response);
+      setFilteredJwellery(response?.data?.response);
+      setProductsLoaded(true);
+    }
   };
 
   useEffect(() => {
     (async () => {
       await handleFetchFilteredData();
     })();
-  }, [refresh, menuItemId, isSubCategory, selectedSort]);
+  }, [
+    refresh,
+    menuItemId,
+    isSubCategory,
+    selectedSort,
+    searchTerm,
+    isSearchPage,
+  ]);
 
   useEffect(() => {
     if (selectedPriceRange.length > 0) {
       const filtered = jwellery.filter((item) => {
-        const price = item.customizations.variants.options[0].price;
+        const price =
+          item.customizations?.variants?.options[0]?.price || item.price;
         return selectedPriceRange.some(
           (range) => price >= range.low && price <= range.high
         );
@@ -253,7 +273,10 @@ function Productpage() {
                         image={item.images[0].file}
                         name={item.name}
                         hash={item.hash}
-                        price={item.customizations.variants.options[0].price}
+                        price={
+                          item.customizations?.variants?.options[0]?.price ||
+                          item.price
+                        }
                         isWishlisted={item.exists_in_wishlist}
                         isInCart={item.exists_in_cart}
                         clickHandler={handleCardClick}
@@ -280,7 +303,7 @@ function Productpage() {
             }}
             className="page-heading"
           >
-            {menuItemName}
+            {isSearchPage ? `Search Results for "${searchTerm}"` : menuItemName}
           </Typography>
 
           <div className="breadcrumbs-container">
@@ -292,7 +315,7 @@ function Productpage() {
                 Jwellery
               </Typography>
               <Typography className="breadcrumb-link" color="textPrimary">
-                {menuItemName}
+                {isSearchPage ? `Search Results` : menuItemName}
               </Typography>
             </Breadcrumbs>
           </div>
@@ -410,7 +433,10 @@ function Productpage() {
                     image={item.images[0].file}
                     name={item.name}
                     hash={item.hash}
-                    price={item.price}
+                    price={
+                      item.customizations?.variants?.options[0]?.price ||
+                      item.price
+                    }
                     isWishlisted={item.exists_in_wishlist}
                     isInCart={item.exists_in_cart}
                     clickHandler={handleCardClick}

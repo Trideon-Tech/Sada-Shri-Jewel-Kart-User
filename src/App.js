@@ -11,7 +11,6 @@ import OrderConfirmation from "./pages/orderConfirmation/orderConfirmation.compo
 import Orders from "./pages/orders/orders.component";
 import ProductDetail from "./pages/productdetail/productdetail.component";
 import Productpage from "./pages/productpage/productpage.component";
-import SearchProductpage from "./pages/searchProductPage/searchProductPage.component";
 import Register from "./pages/signup/register.component";
 import TrackOrder from "./pages/track-order/trackOrder.component";
 import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
@@ -30,7 +29,8 @@ function App() {
               path="/jwellery/:category/:menuItemId/:isSubCategory"
               element={<Productpage />}
             />
-            <Route path="/jwellery/search" element={<SearchProductpage />} />
+            <Route path="/jwellery/search" element={<Productpage />} />
+            {/* <Route path="/jwellery/search" element={<SearchProductpage />} /> */}
             <Route
               path="/item/:category/:product"
               element={<ProductDetail />}
