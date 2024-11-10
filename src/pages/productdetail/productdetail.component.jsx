@@ -69,10 +69,7 @@ function ProductDetail() {
   const [customizationTypes, setCustomizationTypes] = useState([]);
   const [customizationOptions, setCustomizationOptions] = useState({});
   const [customizationVariants, setCustomizationVariants] = useState({});
-  const [selectedCustomization, setSelectedCustomization] = useState({});
   const [selctedVariantId, setSelectedVariantId] = useState();
-  const [selectedCustomizationPrice, setSelectedCustomizationPrice] =
-    useState();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
@@ -86,20 +83,16 @@ function ProductDetail() {
   const [eta, setETA] = useState("");
 
   const addToCartHandler = () => {
-    if (productDetail.exists_in_cart) {
-      navigate("/cart");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate(
+        `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
+      );
       return;
     }
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      let existingList = localStorage.getItem("cart_list") || "";
-      existingList = existingList.split(",");
-      existingList.push(productDetail.id);
-      existingList = Array.from(new Set(existingList));
-      localStorage.setItem("cart_list", existingList.join(","));
-      toast.info("Product Added to Cart", generalToastStyle);
-      navigate(0);
+    if (productDetail.exists_in_cart) {
+      navigate("/cart");
       return;
     }
 
@@ -152,12 +145,9 @@ function ProductDetail() {
   const addToCartHandlerForRecommendations = (id) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      let existingList = localStorage.getItem("cart_list") || "";
-      existingList = existingList.split(",");
-      existingList.push(id);
-      existingList = Array.from(new Set(existingList));
-      localStorage.setItem("cart_list", existingList.join(","));
-      triggerRefresh();
+      navigate(
+        `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
+      );
       return;
     }
 
@@ -334,20 +324,12 @@ function ProductDetail() {
   const handleCreateWishList = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      let wishListItems = localStorage.getItem("wish_list");
-      if (!wishListItems) {
-        localStorage.setItem("wish_list", productDetail.id);
-      } else {
-        wishListItems = wishListItems.split(",");
-        wishListItems.push(productDetail.id);
-        wishListItems = Array.from(new Set(wishListItems));
-        localStorage.setItem("wish_list", wishListItems.join(","));
-      }
-      // navigate(0);
-      triggerRefresh();
-
+      navigate(
+        `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
+      );
       return;
     }
+
     try {
       const formData = new FormData();
       formData.append("type", "add_item");
@@ -363,7 +345,6 @@ function ProductDetail() {
           },
         }
       );
-      // triggerRefresh();
       navigate(0);
     } catch (err) {
       console.log(err);
@@ -500,7 +481,9 @@ function ProductDetail() {
       navigate(
         `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
           productDetail?.hash
-        }&customization=${selctedVariantId || -1}`
+        }&customization=${
+          productDetail?.customizations?.variants?.options[0]?.id || -1
+        }`
       );
     } else {
       navigate(
@@ -1496,13 +1479,13 @@ function ProductDetail() {
                 <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                   #{productDetail.hash?.toUpperCase()}
                 </Typography>
-                <div style={{ fontSize: "0.9rem", marginTop: "12px" }}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </div>
+
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: productDetail.description,
+                  }}
+                  style={{ fontSize: "0.9rem", marginTop: "12px" }}
+                ></div>
 
                 <div
                   style={{

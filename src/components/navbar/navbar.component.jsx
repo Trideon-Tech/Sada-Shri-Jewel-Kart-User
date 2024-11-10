@@ -196,7 +196,6 @@ const Navbar = () => {
 
     const token = localStorage.getItem("token");
     if (!token) return;
-    // if (!sessionStorage.getItem("cart")) {
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
@@ -215,7 +214,7 @@ const Navbar = () => {
         sessionStorage.setItem("cart", response?.data?.response?.length || 0);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
-    // }
+
     axios
       .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
       .then((response) => {
@@ -719,7 +718,10 @@ const Navbar = () => {
               onClick={() => navigate("/")}
             />
             <div className="search">
-              <div className="search-icon" style={{ backgroundColor: "white", borderRadius: "4px" }}>
+              <div
+                className="search-icon"
+                style={{ backgroundColor: "white", borderRadius: "4px" }}
+              >
                 <Dropdown>
                   <MenuButton
                     slots={{ root: IconButton }}

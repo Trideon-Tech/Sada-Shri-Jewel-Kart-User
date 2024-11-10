@@ -9,12 +9,17 @@ import Typography from "@mui/joy/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import { Autocomplete } from "@react-google-maps/api";
+import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 
 const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDD2ek0oaYCGCsN7T5MvyV8z-GSXpsLgfg",
+    libraries: ["places"],
+  });
+
   const [editing, setEditing] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [editAddress, setEditAddress] = useState({});
@@ -29,6 +34,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   const [mobile, setMobile] = useState("");
   const [refreshAddresses, setRefreshAddresses] = useState(1);
   const [addingNew, setAddingNew] = useState(false);
+  const [autocomplete, setAutocomplete] = useState(null);
 
   const autocompleteRef = useRef(null);
 
@@ -85,6 +91,9 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
         if (response.data.success === 1) {
           console.log("address Added successfully");
           setRefreshAddresses(refreshAddresses + 1);
+          // Trigger refresh in other components by dispatching a custom event
+          const addressUpdateEvent = new CustomEvent("addressesUpdated");
+          window.dispatchEvent(addressUpdateEvent);
         }
       })
       .catch((error) => {
@@ -94,34 +103,58 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
     setRefreshAddresses(refreshAddresses + 1);
   };
 
+  const onLoad = (autocomplete) => {
+    console.log("Autocomplete loaded:", autocomplete);
+    setAutocomplete(autocomplete);
+  };
+
   const handlePlaceSelect = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (place.address_components) {
-      setAdd_line1(place.name);
+    const place = autocompleteRef.current?.getPlace();
+    if (!place) return;
 
-      for (let component of place.address_components) {
-        const componentType = component.types[0];
+    let streetNumber = "";
+    let route = "";
 
-        switch (componentType) {
-          case "street_number":
-            setAdd_line2((prev) => component.long_name + " " + prev);
-            break;
-          case "route":
-            setAdd_line2((prev) => prev + component.short_name);
-            break;
-          case "postal_code":
-            setPincode(component.long_name);
-            break;
-          case "locality":
-            setCity(component.long_name);
-            break;
-          case "administrative_area_level_1":
-            setState(component.long_name);
-            break;
+    setAdd_line1(place.name);
+
+    for (const component of place.address_components) {
+      const componentType = component.types[0];
+
+      switch (componentType) {
+        case "street_number": {
+          streetNumber = component.long_name;
+          break;
+        }
+        case "route": {
+          route = component.short_name;
+          break;
+        }
+        case "postal_code": {
+          setPincode(component.long_name);
+          break;
+        }
+        case "locality": {
+          setCity(component.long_name);
+          break;
+        }
+        case "administrative_area_level_1": {
+          setState(component.long_name);
+          break;
         }
       }
     }
+
+    // Combine street number and route for address line 2
+    if (streetNumber && route) {
+      setAdd_line2(`${streetNumber} ${route}`);
+    } else if (route) {
+      setAdd_line2(route);
+    }
   };
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box>
@@ -354,9 +387,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Autocomplete
-                      onLoad={(autocomplete) =>
-                        (autocompleteRef.current = autocomplete)
-                      }
+                      onLoad={onLoad}
                       onPlaceChanged={handlePlaceSelect}
                     >
                       <TextField
@@ -385,6 +416,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         size="small"
                         variant="outlined"
                         onChange={(e) => setAdd_line1(e.target.value)}
+                        inputRef={autocompleteRef}
                       />
                     </Autocomplete>
                   </Grid>

@@ -75,25 +75,14 @@ const JwelleryCard = ({
   };
 
   const handleCreateWishList = async () => {
-    if (isWishlisted || wishListed) {
-      removeFromWishList();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin");
       return;
     }
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      let wishListItems = localStorage.getItem("wish_list");
-      if (!wishListItems) {
-        localStorage.setItem("wish_list", id);
-      } else {
-        wishListItems = wishListItems.split(",");
-        wishListItems.push(id);
-        wishListItems = Array.from(new Set(wishListItems));
-        localStorage.setItem("wish_list", wishListItems.join(","));
-      }
-      setWishListed(true);
-      triggerRefresh();
-
+    if (isWishlisted || wishListed) {
+      removeFromWishList();
       return;
     }
 
@@ -115,6 +104,20 @@ const JwelleryCard = ({
 
     setWishListed(true);
     triggerRefresh();
+  };
+
+  const handleAddToCart = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+
+    if (isInCart) {
+      navigate("/cart");
+    } else {
+      addToCartClick(id);
+    }
   };
 
   return (
@@ -250,10 +253,7 @@ const JwelleryCard = ({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
-            onClick={() => {
-              if (isInCart) navigate("/cart");
-              else addToCartClick(id);
-            }}
+            onClick={handleAddToCart}
           >
             {isInCart ? "Go to Cart" : "Add to Cart"}
           </Button>
@@ -380,10 +380,7 @@ const JwelleryCard = ({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
-            onClick={() => {
-              if (isInCart) navigate("/cart");
-              else addToCartClick(id);
-            }}
+            onClick={handleAddToCart}
           >
             {isInCart ? "Go to Cart" : "Add to Cart"}
           </Button>

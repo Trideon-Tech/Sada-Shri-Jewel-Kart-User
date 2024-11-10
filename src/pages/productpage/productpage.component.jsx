@@ -120,7 +120,14 @@ function Productpage() {
       if (selectedSort !== "Featured" && selectedSort)
         params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
 
-      const apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
+      let apiUrl;
+      if (isSubCategory !== "false") {
+        // If it's a subcategory
+        apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
+      } else {
+        // If it's a main category
+        apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
+      }
 
       const response = await axios.get(apiUrl, { params });
       setJwellery(response?.data?.response);

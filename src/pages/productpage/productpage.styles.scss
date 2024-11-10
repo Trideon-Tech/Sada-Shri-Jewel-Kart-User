@@ -63,11 +63,11 @@
       }
 
       .products {
-        height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: start;
         align-items: start;
+        margin-bottom: 50px;
 
         .heading {
           margin-left: 30px;
@@ -90,7 +90,7 @@
       }
     }
   }
-  
+
   .mobile {
     display: none;
   }
