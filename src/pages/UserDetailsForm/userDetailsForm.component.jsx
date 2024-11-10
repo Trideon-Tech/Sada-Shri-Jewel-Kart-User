@@ -1,22 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import * as React from "react";
-import Navbar from "../../components/navbar/navbar.component";
-import Snackbar from "@mui/joy/Snackbar";
+import Option from "@mui/joy/Option";
+import Select from "@mui/joy/Select";
 import {
+  Button,
   Divider,
   Grid,
-  IconButton,
-  TextField,
-  Button,
-  Typography,
+  TextField
 } from "@mui/material";
-import { Facebook, Google } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import "./userDetailsForm.styles.scss";
-import CustomSnackbar from "../../components/customSnackbar/customSnackBar.component";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
 import axios from "axios";
+import * as React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import Navbar from "../../components/navbar/navbar.component";
+import { generalToastStyle } from "../../utils/toast.styles";
 
 const UserDetailsForm = () => {
   let navigate = useNavigate();
@@ -121,72 +117,44 @@ const UserDetailsForm = () => {
         "default_wishlist",
         defaultWishlists?.response[0]?.id
       );
-      navigate("/");
+      // navigate("/");
     } catch (error) {
+      toast.error(error.response.data.message, generalToastStyle);
       setSnackBarMessage(error.response.data.message);
     }
   };
 
   return (
-    <div className="register">
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
+      <ToastContainer />
       <Navbar />
-      <Snackbar
-        autoHideDuration={5000}
-        variant="soft"
-        color="primary"
-        size="lg"
-        invertedColors
-        open={open}
-        onClose={() => setOpen(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        sx={(theme) => ({
-          backgroundColor: "#fff2e0",
-          maxWidth: 360,
-        })}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: 1,
+          padding: "20px",
+        }}
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "max-content",
-            padding: "2%",
+            width: "100%",
+            maxWidth: "500px",
+            padding: "20px",
+            backgroundColor: "white",
+            borderRadius: "8px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
           }}
         >
-          <Typography variant="body">{snackBarMessage}</Typography>
-          <Button
-            variant="solid"
-            style={{
-              marginTop: "5%",
-              color: "white",
-              backgroundColor: "#a36e29",
-            }}
-            component={Link}
-            to="/signin"
-          >
-            Login
-          </Button>
-        </div>
-      </Snackbar>
-      <div className="register-container">
-        <div className="register-form">
-          <h2>
+          <h2 style={{ textAlign: "center", marginBottom: "10px" }}>
             Complete Sign Up to <br />
             Sada Shri Jewel Kart
           </h2>
-          <p>
-            Unlock Best prices and become an insider for our exclusive launches
-            & offers. Complete your profile and get ₹250 worth of xCLusive
-            Points.
-          </p>
-          <IconButton className="google-button" style={{ color: "#a36e29" }}>
-            <Google style={{ fontSize: "3rem" }} />
-          </IconButton>
-          <IconButton className="facebook-button" style={{ color: "#a36e29" }}>
-            <Facebook style={{ fontSize: "3rem" }} />
-          </IconButton>
-          <p>Or</p>
-          <Divider />
-          <Grid container className="register-grid" spacing={2}>
+          <Divider style={{ margin: "20px 0" }} />
+          <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
                 label="Enter First Name"
@@ -195,6 +163,19 @@ const UserDetailsForm = () => {
                 value={firstName}
                 onChange={(e) => {
                   setFirstName(e.target.value);
+                }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
                 }}
               />
             </Grid>
@@ -208,6 +189,19 @@ const UserDetailsForm = () => {
                 onChange={(e) => {
                   setLastName(e.target.value);
                 }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={6}>
@@ -219,13 +213,39 @@ const UserDetailsForm = () => {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={6}>
               <Select
                 placeholder="Select Gender"
                 size="lg"
-                sx={{ height: "76%" }}
+                sx={{
+                  height: "76%",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(0, 0, 0, 0.23)",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#a36e29",
+                    },
+                  },
+                }}
                 name="foo"
                 onChange={(newValue) => {
                   setGender(newValue);
@@ -249,17 +269,30 @@ const UserDetailsForm = () => {
               </Button>
             </Grid>
           </Grid>
-          <p className="signup-text">
-            Don't Have an account?{" "}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "20px",
+              gap: "5px",
+            }}
+          >
+            <p style={{ margin: 0 }}>Don't Have an account?</p>
             <p
-              style={{ color: "#a36e29", textDecoration: "underline" }}
+              style={{
+                color: "#a36e29",
+                textDecoration: "underline",
+                cursor: "pointer",
+                margin: 0,
+              }}
               onClick={() => {
                 navigate("/signup");
               }}
             >
               SignUp
             </p>
-          </p>
+          </div>
         </div>
       </div>
     </div>
