@@ -172,6 +172,12 @@ const Orders = () => {
           setOpenConfirmationModal(false);
           window.location.reload();
         }
+      })
+      .catch((error) => {
+        toast.error(
+          error.response?.data?.message || "An error occurred",
+          generalToastStyle
+        );
       });
   };
 

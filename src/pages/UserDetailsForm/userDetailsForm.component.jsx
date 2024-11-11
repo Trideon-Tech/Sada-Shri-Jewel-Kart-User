@@ -117,7 +117,7 @@ const UserDetailsForm = () => {
         "default_wishlist",
         defaultWishlists?.response[0]?.id
       );
-      // navigate("/");
+      navigate("/");
     } catch (error) {
       toast.error(error.response.data.message, generalToastStyle);
       setSnackBarMessage(error.response.data.message);
