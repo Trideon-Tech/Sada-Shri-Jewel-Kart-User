@@ -361,6 +361,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
           openModal={openModal}
           rating={rating}
           reviewsCount={reviewsCount}
+          enableWrite={productDetails.admin_verified == 1}
         />
       </Box>
       <Divider style={{ width: "100%" }} />

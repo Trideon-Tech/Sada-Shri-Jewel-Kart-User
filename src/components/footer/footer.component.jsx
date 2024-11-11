@@ -49,7 +49,14 @@ function Footer() {
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 marginTop: "10px",
+                cursor: "pointer",
               }}
+              onClick={() =>
+                window.open(
+                  "https://blogs.sadashrijewelkart.com/shipping-and-returns/",
+                  "_blank"
+                )
+              }
             >
               Shipping and Delivery Policy
             </Typography>
@@ -58,7 +65,14 @@ function Footer() {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
+                cursor: "pointer",
               }}
+              onClick={() =>
+                window.open(
+                  "https://blogs.sadashrijewelkart.com/privacy-policy/",
+                  "_blank"
+                )
+              }
             >
               Privacy Policy
             </Typography>
@@ -67,7 +81,14 @@ function Footer() {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
+                cursor: "pointer",
               }}
+              onClick={() =>
+                window.open(
+                  "https://blogs.sadashrijewelkart.com/terms-and-conditions/",
+                  "_blank"
+                )
+              }
             >
               Terms and Conditions
             </Typography>
@@ -76,6 +97,7 @@ function Footer() {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
+                cursor: "pointer",
               }}
             >
               Refund Policy

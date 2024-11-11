@@ -2,7 +2,7 @@ import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 
 import Rating from "@mui/material/Rating";
 
-const OverAllRating = ({ openModal, rating, reviewsCount }) => {
+const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
   return (
@@ -41,20 +41,37 @@ const OverAllRating = ({ openModal, rating, reviewsCount }) => {
       >
         Based on {reviewsCount} Ratings & Reviews
       </Typography>
-      <Button
-        variant="contained"
-        fullWidth
-        style={{
-          background: "#a36e29",
-          fontFamily: '"Open Sans", sans-serif',
-          fontSize: "0.8rem",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}
-        onClick={() => openModal(true)}
-      >
-        Write a Review
-      </Button>
+      {enableWrite ? (
+        <Button
+          variant="contained"
+          fullWidth
+          style={{
+            background: "#a36e29",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+          onClick={() => openModal(true)}
+        >
+          Write a Review
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          fullWidth
+          disabled
+          style={{
+            background: "#cccccc",
+            fontFamily: '"Open Sans", sans-serif',
+            fontSize: "0.8rem",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          Currently Unavailable
+        </Button>
+      )}
     </Box>
   );
 };

@@ -54,10 +54,10 @@ const Navbar = () => {
   const [cartLength, setCartLength] = useState(0);
   const [rates, setRates] = useState([
     ["Today's Gold and Silver Rates", ""],
-    ["Gold 22KT (per 10 gm)", ""],
-    ["Gold 18KT (per 10 gm)", ""],
-    ["Gold 14KT (per 10 gm)", ""],
-    ["Silver (per 10 gm)", ""],
+    ["Gold 24KT (per gm)", ""],
+    ["Gold 22KT (per gm)", ""],
+    ["Gold 18KT (per gm)", ""],
+    ["Silver (per gm)", ""],
   ]);
   const [expandedCategory, setExpandedCategory] = useState(null);
 
@@ -185,9 +185,9 @@ const Navbar = () => {
 
         let tempRates = rates;
 
-        tempRates[1][1] = response?.data?.response?.jewellery_inventory?.gold22;
-        tempRates[2][1] = response?.data?.response?.jewellery_inventory?.gold18;
-        tempRates[3][1] = response?.data?.response?.jewellery_inventory?.gold14;
+        tempRates[1][1] = response?.data?.response?.jewellery_inventory?.gold24;
+        tempRates[2][1] = response?.data?.response?.jewellery_inventory?.gold22;
+        tempRates[3][1] = response?.data?.response?.jewellery_inventory?.gold18;
         tempRates[4][1] = response?.data?.response?.jewellery_inventory?.silver;
 
         setRates(() => tempRates);

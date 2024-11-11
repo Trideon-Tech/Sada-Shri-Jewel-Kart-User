@@ -1096,25 +1096,27 @@ function ProductDetail() {
                       />
                     </Grid>
                   ))}
-                {productDetail.video && (
-                  <Grid item xs={6}>
-                    <video
-                      controls
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                      autoPlay={true}
-                    >
-                      <source
-                        src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
-                        type="video/mp4"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  </Grid>
-                )}
+                {productDetail.video &&
+                  productDetail.video !==
+                    "Product Infographics doesn't exist." && (
+                    <Grid item xs={6}>
+                      <video
+                        controls
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                        autoPlay={true}
+                      >
+                        <source
+                          src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    </Grid>
+                  )}
               </Grid>
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: "6vh" }}>
@@ -1351,58 +1353,85 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  marginRight: "8vh",
-                  marginTop: "30px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  fullWidth
+              {productDetail.admin_verified == 1 ? (
+                <div
                   style={{
-                    fontWeight: "bold",
-                    background: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                    marginRight: "5px",
+                    display: "flex",
+                    marginRight: "8vh",
+                    marginTop: "30px",
                   }}
-                  onClick={addToCartHandler}
                 >
-                  {productDetail.exists_in_cart ? "Go to Cart" : "Add to Cart"}
-                  <ShoppingCartOutlined
+                  <Button
+                    variant="contained"
+                    fullWidth
                     style={{
-                      marginLeft: "10px",
+                      fontWeight: "bold",
+                      background: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                      fontWeight: "bold",
+                      marginRight: "5px",
                     }}
-                  />
-                </Button>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  style={{
-                    fontWeight: "bold",
-                    color: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.9rem",
-                    fontWeight: "bold",
-                    marginLeft: "5px",
-                    background: "transparent",
-                    border: "2px solid #a36e29",
-                    backgroundColor: "white",
-                  }}
-                  onClick={buyNow}
-                >
-                  Buy Now
-                  <ShoppingBagOutlined
+                    onClick={addToCartHandler}
+                  >
+                    {productDetail.exists_in_cart
+                      ? "Go to Cart"
+                      : "Add to Cart"}
+                    <ShoppingCartOutlined
+                      style={{
+                        marginLeft: "10px",
+                      }}
+                    />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    fullWidth
                     style={{
-                      marginLeft: "10px",
+                      fontWeight: "bold",
                       color: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                      fontWeight: "bold",
+                      marginLeft: "5px",
+                      background: "transparent",
+                      border: "2px solid #a36e29",
+                      backgroundColor: "white",
                     }}
-                  />
-                </Button>
-              </div>
+                    onClick={buyNow}
+                  >
+                    Buy Now
+                    <ShoppingBagOutlined
+                      style={{
+                        marginLeft: "10px",
+                        color: "#a36e29",
+                      }}
+                    />
+                  </Button>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    marginRight: "8vh",
+                    marginTop: "30px",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    disabled
+                    style={{
+                      fontWeight: "bold",
+                      background: "#cccccc",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Currently Unavailable
+                  </Button>
+                </div>
+              )}
 
               <Typography
                 sx={{
