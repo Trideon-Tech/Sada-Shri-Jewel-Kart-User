@@ -41,22 +41,21 @@ const ImageVideoCarousel = ({ images, video }) => {
               smallImage: {
                 alt: `Product Image ${selectedIndex}`,
                 isFluidWidth: true,
-                src: images[selectedIndex]
+                src: images[selectedIndex],
               },
               largeImage: {
                 src: images[selectedIndex],
-                width: 2400,
-                height: 2400
+                width: 1000,
+                height: 1000,
               },
               enlargedImagePosition: "over",
-              isHintEnabled: true,
-              shouldHideHintAfterFirstActivation: false,
+              isHintEnabled: false,
               enlargedImageContainerDimensions: {
-                width: '200%',
-                height: '200%'
+                width: "200%",
+                height: "200%",
               },
               hoverDelayInMs: 100,
-              hoverOffDelayInMs: 150
+              hoverOffDelayInMs: 150,
             }}
           />
         ) : (

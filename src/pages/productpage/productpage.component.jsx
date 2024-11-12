@@ -307,7 +307,10 @@ function Productpage() {
               fontSize: "1.4rem",
               fontWeight: "bold",
               color: "#a36e29",
+              paddingTop: "10px",
+              paddingLeft: "5vw",
             }}
+            textAlign={"left"}
             className="page-heading"
           >
             {isSearchPage ? `Search Results for "${searchTerm}"` : menuItemName}
@@ -483,6 +486,7 @@ function Productpage() {
             </div>
           </Drawer>
         </div>
+        <Footer />
       </div>
     </div>
   );

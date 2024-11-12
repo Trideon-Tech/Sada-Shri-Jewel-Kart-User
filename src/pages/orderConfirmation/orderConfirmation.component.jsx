@@ -120,7 +120,7 @@ const OrderConfirmation = () => {
             width: "100vw",
             display: "flex",
             justifyContent: "center",
-            marginTop: matches ? "" : "10vh",
+            marginTop: matches ? "" : "12vh",
           }}
         >
           <div style={{ width: matches ? "70%" : "80%" }}>

@@ -60,6 +60,7 @@ const Navbar = () => {
     ["Silver (per gm)", ""],
   ]);
   const [expandedCategory, setExpandedCategory] = useState(null);
+  const [openCategory, setOpenCategory] = useState();
 
   const getCartLengthNonAuth = () => {
     const cartList = localStorage.getItem("cart_list") || "";
@@ -620,15 +621,23 @@ const Navbar = () => {
       <div className="mobile">
         <Drawer
           className="drawer"
-          anchor="right"
+          anchor="left"
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
+          PaperProps={{
+            sx: {
+              width: "100%",
+              height: "100%",
+            },
+          }}
         >
           <List>
             <ListItem
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                borderBottom: "1px solid #e0e0e0",
+                padding: "16px",
               }}
             >
               <div
@@ -643,26 +652,154 @@ const Navbar = () => {
                 <CloseIcon />
               </IconButton>
             </ListItem>
-            {menuItems.map((category) => (
-              <ListItem
-                key={category.id}
-                onClick={() => handleMenuItemClick(category)}
+
+            <ListItem style={{ padding: "16px" }}>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  border: "1px solid #e0e0e0",
+                  borderRadius: "4px",
+                  padding: "8px",
+                }}
               >
-                <ListItemAvatar>
-                  <Avatar
-                    alt={category.name}
-                    src={process.env.PUBLIC_URL + "/assets/logoNew.png"}
-                  />
-                </ListItemAvatar>
-                <div
+                <SearchIcon style={{ color: "#a36e29", marginRight: "8px" }} />
+                <InputBase
+                  placeholder="Search for Jewellery..."
                   style={{
+                    width: "100%",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
                   }}
+                  value={searchTerm}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  onKeyDown={handleFuzzySearch}
+                />
+              </div>
+            </ListItem>
+
+            {showSearchDropdown && searchResults.length > 0 && (
+              <ClickAwayListener
+                onClickAway={() => setShowSearchDropdown(false)}
+              >
+                <ListItem
+                  style={{ padding: "0 16px", position: "relative", zIndex: 2 }}
                 >
-                  {category.name}
-                </div>
-              </ListItem>
+                  <Paper
+                    style={{
+                      width: "100%",
+                      maxHeight: "300px",
+                      overflowY: "auto",
+                      position: "absolute",
+                      top: 0,
+                      left: "16px",
+                      right: "16px",
+                    }}
+                  >
+                    <List>
+                      {searchResults.map((result, index) => (
+                        <ListItem
+                          button
+                          key={index}
+                          onClick={() => {
+                            handleSearchItemClick(result);
+                            setOpenDrawer(false);
+                          }}
+                        >
+                          <Typography
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.8rem",
+                            }}
+                          >
+                            {result}
+                          </Typography>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Paper>
+                </ListItem>
+              </ClickAwayListener>
+            )}
+
+            {menuItems.map((category) => (
+              <React.Fragment key={category.id}>
+                <ListItem button onClick={() => handleMenuItemClick(category)}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={category.name}
+                      src={
+                        category.image
+                          ? `https://api.sadashrijewelkart.com/assets/${category.image}`
+                          : `${process.env.PUBLIC_URL}/assets/logoNew.png`
+                      }
+                    />
+                  </ListItemAvatar>
+                  <div
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                      flexGrow: 1,
+                    }}
+                  >
+                    {category.name}
+                  </div>
+                  {category.sub_categories?.length > 0 && (
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpandedCategory(
+                          expandedCategory === category.id ? null : category.id
+                        );
+                      }}
+                    >
+                      <ExpandMore
+                        style={{
+                          transform:
+                            expandedCategory === category.id
+                              ? "rotate(180deg)"
+                              : "rotate(0deg)",
+                          transition: "0.3s",
+                        }}
+                      />
+                    </IconButton>
+                  )}
+                </ListItem>
+                {category.sub_categories?.length > 0 && (
+                  <Collapse in={expandedCategory === category.id}>
+                    <List style={{ paddingLeft: "32px" }}>
+                      {category.sub_categories.map((subCategory) => (
+                        <ListItem
+                          button
+                          key={subCategory.id}
+                          onClick={() => handleMenuItemClick(subCategory)}
+                        >
+                          <ListItemAvatar>
+                            <Avatar
+                              alt={subCategory.name}
+                              src={
+                                subCategory.image
+                                  ? `https://api.sadashrijewelkart.com/assets/${subCategory.image}`
+                                  : `${process.env.PUBLIC_URL}/assets/logoNew.png`
+                              }
+                            />
+                          </ListItemAvatar>
+                          <div
+                            style={{
+                              fontFamily: '"Open Sans", sans-serif',
+                              fontSize: "0.8rem",
+                            }}
+                          >
+                            {subCategory.name}
+                          </div>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Collapse>
+                )}
+              </React.Fragment>
             ))}
           </List>
 
@@ -676,6 +813,7 @@ const Navbar = () => {
               color: "#a36e29",
               textDecoration: "underline",
               fontWeight: "600",
+              cursor: "pointer",
             }}
             onClick={() =>
               window.open("https://seller.sadashrijewelkart.com", "_blank")
@@ -817,73 +955,6 @@ const Navbar = () => {
                   </Badge>
                 </IconButton>
               </div>
-            </div>
-          </div>
-          <div
-            className="search"
-            style={{ padding: "10px", position: "relative" }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "white",
-                borderRadius: "4px",
-                padding: "5px",
-              }}
-            >
-              <SearchIcon style={{ color: "#a36e29", marginLeft: "10px" }} />
-              <ClickAwayListener
-                onClickAway={() => setShowSearchDropdown(false)}
-              >
-                <div style={{ width: "100%" }}>
-                  <InputBase
-                    placeholder="Search for Jewellery..."
-                    style={{
-                      width: "100%",
-                      marginLeft: "10px",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                    }}
-                    value={searchTerm}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    onKeyDown={handleFuzzySearch}
-                  />
-                  {showSearchDropdown && searchResults.length > 0 && (
-                    <Paper
-                      style={{
-                        position: "absolute",
-                        top: "100%",
-                        left: 0,
-                        right: 0,
-                        zIndex: 1000,
-                        maxHeight: "300px",
-                        overflowY: "auto",
-                        margin: "0 10px",
-                      }}
-                    >
-                      <List>
-                        {searchResults.map((result, index) => (
-                          <ListItem
-                            button
-                            key={index}
-                            onClick={() => handleSearchItemClick(result)}
-                          >
-                            <Typography
-                              style={{
-                                fontFamily: '"Open Sans", sans-serif',
-                                fontSize: "0.8rem",
-                              }}
-                            >
-                              {result}
-                            </Typography>
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Paper>
-                  )}
-                </div>
-              </ClickAwayListener>
             </div>
           </div>
         </AppBar>
