@@ -52,6 +52,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function ProductDetail() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const matches = useMediaQuery("(min-width:600px)");
 
   const { triggerRefresh } = useRefresh();

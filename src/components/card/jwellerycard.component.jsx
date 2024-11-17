@@ -20,6 +20,7 @@ const JwelleryCard = ({
   isWishlisted,
   isInCart,
   addToCartClick,
+  wishlistItem,
 }) => {
   const navigate = useNavigate();
   const { triggerRefresh } = useRefresh();
@@ -64,7 +65,7 @@ const JwelleryCard = ({
           },
           data: {
             type: "wishlist_item",
-            wishlist_item_id: id,
+            wishlist_item_id: wishlistItem.id,
           },
         }
       );

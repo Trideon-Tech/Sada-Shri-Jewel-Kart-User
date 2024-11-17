@@ -5,7 +5,7 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  TextField
+  TextField,
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -177,6 +177,11 @@ const Register = () => {
                   if (Number.isInteger(Number(e.target.value)))
                     if (e.target.value.length <= 10) setMobile(e.target.value);
                 }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && mobile?.length === 10) {
+                    sendOTPHandler();
+                  }
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -294,6 +299,11 @@ const Register = () => {
                 value={otp}
                 onChange={(e) => {
                   setOTP(e.target.value);
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && otp?.length === 4) {
+                    verifyOTPHandler();
+                  }
                 }}
               />
             </Grid>

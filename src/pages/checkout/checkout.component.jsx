@@ -113,7 +113,6 @@ const Checkout = () => {
                 style={{
                   padding: !matches ? "0%" : "3%",
                   paddingRight: 0,
-                  height: "95%",
                   backgroundColor: !matches ? "white" : "#f8f8f8",
                 }}
               >

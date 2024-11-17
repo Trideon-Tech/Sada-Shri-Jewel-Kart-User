@@ -1,11 +1,6 @@
 import Option from "@mui/joy/Option";
 import Select from "@mui/joy/Select";
-import {
-  Button,
-  Divider,
-  Grid,
-  TextField
-} from "@mui/material";
+import { Button, Divider, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
@@ -84,6 +79,9 @@ const UserDetailsForm = () => {
       );
       localStorage.setItem("token", userData.response.token);
       localStorage.setItem("user_id", userData.response.id);
+      localStorage.setItem("user_name", `${firstName} ${lastName}`);
+      localStorage.setItem("user_email", email);
+      localStorage.setItem("mobile", localStorage.getItem("mobile"));
 
       const wishlistData = new FormData();
       wishlistData.append("type", "create");

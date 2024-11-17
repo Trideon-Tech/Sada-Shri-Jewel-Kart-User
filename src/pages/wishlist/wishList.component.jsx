@@ -125,10 +125,10 @@ const Wishlist = () => {
         <Typography
           style={{
             fontWeight: "bold",
-            marginLeft: "100px",
+            marginLeft: mediaQuery ? "100px" : "20px",
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1.4rem",
-            marginTop: "10px",
+            marginTop: mediaQuery ? "10px" : "60px",
             marginBottom: "10px",
           }}
         >

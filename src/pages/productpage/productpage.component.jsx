@@ -288,6 +288,7 @@ function Productpage() {
                         isInCart={item.exists_in_cart}
                         clickHandler={handleCardClick}
                         addToCartClick={addToCartHandler}
+                        wishlistItem={item.wishlist_item[0]}
                       />
                     </Grid>
                   ))
@@ -450,6 +451,8 @@ function Productpage() {
                     isWishlisted={item.exists_in_wishlist}
                     isInCart={item.exists_in_cart}
                     clickHandler={handleCardClick}
+                    addToCartClick={addToCartHandler}
+                    wishlistItem={item.wishlist_item[0]}
                   />
                 </Grid>
               ))

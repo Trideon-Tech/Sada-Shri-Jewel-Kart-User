@@ -1046,30 +1046,6 @@ export default function CartTotal({
             alignItems: "center",
           }}
         >
-          <Button
-            variant="contained"
-            style={{
-              marginBottom: "5%",
-              backgroundColor: "#a36e29",
-              borderRadius: "10px",
-              elevation: "0",
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "1rem",
-              fontWeight: "600",
-              background: "#a36e29",
-            }}
-            component={Link}
-            to={
-              localStorage.getItem("token")
-                ? `/checkout?discount=${selectedCouponId}&coins=${
-                    coinsApplied ? coinsRedeem : 0
-                  }`
-                : "/signin"
-            }
-            fullWidth
-          >
-            {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}
-          </Button>
           <Card
             style={{
               width: "90%",
@@ -1393,6 +1369,30 @@ export default function CartTotal({
               </Typography>
             </Box>
           </Card>
+          <Button
+            variant="contained"
+            style={{
+              marginBottom: "5%",
+              backgroundColor: "#a36e29",
+              borderRadius: "10px",
+              elevation: "0",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1rem",
+              fontWeight: "600",
+              background: "#a36e29",
+            }}
+            component={Link}
+            to={
+              localStorage.getItem("token")
+                ? `/checkout?discount=${selectedCouponId}&coins=${
+                    coinsApplied ? coinsRedeem : 0
+                  }`
+                : "/signin"
+            }
+            fullWidth
+          >
+            {localStorage.getItem("token") ? "CHECKOUT" : "SIGN IN TO PROCEED"}
+          </Button>
         </Box>
       </div>
     </div>

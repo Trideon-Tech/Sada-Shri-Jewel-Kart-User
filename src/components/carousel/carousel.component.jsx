@@ -55,6 +55,7 @@ function CarouselPanel() {
         display: "flex",
         flexDirection: "column",
         height: matches ? "70vh" : "30vh",
+        marginTop: matches ? "" : "20vh",
         position: "relative",
       }}
     >
@@ -79,7 +80,7 @@ function CarouselPanel() {
                   style={{
                     objectFit: "cover",
                     width: "100%",
-                    height: "70vh",
+                    height: matches ? "70vh" : "30vh",
                   }}
                   src={process.env.PUBLIC_URL + step.imgPath}
                   alt={step.label}

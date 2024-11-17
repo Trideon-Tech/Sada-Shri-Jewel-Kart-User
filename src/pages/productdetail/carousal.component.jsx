@@ -3,13 +3,43 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { IconButton } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
 import "./carousal.styles.scss";
 
 const ImageVideoCarousel = ({ images, video }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const containerRef = useRef(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    }
+    if (isRightSwipe) {
+      goToPrev();
+    }
+  };
 
   const goToPrev = () => {
     const maxIndex = video !== null ? images.length : images.length - 1;
@@ -26,7 +56,13 @@ const ImageVideoCarousel = ({ images, video }) => {
   };
 
   return (
-    <div className="carousel-container">
+    <div
+      className="carousel-container"
+      ref={containerRef}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       <IconButton className="prev" onClick={goToPrev} aria-label="previous">
         <ArrowBackIosIcon />
       </IconButton>

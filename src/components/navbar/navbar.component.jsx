@@ -241,6 +241,7 @@ const Navbar = () => {
   };
 
   const handleSearchItemClick = (item) => {
+    console.log(item);
     setSearchTerm(item);
     setShowSearchDropdown(false);
     navigate(`/jwellery/search?search=${item}`);
@@ -260,6 +261,7 @@ const Navbar = () => {
     localStorage.clear();
     navigate("/");
   };
+
   const handleMenuItemClick = (menuItem) => {
     setOpenDrawer(false);
     setOpenWebDrawer(false);
@@ -653,77 +655,6 @@ const Navbar = () => {
               </IconButton>
             </ListItem>
 
-            <ListItem style={{ padding: "16px" }}>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  border: "1px solid #e0e0e0",
-                  borderRadius: "4px",
-                  padding: "8px",
-                }}
-              >
-                <SearchIcon style={{ color: "#a36e29", marginRight: "8px" }} />
-                <InputBase
-                  placeholder="Search for Jewellery..."
-                  style={{
-                    width: "100%",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.8rem",
-                  }}
-                  value={searchTerm}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  onKeyDown={handleFuzzySearch}
-                />
-              </div>
-            </ListItem>
-
-            {showSearchDropdown && searchResults.length > 0 && (
-              <ClickAwayListener
-                onClickAway={() => setShowSearchDropdown(false)}
-              >
-                <ListItem
-                  style={{ padding: "0 16px", position: "relative", zIndex: 2 }}
-                >
-                  <Paper
-                    style={{
-                      width: "100%",
-                      maxHeight: "300px",
-                      overflowY: "auto",
-                      position: "absolute",
-                      top: 0,
-                      left: "16px",
-                      right: "16px",
-                    }}
-                  >
-                    <List>
-                      {searchResults.map((result, index) => (
-                        <ListItem
-                          button
-                          key={index}
-                          onClick={() => {
-                            handleSearchItemClick(result);
-                            setOpenDrawer(false);
-                          }}
-                        >
-                          <Typography
-                            style={{
-                              fontFamily: '"Open Sans", sans-serif',
-                              fontSize: "0.8rem",
-                            }}
-                          >
-                            {result}
-                          </Typography>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Paper>
-                </ListItem>
-              </ClickAwayListener>
-            )}
-
             {menuItems.map((category) => (
               <React.Fragment key={category.id}>
                 <ListItem button onClick={() => handleMenuItemClick(category)}>
@@ -955,6 +886,40 @@ const Navbar = () => {
                   </Badge>
                 </IconButton>
               </div>
+            </div>
+          </div>
+          <div style={{ padding: "8px 16px", backgroundColor: "white" }}>
+            <div
+              style={{
+                width: "95%",
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "white",
+                border: "1px solid #e0e0e0",
+                borderRadius: "4px",
+                padding: "8px",
+                marginTop: "-15px",
+              }}
+              onClick={() =>
+                navigate("/search-result", { state: { searchIndex } })
+              }
+            >
+              <SearchIcon style={{ color: "#a36e29", marginRight: "8px" }} />
+              <InputBase
+                placeholder="Search for Jewellery..."
+                style={{
+                  width: "100%",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+                value={searchTerm}
+                onChange={(e) => handleSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleFuzzySearch(e);
+                  }
+                }}
+              />
             </div>
           </div>
         </AppBar>

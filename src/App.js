@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import SearchResult from "./components/navbar/searchResult.component";
 import Address from "./pages/address/address.component";
 import Cart from "./pages/cart/cart.component";
 import Checkout from "./pages/checkout/checkout.component";
@@ -50,6 +51,7 @@ function App() {
               <Route path="address" element={<Address />} />
               <Route path="" element={<EditProfile />} />
             </Route>
+            <Route path="/search-result" element={<SearchResult />} />
           </Routes>
         </BrowserRouter>
       </RefreshProvider>

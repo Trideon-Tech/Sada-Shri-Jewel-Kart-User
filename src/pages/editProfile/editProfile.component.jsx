@@ -31,10 +31,24 @@ const EditProfile = () => {
   const updateProfile = () => {
     const formData = new FormData();
     formData.append("type", "update");
-    formData.append("name", `${firstName} ${lastName}`);
-    formData.append("email", email);
-    formData.append("mobile", mobile);
-    formData.append("user_id", localStorage.getItem("user_id"));
+
+    // Only append fields that have changed
+    if (firstName !== userName[0] || lastName !== userName[1]) {
+      formData.append("name", `${firstName} ${lastName}`);
+    }
+    if (email !== localStorage.getItem("user_email")) {
+      formData.append("email", email);
+    }
+    if (mobile !== localStorage.getItem("mobile")) {
+      formData.append(
+        "mobile",
+        mobile.length === 12
+          ? mobile.slice(2)
+          : mobile.length === 10
+          ? mobile
+          : ""
+      );
+    }
 
     const token = localStorage.getItem("token");
     axios
@@ -50,12 +64,29 @@ const EditProfile = () => {
         }
       )
       .then((response) => {
-        console.log(response);
+        // Get updated user profile
+        axios
+          .get(
+            `https://api.sadashrijewelkart.com/v1.0.0/user/userProfile.php?type=getUserProfile`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((profileResponse) => {
+            const userData = profileResponse.data.response.user[0];
+            localStorage.setItem("user_name", userData.name);
+            localStorage.setItem("user_email", userData.email);
+            localStorage.setItem("mobile", userData.mobile);
+            window.location.reload();
+          });
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
   return matches ? (
     <Box
       style={{
@@ -303,8 +334,70 @@ const EditProfile = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        marginTop: "20px",
+        position: "relative", // Added position relative
       }}
     >
+      {!matches ? (
+        <BottomNavigation
+          showLabels
+          style={{
+            background: "rgba(163,110,41,0.08)",
+            border: "1px solid #a36e29",
+            borderRadius: "50px",
+            height: "40px",
+            width: "90%", // Added width
+            position: "fixed", // Changed to fixed
+            bottom: 20, // Added bottom spacing
+            zIndex: 1000, // Added z-index
+          }}
+        >
+          <BottomNavigationAction
+            label="Profile"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "600",
+                color: "#a36e29",
+                textDecoration: "underline",
+              },
+            }}
+            onClick={() => navigate("/my-account")}
+          />
+          <BottomNavigationAction
+            label="Orders"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/orders")}
+          />
+          <BottomNavigationAction
+            label="Address"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/address")}
+          />
+          <BottomNavigationAction
+            label="Wallet"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/wallet")}
+          />
+        </BottomNavigation>
+      ) : null}
+
       <Box
         style={{
           width: "100%",
@@ -313,6 +406,7 @@ const EditProfile = () => {
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "flex-start",
+          marginBottom: !matches ? "60px" : "0", // Added margin bottom for mobile
         }}
       >
         <Box
@@ -543,62 +637,6 @@ const EditProfile = () => {
           </div>
         </Card>
       </Box>
-      {!matches ? (
-        <BottomNavigation
-          showLabels
-          style={{
-            background: "rgba(163,110,41,0.08)",
-            marginTop: "auto",
-            border: "1px solid #a36e29",
-            borderRadius: "50px",
-            height: "40px",
-          }}
-        >
-          <BottomNavigationAction
-            label="Profile"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-                fontWeight: "600",
-                color: "#a36e29",
-                textDecoration: "underline",
-              },
-            }}
-            onClick={() => navigate("/my-account")}
-          />
-          <BottomNavigationAction
-            label="Orders"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              },
-            }}
-            onClick={() => navigate("/my-account/orders")}
-          />
-          <BottomNavigationAction
-            label="Address"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              },
-            }}
-            onClick={() => navigate("/my-account/address")}
-          />
-          <BottomNavigationAction
-            label="Wallet"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              },
-            }}
-            onClick={() => navigate("/my-account/wallet")}
-          />
-        </BottomNavigation>
-      ) : null}
     </div>
   );
 };

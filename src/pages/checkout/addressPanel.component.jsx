@@ -51,10 +51,13 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
         }
       )
       .then((response) => {
-        console.log(response);
-        console.log("SA", selectedAddress);
-        if (!selectedAddress) setSelectedAddress(response?.data?.response[0]);
-        setAddresses(response?.data?.response);
+        const addressList = response?.data?.response;
+        setAddresses(addressList);
+        console.log(addressList);
+        if ((!selectedAddress || addingNew) && addressList?.length > 0) {
+          setSelectedAddress(addressList[0]);
+          window.location.reload();
+        }
       })
       .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshAddresses]);
@@ -91,7 +94,6 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
         if (response.data.success === 1) {
           console.log("address Added successfully");
           setRefreshAddresses(refreshAddresses + 1);
-          // Trigger refresh in other components by dispatching a custom event
           const addressUpdateEvent = new CustomEvent("addressesUpdated");
           window.dispatchEvent(addressUpdateEvent);
         }
@@ -163,7 +165,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
           <Select
             placeholder="Select Address"
             defaultValue={selectedAddress}
-            value={selectedAddress?.add_line_1}
+            value={selectedAddress}
             slotProps={{
               listbox: {
                 sx: {

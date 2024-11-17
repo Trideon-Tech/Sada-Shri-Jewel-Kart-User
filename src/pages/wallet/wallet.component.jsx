@@ -345,6 +345,9 @@ const Wallet = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        marginTop: "10px",
+        position: "relative",
+        paddingBottom: !matches ? "80px" : "0", // Add padding at bottom for navigation
       }}
     >
       <Box
@@ -520,10 +523,15 @@ const Wallet = () => {
           showLabels
           style={{
             background: "rgba(163,110,41,0.08)",
-            marginTop: "auto",
             border: "1px solid #a36e29",
             borderRadius: "50px",
             height: "40px",
+            width: "90%",
+            position: "fixed",
+            bottom: 20,
+            zIndex: 1000,
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
           <BottomNavigationAction

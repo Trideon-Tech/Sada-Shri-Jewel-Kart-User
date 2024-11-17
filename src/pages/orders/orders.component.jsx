@@ -726,8 +726,70 @@ const Orders = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        marginTop: "30px",
+        position: "relative", // Added position relative
       }}
     >
+      {!matches ? (
+        <BottomNavigation
+          showLabels
+          style={{
+            background: "rgba(163,110,41,0.08)",
+            border: "1px solid #a36e29", 
+            borderRadius: "50px",
+            height: "40px",
+            width: "90%", // Added width
+            position: "fixed", // Changed to fixed
+            bottom: 20, // Added bottom spacing
+            zIndex: 1000, // Added z-index
+          }}
+        >
+          <BottomNavigationAction
+            label="Profile"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account")}
+          />
+          <BottomNavigationAction
+            label="Orders"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "600",
+                color: "#a36e29",
+                textDecoration: "underline",
+              },
+            }}
+            onClick={() => navigate("/my-account/orders")}
+          />
+          <BottomNavigationAction
+            label="Address"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/address")}
+          />
+          <BottomNavigationAction
+            label="Wallet"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/wallet")}
+          />
+        </BottomNavigation>
+      ) : null}
+
       <Box
         style={{
           width: "90%",
@@ -737,6 +799,7 @@ const Orders = () => {
           justifyContent: "space-around",
           alignItems: "center",
           height: "90%",
+          marginBottom: "80px", // Added margin to prevent content from being hidden behind nav
         }}
       >
         <Box
@@ -852,62 +915,6 @@ const Orders = () => {
           </TabPanel>
         </Tabs>
       </Box>
-      {!matches ? (
-        <BottomNavigation
-          showLabels
-          style={{
-            background: "rgba(163,110,41,0.08)",
-            marginTop: "auto",
-            border: "1px solid #a36e29",
-            borderRadius: "50px",
-            height: "40px",
-          }}
-        >
-          <BottomNavigationAction
-            label="Profile"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              },
-            }}
-            onClick={() => navigate("/my-account")}
-          />
-          <BottomNavigationAction
-            label="Orders"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-                fontWeight: "600",
-                color: "#a36e29",
-                textDecoration: "underline",
-              },
-            }}
-            onClick={() => navigate("/my-account/orders")}
-          />
-          <BottomNavigationAction
-            label="Address"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              },
-            }}
-            onClick={() => navigate("/my-account/address")}
-          />
-          <BottomNavigationAction
-            label="Wallet"
-            sx={{
-              "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
-                fontSize: "0.8rem",
-              },
-            }}
-            onClick={() => navigate("/my-account/wallet")}
-          />
-        </BottomNavigation>
-      ) : null}
     </div>
   );
 };
