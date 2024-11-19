@@ -1,10 +1,9 @@
-import { PlayCircle } from "@mui/icons-material";
+import { Close, PlayCircle } from "@mui/icons-material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { IconButton } from "@mui/material";
+import { Dialog, DialogContent, IconButton } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 import React, { useRef, useState } from "react";
-import ReactImageMagnify from "react-image-magnify";
 import "./carousal.styles.scss";
 
 const ImageVideoCarousel = ({ images, video }) => {
@@ -12,6 +11,7 @@ const ImageVideoCarousel = ({ images, video }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const containerRef = useRef(null);
 
   // Minimum swipe distance (in px)
@@ -56,91 +56,213 @@ const ImageVideoCarousel = ({ images, video }) => {
   };
 
   return (
-    <div
-      className="carousel-container"
-      ref={containerRef}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
-      <IconButton className="prev" onClick={goToPrev} aria-label="previous">
-        <ArrowBackIosIcon />
-      </IconButton>
-      <div className="selected-item">
-        {selectedIndex === images.length && video !== null ? (
-          <video controls autoPlay>
-            <source src={video} type="video/mp4" />
-          </video>
-        ) : images.length > 0 ? (
-          <ReactImageMagnify
-            {...{
-              smallImage: {
-                alt: `Product Image ${selectedIndex}`,
-                isFluidWidth: true,
-                src: images[selectedIndex],
-              },
-              largeImage: {
-                src: images[selectedIndex],
-                width: 1000,
-                height: 1000,
-              },
-              enlargedImagePosition: "over",
-              isHintEnabled: false,
-              enlargedImageContainerDimensions: {
-                width: "200%",
-                height: "200%",
-              },
-              hoverDelayInMs: 100,
-              hoverOffDelayInMs: 150,
-            }}
-          />
-        ) : (
-          <Skeleton
-            sx={{ bgcolor: "grey.900" }}
-            variant="rectangular"
-            height={800}
-            width={650}
-          />
-        )}
-      </div>
-      <IconButton className="next" onClick={goToNext} aria-label="next">
-        <ArrowForwardIosIcon />
-      </IconButton>
-      <div className="item-thumbnails">
-        {images.map((image, index) =>
-          images.length > 0 ? (
+    <>
+      <div
+        className="carousel-container"
+        ref={containerRef}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <IconButton className="prev" onClick={goToPrev} aria-label="previous">
+          <ArrowBackIosIcon />
+        </IconButton>
+        <div className="selected-item" onClick={() => setDialogOpen(true)}>
+          {selectedIndex === images.length && video !== null ? (
+            <video controls autoPlay>
+              <source src={video} type="video/mp4" />
+            </video>
+          ) : images.length > 0 ? (
             <img
-              key={index}
-              src={image}
-              alt={`Thumbnail ${index}`}
-              onClick={() => selectItem(index)}
-              onLoad={() => {
-                setImageLoaded(true);
-                console.log("loaded");
-              }}
-              className={selectedIndex === index ? "selected" : ""}
+              src={images[selectedIndex]}
+              alt={`Product Image ${selectedIndex}`}
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           ) : (
             <Skeleton
               sx={{ bgcolor: "grey.900" }}
               variant="rectangular"
-              width={210}
-              height={118}
+              height={800}
+              width={650}
             />
-          )
-        )}
-        {video !== null && (
-          <div
-            className={`thumbnail ${
-              selectedIndex === images.length ? "selected" : ""
-            }`}
-            onClick={() => selectItem(images.length)}
-          >
-            <PlayCircle sx={{ color: "#a36e29" }} />
-          </div>
-        )}
+          )}
+        </div>
+        <IconButton className="next" onClick={goToNext} aria-label="next">
+          <ArrowForwardIosIcon />
+        </IconButton>
+        <div className="item-thumbnails">
+          {images.map((image, index) =>
+            images.length > 0 ? (
+              <img
+                key={index}
+                src={image}
+                alt={`Thumbnail ${index}`}
+                onClick={() => selectItem(index)}
+                onLoad={() => {
+                  setImageLoaded(true);
+                  console.log("loaded");
+                }}
+                className={selectedIndex === index ? "selected" : ""}
+              />
+            ) : (
+              <Skeleton
+                sx={{ bgcolor: "grey.900" }}
+                variant="rectangular"
+                width={210}
+                height={118}
+              />
+            )
+          )}
+          {video !== null && (
+            <div
+              className={`thumbnail ${
+                selectedIndex === images.length ? "selected" : ""
+              }`}
+              onClick={() => selectItem(images.length)}
+            >
+              <PlayCircle sx={{ color: "#a36e29" }} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+
+      <Dialog
+        fullScreen
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        sx={{ background: "white" }}
+      >
+        <DialogContent sx={{ padding: 0, background: "white" }}>
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={() => setDialogOpen(false)}
+            aria-label="close"
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: "grey",
+              zIndex: 1,
+            }}
+          >
+            <Close />
+          </IconButton>
+          <div
+            style={{
+              height: "100vh",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {selectedIndex === images.length && video !== null ? (
+                <video
+                  controls
+                  autoPlay
+                  style={{ width: "100%", height: "calc(100vh - 120px)" }}
+                >
+                  <source src={video} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={images[selectedIndex]}
+                  alt={`Product Image ${selectedIndex}`}
+                  style={{
+                    width: "100%",
+                    height: "calc(100vh - 120px)",
+                    objectFit: "contain",
+                  }}
+                />
+              )}
+            </div>
+            <div
+              style={{
+                height: "120px",
+                backgroundColor: "#fff",
+                display: "flex",
+                overflowX: "auto",
+                padding: "10px",
+                gap: "10px",
+                whiteSpace: "nowrap",
+                scrollbarWidth: "thin",
+                msOverflowStyle: "none",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Thumbnail ${index}`}
+                  onClick={() => selectItem(index)}
+                  style={{
+                    height: "100px",
+                    width: "100px",
+                    minWidth: "100px",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                    border:
+                      selectedIndex === index ? "2px solid #a36e29" : "none",
+                    borderRadius: "4px",
+                    flexShrink: 0,
+                  }}
+                />
+              ))}
+              {video !== null && (
+                <div
+                  onClick={() => selectItem(images.length)}
+                  style={{
+                    height: "100px",
+                    width: "100px",
+                    minWidth: "100px",
+                    position: "relative",
+                    cursor: "pointer",
+                    border:
+                      selectedIndex === images.length
+                        ? "2px solid #a36e29"
+                        : "1px solid #ddd",
+                    borderRadius: "4px",
+                    flexShrink: 0,
+                  }}
+                >
+                  <video
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <source src={video} type="video/mp4" />
+                  </video>
+                  <PlayCircle
+                    sx={{
+                      color: "#a36e29",
+                      fontSize: "40px",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

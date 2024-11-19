@@ -3,6 +3,8 @@ import {
   CloseSharp,
   FavoriteBorderOutlined,
   LocalShippingOutlined,
+  NavigateBefore,
+  NavigateNext,
   ShoppingBagOutlined,
   ShoppingCartOutlined,
   StarBorderRounded,
@@ -21,16 +23,17 @@ import {
   Card,
   Dialog,
   DialogActions,
+  DialogContent,
   DialogTitle,
   Drawer,
   Grid,
+  IconButton,
   Slide,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ReactImageMagnify from "react-image-magnify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { WhatsappIcon, WhatsappShareButton } from "react-share";
 import { toast, ToastContainer } from "react-toastify";
@@ -85,6 +88,15 @@ function ProductDetail() {
   const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
   const [currentPositionPincode, setCurrentPositionPincode] = useState("");
   const [eta, setETA] = useState("");
+  const mediaQuery = useMediaQuery("(min-width:600px)");
+  const [openShareDialog, setOpenShareDialog] = React.useState(false);
+  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
+
+  const [localWishlisted, setLocalWishlisted] = useState(false);
+  const [buyNowDrawer, setBuyNowDrawer] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -227,8 +239,6 @@ function ProductDetail() {
     navigate(0);
   };
 
-  const mediaQuery = useMediaQuery("(min-width:600px)");
-
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
 
@@ -242,7 +252,6 @@ function ProductDetail() {
     getJwelleryDetail();
   }, []);
 
-  const [openShareDialog, setOpenShareDialog] = React.useState(false);
   const handleClickOpen = () => {
     setOpenShareDialog(true);
   };
@@ -250,13 +259,6 @@ function ProductDetail() {
   const handleClose = () => {
     setOpenShareDialog(false);
   };
-
-  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
-  const [averageRating, setAverageRating] = useState(0);
-
-  const [localWishlisted, setLocalWishlisted] = useState(false);
-  const [buyNowDrawer, setBuyNowDrawer] = useState(false);
-  const [addresses, setAddresses] = useState();
 
   const getWishListItemsNonAuth = () => {
     const wishListExists = localStorage.getItem("wish_list");
@@ -1075,27 +1077,18 @@ function ProductDetail() {
                 {productDetail.images &&
                   productDetail.images.map((image, index) => (
                     <Grid item xs={6} key={image.id}>
-                      <ReactImageMagnify
-                        {...{
-                          smallImage: {
-                            alt: `Product ${index + 1}`,
-                            isFluidWidth: true,
-                            src: `https://api.sadashrijewelkart.com/assets/${image.file}`,
-                          },
-                          largeImage: {
-                            src: `https://api.sadashrijewelkart.com/assets/${image.file}`,
-                            width: 2400,
-                            height: 2400,
-                          },
-                          enlargedImagePosition: "over",
-                          isHintEnabled: false,
-                          shouldHideHintAfterFirstActivation: false,
-                          enlargedImageContainerDimensions: {
-                            width: "200%",
-                            height: "200%",
-                          },
-                          hoverDelayInMs: 100,
-                          hoverOffDelayInMs: 150,
+                      <img
+                        src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
+                        alt={`Product ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setSelectedImageIndex(index);
+                          setImageModalOpen(true);
                         }}
                       />
                     </Grid>
@@ -1122,6 +1115,153 @@ function ProductDetail() {
                     </Grid>
                   )}
               </Grid>
+              {productDetail && Object.keys(productDetail).length > 0 && (
+                <Dialog
+                  open={imageModalOpen}
+                  onClose={() => setImageModalOpen(false)}
+                  maxWidth="lg"
+                  fullWidth
+                >
+                  <DialogContent style={{ display: "flex", gap: "20px" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1,
+                        overflowY: "auto",
+                        p: 1,
+                      }}
+                    >
+                      {productDetail.images?.map((image, index) => (
+                        <Box
+                          key={image.id}
+                          onClick={() => setSelectedImageIndex(index)}
+                          sx={{
+                            border:
+                              selectedImageIndex === index
+                                ? "2px solid #E0B872"
+                                : "2px solid transparent",
+                            cursor: "pointer",
+                            borderRadius: "10px",
+                          }}
+                        >
+                          <img
+                            src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
+                            alt={`Thumbnail ${index + 1}`}
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              objectFit: "cover",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </Box>
+                      ))}
+                      {productDetail.video &&
+                        productDetail.video !==
+                          "Product Infographics doesn't exist." && (
+                          <Box
+                            onClick={() =>
+                              setSelectedImageIndex(
+                                productDetail.images?.length
+                              )
+                            }
+                            sx={{
+                              border:
+                                selectedImageIndex ===
+                                productDetail.images?.length
+                                  ? "2px solid #E0B872"
+                                  : "2px solid transparent",
+                              cursor: "pointer",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            <video
+                              style={{
+                                width: "100px",
+                                height: "100px",
+                                objectFit: "cover",
+                                borderRadius: "10px",
+                              }}
+                            >
+                              <source
+                                src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
+                                type="video/mp4"
+                              />
+                            </video>
+                          </Box>
+                        )}
+                    </Box>
+                    <Box
+                      sx={{
+                        flexGrow: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: "85vh",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      {selectedImageIndex < productDetail.images?.length ? (
+                        <img
+                          src={`https://api.sadashrijewelkart.com/assets/${productDetail.images[selectedImageIndex]?.file}`}
+                          alt={`Product ${selectedImageIndex + 1}`}
+                          style={{
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                            objectFit: "cover",
+                            height: "85vh",
+                            borderRadius: "10px",
+                          }}
+                        />
+                      ) : (
+                        <video
+                          controls
+                          style={{
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                            height: "85vh",
+                            borderRadius: "10px",
+                          }}
+                          autoPlay={true}
+                        >
+                          <source
+                            src={`https://api.sadashrijewelkart.com/assets/${productDetail.video?.file}`}
+                            type="video/mp4"
+                          />
+                          Your browser does not support the video tag.
+                        </video>
+                      )}
+                    </Box>
+                  </DialogContent>
+                  <DialogActions>
+                    <IconButton
+                      onClick={() => {
+                        const totalItems = productDetail.video
+                          ? productDetail.images.length + 1
+                          : productDetail.images.length;
+                        setSelectedImageIndex((prev) =>
+                          prev === 0 ? totalItems - 1 : prev - 1
+                        );
+                      }}
+                    >
+                      <NavigateBefore />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        const totalItems = productDetail.video
+                          ? productDetail.images.length + 1
+                          : productDetail.images.length;
+                        setSelectedImageIndex((prev) =>
+                          prev === totalItems - 1 ? 0 : prev + 1
+                        );
+                      }}
+                    >
+                      <NavigateNext />
+                    </IconButton>
+                  </DialogActions>
+                </Dialog>
+              )}
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: "6vh" }}>
               <Box
