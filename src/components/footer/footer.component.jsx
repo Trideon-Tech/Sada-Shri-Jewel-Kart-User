@@ -160,7 +160,7 @@ function Footer() {
           }}
           align="center"
         >
-          Copyright © {new Date().getFullYear()} SadāShri Ventures Private
+          Copyright © {new Date().getFullYear()} Sadāshrī Ventures Private
           Limited. All rights reserved.
         </Typography>
       </Container>

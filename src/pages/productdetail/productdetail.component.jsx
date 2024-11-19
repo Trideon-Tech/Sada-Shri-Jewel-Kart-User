@@ -1002,7 +1002,7 @@ function ProductDetail() {
               }}
             >
               <WhatsappShareButton
-                title={`${productDetail.name} from Sada Shri Jewel Kart`}
+                title={`${productDetail.name} from Sadāshrī Jewelkart`}
                 round={true}
                 url={window.location}
               >
@@ -2036,7 +2036,7 @@ function ProductDetail() {
               </div>
               <Box
                 style={{
-                  height: "5%",
+                  height: "30px",
                   display: "flex",
                 }}
               >
@@ -2115,6 +2115,7 @@ function ProductDetail() {
                   justifyContent: "space-around",
                   alignItems: "center",
                   fontFamily: '"Open Sans", sans-serif',
+                  paddingRight: "10px",
                 }}
               >
                 <div

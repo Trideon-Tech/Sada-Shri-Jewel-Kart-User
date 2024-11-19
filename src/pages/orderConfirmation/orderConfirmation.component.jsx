@@ -131,7 +131,7 @@ const OrderConfirmation = () => {
                 alignItems: matches ? "center" : "flex-start",
                 justifyContent: "space-between",
                 flexDirection: matches ? "row" : "column",
-                marginTop: matches ? "20px" : "",
+                marginTop: matches ? "20px" : "5vh",
               }}
             >
               <p
@@ -418,7 +418,7 @@ const OrderConfirmation = () => {
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: matches ? "20px" : "8px",
+                          padding: matches ? "20px" : "4px",
                           paddingLeft: "20px",
                           paddingRight: "20px",
                           marginBottom: "50px",
@@ -552,7 +552,7 @@ const OrderConfirmation = () => {
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: matches ? "20px" : "8px",
+                          padding: matches ? "20px" : "4px",
                           paddingLeft: "40px",
                           paddingRight: "40px",
                         }}

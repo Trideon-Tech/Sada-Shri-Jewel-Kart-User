@@ -726,7 +726,7 @@ const Orders = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "30px",
+        marginTop: "calc(30px + 4vh)",
         position: "relative", // Added position relative
       }}
     >
@@ -734,8 +734,8 @@ const Orders = () => {
         <BottomNavigation
           showLabels
           style={{
-            background: "rgba(163,110,41,0.08)",
-            border: "1px solid #a36e29", 
+            background: "rgba(163,110,41)",
+            border: "1px solid #a36e29",
             borderRadius: "50px",
             height: "40px",
             width: "90%", // Added width
@@ -761,7 +761,7 @@ const Orders = () => {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
-                color: "#a36e29",
+                color: "white",
                 textDecoration: "underline",
               },
             }}

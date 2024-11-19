@@ -112,9 +112,9 @@ const Address = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "10px",
+        marginTop: "calc(10px + 3vh)",
         position: "relative",
-        paddingBottom: !matches ? "80px" : "0", // Add padding at bottom for navigation
+        paddingBottom: !matches ? "80px" : "0",
       }}
     >
       <Box
@@ -182,7 +182,7 @@ const Address = () => {
         <BottomNavigation
           showLabels
           style={{
-            background: "rgba(163,110,41,0.08)",
+            background: "rgba(163,110,41)",
             border: "1px solid #a36e29",
             borderRadius: "50px",
             height: "40px",
@@ -221,7 +221,7 @@ const Address = () => {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
-                color: "#a36e29",
+                color: "white",
                 textDecoration: "underline",
               },
             }}

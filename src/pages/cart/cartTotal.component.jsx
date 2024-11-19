@@ -1241,7 +1241,7 @@ export default function CartTotal({
                   fontWeight: "bold",
                 }}
               >
-                ₹ {Number(totalPrice).toLocaleString()}
+                ₹ {Number(totalPrice).toFixed(2)}
               </Typography>
             </Box>
 
@@ -1270,7 +1270,7 @@ export default function CartTotal({
                   fontWeight: "bold",
                 }}
               >
-                ₹ {Number(discountValue).toLocaleString()}
+                ₹ {Number(discountValue).toFixed(2)}
               </Typography>
             </Box>
             {coinsApplied ? (
@@ -1299,7 +1299,7 @@ export default function CartTotal({
                     fontWeight: "bold",
                   }}
                 >
-                  ₹ {coinsRedeem}
+                  ₹ {Number(coinsRedeem).toFixed(2)}
                 </Typography>
               </Box>
             ) : null}
@@ -1329,8 +1329,10 @@ export default function CartTotal({
                 }}
               >
                 ₹{" "}
-                {Number(discountValue) +
-                  (coinsApplied ? Number(coinsRedeem) : 0)}
+                {(
+                  Number(discountValue) +
+                  (coinsApplied ? Number(coinsRedeem) : 0)
+                ).toFixed(2)}
               </Typography>
             </Box>
             <Box
@@ -1365,7 +1367,7 @@ export default function CartTotal({
                   Number(totalPrice) -
                   discountValue -
                   (coinsApplied ? coinsRedeem : 0)
-                ).toLocaleString()}
+                ).toFixed(2)}
               </Typography>
             </Box>
           </Card>

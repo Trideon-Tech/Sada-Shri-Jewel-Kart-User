@@ -206,6 +206,7 @@
 
       .container {
         width: 100%;
+        padding-right: 10px;
 
         .product-content {
           display: flex;
@@ -216,7 +217,7 @@
         .product-image-section {
           flex: 1;
           max-width: 100%;
-          padding-top: 12vh;
+          padding-top: 16vh;
           background-color: white;
           padding-bottom: 20px;
 

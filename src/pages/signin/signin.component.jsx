@@ -1,15 +1,12 @@
+import { Facebook, Google } from "@mui/icons-material";
+import Button from "@mui/joy/Button";
+import Input from "@mui/joy/Input";
+import { Divider, Grid, IconButton } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
-import { Divider, Grid, IconButton, TextField } from "@mui/material";
-import { Facebook, Google } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import FormHelperText from "@mui/joy/FormHelperText";
-import Input from "@mui/joy/Input";
-import Button from "@mui/joy/Button";
 import "./signin.styles.scss";
-import axios from "axios";
 
 const SignIn = () => {
   let navigate = useNavigate();
@@ -95,7 +92,7 @@ const SignIn = () => {
         <div className="register-form">
           <h2>
             SignIn to <br />
-            Sada Shri Jewel Kart
+            Sadāshrī Jewelkart
           </h2>
           <p>
             Unlock Best prices and become an insider for our exclusive launches

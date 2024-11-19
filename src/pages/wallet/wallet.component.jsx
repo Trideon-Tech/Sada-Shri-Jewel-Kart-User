@@ -11,7 +11,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const HistoryInfo = ({ logData, orderDetail }) => {
+const HistoryInfo = ({ logData, _ }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
   return (
@@ -45,7 +45,6 @@ const HistoryInfo = ({ logData, orderDetail }) => {
           <p
             style={{
               margin: 0,
-              fontSize: "16px",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
               fontWeight: "bold",
@@ -76,7 +75,6 @@ const HistoryInfo = ({ logData, orderDetail }) => {
             style={{
               margin: 0,
               color: "#00000060",
-              fontSize: "14px",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
@@ -88,7 +86,6 @@ const HistoryInfo = ({ logData, orderDetail }) => {
             style={{
               margin: 0,
               color: "#00000060",
-              fontSize: "14px",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
             }}
@@ -105,12 +102,12 @@ const Wallet = () => {
   const matches = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
 
-  const [transactions, setTransactions] = useState([]);
   const [creditLog, setCreditLog] = useState([]);
   const [debitLog, setDebitLog] = useState([]);
   const [showDebit, setShowDebit] = useState(false);
 
   const [orderList, setOrderList] = useState([]);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -136,7 +133,7 @@ const Wallet = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    // if (!sessionStorage.getItem("cart")) {
+
     axios
       .get(
         `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
@@ -151,7 +148,6 @@ const Wallet = () => {
       )
       .then((response) => {
         console.log("wallet", response);
-        setTransactions(response?.data?.response);
         setCreditLog(
           response?.data?.response?.filter(
             (item) => item.transaction_type === "credit"
@@ -167,6 +163,7 @@ const Wallet = () => {
       })
       .catch((error) => console.log("Error while fetching wallet info", error));
   }, []);
+
   return matches ? (
     <Box
       style={{
@@ -345,9 +342,9 @@ const Wallet = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "10px",
+        marginTop: "calc(10px + 2vh)",
         position: "relative",
-        paddingBottom: !matches ? "80px" : "0", // Add padding at bottom for navigation
+        paddingBottom: !matches ? "80px" : "0",
       }}
     >
       <Box
@@ -358,7 +355,8 @@ const Wallet = () => {
           flexDirection: "column",
           justifyContent: "space-around",
           alignItems: "center",
-          height: "90%",
+          height: "85%",
+          marginBottom: "30px",
         }}
       >
         <Box
@@ -522,7 +520,7 @@ const Wallet = () => {
         <BottomNavigation
           showLabels
           style={{
-            background: "rgba(163,110,41,0.08)",
+            background: "rgba(163,110,41)",
             border: "1px solid #a36e29",
             borderRadius: "50px",
             height: "40px",
@@ -571,7 +569,7 @@ const Wallet = () => {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
-                color: "#a36e29",
+                color: "white",
                 textDecoration: "underline",
               },
             }}

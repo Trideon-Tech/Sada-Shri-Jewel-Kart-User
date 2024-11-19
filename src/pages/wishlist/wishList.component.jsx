@@ -128,7 +128,7 @@ const Wishlist = () => {
             marginLeft: mediaQuery ? "100px" : "20px",
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1.4rem",
-            marginTop: mediaQuery ? "10px" : "60px",
+            marginTop: mediaQuery ? "10px" : "calc(60px + 4vh)",
             marginBottom: "10px",
           }}
         >

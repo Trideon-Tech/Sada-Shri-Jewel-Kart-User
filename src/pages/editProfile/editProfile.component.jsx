@@ -334,22 +334,22 @@ const EditProfile = () => {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        marginTop: "20px",
-        position: "relative", // Added position relative
+        marginTop: "calc(20px + 4vh)",
+        position: "relative",
       }}
     >
       {!matches ? (
         <BottomNavigation
           showLabels
           style={{
-            background: "rgba(163,110,41,0.08)",
+            background: "rgba(163,110,41)",
             border: "1px solid #a36e29",
             borderRadius: "50px",
             height: "40px",
-            width: "90%", // Added width
-            position: "fixed", // Changed to fixed
-            bottom: 20, // Added bottom spacing
-            zIndex: 1000, // Added z-index
+            width: "90%",
+            position: "fixed",
+            bottom: 20,
+            zIndex: 1000,
           }}
         >
           <BottomNavigationAction
@@ -359,7 +359,7 @@ const EditProfile = () => {
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
-                color: "#a36e29",
+                color: "white",
                 textDecoration: "underline",
               },
             }}
@@ -430,7 +430,7 @@ const EditProfile = () => {
         <Card
           style={{
             margin: "auto",
-            marginTop: matches ? "50px" : "30px",
+            marginTop: matches ? "50px" : "10px",
             marginBottom: "20px",
             width: matches ? "70%" : "80%",
             paddingBottom: "40px",
@@ -466,7 +466,7 @@ const EditProfile = () => {
               <TextField
                 sx={{
                   width: "100%",
-                  height: "35px",
+                  height: "30px",
                   "& input": {
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
@@ -494,7 +494,7 @@ const EditProfile = () => {
               <TextField
                 sx={{
                   width: "100%",
-                  height: "35px",
+                  height: "30px",
                   "& input": {
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
@@ -522,7 +522,7 @@ const EditProfile = () => {
               <TextField
                 sx={{
                   width: "100%",
-                  height: "35px",
+                  height: "30px",
                   marginTop: "10px",
                   "& input": {
                     fontFamily: '"Open Sans", sans-serif',
@@ -552,7 +552,7 @@ const EditProfile = () => {
               <TextField
                 sx={{
                   width: "100%",
-                  height: "35px",
+                  height: "30px",
                   marginTop: "10px",
                   "& input": {
                     fontFamily: '"Open Sans", sans-serif',
@@ -584,7 +584,7 @@ const EditProfile = () => {
               <TextField
                 sx={{
                   width: "100%",
-                  height: "35px",
+                  height: "30px",
                   marginTop: "10px",
                   "& input": {
                     fontFamily: '"Open Sans", sans-serif',

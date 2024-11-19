@@ -206,7 +206,7 @@ const CheckoutForm = ({ cartItems }) => {
       key: "rzp_test_u3HTPcwIbGNSAp",
       amount: data.amount_due.toString(),
       currency: data.currency,
-      name: "Sada Shri",
+      name: "Sadāshrī Jewelkart",
       description: "Payment Request",
       image: {
         logo: "https://source.unsplash.com/random/1280x720?jewellery&sig=1",
@@ -322,7 +322,7 @@ const CheckoutForm = ({ cartItems }) => {
       <Box
         style={{
           width: matches ? "60%" : "100%",
-          marginTop: "5%",
+          marginTop: matches ? "5%" : '20%',
           height: "max-content",
         }}
       >

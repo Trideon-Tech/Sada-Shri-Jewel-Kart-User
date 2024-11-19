@@ -491,7 +491,7 @@ const Cart = () => {
             alignItems: "center",
             backgroundColor:
               cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
-            marginTop: "32px",
+            marginTop: "calc(32px + 6vh)",
           }}
         >
           {cartItems?.length > 0 ? (

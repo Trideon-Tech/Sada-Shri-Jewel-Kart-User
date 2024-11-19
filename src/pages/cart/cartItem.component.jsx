@@ -1,7 +1,7 @@
 import { FavoriteBorderOutlined } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Drawer, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -395,7 +395,7 @@ export default function CartItem({
               </Typography>
             </Box>
           </Box>
-          {item.customization === "-1" ? null : (
+          {/* {item.customization === "-1" ? null : (
             <>
               <Box
                 style={{
@@ -528,10 +528,10 @@ export default function CartItem({
                 </div>
               </Drawer>
             </>
-          )}
+          )} */}
           <Typography
             style={{
-              marginTop: "2%",
+              marginTop: "4%",
               fontSize: "1rem",
               fontWeight: "bold",
               fontFamily: '"Open Sans", sans-serif',

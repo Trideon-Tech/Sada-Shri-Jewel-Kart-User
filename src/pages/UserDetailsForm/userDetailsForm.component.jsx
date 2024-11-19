@@ -149,7 +149,7 @@ const UserDetailsForm = () => {
         >
           <h2 style={{ textAlign: "center", marginBottom: "10px" }}>
             Complete Sign Up to <br />
-            Sada Shri Jewel Kart
+            Sadāshrī Jewelkart
           </h2>
           <Divider style={{ margin: "20px 0" }} />
           <Grid container spacing={2}>

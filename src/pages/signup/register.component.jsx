@@ -1,11 +1,9 @@
-import { Facebook, Google } from "@mui/icons-material";
 import Button from "@mui/joy/Button";
 import {
   Divider,
   Grid,
-  IconButton,
   InputAdornment,
-  TextField,
+  TextField
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -157,13 +155,6 @@ const Register = () => {
             Unlock Best prices and become an insider for our exclusive launches
             & offers.
           </div>
-          <IconButton className="google-button" style={{ color: "#a36e29" }}>
-            <Google style={{ fontSize: "3rem" }} />
-          </IconButton>
-          <IconButton className="facebook-button" style={{ color: "#a36e29" }}>
-            <Facebook style={{ fontSize: "3rem" }} />
-          </IconButton>
-          <div className="text">Or</div>
           <Divider />
           <Grid container className="register-grid" spacing={2}>
             <Grid item xs={12}>

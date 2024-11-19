@@ -3,6 +3,9 @@ import {
   ExpandLess,
   ExpandMore,
   FavoriteBorderOutlined,
+  HowToReg,
+  Login,
+  Logout,
   MenuOutlined,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
@@ -22,6 +25,7 @@ import {
   Avatar,
   ClickAwayListener,
   Collapse,
+  Dialog,
   Drawer,
   IconButton,
   InputBase,
@@ -61,6 +65,7 @@ const Navbar = () => {
   ]);
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [openCategory, setOpenCategory] = useState();
+  const [openAuthDialog, setOpenAuthDialog] = useState(false);
 
   const getCartLengthNonAuth = () => {
     const cartList = localStorage.getItem("cart_list") || "";
@@ -621,6 +626,125 @@ const Navbar = () => {
       </div>
       {/* MobileUI */}
       <div className="mobile">
+        <Dialog
+          open={openAuthDialog}
+          onClose={() => setOpenAuthDialog(false)}
+          PaperProps={{
+            style: {
+              width: "80vw",
+              maxWidth: "300px",
+              padding: "20px",
+              borderRadius: "8px",
+            },
+          }}
+        >
+          <div>
+            {localStorage.getItem("token") ? (
+              <>
+                <div
+                  component={Link}
+                  to="/my-account"
+                  onClick={() => {
+                    setOpenAuthDialog(false);
+                    navigate("/my-account");
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "8px 16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <AccountCircleIcon
+                    style={{ color: "#a36e29", marginRight: "10px" }}
+                  />
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    My Account
+                  </Typography>
+                </div>
+                <div
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    setOpenAuthDialog(false);
+                    navigate("/");
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "8px 16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Logout style={{ color: "#a36e29", marginRight: "10px" }} />
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Logout
+                  </Typography>
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  component={Link}
+                  to="/login"
+                  onClick={() => {
+                    setOpenAuthDialog(false);
+                    navigate("/signin");
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "8px 16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Login style={{ color: "#a36e29", marginRight: "10px" }} />
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Login
+                  </Typography>
+                </div>
+                <div
+                  component={Link}
+                  to="/signup"
+                  onClick={() => {
+                    setOpenAuthDialog(false);
+                    navigate("/signup");
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "8px 16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <HowToReg style={{ color: "#a36e29", marginRight: "10px" }} />
+                  <Typography
+                    style={{
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Register
+                  </Typography>
+                </div>
+              </>
+            )}
+          </div>
+        </Dialog>
         <Drawer
           className="drawer"
           anchor="left"
@@ -796,10 +920,11 @@ const Navbar = () => {
                     slots={{ root: IconButton }}
                     slotProps={{ root: { variant: "plain", color: "neutral" } }}
                     sx={{ borderRadius: 40 }}
+                    onClick={() => setOpenAuthDialog(true)}
                   >
                     <AccountCircleOutlined style={{ color: "#a36e29" }} />
                   </MenuButton>
-                  <Menu
+                  {/* <Menu
                     style={{
                       height: "max-content",
                     }}
@@ -854,7 +979,7 @@ const Navbar = () => {
                         </Typography>
                       </MenuItem>
                     )}
-                  </Menu>
+                  </Menu> */}
                 </Dropdown>
 
                 <IconButton color="inherit" component={Link} to="/wishlist">

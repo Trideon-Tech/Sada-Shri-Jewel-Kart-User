@@ -260,6 +260,7 @@ const JwelleryCard = ({
           </Button>
         </div>
       </div>
+
       {/* Mobile UI */}
       <div className="mobile">
         <div className="card-image-container" style={{ position: "relative" }}>
