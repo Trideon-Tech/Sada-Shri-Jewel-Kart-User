@@ -13,6 +13,8 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { generalToastStyle } from "../../utils/toast.styles";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -74,11 +76,13 @@ const EditProfile = () => {
               },
             }
           )
-          .then((profileResponse) => {
+          .then(async (profileResponse) => {
             const userData = profileResponse.data.response.user[0];
             localStorage.setItem("user_name", userData.name);
             localStorage.setItem("user_email", userData.email);
             localStorage.setItem("mobile", userData.mobile);
+            toast.success("Profile updated successfully!", generalToastStyle);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             window.location.reload();
           });
       })
@@ -98,6 +102,7 @@ const EditProfile = () => {
         alignItems: "flex-start",
       }}
     >
+      <ToastContainer />
       <Box
         style={{
           width: "70%",
@@ -338,6 +343,7 @@ const EditProfile = () => {
         position: "relative",
       }}
     >
+      <ToastContainer />
       {!matches ? (
         <BottomNavigation
           showLabels
@@ -406,7 +412,7 @@ const EditProfile = () => {
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "flex-start",
-          marginBottom: !matches ? "60px" : "0", // Added margin bottom for mobile
+          marginBottom: !matches ? "80px" : "0", // Added margin bottom for mobile
         }}
       >
         <Box
@@ -458,7 +464,7 @@ const EditProfile = () => {
             spacing={2}
             rowSpacing={3}
             style={{
-              marginTop: "30px",
+              marginTop: "10px",
               width: "80%",
             }}
           >
