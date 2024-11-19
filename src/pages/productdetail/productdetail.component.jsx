@@ -3,6 +3,7 @@ import {
   CloseSharp,
   FavoriteBorderOutlined,
   LocalShippingOutlined,
+  MonetizationOnRounded,
   NavigateBefore,
   NavigateNext,
   ShoppingBagOutlined,
@@ -25,6 +26,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Drawer,
   Grid,
   IconButton,
@@ -58,8 +60,6 @@ function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const matches = useMediaQuery("(min-width:600px)");
 
   const { triggerRefresh } = useRefresh();
   const [open, setOpen] = useState(false);
@@ -97,6 +97,12 @@ function ProductDetail() {
   const [buyNowDrawer, setBuyNowDrawer] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [coinsRedeem, setCoinsRedeem] = useState(0);
+  const [coinsIsRedeemed, setCoinsIsRedeemed] = useState(false);
+  const [couponList, setCouponList] = useState([]);
+  const [selectedCouponId, setSelectedCouponId] = useState();
+  const [selectedCouponCode, setSelectedCouponCode] = useState();
+  const [discountAmount, setDiscountAmount] = useState();
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -250,6 +256,49 @@ function ProductDetail() {
     }
 
     getJwelleryDetail();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    axios
+      .get(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+          "user_id"
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setCoinsRedeem(response?.data?.response[0].balance);
+      })
+      .catch((error) => console.log("Error while fetching wallet info", error));
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const { data } = await axios.get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/coupons/all.php?type=all_coupons`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (Array.isArray(data?.response)) setCouponList(data?.response);
+      } catch (err) {
+        console.log("fetching coupons failed ", err);
+      }
+    })();
   }, []);
 
   const handleClickOpen = () => {
@@ -489,6 +538,8 @@ function ProductDetail() {
           productDetail?.hash
         }&customization=${
           productDetail?.customizations?.variants?.options[0]?.id || -1
+        }&discount=${selectedCouponId || 0}&coins=${
+          coinsIsRedeemed ? coinsRedeem : 0
         }`
       );
     } else {
@@ -1069,6 +1120,573 @@ function ProductDetail() {
         </div>
       </Drawer>
 
+      {/* Buy Now Drawer */}
+      <Drawer
+        anchor={mediaQuery ? "right" : "bottom"}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        <Box sx={{ width: mediaQuery ? 700 : "100%", p: mediaQuery ? 3 : 2 }}>
+          {productDetail && Object.keys(productDetail).length > 0 && (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "90%",
+                }}
+              >
+                <Typography
+                  style={{
+                    textAlign: !mediaQuery ? "left" : "center",
+                    fontWeight: "bold",
+                    color: "black",
+                    marginBottom: mediaQuery ? "3%" : "4%",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: mediaQuery ? "1.5rem" : "1.2rem",
+                  }}
+                >
+                  Order Summary
+                </Typography>
+                {!mediaQuery && (
+                  <IconButton
+                    onClick={() => setDrawerOpen(false)}
+                    style={{
+                      marginBottom: "4%",
+                    }}
+                  >
+                    <Close />
+                  </IconButton>
+                )}
+              </Box>
+
+              <Card
+                sx={{
+                  borderRadius: "10px",
+                  display: "flex",
+                  padding: mediaQuery ? "3%" : "2%",
+                  width: mediaQuery ? "90%" : "88%",
+                  height: mediaQuery ? "max-content" : "140px",
+                  aspectRatio: mediaQuery ? "4/1" : "3/1",
+                  marginBottom: "3%",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+                elevation={1}
+              >
+                <Box
+                  style={{
+                    border: "2px solid #e7e7e7",
+                    borderRadius: "10px",
+                    height: "100%",
+                    aspectRatio: "1/1",
+                    overflow: "hidden",
+                  }}
+                >
+                  {productDetail?.images ? (
+                    <img
+                      src={`https://api.sadashrijewelkart.com/assets/${productDetail?.images[0]?.file}`}
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : null}
+                </Box>
+                <Box
+                  style={{
+                    height: "100%",
+                    width: mediaQuery ? "70%" : "65%",
+                    padding: mediaQuery ? "10px" : "8px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    marginLeft: mediaQuery ? "20px" : "12px",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: mediaQuery ? "1rem" : "0.9rem",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {productDetail?.name}
+                  </Typography>
+                  <Box
+                    style={{
+                      width: "100%",
+                      marginTop: "2%",
+                      height: "max-content",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      style={{
+                        display: "flex",
+                        marginRight: "auto",
+                        width: "max-content",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          color: "gray",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                        }}
+                      >
+                        Quantity :
+                      </Typography>
+                      <Typography
+                        style={{
+                          color: "gray",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        1 Pcs.
+                      </Typography>
+                    </Box>
+                  </Box>
+                  {productDetail.customization === "-1" ? null : (
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "2%",
+                        height: "max-content",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        style={{
+                          display: "flex",
+                          marginRight: "auto",
+                          width: "max-content",
+                          justifyContent: "space-evenly",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography
+                          style={{
+                            color: "gray",
+                            fontFamily: '"Open Sans", sans-serif',
+                            fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                            marginRight: "10px",
+                          }}
+                        >
+                          Size : {productDetail?.size}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  )}
+                  <Box
+                    style={{
+                      width: "100%",
+                      marginTop: "2%",
+                      height: "max-content",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      style={{
+                        display: "flex",
+                        marginRight: "auto",
+                        width: "max-content",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          color: "gray",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                        }}
+                      >
+                        HSN Code :
+                      </Typography>
+                      <Typography
+                        style={{
+                          color: "gray",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        {productDetail?.hsn}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Typography
+                    style={{
+                      marginTop: "auto",
+                      marginBottom: "10px",
+                      fontSize: mediaQuery ? "1rem" : "0.9rem",
+                      fontWeight: "bold",
+                      fontFamily: '"Open Sans", sans-serif',
+                    }}
+                  >
+                    <span style={{ fontWeight: "normal" }}>Price :</span> ₹
+                    {productDetail.customizations.variants.options[0].price}
+                  </Typography>
+                </Box>
+              </Card>
+
+              <Card
+                sx={{
+                  p: mediaQuery ? 2 : 1.5,
+                  mb: mediaQuery ? 3 : 1,
+                  width: mediaQuery ? "90%" : "85%",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                      <MonetizationOnRounded
+                        sx={{
+                          color: "#a36e29",
+                          mr: 1,
+                          fontSize: mediaQuery ? "24px" : "20px",
+                        }}
+                      />
+                      <Typography
+                        style={{
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontWeight: 600,
+                          fontSize: mediaQuery ? "1rem" : "0.9rem",
+                        }}
+                      >
+                        Available Coins: {coinsRedeem}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      style={{
+                        color: "gray",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                      }}
+                    >
+                      Use your coins to get instant discount on this purchase
+                    </Typography>
+                  </Box>
+                  <Button
+                    variant="outlined"
+                    size={mediaQuery ? "small" : "small"}
+                    onClick={() => {
+                      setCoinsIsRedeemed(!coinsIsRedeemed);
+                    }}
+                    sx={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      height: "fit-content",
+                      fontSize: mediaQuery ? "0.875rem" : "0.8rem",
+                      "&:hover": {
+                        borderColor: "#a36e29",
+                        backgroundColor: "rgba(163, 110, 41, 0.04)",
+                      },
+                    }}
+                  >
+                    {coinsIsRedeemed ? "Remove Coins" : "Apply Coins"}
+                  </Button>
+                </Box>
+              </Card>
+
+              <Card
+                sx={{
+                  p: mediaQuery ? 2 : 1.5,
+                  mb: mediaQuery ? 3 : 1,
+                  width: mediaQuery ? "90%" : "85%",
+                  marginTop: mediaQuery ? "" : "18px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "max-content",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mb: 2,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: mediaQuery ? "1.2rem" : "1rem",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontWeight: "bold",
+                        margin: 0,
+                      }}
+                    >
+                      Available Coupons
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      overflowX: "scroll",
+                      maxHeight: mediaQuery ? "none" : "200px",
+                    }}
+                  >
+                    {couponList.map((item) => (
+                      <Box
+                        key={item.id}
+                        sx={{
+                          border: "1px solid #e0e0e0",
+                          borderRadius: "4px",
+                          p: mediaQuery ? 2 : 1.5,
+                          mb: 2,
+                          cursor: "pointer",
+                          "&:hover": {
+                            borderColor: "#a36e29",
+                            backgroundColor: "rgba(163, 110, 41, 0.04)",
+                          },
+                        }}
+                        onClick={() => {
+                          if (selectedCouponId === item.id) {
+                            setSelectedCouponId(null);
+                            setSelectedCouponCode(null);
+                            setDiscountAmount(0);
+                          } else {
+                            setSelectedCouponId(item.id);
+                            setSelectedCouponCode(item.code);
+                            const discount =
+                              item.amount === "0"
+                                ? (productDetail.customizations?.variants
+                                    ?.options[0]?.price *
+                                    item.percentage) /
+                                  100
+                                : item.amount;
+                            setDiscountAmount(discount);
+                          }
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box>
+                            <Typography
+                              sx={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontWeight: "bold",
+                                fontSize: mediaQuery ? "1rem" : "0.9rem",
+                                color: "#a36e29",
+                              }}
+                            >
+                              {item.code}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontFamily: '"Open Sans", sans-serif',
+                                fontSize: mediaQuery ? "0.8rem" : "0.75rem",
+                                color: "gray",
+                              }}
+                            >
+                              {item.description}
+                            </Typography>
+                          </Box>
+                          <Button
+                            variant="outlined"
+                            size={mediaQuery ? "small" : "small"}
+                            sx={{
+                              color: "#a36e29",
+                              borderColor: "#a36e29",
+                              fontSize: mediaQuery ? "0.875rem" : "0.8rem",
+                              "&:hover": {
+                                borderColor: "#a36e29",
+                                backgroundColor: "rgba(163, 110, 41, 0.04)",
+                              },
+                            }}
+                          >
+                            {selectedCouponId === item.id ? "Remove" : "Apply"}
+                          </Button>
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+              </Card>
+
+              <Card
+                sx={{
+                  p: mediaQuery ? 2 : 1.5,
+                  mb: mediaQuery ? 3 : 1,
+                  width: mediaQuery ? "90%" : "85%",
+                  marginTop: mediaQuery ? "" : "18px",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontWeight: "bold",
+                    fontSize: mediaQuery ? "1rem" : "0.9rem",
+                    marginBottom: "16px",
+                  }}
+                >
+                  Price Details
+                </Typography>
+
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        color: "gray",
+                      }}
+                    >
+                      Subtotal
+                    </Typography>
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                      }}
+                    >
+                      ₹
+                      {(
+                        productDetail.customizations?.variants?.options[0]
+                          ?.price || 0
+                      ).toFixed(2)}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        color: "gray",
+                      }}
+                    >
+                      Coins Redeemed
+                    </Typography>
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        color: "#d32f2f",
+                      }}
+                    >
+                      - ₹{coinsIsRedeemed ? coinsRedeem : 0}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        color: "gray",
+                      }}
+                    >
+                      Discount
+                    </Typography>
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        color: "#2e7d32",
+                      }}
+                    >
+                      - ₹{parseInt(discountAmount || 0)}
+                    </Typography>
+                  </Box>
+
+                  <Divider sx={{ my: 1 }} />
+
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Net Total
+                    </Typography>
+                    <Typography
+                      style={{
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ₹
+                      {(
+                        (productDetail.customizations?.variants?.options[0]
+                          ?.price || 0) -
+                        (coinsIsRedeemed ? coinsRedeem : 0) -
+                        (discountAmount || 0)
+                      ).toFixed(2)}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Card>
+
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  bgcolor: "#a36e29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  width: mediaQuery ? "95%" : "90%",
+                  marginTop: mediaQuery ? "" : "18px",
+                }}
+                onClick={buyNow}
+              >
+                Proceed to Checkout
+              </Button>
+            </>
+          )}
+        </Box>
+      </Drawer>
+
       <div className="web">
         <div>
           <Grid container>
@@ -1541,7 +2159,7 @@ function ProductDetail() {
                       border: "2px solid #a36e29",
                       backgroundColor: "white",
                     }}
-                    onClick={buyNow}
+                    onClick={() => setDrawerOpen(true)}
                   >
                     Buy Now
                     <ShoppingBagOutlined
@@ -2383,7 +3001,7 @@ function ProductDetail() {
                     background: "transparent",
                     border: "2px solid #a36e29",
                   }}
-                  onClick={buyNow}
+                  onClick={() => setDrawerOpen(true)}
                 >
                   Buy Now
                   <ShoppingBagOutlined
