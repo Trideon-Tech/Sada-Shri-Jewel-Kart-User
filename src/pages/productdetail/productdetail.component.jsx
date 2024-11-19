@@ -366,14 +366,16 @@ function ProductDetail() {
           },
           data: {
             type: "wishlist_item",
-            wishlist_item_id: productDetail.id,
+            wishlist_item_id: productDetail.wishlist_item[0].id,
           },
         }
       );
-      triggerRefresh();
+      // triggerRefresh();
+      window.location.reload();
+    } else {
+      await handleCreateWishList();
+      navigate(0);
     }
-    await handleCreateWishList();
-    navigate(0);
   };
 
   const handleCreateWishList = async () => {
