@@ -13,23 +13,33 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
-    label: "San Francisco – Oakland Bay Bridge, United States",
-    imgPath: "/assets/carousel1.jpeg",
+    label: "C1",
+    imgPath: "/assets/c1.png",
   },
   {
-    label: "Bird",
-    imgPath: "/assets/carousel1.jpeg",
+    label: "C2",
+    imgPath: "/assets/c2.png",
   },
   {
-    label: "Bali, Indonesia",
-    imgPath: "/assets/carousel1.jpeg",
-  },
-  {
-    label: "Goč, Serbia",
-    imgPath: "/assets/carousel1.jpeg",
+    label: "C3",
+    imgPath: "/assets/c3.png",
   },
 ];
 
+const imagesMobile = [
+  {
+    label: "C1",
+    imgPath: "/assets/c1_m.png",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/c2_m.png",
+  },
+  {
+    label: "C3",
+    imgPath: "/assets/c3_m.png",
+  },
+];
 function CarouselPanel() {
   const matches = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
@@ -54,8 +64,8 @@ function CarouselPanel() {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        height: matches ? "70vh" : "30vh",
-        marginTop: matches ? "" : "20vh",
+        height: matches ? "80vh" : "45vh",
+        marginTop: matches ? "0" : "18vh",
         position: "relative",
       }}
     >
@@ -65,12 +75,12 @@ function CarouselPanel() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
+        {(matches ? images : imagesMobile).map((step, index) => (
           <div key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 style={{
-                  height: "70vh",
+                  height: matches ? "80vh" : "45vh",
                   overflow: "hidden",
                   width: "100%",
                   backgroundColor: "pink",
@@ -80,7 +90,7 @@ function CarouselPanel() {
                   style={{
                     objectFit: "cover",
                     width: "100%",
-                    height: matches ? "70vh" : "30vh",
+                    height: matches ? "80vh" : "45vh",
                   }}
                   src={process.env.PUBLIC_URL + step.imgPath}
                   alt={step.label}
@@ -104,12 +114,13 @@ function CarouselPanel() {
             position: "absolute",
             zIndex: 9,
             borderRadius: "20px",
-            top: matches ? "60vh" : "20vh",
-            color: "white",
+            top: matches ? "70vh" : "35vh",
+            height: matches ? "40px" : "20px",
+            color: "#a36e29",
             backgroundColor: "rgba(0,0,0,0.5)",
             "& .MuiMobileStepper-dotActive": {
-              color: "white",
-              backgroundColor: "white",
+              color: "#a36e29",
+              backgroundColor: "#a36e29",
             },
           }}
           steps={maxSteps}
