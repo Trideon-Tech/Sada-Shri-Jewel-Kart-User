@@ -31,7 +31,7 @@ const CouponCard = ({
       elevation={1}
       sx={{
         marginTop: "20px",
-        height: "100px",
+        height: "120px",
         display: "flex",
         borderRadius: "10px",
       }}
@@ -491,27 +491,12 @@ const Cart = () => {
             alignItems: "center",
             backgroundColor:
               cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
-            marginTop: "calc(32px + 6vh)",
+            marginTop: "calc(32px + 14vh)",
+            paddingTop: "20px",
           }}
         >
           {cartItems?.length > 0 ? (
             <>
-              <Box
-                style={{
-                  width: "90%",
-                  marginTop: "8vh",
-                }}
-              >
-                <CartTotal
-                  selectedCouponCode={selectedCouponCode}
-                  selectedCouponId={selectedCouponId}
-                  items={cartItems}
-                  openModal={setModalOpen}
-                  couponList={couponList}
-                  setSelectedCouponId={setSelectedCouponId}
-                  setSelectedCouponCode={setSelectedCouponCode}
-                />
-              </Box>
               <>
                 {cartItems?.map((item) => (
                   <Box
@@ -528,6 +513,21 @@ const Cart = () => {
                   </Box>
                 ))}
               </>
+              <Box
+                style={{
+                  width: "90%",
+                }}
+              >
+                <CartTotal
+                  selectedCouponCode={selectedCouponCode}
+                  selectedCouponId={selectedCouponId}
+                  items={cartItems}
+                  openModal={setModalOpen}
+                  couponList={couponList}
+                  setSelectedCouponId={setSelectedCouponId}
+                  setSelectedCouponCode={setSelectedCouponCode}
+                />
+              </Box>
             </>
           ) : (
             <Box

@@ -163,6 +163,29 @@ const ImageVideoCarousel = ({ images, video }) => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              onTouchStart={(e) => {
+                const touch = e.touches[0];
+                let startX = touch.clientX;
+                
+                const handleTouchMove = (e) => {
+                  const touch = e.touches[0];
+                  const diffX = touch.clientX - startX;
+                  
+                  if (Math.abs(diffX) > 50) { // Threshold for swipe
+                    if (diffX > 0) { // Swipe right
+                      selectItem(selectedIndex === 0 ? (video ? images.length : images.length - 1) : selectedIndex - 1);
+                    } else { // Swipe left
+                      selectItem(selectedIndex === (video ? images.length : images.length - 1) ? 0 : selectedIndex + 1);
+                    }
+                    startX = touch.clientX;
+                  }
+                };
+
+                document.addEventListener('touchmove', handleTouchMove);
+                document.addEventListener('touchend', () => {
+                  document.removeEventListener('touchmove', handleTouchMove);
+                }, { once: true });
+              }}
             >
               {selectedIndex === images.length && video !== null ? (
                 <video

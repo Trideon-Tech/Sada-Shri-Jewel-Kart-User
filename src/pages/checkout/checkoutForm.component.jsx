@@ -322,7 +322,7 @@ const CheckoutForm = ({ cartItems }) => {
       <Box
         style={{
           width: matches ? "60%" : "100%",
-          marginTop: matches ? "5%" : '20%',
+          marginTop: matches ? "5%" : '5%',
           height: "max-content",
         }}
       >

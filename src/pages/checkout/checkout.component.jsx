@@ -105,47 +105,95 @@ const Checkout = () => {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item xs={!matches ? 12 : 6}>
-              <CheckoutForm cartItems={cartItems} />
-            </Grid>
-            <Grid item xs={!matches ? 12 : 5}>
-              <Box
-                style={{
-                  padding: !matches ? "0%" : "3%",
-                  paddingRight: 0,
-                  backgroundColor: !matches ? "white" : "#f8f8f8",
-                }}
-              >
-                <Typography
-                  style={{
-                    textAlign: !matches ? "left" : "center",
-                    fontWeight: "bold",
-                    color: "black",
-                    marginBottom: "3%",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1rem",
-                    paddingTop: "50px",
-                  }}
-                >
-                  Order Summary
-                </Typography>
-                {cartItems?.map((item) => (
-                  <CartItem
-                    key={item.cart_id}
-                    item={item}
-                    itemName={item.name}
-                    weight={item.weight}
-                    price={item.price}
-                    readOnly={true}
-                  />
-                ))}
-                <Divider />
-                <CartTotal
-                  items={cartItems}
-                  coinValueDiscount={Number(coinsRedeem)}
-                />
-              </Box>
-            </Grid>
+            {matches ? (
+              <>
+                <Grid item xs={!matches ? 12 : 6}>
+                  <CheckoutForm cartItems={cartItems} />
+                </Grid>
+                <Grid item xs={!matches ? 12 : 5}>
+                  <Box
+                    style={{
+                      padding: !matches ? "0%" : "3%",
+                      paddingRight: 0,
+                      backgroundColor: !matches ? "white" : "#f8f8f8",
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        textAlign: !matches ? "left" : "center",
+                        fontWeight: "bold",
+                        color: "black",
+                        marginBottom: "3%",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "1rem",
+                        paddingTop: "50px",
+                      }}
+                    >
+                      Order Summary
+                    </Typography>
+                    {cartItems?.map((item) => (
+                      <CartItem
+                        key={item.cart_id}
+                        item={item}
+                        itemName={item.name}
+                        weight={item.weight}
+                        price={item.price}
+                        readOnly={true}
+                      />
+                    ))}
+                    <Divider />
+                    <CartTotal
+                      items={cartItems}
+                      coinValueDiscount={Number(coinsRedeem)}
+                    />
+                  </Box>
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid item xs={!matches ? 12 : 5}>
+                  <Box
+                    style={{
+                      padding: !matches ? "0%" : "3%",
+                      paddingRight: 0,
+                      backgroundColor: !matches ? "white" : "#f8f8f8",
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        textAlign: !matches ? "left" : "center",
+                        fontWeight: "bold",
+                        color: "black",
+                        marginBottom: "3%",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "1rem",
+                        paddingTop: "50px",
+                      }}
+                    >
+                      Order Summary
+                    </Typography>
+                    {cartItems?.map((item) => (
+                      <CartItem
+                        key={item.cart_id}
+                        item={item}
+                        itemName={item.name}
+                        weight={item.weight}
+                        price={item.price}
+                        readOnly={true}
+                      />
+                    ))}
+                    <Divider />
+                    <CartTotal
+                      items={cartItems}
+                      coinValueDiscount={Number(coinsRedeem)}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={!matches ? 12 : 6}>
+                  <CheckoutForm cartItems={cartItems} />
+                </Grid>
+              </>
+            )}
           </Grid>
         </Box>
       </Box>

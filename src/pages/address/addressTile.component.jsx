@@ -1,5 +1,5 @@
+import { Delete } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
-import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import { Box, Typography, useMediaQuery } from "@mui/material";
@@ -8,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import * as React from "react";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { generalToastStyle } from "../../utils/toast.styles";
 
 const AddressTile = ({ address }) => {
   const matches = useMediaQuery("(min-width:600px)");
@@ -20,34 +22,34 @@ const AddressTile = ({ address }) => {
   const [state, setState] = useState(address.state);
   const [pincode, setPincode] = useState(address.pincode);
   const [mobile, setMobile] = useState(address.mobile);
-  const addNewAddress = () => {
-    const formData = new FormData();
-    formData.append("key", "address");
-    formData.append("name", name);
-    formData.append("add_line_1", add_line_1);
-    formData.append("add_line_2", add_line_2);
-    formData.append("city", city);
-    formData.append("state", state);
-    formData.append("pincode", pincode);
-    formData.append("mobile", mobile);
+
+  const deleteAddress = () => {
+    console.log(address);
 
     const token = localStorage.getItem("token");
     axios
-      .post("https://api.sadashrijewelkart.com/v1.0.0/user/add.php", formData, {
+      .delete(`https://api.sadashrijewelkart.com/v1.0.0/user/add.php`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
+        },
+        data: {
+          key: "address",
+          address_id: address.id,
         },
       })
       .then((response) => {
-        if (response.data.success === 1) {
-          console.log("address Added successfully");
-        }
+        console.log("Address deleted successfully");
+        toast.success("Address deleted successfully", generalToastStyle);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.log("Error deleting address:", error);
       });
   };
+
   return (
     <Card
       elevation={1}
@@ -63,6 +65,7 @@ const AddressTile = ({ address }) => {
         alignItems: "flex-start",
       }}
     >
+      <ToastContainer />
       {!isEditing ? (
         <>
           <Box
@@ -83,11 +86,7 @@ const AddressTile = ({ address }) => {
               {`${address?.name}`}
             </Typography>
 
-            <EditIcon
-              style={{ marginLeft: "auto", marginRight: "2%" }}
-              onClick={() => setIsEditing(true)}
-            />
-            <CloseIcon />
+            <Delete onClick={deleteAddress} />
           </Box>
           <Typography
             style={{
