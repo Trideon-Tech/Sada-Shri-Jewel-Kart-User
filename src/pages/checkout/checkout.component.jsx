@@ -167,7 +167,7 @@ const Checkout = () => {
                         marginBottom: "3%",
                         fontFamily: '"Open Sans", sans-serif',
                         fontSize: "1rem",
-                        paddingTop: "50px",
+                        paddingTop: "70px",
                       }}
                     >
                       Order Summary

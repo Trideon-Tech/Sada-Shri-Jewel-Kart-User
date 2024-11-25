@@ -1679,6 +1679,11 @@ function ProductDetail() {
                   fontFamily: '"Open Sans", sans-serif',
                   width: mediaQuery ? "95%" : "90%",
                   marginTop: mediaQuery ? "" : "18px",
+                  "&:hover": {
+                    bgcolor: "white",
+                    color: "#a36e29",
+                    border: "1px solid #a36e29",
+                  },
                 }}
                 onClick={buyNow}
               >
@@ -2117,12 +2122,30 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontFamily: '"Open Sans", sans-serif',
+                  color: "white",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  backgroundColor: "#a36e29",
+                  marginRight: "8vh",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  borderRadius: "10px",
+                  textAlign: "center",
+                }}
+                onClick={() => toast.info("Coming soon!", generalToastStyle)}
+              >
+                Add Customization
+              </div>
               {productDetail.admin_verified == 1 ? (
                 <div
                   style={{
                     display: "flex",
                     marginRight: "8vh",
-                    marginTop: "30px",
+                    marginTop: "20px",
                   }}
                 >
                   <Button
@@ -2196,7 +2219,86 @@ function ProductDetail() {
                   </Button>
                 </div>
               )}
-
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  marginRight: "8vh",
+                }}
+              >
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/1.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/2.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/3.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/4.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+              </Box>
               <Typography
                 sx={{
                   display: "flex",
@@ -2864,9 +2966,32 @@ function ProductDetail() {
                   </Box>
                 </Box>
               </Box>
+              <div className="price-section">
+                <Typography className="price">
+                  ₹ {productDetail?.customizations?.variants?.options[0]?.price}
+                </Typography>
+                <Typography className="original-price">
+                  ₹
+                  {(
+                    productDetail?.customizations?.variants?.options[0]?.price *
+                    1.2
+                  ).toFixed(2)}
+                </Typography>
+                <Typography className="discount">(20% OFF)</Typography>
+              </div>
+              <Typography
+                style={{
+                  fontSize: "0.7rem",
+                  color: "#666",
+                  marginTop: "4px",
+                  fontFamily: '"Open Sans", sans-serif',
+                }}
+              >
+                (MRP inclusive of all taxes)
+              </Typography>
               <div
                 style={{
-                  marginTop: "30px",
+                  marginTop: "20px",
                   height: "50px",
                   background: "white",
                   border: "1px solid #a36e29",
@@ -2876,6 +3001,7 @@ function ProductDetail() {
                   alignItems: "center",
                   fontFamily: '"Open Sans", sans-serif',
                   paddingRight: "10px",
+                  width: "85vw",
                 }}
               >
                 <div
@@ -2948,21 +3074,31 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
-              <div className="price-section">
-                <Typography className="price">
-                  ₹ {productDetail?.customizations?.variants?.options[0]?.price}
-                </Typography>
-                <Typography className="original-price">
-                  ₹
-                  {(
-                    productDetail?.customizations?.variants?.options[0]?.price *
-                    1.2
-                  ).toFixed(2)}
-                </Typography>
+              <div
+                style={{
+                  fontSize: "0.8rem",
+                  marginTop: "10px",
+                  marginBottom: "12px",
+                  fontFamily: '"Open Sans", sans-serif',
+                  color: "white",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  backgroundColor: "#a36e29",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  borderRadius: "10px",
+                  textAlign: "center",
+                  width: "88vw",
+                }}
+                onClick={() => toast.info("Coming soon!", generalToastStyle)}
+              >
+                Add Customization
               </div>
+
               <div
                 style={{
                   display: "flex",
+                  width: "88vw",
                 }}
               >
                 <Button
@@ -3014,6 +3150,85 @@ function ProductDetail() {
                   />
                 </Button>
               </div>
+              <Box
+                sx={{
+                  display: "flex",
+                  marginRight: "8vh",
+                }}
+              >
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/1.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/2.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/3.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/4.png"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
+              </Box>
               <Grid container spacing={3}>
                 <Grid item xs={12} className="location-grid">
                   <Typography
@@ -3031,13 +3246,12 @@ function ProductDetail() {
                   </Typography>
                   <div
                     style={{
-                      width: "20rem",
+                      width: "85vw",
                       height: "2.5rem",
                       backgroundColor: "white",
                       display: "flex",
                       justifyContent: "flex-start",
                       paddingLeft: "10px",
-                      paddingRight: "10px",
                       marginTop: "5px",
                       alignItems: "center",
                       border: "2px solid #e1e1e1",
@@ -3077,6 +3291,7 @@ function ProductDetail() {
                     padding: "10px 25px",
                     fontFamily: '"Open Sans", sans-serif',
                     paddingBottom: "20px",
+                    width: "85vw",
                   }}
                 >
                   <div style={{ fontSize: "1rem", fontWeight: "bold" }}>

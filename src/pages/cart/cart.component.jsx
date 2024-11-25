@@ -538,7 +538,7 @@ const Cart = () => {
                 justifyContent: "center",
                 backgroundColor: "white",
                 width: "100vw",
-                height: "100vh",
+                height: "60vh",
               }}
             >
               <Lottie animationData={emptyCartAnimation} loop={true} />

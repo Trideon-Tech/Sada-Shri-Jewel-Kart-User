@@ -1,6 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import EditIcon from "@mui/icons-material/Edit";
 import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import Option from "@mui/joy/Option";
@@ -257,7 +256,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         fontWeight: "bold",
                       }}
                     >{`${selectedAddress?.name}`}</Typography>
-                    <EditIcon
+                    {/* <EditIcon
                       style={{
                         marginLeft: "auto",
                         cursor: "pointer",
@@ -265,7 +264,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         color: "#a36e29",
                       }}
                       onClick={() => handleEditCreateAddress(true)}
-                    />
+                    /> */}
                   </Box>
                   <Typography
                     style={{

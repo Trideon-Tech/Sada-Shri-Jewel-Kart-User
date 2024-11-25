@@ -165,6 +165,7 @@ const Wishlist = () => {
                   isInCart={item?.exists_in_cart}
                   clickHandler={handleCardClick}
                   addToCartClick={addToCartHandlerForRecommendations}
+                  wishlistItem={{ id: item?.id }}
                 />
               </Grid>
             ))}

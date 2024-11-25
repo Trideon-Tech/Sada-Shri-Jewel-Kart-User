@@ -2,7 +2,7 @@ import { Delete } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Modal, Typography, useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -22,10 +22,9 @@ const AddressTile = ({ address }) => {
   const [state, setState] = useState(address.state);
   const [pincode, setPincode] = useState(address.pincode);
   const [mobile, setMobile] = useState(address.mobile);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const deleteAddress = () => {
-    console.log(address);
-
     const token = localStorage.getItem("token");
     axios
       .delete(`https://api.sadashrijewelkart.com/v1.0.0/user/add.php`, {
@@ -66,6 +65,75 @@ const AddressTile = ({ address }) => {
       }}
     >
       <ToastContainer />
+      {showDeleteDialog && (
+        <Modal
+          open={showDeleteDialog}
+          onClose={() => setShowDeleteDialog(false)}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              borderRadius: "10px",
+              width: 250,
+              backgroundColor: "white",
+              p: 4,
+            }}
+          >
+            <Typography
+              style={{
+                fontWeight: 700,
+                marginBottom: "20px",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.2rem",
+                textAlign: "center",
+              }}
+            >
+              Are you sure you want to delete this address?
+            </Typography>
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "30px",
+              }}
+            >
+              <Button
+                variant="outlined"
+                style={{
+                  width: "48%",
+                  fontWeight: "bold",
+                  border: "2px solid #a36e29",
+                  color: "#a36e29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+                onClick={() => setShowDeleteDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  width: "48%",
+                  fontWeight: "bold",
+                  background: "#a36e29",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "0.8rem",
+                }}
+                onClick={() => {
+                  deleteAddress();
+                  setShowDeleteDialog(false);
+                }}
+              >
+                Delete
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
+      )}
       {!isEditing ? (
         <>
           <Box
@@ -86,7 +154,7 @@ const AddressTile = ({ address }) => {
               {`${address?.name}`}
             </Typography>
 
-            <Delete onClick={deleteAddress} />
+            <Delete onClick={() => setShowDeleteDialog(true)} />
           </Box>
           <Typography
             style={{

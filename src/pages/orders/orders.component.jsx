@@ -130,7 +130,7 @@ const Orders = () => {
             response.data.response.categories.find(
               (c) => c.id === item.product_categories
             )["name"]
-          }/${item["product_name"]}-${item["product_hash"]}?drawer=open`
+          }/${item["product_name"]}-${item["product_hash"]}`
         );
       });
   };
