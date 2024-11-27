@@ -52,6 +52,19 @@ function Footer() {
                 cursor: "pointer",
               }}
               onClick={() =>
+                window.open("https://sadashrijewelkart.com/contact", "_blank")
+              }
+            >
+              Contact Us
+            </Typography>
+            <Typography
+              style={{
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
+                color: "grey",
+                cursor: "pointer",
+              }}
+              onClick={() =>
                 window.open(
                   "https://blogs.sadashrijewelkart.com/shipping-and-returns/",
                   "_blank"

@@ -4,6 +4,7 @@ import SearchResult from "./components/navbar/searchResult.component";
 import Address from "./pages/address/address.component";
 import Cart from "./pages/cart/cart.component";
 import Checkout from "./pages/checkout/checkout.component";
+import ContactUs from "./pages/contactus/contactus.component";
 import EditProfile from "./pages/editProfile/editProfile.component";
 import LandingPage from "./pages/landingpage/landingpage.component";
 import MyAccount from "./pages/myAccount/myAccount.component";
@@ -52,6 +53,7 @@ function App() {
               <Route path="" element={<EditProfile />} />
             </Route>
             <Route path="/search-result" element={<SearchResult />} />
+            <Route path="/contact" element={<ContactUs />} />
           </Routes>
         </BrowserRouter>
       </RefreshProvider>
