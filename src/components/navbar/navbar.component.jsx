@@ -57,14 +57,13 @@ const Navbar = () => {
   const [wishListItems, setWishListItems] = useState(0);
   const [cartLength, setCartLength] = useState(0);
   const [rates, setRates] = useState([
-    ["Today's Gold and Silver Rates", ""],
-    ["Gold 24KT (per gm)", ""],
-    ["Gold 22KT (per gm)", ""],
-    ["Gold 18KT (per gm)", ""],
-    ["Silver (per gm)", ""],
+    ["TODAY'S GOLD AND SILVER RATES", ""],
+    ["GOLD 24KT (PER GM)", ""],
+    ["GOLD 22KT (PER GM)", ""],
+    ["GOLD 18KT (PER GM)", ""],
+    ["SILVER (PER GM)", ""],
   ]);
   const [expandedCategory, setExpandedCategory] = useState(null);
-  const [openCategory, setOpenCategory] = useState();
   const [openAuthDialog, setOpenAuthDialog] = useState(false);
 
   const getCartLengthNonAuth = () => {
@@ -516,11 +515,7 @@ const Navbar = () => {
                       <ListItemAvatar>
                         <Avatar
                           alt={category.name}
-                          src={
-                            category.image
-                              ? `https://api.sadashrijewelkart.com/assets/${category.image}`
-                              : process.env.PUBLIC_URL + "/assets/logoNew.png"
-                          }
+                          src={process.env.PUBLIC_URL + "/assets/gif.gif"}
                         />
                       </ListItemAvatar>
                       <div
@@ -575,11 +570,7 @@ const Navbar = () => {
                               <ListItemAvatar>
                                 <Avatar
                                   alt={subCategory.name}
-                                  src={
-                                    subCategory.image
-                                      ? `https://api.sadashrijewelkart.com/assets/${subCategory.image}`
-                                      : `${process.env.PUBLIC_URL}/assets/logoNew.png`
-                                  }
+                                  src={`${process.env.PUBLIC_URL}/assets/gif.gif`}
                                 />
                               </ListItemAvatar>
                               <div

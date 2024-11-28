@@ -2153,11 +2153,14 @@ function ProductDetail() {
                     fullWidth
                     style={{
                       fontWeight: "bold",
-                      background: "#a36e29",
+                      color: "#a36e29",
                       fontFamily: '"Open Sans", sans-serif',
                       fontSize: "0.9rem",
                       fontWeight: "bold",
                       marginRight: "5px",
+                      background: "transparent",
+                      border: "2px solid #a36e29",
+                      backgroundColor: "white",
                     }}
                     onClick={addToCartHandler}
                   >
@@ -2175,14 +2178,11 @@ function ProductDetail() {
                     fullWidth
                     style={{
                       fontWeight: "bold",
-                      color: "#a36e29",
+                      background: "#a36e29",
                       fontFamily: '"Open Sans", sans-serif',
                       fontSize: "0.9rem",
                       fontWeight: "bold",
                       marginLeft: "5px",
-                      background: "transparent",
-                      border: "2px solid #a36e29",
-                      backgroundColor: "white",
                     }}
                     onClick={() => setDrawerOpen(true)}
                   >
@@ -2224,6 +2224,7 @@ function ProductDetail() {
                   display: "flex",
                   gap: 2,
                   marginRight: "8vh",
+                  marginTop: "20px",
                 }}
               >
                 <Box
@@ -2235,11 +2236,11 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/1.png"}
+                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "120px",
+                      height: "120px",
                       objectFit: "contain",
                     }}
                   />
@@ -2253,11 +2254,11 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/2.png"}
+                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "120px",
+                      height: "120px",
                       objectFit: "contain",
                     }}
                   />
@@ -2271,11 +2272,11 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/3.png"}
+                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "120px",
+                      height: "120px",
                       objectFit: "contain",
                     }}
                   />
@@ -2289,11 +2290,11 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/4.png"}
+                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "100px",
-                      height: "100px",
+                      width: "120px",
+                      height: "120px",
                       objectFit: "contain",
                     }}
                   />
@@ -3107,13 +3108,14 @@ function ProductDetail() {
                   style={{
                     height: "40px",
                     padding: "10px",
-
                     fontWeight: "bold",
-                    background: "#a36e29",
+                    color: "#a36e29",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "bold",
                     marginRight: "5px",
+                    background: "transparent",
+                    border: "2px solid #a36e29",
                   }}
                   onClick={addToCartHandler}
                 >
@@ -3131,13 +3133,11 @@ function ProductDetail() {
                     height: "40px",
                     padding: "10px",
                     fontWeight: "bold",
-                    color: "#a36e29",
+                    background: "#a36e29",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "bold",
                     marginLeft: "5px",
-                    background: "transparent",
-                    border: "2px solid #a36e29",
                   }}
                   onClick={() => setDrawerOpen(true)}
                 >
@@ -3145,7 +3145,7 @@ function ProductDetail() {
                   <ShoppingBagOutlined
                     style={{
                       marginLeft: "10px",
-                      color: "#a36e29",
+                      color: "white",
                     }}
                   />
                 </Button>
@@ -3154,6 +3154,7 @@ function ProductDetail() {
                 sx={{
                   display: "flex",
                   marginRight: "8vh",
+                  marginTop: "20px",
                 }}
               >
                 <Box
@@ -3165,7 +3166,7 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/1.png"}
+                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
                     alt="Delivery Icon"
                     style={{
                       width: "80px",
@@ -3183,7 +3184,7 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/2.png"}
+                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
                     alt="Delivery Icon"
                     style={{
                       width: "80px",
@@ -3201,7 +3202,7 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/3.png"}
+                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
                     alt="Delivery Icon"
                     style={{
                       width: "80px",
@@ -3219,7 +3220,7 @@ function ProductDetail() {
                   }}
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/4.png"}
+                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
                     alt="Delivery Icon"
                     style={{
                       width: "80px",

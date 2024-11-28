@@ -22,14 +22,20 @@ function Footer() {
             xs={matches ? 6 : 12}
             style={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: `${matches ? "left" : "center"}`,
+              flexDirection: "column",
+              alignItems: `${matches ? "flex-start" : "center"}`,
+              justifyContent: "center",
               marginBottom: "20px",
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/assets/logo_dark.png"}
+              src={process.env.PUBLIC_URL + "/assets/logo_dark_1.png"}
               width={matches ? 220 : 180}
+              style={{ marginBottom: "30px" }}
+            />
+            <img
+              src={process.env.PUBLIC_URL + "/assets/payments.webp"}
+              width={matches ? 120 : 180}
             />
           </Grid>
 
@@ -175,6 +181,8 @@ function Footer() {
         >
           Copyright © {new Date().getFullYear()} Sadāshrī Ventures Private
           Limited. All rights reserved.
+          <br />
+          CIN: U46498KA2024PTC185784
         </Typography>
       </Container>
     </Box>
