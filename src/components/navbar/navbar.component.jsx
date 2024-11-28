@@ -776,11 +776,7 @@ const Navbar = () => {
                   <ListItemAvatar>
                     <Avatar
                       alt={category.name}
-                      src={
-                        category.image
-                          ? `https://api.sadashrijewelkart.com/assets/${category.image}`
-                          : `${process.env.PUBLIC_URL}/assets/logoNew.png`
-                      }
+                      src={`${process.env.PUBLIC_URL}/assets/gif.gif`}
                     />
                   </ListItemAvatar>
                   <div
@@ -825,11 +821,7 @@ const Navbar = () => {
                           <ListItemAvatar>
                             <Avatar
                               alt={subCategory.name}
-                              src={
-                                subCategory.image
-                                  ? `https://api.sadashrijewelkart.com/assets/${subCategory.image}`
-                                  : `${process.env.PUBLIC_URL}/assets/logoNew.png`
-                              }
+                              src={`${process.env.PUBLIC_URL}/assets/gif.gif`}
                             />
                           </ListItemAvatar>
                           <div

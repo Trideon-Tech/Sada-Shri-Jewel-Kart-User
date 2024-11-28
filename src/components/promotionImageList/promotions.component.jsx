@@ -16,42 +16,66 @@ export default function PromotionImageList() {
         alignItems: "center",
       }}
     >
-      <Box sx={{ width: "90%", height: "100%", marginTop: "100px" }}>
-        <Grid container spacing={5}>
+      <Box
+        sx={{
+          width: "90%",
+          height: "100%",
+          marginTop: matches ? "100px" : "30px",
+        }}
+      >
+        <Grid container spacing={matches ? 5 : 2}>
           <Grid item xs={matches ? 4 : 12}>
             <img
-              height={matches ? "150px" : "100px"}
-              src={process.env.PUBLIC_URL + "/assets/brick1.png"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/b1.png"}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
             <img
-              height={matches ? "150px" : "100px"}
-              src={process.env.PUBLIC_URL + "/assets/brick2.png"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/b2.png"}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
             <img
-              height={matches ? "150px" : "100px"}
-              src={process.env.PUBLIC_URL + "/assets/brick3.png"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/b3.png"}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
             <img
-              height={matches ? "150px" : "100px"}
-              src={process.env.PUBLIC_URL + "/assets/brick4.png"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/b4.png"}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
             <img
-              height={matches ? "150px" : "100px"}
-              src={process.env.PUBLIC_URL + "/assets/brick5.png"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/b5.png"}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
             <img
-              height={matches ? "150px" : "100px"}
-              src={process.env.PUBLIC_URL + "/assets/brick6.png"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/b6.png"}
             />
           </Grid>
         </Grid>

@@ -413,15 +413,15 @@ const OrderConfirmation = () => {
                       </Card>
                     ))}
                   </div>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                  <Grid container spacing={matches ? 2 : 0}>
+                    <Grid item xs={matches ? 6 : 12}>
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: matches ? "20px" : "4px",
+                          padding: matches ? "20px" : "10px",
                           paddingLeft: "20px",
                           paddingRight: "20px",
-                          marginBottom: "50px",
+                          marginBottom: matches ? "50px" : "20px",
                         }}
                         elevation={1}
                       >
@@ -548,13 +548,14 @@ const OrderConfirmation = () => {
                         </div>
                       </Paper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={matches ? 6 : 12}>
                       <Paper
                         style={{
                           borderRadius: "5px",
-                          padding: matches ? "20px" : "4px",
+                          padding: matches ? "20px" : "10px",
                           paddingLeft: "40px",
                           paddingRight: "40px",
+                          marginBottom: matches ? "50px" : "20px",
                         }}
                         elevation={1}
                       >

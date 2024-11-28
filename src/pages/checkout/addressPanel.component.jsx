@@ -61,15 +61,6 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
       .catch((error) => console.log("Error while fetching cart items", error));
   }, [refreshAddresses]);
 
-  const handleEditCreateAddress = (editMode = false) => {
-    if (editMode) {
-      setEditAddress(selectedAddress);
-    } else {
-      setEditAddress({});
-    }
-    setEditing(true);
-  };
-
   const addNewAddress = () => {
     const formData = new FormData();
     formData.append("key", "address");
@@ -95,13 +86,15 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
           setRefreshAddresses(refreshAddresses + 1);
           const addressUpdateEvent = new CustomEvent("addressesUpdated");
           window.dispatchEvent(addressUpdateEvent);
+          setAddingNew(false);
+          window.location.reload();
         }
       })
       .catch((error) => {
         console.error("Error:", error);
+        setAddingNew(false);
+        window.location.reload();
       });
-    setAddingNew(false);
-    setRefreshAddresses(refreshAddresses + 1);
   };
 
   const onLoad = (autocomplete) => {
