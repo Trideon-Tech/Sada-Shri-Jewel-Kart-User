@@ -37,6 +37,29 @@ function Productpage() {
   const navigate = useNavigate();
   const [selectedPriceRange, setSelectedPriceRange] = useState({});
 
+  const images = [
+    {
+      label: "Diamond Jewellery",
+      imgPath: "/assets/4.webp",
+    },
+    {
+      label: "Gold Jewellery",
+      imgPath: "/assets/3.webp",
+    },
+    {
+      label: "Gemstone",
+      imgPath: "/assets/11.webp",
+    },
+    {
+      label: "Silver Jewellery",
+      imgPath: "/assets/7.webp",
+    },
+    {
+      label: "Silver Articles",
+      imgPath: "/assets/8.webp",
+    },
+  ];
+
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -179,7 +202,11 @@ function Productpage() {
           }}
         >
           <img
-            src={process.env.PUBLIC_URL + "/assets/productList bg.jpg"}
+            src={
+              process.env.PUBLIC_URL +
+              (images.find((img) => img.label === menuItemName)?.imgPath ||
+                "/assets/productList bg.jpg")
+            }
             style={{ width: "100%" }}
           />
         </Box>

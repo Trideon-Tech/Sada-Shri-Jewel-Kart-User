@@ -12,6 +12,8 @@ import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { generalToastStyle } from "../../utils/toast.styles";
 
 const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   const { isLoaded } = useLoadScript({
@@ -62,11 +64,48 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
   }, [refreshAddresses]);
 
   const addNewAddress = () => {
+    if (!firstName || !lastName) {
+      toast.error("Please enter your full name", {
+        style: generalToastStyle,
+      });
+      return;
+    }
+    if (!add_line1) {
+      toast.error("Please enter your address line 1", {
+        style: generalToastStyle,
+      });
+      return;
+    }
+    if (!city) {
+      toast.error("Please enter your city", {
+        style: generalToastStyle,
+      });
+      return;
+    }
+    if (!state) {
+      toast.error("Please enter your state", {
+        style: generalToastStyle,
+      });
+      return;
+    }
+    if (!pincode) {
+      toast.error("Please enter your pincode", {
+        style: generalToastStyle,
+      });
+      return;
+    }
+    if (!mobile) {
+      toast.error("Please enter your mobile number", {
+        style: generalToastStyle,
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("key", "address");
     formData.append("name", `${firstName} ${lastName}`);
     formData.append("add_line_1", add_line1);
-    formData.append("add_line_2", add_line2);
+    formData.append("add_line_2", add_line2 || "");
     formData.append("city", city);
     formData.append("state", state);
     formData.append("pincode", pincode);
@@ -92,6 +131,9 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
       })
       .catch((error) => {
         console.error("Error:", error);
+        toast.error("Error adding address. Please try again.", {
+          style: generalToastStyle,
+        });
         setAddingNew(false);
         window.location.reload();
       });
@@ -152,6 +194,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
 
   return (
     <Box>
+      <ToastContainer />
       {!addresses ? null : (
         <Box>
           <Select

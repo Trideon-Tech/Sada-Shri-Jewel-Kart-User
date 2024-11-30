@@ -564,7 +564,7 @@ function ProductDetail() {
       >
         <ModalOverflow>
           <ModalDialog
-            style={{ width: "30vw", height: "25vw", padding: "30px" }}
+            style={{ width: "30vw", height: "30vw", padding: "30px" }}
           >
             <div
               style={{
@@ -1999,7 +1999,7 @@ function ProductDetail() {
                 </Typography>
                 <Typography
                   style={{
-                    marginRight: "auto",
+                    marginRight: "10px",
                     marginLeft: "3%",
                     color: "gray",
                     textDecoration: "line-through",
@@ -2012,6 +2012,15 @@ function ProductDetail() {
                     productDetail?.customizations?.variants?.options[0]?.price *
                     1.2
                   ).toFixed(2)}
+                </Typography>
+                <Typography
+                  style={{
+                    marginRight: "auto",
+                    color: "green",
+                    fontFamily: '"Open Sans", sans-serif',
+                  }}
+                >
+                  (20% OFF)
                 </Typography>
               </Box>
               <div

@@ -2,9 +2,12 @@ import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PromotionImageList() {
+  const navigate = useNavigate();
   const matches = useMediaQuery("(min-width:600px)");
+
   return (
     <Box
       style={{
@@ -20,7 +23,7 @@ export default function PromotionImageList() {
         sx={{
           width: "90%",
           height: "100%",
-          marginTop: matches ? "100px" : "30px",
+          marginTop: matches ? "0px" : "30px",
         }}
       >
         <Grid container spacing={matches ? 5 : 2}>
@@ -29,8 +32,54 @@ export default function PromotionImageList() {
               style={{
                 width: "100%",
                 borderRadius: "20px",
+                cursor: "pointer",
               }}
-              src={process.env.PUBLIC_URL + "/assets/b1.png"}
+              src={process.env.PUBLIC_URL + "/assets/1.webp"}
+              onClick={() => navigate("/jwellery/Diamond%20Jewellery/2/false")}
+            />
+          </Grid>
+          <Grid item xs={matches ? 4 : 12}>
+            <img
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                cursor: "pointer",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/2.webp"}
+              onClick={() => navigate("/jwellery/Gold%20Jewellery/1/false")}
+            />
+          </Grid>
+          <Grid item xs={matches ? 4 : 12}>
+            <img
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                cursor: "pointer",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/11.webp"}
+              onClick={() => navigate("/jwellery/Gemstone/13/true")}
+            />
+          </Grid>
+          <Grid item xs={matches ? 4 : 12}>
+            <img
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                cursor: "pointer",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/6.webp"}
+              onClick={() => navigate("/jwellery/Silver%20Jewellery/4/false")}
+            />
+          </Grid>
+          <Grid item xs={matches ? 4 : 12}>
+            <img
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                cursor: "pointer",
+              }}
+              src={process.env.PUBLIC_URL + "/assets/8.webp"}
+              onClick={() => navigate("/jwellery/Silver%20Articles/3/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
@@ -39,54 +88,28 @@ export default function PromotionImageList() {
                 width: "100%",
                 borderRadius: "20px",
               }}
-              src={process.env.PUBLIC_URL + "/assets/b2.png"}
-            />
-          </Grid>
-          <Grid item xs={matches ? 4 : 12}>
-            <img
-              style={{
-                width: "100%",
-                borderRadius: "20px",
-              }}
-              src={process.env.PUBLIC_URL + "/assets/b3.png"}
-            />
-          </Grid>
-          <Grid item xs={matches ? 4 : 12}>
-            <img
-              style={{
-                width: "100%",
-                borderRadius: "20px",
-              }}
-              src={process.env.PUBLIC_URL + "/assets/b4.png"}
-            />
-          </Grid>
-          <Grid item xs={matches ? 4 : 12}>
-            <img
-              style={{
-                width: "100%",
-                borderRadius: "20px",
-              }}
-              src={process.env.PUBLIC_URL + "/assets/b5.png"}
-            />
-          </Grid>
-          <Grid item xs={matches ? 4 : 12}>
-            <img
-              style={{
-                width: "100%",
-                borderRadius: "20px",
-              }}
-              src={process.env.PUBLIC_URL + "/assets/b6.png"}
+              src={process.env.PUBLIC_URL + "/assets/9.webp"}
             />
           </Grid>
         </Grid>
       </Box>
 
-      <Box sx={{ width: "90%", height: "100%", marginTop: "100px" }}>
-        <Grid container spacing={4}>
+      <Box
+        sx={{
+          width: "90%",
+          height: "100%",
+          marginTop: matches ? "100px" : "50px",
+        }}
+      >
+        <Grid container spacing={2}>
           <Grid item xs={matches ? 6 : 12}>
             <img
-              width={"100%"}
-              src={process.env.PUBLIC_URL + "/assets/side1_1.png"}
+              src={process.env.PUBLIC_URL + "/assets/12.webp"}
+              style={{
+                width: "100%",
+                borderRadius: "20px",
+                cursor: "pointer",
+              }}
             />
           </Grid>
 
@@ -102,24 +125,48 @@ export default function PromotionImageList() {
               }}
             >
               <img
-                width={"100%"}
-                src={process.env.PUBLIC_URL + "/assets/side2_1.png"}
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  height: "32%",
+                  objectFit: "cover",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/22.webp"}
               />
 
               <img
-                width={"100%"}
-                src={process.env.PUBLIC_URL + "/assets/side2_2.png"}
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  height: "32%",
+                  objectFit: "cover",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/23.webp"}
               />
 
               <img
-                width={"100%"}
-                src={process.env.PUBLIC_URL + "/assets/side2_1.png"}
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  height: "32%",
+                  objectFit: "cover",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/24.webp"}
               />
             </Box>
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ width: "100%", height: "100%", marginTop: "100px" }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          marginTop: matches ? "100px" : "50px",
+        }}
+      >
         <img
           width={"100%"}
           src={process.env.PUBLIC_URL + "/assets/footer.png"}
@@ -128,54 +175,3 @@ export default function PromotionImageList() {
     </Box>
   );
 }
-
-const itemData = [
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Bed",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Books",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Sink",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Kitchen",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Blinds",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Chairs",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Laptop",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Doors",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Coffee",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Storage",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Candle",
-  },
-  {
-    img: "https://random-image-pepebigotes.vercel.app/api/random-image?m=m",
-    title: "Coffee table",
-  },
-];

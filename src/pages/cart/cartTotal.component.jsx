@@ -242,7 +242,7 @@ export default function CartTotal({
       >
         <ModalOverflow>
           <ModalDialog
-            style={{ width: "30vw", height: "25vw", padding: "30px" }}
+            style={{ width: "30vw", height: "30vw", padding: "30px" }}
           >
             <div
               style={{

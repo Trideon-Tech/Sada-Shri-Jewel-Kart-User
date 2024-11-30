@@ -14,30 +14,30 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
   {
     label: "C1",
-    imgPath: "/assets/c1.png",
+    imgPath: "/assets/landing_vid.mp4",
   },
   {
     label: "C2",
-    imgPath: "/assets/c2.png",
+    imgPath: "/assets/13.webp",
   },
   {
     label: "C3",
-    imgPath: "/assets/c3.png",
+    imgPath: "/assets/14.webp",
   },
 ];
 
 const imagesMobile = [
   {
     label: "C1",
-    imgPath: "/assets/c1_m.png",
+    imgPath: "/assets/landing_vid.mp4",
   },
   {
     label: "C2",
-    imgPath: "/assets/c2_m.png",
+    imgPath: "/assets/13.webp",
   },
   {
     label: "C3",
-    imgPath: "/assets/c3_m.png",
+    imgPath: "/assets/14.webp",
   },
 ];
 function CarouselPanel() {
@@ -45,6 +45,7 @@ function CarouselPanel() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
+  const videoRef = React.useRef(null);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -58,14 +59,20 @@ function CarouselPanel() {
     setActiveStep(step);
   };
 
+  const handleVideoEnded = () => {
+    if (activeStep < maxSteps - 1) {
+      handleNext();
+    }
+  };
+
   return (
     <Box
       sx={{
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        height: matches ? "80vh" : "45vh",
-        marginTop: matches ? "0" : "18vh",
+        height: matches ? "95vh" : "25vh",
+        marginTop: matches ? "30px" : "17vh",
         position: "relative",
       }}
     >
@@ -80,80 +87,102 @@ function CarouselPanel() {
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 style={{
-                  height: matches ? "80vh" : "45vh",
+                  height: matches ? "85vh" : "27vh",
                   overflow: "hidden",
                   width: "100%",
-                  backgroundColor: "pink",
+                  backgroundColor: "rgba(163,110,41,0.08)",
+                  marginTop: matches ? "30px" : "0px",
                 }}
               >
-                <img
-                  style={{
-                    objectFit: "cover",
-                    width: "100%",
-                    height: matches ? "80vh" : "45vh",
-                  }}
-                  src={process.env.PUBLIC_URL + step.imgPath}
-                  alt={step.label}
-                />
+                {index === 0 ? (
+                  <video
+                    ref={videoRef}
+                    style={{
+                      objectFit: matches ? "cover" : "contain",
+                      width: "100%",
+                      height: matches ? "85vh" : "27vh",
+                    }}
+                    src={process.env.PUBLIC_URL + step.imgPath}
+                    autoPlay
+                    loop={false}
+                    muted
+                    playsInline
+                    onEnded={handleVideoEnded}
+                  />
+                ) : (
+                  <img
+                    style={{
+                      objectFit: matches ? "cover" : "contain",
+                      width: "100%",
+                      height: matches ? "85vh" : "27vh",
+                    }}
+                    src={process.env.PUBLIC_URL + step.imgPath}
+                    alt={step.label}
+                  />
+                )}
               </Box>
             ) : null}
           </div>
         ))}
       </AutoPlaySwipeableViews>
-      <Box
-        style={{
-          width: "100vw",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        <MobileStepper
-          variant="dots"
+      {matches ? (
+        <Box
           style={{
-            position: "absolute",
-            zIndex: 9,
-            borderRadius: "20px",
-            top: matches ? "70vh" : "35vh",
-            height: matches ? "40px" : "20px",
-            color: "#a36e29",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            "& .MuiMobileStepper-dotActive": {
-              color: "#a36e29",
-              backgroundColor: "#a36e29",
-            },
+            width: "100vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
           }}
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft style={{ color: "white" }} />
-              ) : (
-                <KeyboardArrowRight style={{ color: "white" }} />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={handleBack}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight style={{ color: "white" }} />
-              ) : (
-                <KeyboardArrowLeft style={{ color: "white" }} />
-              )}
-            </Button>
-          }
-        />
-      </Box>
+        >
+          <MobileStepper
+            variant="dots"
+            style={{
+              position: "absolute",
+              zIndex: 9,
+              borderRadius: "20px",
+              top: matches ? "70vh" : "35vh",
+              height: matches ? "40px" : "20px",
+              color: "#a36e29",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              "& .MuiMobileStepper-dotActive": {
+                color: "#a36e29",
+                backgroundColor: "#a36e29",
+              },
+            }}
+            steps={maxSteps}
+            position="static"
+            activeStep={activeStep}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={activeStep === maxSteps - 1}
+              >
+                {theme.direction === "rtl" ? (
+                  <KeyboardArrowLeft style={{ color: "white" }} />
+                ) : (
+                  <KeyboardArrowRight style={{ color: "white" }} />
+                )}
+              </Button>
+            }
+            backButton={
+              <Button
+                size="small"
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                {theme.direction === "rtl" ? (
+                  <KeyboardArrowRight style={{ color: "white" }} />
+                ) : (
+                  <KeyboardArrowLeft style={{ color: "white" }} />
+                )}
+              </Button>
+            }
+          />
+        </Box>
+      ) : (
+        <div></div>
+      )}
     </Box>
   );
 }

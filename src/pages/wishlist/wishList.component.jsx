@@ -105,12 +105,16 @@ const Wishlist = () => {
       <Box
         style={{
           width: "100vw",
-          height: "max-content",
+          height: "40vh",
         }}
       >
         <img
-          src={process.env.PUBLIC_URL + "/assets/productList bg.jpg"}
-          style={{ width: "100%" }}
+          src={process.env.PUBLIC_URL + "/assets/25.webp"}
+          style={{
+            width: "100%",
+            height: "40vh",
+            objectFit: "cover",
+          }}
         />
       </Box>
       <div
@@ -130,6 +134,7 @@ const Wishlist = () => {
             fontSize: "1.4rem",
             marginTop: mediaQuery ? "10px" : "calc(60px + 4vh)",
             marginBottom: "10px",
+            marginTop: "30px",
           }}
         >
           Your Wishlist
