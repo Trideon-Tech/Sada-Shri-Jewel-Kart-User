@@ -14,22 +14,38 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
   {
     label: "C1",
-    imgPath: "/assets/landing_vid.mp4",
+    imgPath: "/assets/26.webp",
   },
   {
     label: "C2",
     imgPath: "/assets/13.webp",
   },
+  // {
+  //   label: "C3",
+  //   imgPath: "/assets/14.webp",
+  // },
+  // {
+  //   label: "C4",
+  //   imgPath: "/assets/27.webp",
+  // },
   {
-    label: "C3",
-    imgPath: "/assets/14.webp",
+    label: "C5",
+    imgPath: "/assets/28.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/29.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/30.webp",
   },
 ];
 
 const imagesMobile = [
   {
     label: "C1",
-    imgPath: "/assets/landing_vid.mp4",
+    imgPath: "/assets/26.webp",
   },
   {
     label: "C2",
@@ -94,32 +110,15 @@ function CarouselPanel() {
                   marginTop: matches ? "30px" : "0px",
                 }}
               >
-                {index === 0 ? (
-                  <video
-                    ref={videoRef}
-                    style={{
-                      objectFit: matches ? "cover" : "contain",
-                      width: "100%",
-                      height: matches ? "85vh" : "27vh",
-                    }}
-                    src={process.env.PUBLIC_URL + step.imgPath}
-                    autoPlay
-                    loop={false}
-                    muted
-                    playsInline
-                    onEnded={handleVideoEnded}
-                  />
-                ) : (
-                  <img
-                    style={{
-                      objectFit: matches ? "cover" : "contain",
-                      width: "100%",
-                      height: matches ? "85vh" : "27vh",
-                    }}
-                    src={process.env.PUBLIC_URL + step.imgPath}
-                    alt={step.label}
-                  />
-                )}
+                <img
+                  style={{
+                    objectFit: matches ? "cover" : "contain",
+                    width: "100%",
+                    height: matches ? "85vh" : "27vh",
+                  }}
+                  src={process.env.PUBLIC_URL + step.imgPath}
+                  alt={step.label}
+                />
               </Box>
             ) : null}
           </div>

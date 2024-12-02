@@ -21,6 +21,7 @@ const JwelleryCard = ({
   isInCart,
   addToCartClick,
   wishlistItem,
+  quantity,
 }) => {
   const navigate = useNavigate();
   const { triggerRefresh } = useRefresh();
@@ -243,21 +244,38 @@ const JwelleryCard = ({
           >
             {name.length > 25 ? `${name.substring(0, 25)}...` : name}
           </Typography>
-          <Button
-            variant="contained"
-            style={{
-              width: "100%",
-              fontWeight: "bold",
-              marginTop: "3%",
-              marginBottom: "3%",
-              background: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-            onClick={handleAddToCart}
-          >
-            {isInCart ? "Go to Cart" : "Add to Cart"}
-          </Button>
+          {quantity != "0" ? (
+            <Button
+              variant="contained"
+              style={{
+                width: "100%",
+                fontWeight: "bold",
+                marginTop: "3%",
+                marginBottom: "3%",
+                background: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              onClick={handleAddToCart}
+            >
+              {isInCart ? "Go to Cart" : "Add to Cart"}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              style={{
+                width: "100%",
+                fontWeight: "bold",
+                marginTop: "3%",
+                marginBottom: "3%",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              disabled
+            >
+              CURRENTLY UNAVAILABle
+            </Button>
+          )}
         </div>
       </div>
 
@@ -372,20 +390,36 @@ const JwelleryCard = ({
           >
             {name.length > 16 ? `${name.substring(0, 16)}...` : name}
           </Typography>
-          <Button
-            variant="contained"
-            style={{
-              width: "100%",
-              fontWeight: "bold",
-              marginTop: "3%",
-              background: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
-            }}
-            onClick={handleAddToCart}
-          >
-            {isInCart ? "Go to Cart" : "Add to Cart"}
-          </Button>
+          {quantity != "0" ? (
+            <Button
+              variant="contained"
+              style={{
+                width: "100%",
+                fontWeight: "bold",
+                marginTop: "3%",
+                background: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              onClick={handleAddToCart}
+            >
+              {isInCart ? "Go to Cart" : "Add to Cart"}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              style={{
+                width: "100%",
+                fontWeight: "bold",
+                marginTop: "3%",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+              disabled
+            >
+              NOT AVAILABLE
+            </Button>
+          )}
         </div>
       </div>
     </div>

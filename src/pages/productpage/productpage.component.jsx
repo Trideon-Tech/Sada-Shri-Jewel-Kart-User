@@ -316,6 +316,7 @@ function Productpage() {
                         clickHandler={handleCardClick}
                         addToCartClick={addToCartHandler}
                         wishlistItem={item.wishlist_item[0]}
+                        quantity={item.quantity}
                       />
                     </Grid>
                   ))
@@ -480,6 +481,7 @@ function Productpage() {
                     clickHandler={handleCardClick}
                     addToCartClick={addToCartHandler}
                     wishlistItem={item.wishlist_item[0]}
+                    quantity={item.quantity}
                   />
                 </Grid>
               ))

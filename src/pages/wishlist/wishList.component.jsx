@@ -171,6 +171,7 @@ const Wishlist = () => {
                   clickHandler={handleCardClick}
                   addToCartClick={addToCartHandlerForRecommendations}
                   wishlistItem={{ id: item?.id }}
+                  quantity={item.quantity}
                 />
               </Grid>
             ))}
