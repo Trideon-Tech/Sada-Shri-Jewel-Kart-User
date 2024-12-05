@@ -2269,7 +2269,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/1.svg"}
@@ -2287,7 +2294,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/2.svg"}
@@ -2305,7 +2319,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/3.svg"}
@@ -2323,7 +2344,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/4.svg"}
@@ -3334,7 +3362,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/1.svg"}
@@ -3352,7 +3387,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/2.svg"}
@@ -3370,7 +3412,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/3.svg"}
@@ -3388,7 +3437,14 @@ function ProductDetail() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                      "_blank"
+                    )
+                  }
                 >
                   <img
                     src={process.env.PUBLIC_URL + "/assets/4.svg"}
