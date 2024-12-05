@@ -35,7 +35,7 @@ export default function PromotionImageList() {
                 cursor: "pointer",
               }}
               src={process.env.PUBLIC_URL + "/assets/1.webp"}
-              onClick={() => navigate("/jwellery/Diamond%20Jewellery/2/false")}
+              onClick={() => navigate("/jwellery/Diamond%20Jewellery/15/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>

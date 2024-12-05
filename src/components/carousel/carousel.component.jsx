@@ -1,8 +1,4 @@
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import MobileStepper from "@mui/material/MobileStepper";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
@@ -14,54 +10,206 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const images = [
   {
     label: "C1",
-    imgPath: "/assets/26.webp",
+    imgPath: "/assets/33.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/36.webp",
   },
   {
     label: "C2",
-    imgPath: "/assets/13.webp",
+    imgPath: "/assets/31.webp",
   },
-  // {
-  //   label: "C3",
-  //   imgPath: "/assets/14.webp",
-  // },
-  // {
-  //   label: "C4",
-  //   imgPath: "/assets/27.webp",
-  // },
   {
     label: "C5",
-    imgPath: "/assets/28.webp",
+    imgPath: "/assets/32.webp",
   },
   {
     label: "C6",
-    imgPath: "/assets/29.webp",
+    imgPath: "/assets/35.webp",
   },
   {
     label: "C7",
-    imgPath: "/assets/30.webp",
+    imgPath: "/assets/34.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/33.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/36.webp",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/31.webp",
+  },
+  {
+    label: "C5",
+    imgPath: "/assets/32.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/35.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/34.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/33.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/36.webp",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/31.webp",
+  },
+  {
+    label: "C5",
+    imgPath: "/assets/32.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/35.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/34.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/33.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/36.webp",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/31.webp",
+  },
+  {
+    label: "C5",
+    imgPath: "/assets/32.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/35.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/34.webp",
   },
 ];
 
 const imagesMobile = [
   {
     label: "C1",
-    imgPath: "/assets/26.webp",
+    imgPath: "/assets/37.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/38.webp",
   },
   {
     label: "C2",
-    imgPath: "/assets/13.webp",
+    imgPath: "/assets/39.webp",
   },
   {
-    label: "C3",
-    imgPath: "/assets/14.webp",
+    label: "C5",
+    imgPath: "/assets/40.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/41.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/42.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/37.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/38.webp",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/39.webp",
+  },
+  {
+    label: "C5",
+    imgPath: "/assets/40.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/41.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/42.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/37.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/38.webp",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/39.webp",
+  },
+  {
+    label: "C5",
+    imgPath: "/assets/40.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/41.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/42.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/37.webp",
+  },
+  {
+    label: "C1",
+    imgPath: "/assets/38.webp",
+  },
+  {
+    label: "C2",
+    imgPath: "/assets/39.webp",
+  },
+  {
+    label: "C5",
+    imgPath: "/assets/40.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/41.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/42.webp",
   },
 ];
+
 function CarouselPanel() {
   const matches = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
-  const videoRef = React.useRef(null);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -87,7 +235,7 @@ function CarouselPanel() {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        height: matches ? "95vh" : "25vh",
+        height: matches ? "85vh" : "25vh",
         marginTop: matches ? "30px" : "17vh",
         position: "relative",
       }}
@@ -103,7 +251,7 @@ function CarouselPanel() {
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 style={{
-                  height: matches ? "85vh" : "27vh",
+                  height: matches ? "75vh" : "25vh",
                   overflow: "hidden",
                   width: "100%",
                   backgroundColor: "rgba(163,110,41,0.08)",
@@ -114,7 +262,7 @@ function CarouselPanel() {
                   style={{
                     objectFit: matches ? "cover" : "contain",
                     width: "100%",
-                    height: matches ? "85vh" : "27vh",
+                    height: matches ? "75vh" : "25vh",
                   }}
                   src={process.env.PUBLIC_URL + step.imgPath}
                   alt={step.label}
@@ -124,7 +272,7 @@ function CarouselPanel() {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-      {matches ? (
+      {/* {matches ? (
         <Box
           style={{
             width: "100vw",
@@ -181,7 +329,7 @@ function CarouselPanel() {
         </Box>
       ) : (
         <div></div>
-      )}
+      )} */}
     </Box>
   );
 }

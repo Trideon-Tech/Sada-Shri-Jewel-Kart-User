@@ -58,7 +58,6 @@ const Navbar = () => {
   const [cartLength, setCartLength] = useState(0);
   const [rates, setRates] = useState([
     ["TODAY'S GOLD AND SILVER RATES", ""],
-    ["GOLD 24KT (PER GM)", ""],
     ["GOLD 22KT (PER GM)", ""],
     ["GOLD 18KT (PER GM)", ""],
     ["SILVER (PER GM)", ""],
@@ -190,10 +189,9 @@ const Navbar = () => {
 
         let tempRates = rates;
 
-        tempRates[1][1] = response?.data?.response?.jewellery_inventory?.gold24;
-        tempRates[2][1] = response?.data?.response?.jewellery_inventory?.gold22;
-        tempRates[3][1] = response?.data?.response?.jewellery_inventory?.gold18;
-        tempRates[4][1] = response?.data?.response?.jewellery_inventory?.silver;
+        tempRates[1][1] = response?.data?.response?.jewellery_inventory?.gold22;
+        tempRates[2][1] = response?.data?.response?.jewellery_inventory?.gold18;
+        tempRates[3][1] = response?.data?.response?.jewellery_inventory?.silver;
 
         setRates(() => tempRates);
       })
@@ -302,7 +300,7 @@ const Navbar = () => {
         <AppBar elevation={0} className="appbar">
           <div className="rates">
             <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
-              {[...rates, ...rates].map((rate, index) => (
+              {[...rates, ...rates, ...rates, ...rates].map((rate, index) => (
                 <div
                   style={{
                     marginRight: "50px",
