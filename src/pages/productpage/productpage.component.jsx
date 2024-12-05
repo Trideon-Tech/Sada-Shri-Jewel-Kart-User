@@ -329,7 +329,21 @@ function Productpage() {
       </div>
       {/* Mobile UI */}
       <div className="mobile" style={{ height: "max-content" }}>
-        <div className="block-with-background">
+        <div
+          style={{
+            backgroundImage: `url(${
+              process.env.PUBLIC_URL +
+              (images.find((img) => img.label === menuItemName)?.imgPath ||
+                "/assets/productList bg.jpg")
+            })`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            padding: "5px",
+            textAlign: "center",
+            marginTop: "20vh",
+            height: isSearchPage ? "12vh" : "15vh",
+          }}
+        >
           <Typography
             style={{
               fontFamily: '"Open Sans", sans-serif',
@@ -340,23 +354,52 @@ function Productpage() {
               paddingLeft: "5vw",
             }}
             textAlign={"left"}
-            className="page-heading"
           >
-            {isSearchPage ? `Search Results for "${searchTerm}"` : menuItemName}
+            {isSearchPage ? `Search Results for "${searchTerm}"` : ""}
+            {/* {isSearchPage ? `Search Results for "${searchTerm}"` : menuItemName} */}
           </Typography>
 
-          <div className="breadcrumbs-container">
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link to="/" className="breadcrumb-link">
-                Home
-              </Link>
-              <Typography className="breadcrumb-link" color="textPrimary">
-                Jwellery
-              </Typography>
-              <Typography className="breadcrumb-link" color="textPrimary">
-                {isSearchPage ? `Search Results` : menuItemName}
-              </Typography>
-            </Breadcrumbs>
+          <div
+            style={{
+              marginLeft: "5vw",
+              padding: "10px 0",
+            }}
+          >
+            {isSearchPage ? (
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link
+                  to="/"
+                  style={{
+                    fontSize: "small",
+                    textDecoration: "none",
+                    color: "black",
+                    fontFamily: '"Open Sans", sans-serif',
+                  }}
+                >
+                  Home
+                </Link>
+                <Typography
+                  style={{
+                    fontSize: "small",
+                    textDecoration: "none",
+                    color: "black",
+                    fontFamily: '"Open Sans", sans-serif',
+                  }}
+                >
+                  Jwellery
+                </Typography>
+                <Typography
+                  style={{
+                    fontSize: "small",
+                    textDecoration: "none",
+                    color: "black",
+                    fontFamily: '"Open Sans", sans-serif',
+                  }}
+                >
+                  {isSearchPage ? `Search Results` : menuItemName}
+                </Typography>
+              </Breadcrumbs>
+            ) : null}
           </div>
         </div>
         <div className="product-container">

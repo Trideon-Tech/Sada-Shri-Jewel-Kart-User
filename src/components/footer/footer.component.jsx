@@ -1,3 +1,4 @@
+import { Facebook, Instagram, Pinterest, YouTube } from "@mui/icons-material";
 import { Box, Container, Divider, Grid, Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
@@ -31,11 +32,80 @@ function Footer() {
             <img
               src={process.env.PUBLIC_URL + "/assets/logo_dark_1.png"}
               width={matches ? 220 : 180}
-              style={{ marginBottom: "30px" }}
+              style={{ marginBottom: "10px" }}
             />
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                mt: 3,
+                mb: 3,
+              }}
+            >
+              <Facebook
+                sx={{
+                  color: "#1877f2",
+                  cursor: "pointer",
+                  "&:hover": { color: "#1877f2" },
+                  height: "30px",
+                  width: "30px",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://www.facebook.com/profile.php?id=61556186217870",
+                    "_blank"
+                  )
+                }
+              />
+              <Instagram
+                sx={{
+                  color: "#e4405f",
+                  cursor: "pointer",
+                  "&:hover": { color: "#e4405f" },
+                  height: "30px",
+                  width: "30px",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://www.instagram.com/sadashrijewelkart_official/",
+                    "_blank"
+                  )
+                }
+              />
+              <YouTube
+                sx={{
+                  color: "#ff0000",
+                  cursor: "pointer",
+                  "&:hover": { color: "#ff0000" },
+                  height: "30px",
+                  width: "30px",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://www.youtube.com/@sadashri_jewelkart",
+                    "_blank"
+                  )
+                }
+              />
+              <Pinterest
+                sx={{
+                  color: "#bd081c",
+                  cursor: "pointer",
+                  "&:hover": { color: "#bd081c" },
+                  height: "30px",
+                  width: "30px",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://pinterest.com/sadashrijewelkart",
+                    "_blank"
+                  )
+                }
+              />
+            </Box>
             <img
               src={process.env.PUBLIC_URL + "/assets/payments.webp"}
-              width={matches ? 120 : 180}
+              width={matches ? 220 : 180}
             />
           </Grid>
 

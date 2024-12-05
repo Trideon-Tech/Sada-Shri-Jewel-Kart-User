@@ -270,10 +270,11 @@ const JwelleryCard = ({
                 marginBottom: "3%",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
+                background: "#a36e29",
               }}
-              disabled
+              onClick={() => clickHandler(name, hash)}
             >
-              CURRENTLY UNAVAILABle
+              SHOW DETAILS
             </Button>
           )}
         </div>
@@ -413,11 +414,12 @@ const JwelleryCard = ({
                 fontWeight: "bold",
                 marginTop: "3%",
                 fontFamily: '"Open Sans", sans-serif',
+                background: "#a36e29",
                 fontSize: "0.8rem",
               }}
-              disabled
+              onClick={() => clickHandler(name, hash)}
             >
-              NOT AVAILABLE
+              SHOW DETAILS
             </Button>
           )}
         </div>

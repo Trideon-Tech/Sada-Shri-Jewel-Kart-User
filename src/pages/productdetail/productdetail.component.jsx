@@ -2149,62 +2149,87 @@ function ProductDetail() {
               >
                 Add Customization
               </div>
-              {productDetail.admin_verified == 1 &&
-              productDetail.quantity != 0 ? (
-                <div
-                  style={{
-                    display: "flex",
-                    marginRight: "8vh",
-                    marginTop: "20px",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    fullWidth
+              {productDetail.admin_verified == 1 ? (
+                <>
+                  <div
                     style={{
-                      fontWeight: "bold",
-                      color: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                      fontWeight: "bold",
-                      marginRight: "5px",
-                      background: "transparent",
-                      border: "2px solid #a36e29",
-                      backgroundColor: "white",
+                      display: "flex",
+                      marginRight: "8vh",
+                      marginTop: "10px",
                     }}
-                    onClick={addToCartHandler}
                   >
-                    {productDetail.exists_in_cart
-                      ? "Go to Cart"
-                      : "Add to Cart"}
-                    <ShoppingCartOutlined
+                    <Button
+                      variant="contained"
+                      fullWidth
                       style={{
-                        marginLeft: "10px",
-                      }}
-                    />
-                  </Button>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    style={{
-                      fontWeight: "bold",
-                      background: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                      fontWeight: "bold",
-                      marginLeft: "5px",
-                    }}
-                    onClick={() => setDrawerOpen(true)}
-                  >
-                    Buy Now
-                    <ShoppingBagOutlined
-                      style={{
-                        marginLeft: "10px",
+                        fontWeight: "bold",
                         color: "#a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.9rem",
+                        fontWeight: "bold",
+                        marginRight: "5px",
+                        background: "transparent",
+                        border: "2px solid #a36e29",
+                        backgroundColor: "white",
                       }}
-                    />
-                  </Button>
-                </div>
+                      onClick={
+                        productDetail.quantity > 0
+                          ? addToCartHandler
+                          : handleCreateWishList
+                      }
+                    >
+                      {productDetail.quantity > 0
+                        ? productDetail.exists_in_cart
+                          ? "Go to Cart"
+                          : "Add to Cart"
+                        : "Add to Wishlist"}
+                      {productDetail.quantity > 0 && (
+                        <ShoppingCartOutlined
+                          style={{
+                            marginLeft: "10px",
+                          }}
+                        />
+                      )}
+                    </Button>
+                    {productDetail.quantity > 0 && (
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        style={{
+                          fontWeight: "bold",
+                          background: "#a36e29",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.9rem",
+                          fontWeight: "bold",
+                          marginLeft: "5px",
+                        }}
+                        onClick={() => setDrawerOpen(true)}
+                      >
+                        Buy Now
+                        <ShoppingBagOutlined
+                          style={{
+                            marginLeft: "10px",
+                            color: "#a36e29",
+                          }}
+                        />
+                      </Button>
+                    )}
+                  </div>
+                  <Typography
+                    style={{
+                      marginRight: "8vh",
+                      marginTop: "10px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
+                      fontSize: "0.9rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {productDetail.quantity > 0
+                      ? `Only ${productDetail.quantity} pieces left`
+                      : "Out of Stock"}
+                  </Typography>
+                </>
               ) : (
                 <div
                   style={{
@@ -2229,6 +2254,7 @@ function ProductDetail() {
                   </Button>
                 </div>
               )}
+
               <Box
                 sx={{
                   display: "flex",
@@ -3107,7 +3133,7 @@ function ProductDetail() {
                 Add Customization
               </div>
 
-              {productDetail.admin_verified == 1 &&
+              {/* {productDetail.admin_verified == 1 &&
               productDetail.quantity != 0 ? (
                 <div
                   style={{
@@ -3187,6 +3213,112 @@ function ProductDetail() {
                   }}
                 >
                   Currently Unavailable
+                </div>
+              )} */}
+
+              {productDetail.admin_verified == 1 ? (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "90%",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        fontWeight: "bold",
+                        color: "#a36e29",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.8rem",
+                        fontWeight: "bold",
+                        marginRight: "5px",
+                        background: "transparent",
+                        border: "2px solid #a36e29",
+                        backgroundColor: "white",
+                      }}
+                      onClick={
+                        productDetail.quantity > 0
+                          ? addToCartHandler
+                          : handleCreateWishList
+                      }
+                    >
+                      {productDetail.quantity > 0
+                        ? productDetail.exists_in_cart
+                          ? "Go to Cart"
+                          : "Add to Cart"
+                        : "Add to Wishlist"}
+                      {productDetail.quantity > 0 && (
+                        <ShoppingCartOutlined
+                          style={{
+                            marginLeft: "5px",
+                          }}
+                        />
+                      )}
+                    </Button>
+                    {productDetail.quantity > 0 && (
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        style={{
+                          fontWeight: "bold",
+                          background: "#a36e29",
+                          fontFamily: '"Open Sans", sans-serif',
+                          fontSize: "0.8rem",
+                          fontWeight: "bold",
+                          marginLeft: "5px",
+                        }}
+                        onClick={() => setDrawerOpen(true)}
+                      >
+                        Buy Now
+                        <ShoppingBagOutlined
+                          style={{
+                            marginLeft: "5px",
+                            color: "white",
+                          }}
+                        />
+                      </Button>
+                    )}
+                  </div>
+                  <Typography
+                    style={{
+                      marginRight: "8vh",
+                      marginTop: "10px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
+                      fontSize: "0.8rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {productDetail.quantity > 0
+                      ? `Only ${productDetail.quantity} pieces left`
+                      : "Out of Stock"}
+                  </Typography>
+                </>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    marginRight: "8vh",
+                    marginTop: "30px",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    disabled
+                    style={{
+                      fontWeight: "bold",
+                      background: "#cccccc",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Currently Unavailable
+                  </Button>
                 </div>
               )}
               <Box
