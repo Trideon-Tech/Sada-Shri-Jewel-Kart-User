@@ -252,7 +252,7 @@ const JwelleryCard = ({
                 fontWeight: "bold",
                 marginTop: "3%",
                 marginBottom: "3%",
-                background: "#a36e29",
+                background: "linear-gradient(to right, #d4a76a, #a36e29)",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
               }}
@@ -270,7 +270,7 @@ const JwelleryCard = ({
                 marginBottom: "3%",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
-                background: "#a36e29",
+                background: "linear-gradient(to right, #d4a76a, #a36e29)",
               }}
               onClick={() => clickHandler(name, hash)}
             >

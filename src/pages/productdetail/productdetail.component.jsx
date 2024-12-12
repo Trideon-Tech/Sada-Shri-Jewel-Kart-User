@@ -2138,7 +2138,7 @@ function ProductDetail() {
                   color: "white",
                   fontWeight: "600",
                   cursor: "pointer",
-                  backgroundColor: "#a36e29",
+                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
                   marginRight: "8vh",
                   paddingTop: "8px",
                   paddingBottom: "8px",
@@ -2197,7 +2197,8 @@ function ProductDetail() {
                         fullWidth
                         style={{
                           fontWeight: "bold",
-                          background: "#a36e29",
+                          background:
+                            "linear-gradient(to right, #d4a76a, #a36e29)",
                           fontFamily: '"Open Sans", sans-serif',
                           fontSize: "0.9rem",
                           fontWeight: "bold",
@@ -2209,7 +2210,7 @@ function ProductDetail() {
                         <ShoppingBagOutlined
                           style={{
                             marginLeft: "10px",
-                            color: "#a36e29",
+                            color: "white",
                           }}
                         />
                       </Button>
@@ -2254,6 +2255,116 @@ function ProductDetail() {
                   </Button>
                 </div>
               )}
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  marginRight: "8vh",
+                  marginTop: "20px",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                    marginBottom: "-8px",
+                  }}
+                >
+                  Saving Schemes
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      border: "none",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Daily Bloom
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      border: "none",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    Gold Harvest
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      border: "none",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    No Making No Wastage
+                  </Button>
+                </Box>
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                    marginTop: "20px",
+                  }}
+                >
+                  Verify Product Credentials
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    BIS Care
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    GIA Link
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    IGI Link
+                  </Button>
+                </Box>
+              </Box>
 
               <Box
                 sx={{
@@ -3140,7 +3251,7 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
-              <div
+              <Button
                 style={{
                   fontSize: "0.8rem",
                   marginTop: "10px",
@@ -3149,7 +3260,7 @@ function ProductDetail() {
                   color: "white",
                   fontWeight: "600",
                   cursor: "pointer",
-                  backgroundColor: "#a36e29",
+                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
                   paddingTop: "8px",
                   paddingBottom: "8px",
                   borderRadius: "10px",
@@ -3159,7 +3270,7 @@ function ProductDetail() {
                 onClick={() => toast.info("Coming soon!", generalToastStyle)}
               >
                 Add Customization
-              </div>
+              </Button>
 
               {/* {productDetail.admin_verified == 1 &&
               productDetail.quantity != 0 ? (
@@ -3349,6 +3460,115 @@ function ProductDetail() {
                   </Button>
                 </div>
               )}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  marginRight: "8vh",
+                  marginTop: "20px",
+                }}
+              >
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                    marginBottom: "-8px",
+                  }}
+                >
+                  Saving Schemes
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      border: "none",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    Daily Bloom
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      border: "none",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    Gold Harvest
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "white",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      border: "none",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    No Making No Wastage
+                  </Button>
+                </Box>
+                <Typography
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.1rem",
+                    fontWeight: "600",
+                    marginTop: "20px",
+                  }}
+                >
+                  Verify Product Credentials
+                </Typography>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    BIS Care
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    GIA Link
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      color: "#a36e29",
+                      borderColor: "#a36e29",
+                      fontFamily: '"Open Sans", sans-serif',
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    IGI Link
+                  </Button>
+                </Box>
+              </Box>
               <Box
                 sx={{
                   display: "flex",

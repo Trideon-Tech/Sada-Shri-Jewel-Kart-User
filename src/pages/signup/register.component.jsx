@@ -149,7 +149,7 @@ const Register = () => {
         >
           <div className="head">
             {isSignUp ? "Sign Up" : "Login"} to <br />
-            SadaShri Jewelkart
+            Sadāshrī Jewelkart
           </div>
           <div className="text">
             Unlock Best prices and become an insider for our exclusive launches

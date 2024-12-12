@@ -35,7 +35,7 @@ export default function PromotionImageList() {
                 cursor: "pointer",
               }}
               src={process.env.PUBLIC_URL + "/assets/1.webp"}
-              onClick={() => navigate("/jwellery/Diamond%20Jewellery/15/false")}
+              onClick={() => navigate("/jwellery/DIAMOND%20JEWELLERY/15/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
@@ -46,7 +46,7 @@ export default function PromotionImageList() {
                 cursor: "pointer",
               }}
               src={process.env.PUBLIC_URL + "/assets/2.webp"}
-              onClick={() => navigate("/jwellery/Gold%20Jewellery/1/false")}
+              onClick={() => navigate("/jwellery/GOLD%20JEWELLERY/1/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
@@ -57,7 +57,7 @@ export default function PromotionImageList() {
                 cursor: "pointer",
               }}
               src={process.env.PUBLIC_URL + "/assets/11.webp"}
-              onClick={() => navigate("/jwellery/Gemstone/13/true")}
+              onClick={() => navigate("/jwellery/GEMSTONE/13/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
@@ -68,7 +68,7 @@ export default function PromotionImageList() {
                 cursor: "pointer",
               }}
               src={process.env.PUBLIC_URL + "/assets/6.webp"}
-              onClick={() => navigate("/jwellery/Silver%20Jewellery/4/false")}
+              onClick={() => navigate("/jwellery/SILVER%20JEWELLERY/4/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>
@@ -79,7 +79,7 @@ export default function PromotionImageList() {
                 cursor: "pointer",
               }}
               src={process.env.PUBLIC_URL + "/assets/8.webp"}
-              onClick={() => navigate("/jwellery/Silver%20Articles/3/false")}
+              onClick={() => navigate("/jwellery/SILVER%20ARTICLES/3/false")}
             />
           </Grid>
           <Grid item xs={matches ? 4 : 12}>

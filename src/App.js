@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import SearchResult from "./components/navbar/searchResult.component";
@@ -21,6 +22,17 @@ import Wishlist from "./pages/wishlist/wishList.component";
 import { RefreshProvider } from "./RefreshContent";
 
 function App() {
+  const playClickSound = () => {
+    const audio = new Audio(process.env.PUBLIC_URL + "/assets/click.mp3");
+    audio.play();
+  };
+
+  // Add click sound to entire app
+  useEffect(() => {
+    document.addEventListener("click", playClickSound);
+    return () => document.removeEventListener("click", playClickSound);
+  }, []);
+
   return (
     <div className="App">
       <RefreshProvider>

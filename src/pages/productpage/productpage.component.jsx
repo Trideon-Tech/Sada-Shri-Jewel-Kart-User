@@ -39,23 +39,23 @@ function Productpage() {
 
   const images = [
     {
-      label: "Diamond Jewellery",
+      label: "DIAMOND JEWELLERY",
       imgPath: "/assets/4.webp",
     },
     {
-      label: "Gold Jewellery",
+      label: "GOLD JEWELLERY",
       imgPath: "/assets/3.webp",
     },
     {
-      label: "Gemstone",
+      label: "GEMSTONE",
       imgPath: "/assets/11.webp",
     },
     {
-      label: "Silver Jewellery",
+      label: "SILVER JEWELLERY",
       imgPath: "/assets/7.webp",
     },
     {
-      label: "Silver Articles",
+      label: "SILVER ARTICLES",
       imgPath: "/assets/8.webp",
     },
   ];
@@ -204,8 +204,8 @@ function Productpage() {
           <img
             src={
               process.env.PUBLIC_URL +
-              (images.find((img) => img.label === menuItemName)?.imgPath ||
-                "/assets/productList bg.jpg")
+              (images.find((img) => img.label === menuItemName?.split("+")[0])
+                ?.imgPath || "/assets/productList bg.jpg")
             }
             style={{ width: "100%" }}
           />
