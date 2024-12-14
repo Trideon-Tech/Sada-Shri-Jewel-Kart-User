@@ -319,10 +319,11 @@ const EditProfile = () => {
             size="medium"
             variant="contained"
             style={{
-              background: "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
               textTransform: "none",
+              background:
+                "linear-gradient(to right, #d4a76a, #a36e29)",
             }}
             onClick={() => updateProfile()}
           >
@@ -631,10 +632,11 @@ const EditProfile = () => {
               size="medium"
               variant="contained"
               style={{
-                background: "#a36e29",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "1rem",
                 textTransform: "none",
+                background:
+                  "linear-gradient(to right, #d4a76a, #a36e29)",
               }}
               onClick={() => updateProfile()}
             >

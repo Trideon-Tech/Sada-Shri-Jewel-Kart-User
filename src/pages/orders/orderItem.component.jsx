@@ -309,7 +309,8 @@ const OrderItem = ({
                 width: "32%",
                 fontWeight: "bold",
                 height: "100%",
-                background: "#a36e29",
+                background:
+                  "linear-gradient(to right, #d4a76a, #a36e29)",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
               }}
@@ -376,7 +377,8 @@ const OrderItem = ({
               width: "100%",
               fontWeight: "bold",
               height: "100%",
-              background: "#a36e29",
+              background:
+                "linear-gradient(to right, #d4a76a, #a36e29)",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "0.8rem",
               marginTop: "10px",

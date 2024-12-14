@@ -309,9 +309,10 @@ const Register = () => {
                   onClick={() => verifyOTPHandler()}
                   style={{
                     color: "white",
-                    backgroundColor: "#a36e29",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
+                    background:
+                      "linear-gradient(to right, #d4a76a, #a36e29)",
                   }}
                   disabled={false}
                 >
@@ -328,6 +329,8 @@ const Register = () => {
                   style={{
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.8rem",
+                    background:
+                      "linear-gradient(to right, #d4a76a, #a36e29)",
                   }}
                 >
                   Continue

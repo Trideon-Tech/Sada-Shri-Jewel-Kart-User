@@ -249,6 +249,7 @@ const Wallet = () => {
             </div>
             {matches ? (
               <img
+                alt="coins"
                 style={{
                   marginRight: 0,
                   marginLeft: "auto",
@@ -273,7 +274,10 @@ const Wallet = () => {
               style={{
                 width: "300px",
                 height: "50px",
-                backgroundColor: !showDebit ? "#A36E29" : "white",
+                background:
+                  !showDebit
+                    ? "linear-gradient(to right, #d4a76a, #a36e29)"
+                    : "white",
                 color: !showDebit ? "white" : "#A36E29",
                 border: "2px solid #A36E29",
                 fontWeight: 600,
@@ -291,7 +295,10 @@ const Wallet = () => {
                 marginLeft: "20px",
                 width: "300px",
                 height: "50px",
-                backgroundColor: showDebit ? "#A36E29" : "white",
+                background:
+                  showDebit
+                    ? "linear-gradient(to right, #d4a76a, #a36e29)"
+                    : "white",
                 color: showDebit ? "white" : "#A36E29",
                 border: "2px solid #A36E29",
                 fontWeight: 600,
