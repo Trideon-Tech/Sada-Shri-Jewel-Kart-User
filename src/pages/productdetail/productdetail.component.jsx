@@ -3272,89 +3272,6 @@ function ProductDetail() {
                 Add Customization
               </Button>
 
-              {/* {productDetail.admin_verified == 1 &&
-              productDetail.quantity != 0 ? (
-                <div
-                  style={{
-                    display: "flex",
-                    width: "88vw",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    style={{
-                      height: "40px",
-                      padding: "10px",
-                      fontWeight: "bold",
-                      color: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      fontWeight: "bold",
-                      marginRight: "5px",
-                      background: "transparent",
-                      border: "2px solid #a36e29",
-                    }}
-                    onClick={addToCartHandler}
-                  >
-                    {productDetail.exists_in_cart
-                      ? "Go to Cart"
-                      : "Add to Cart"}
-                    <ShoppingCartOutlined
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    />
-                  </Button>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    style={{
-                      height: "40px",
-                      padding: "10px",
-                      fontWeight: "bold",
-                      background: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      fontWeight: "bold",
-                      marginLeft: "5px",
-                    }}
-                    onClick={() => setDrawerOpen(true)}
-                  >
-                    Buy Now
-                    <ShoppingBagOutlined
-                      style={{
-                        marginLeft: "10px",
-                        color: "white",
-                      }}
-                    />
-                  </Button>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    marginTop: "10px",
-                    marginBottom: "12px",
-                    fontFamily: '"Open Sans", sans-serif',
-                    color: "rgba(0, 0, 0, 0.26)",
-                    fontWeight: "600",
-                    cursor: "not-allowed",
-                    backgroundColor: "rgba(0, 0, 0, 0.12)",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
-                    borderRadius: "4px",
-                    textAlign: "center",
-                    width: "88vw",
-                    boxShadow: "none",
-                    border: "none",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Currently Unavailable
-                </div>
-              )} */}
-
               {productDetail.admin_verified == 1 ? (
                 <>
                   <div
@@ -3403,10 +3320,10 @@ function ProductDetail() {
                         fullWidth
                         style={{
                           fontWeight: "bold",
-                          background: "#a36e29",
                           fontFamily: '"Open Sans", sans-serif',
+                          background:
+                            "linear-gradient(to right, #d4a76a, #a36e29)",
                           fontSize: "0.8rem",
-                          fontWeight: "bold",
                           marginLeft: "5px",
                         }}
                         onClick={() => setDrawerOpen(true)}
@@ -3901,8 +3818,8 @@ function ProductDetail() {
                             }}
                           >
                             {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.metal_info?.net_wt_after_wastage
+                              parseFloat(productDetail.customizations?.variants?.options[0]
+                                ?.metal_info?.net_wt_after_wastage).toFixed(2)
                             }{" "}
                             g
                           </div>
