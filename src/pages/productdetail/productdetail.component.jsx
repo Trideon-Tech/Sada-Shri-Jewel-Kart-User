@@ -2275,33 +2275,34 @@ function ProductDetail() {
                 >
                   Saving Schemes
                 </Typography>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
+                    alt="scheme1"
                     style={{
-                      color: "white",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      border: "none",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
                     }}
-                  >
-                    Daily Bloom
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
+                  />
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/scheme_2.gif"}
+                    alt="scheme2"
                     style={{
-                      color: "white",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      border: "none",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
                     }}
-                  >
-                    No Making No Wastage
-                  </Button>
+                  />
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/scheme_3.gif"}
+                    alt="scheme2"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
+                    }}
+                  />
                 </Box>
                 <Typography
                   style={{
@@ -3383,46 +3384,34 @@ function ProductDetail() {
                 >
                   Saving Schemes
                 </Typography>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <img
+                    src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
+                    alt="scheme1"
                     style={{
-                      color: "white",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      border: "none",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
                     }}
-                  >
-                    Daily Bloom
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
+                  />
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/scheme_2.gif"}
+                    alt="scheme2"
                     style={{
-                      color: "white",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      border: "none",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
                     }}
-                  >
-                    Gold Harvest
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
+                  />
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/scheme_3.gif"}
+                    alt="scheme2"
                     style={{
-                      color: "white",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      border: "none",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
                     }}
-                  >
-                    No Making No Wastage
-                  </Button>
+                  />
                 </Box>
                 <Typography
                   style={{
