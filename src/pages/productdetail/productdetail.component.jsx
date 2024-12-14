@@ -2093,7 +2093,7 @@ function ProductDetail() {
                   <div style={{ fontSize: "0.8rem" }}>Metal</div>
                   <div
                     style={{
-                      fontSize: "1rem",
+                      fontSize: "0.7rem",
                       color: "#a36e29",
                       fontWeight: "bold",
                     }}
@@ -2288,19 +2288,6 @@ function ProductDetail() {
                     }}
                   >
                     Daily Bloom
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "white",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      border: "none",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    Gold Harvest
                   </Button>
                   <Button
                     variant="outlined"

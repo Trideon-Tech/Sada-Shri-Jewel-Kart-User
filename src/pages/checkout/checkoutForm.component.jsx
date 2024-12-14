@@ -57,7 +57,8 @@ const SelectAddressStep = ({
           fontFamily: '"Open Sans", sans-serif',
           fontSize: "1rem",
           fontWeight: "bold",
-          background: "#a36e29",
+          background:
+            "linear-gradient(to right, #d4a76a, #a36e29)",
         }}
         onClick={handleCreateOrder}
       >
@@ -133,7 +134,8 @@ const SelectPaymentMethodStep = ({
             minHeight: 50,
             fontFamily: '"Open Sans", sans-serif',
             fontSize: "1rem",
-            background: "#a36e29",
+            background:
+              "linear-gradient(to right, #d4a76a, #a36e29)",
           }}
           onClick={handlePaymentRequest}
         >

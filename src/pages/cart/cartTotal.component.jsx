@@ -1016,7 +1016,8 @@ export default function CartTotal({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
               fontWeight: "600",
-              background: "#a36e29",
+              background:
+                "linear-gradient(to right, #d4a76a, #a36e29)",
             }}
             component={Link}
             to={
@@ -1383,7 +1384,8 @@ export default function CartTotal({
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1rem",
               fontWeight: "600",
-              background: "#a36e29",
+              background:
+                "linear-gradient(to right, #d4a76a, #a36e29)",
             }}
             component={Link}
             to={
