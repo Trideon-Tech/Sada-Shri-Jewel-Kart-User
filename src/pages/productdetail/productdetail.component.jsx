@@ -2060,13 +2060,13 @@ function ProductDetail() {
               <div
                 style={{
                   width: "100%",
-                  paddingLeft: "30px",
+                  paddingLeft: "15px",
                 }}
               >
-                <div style={{ fontSize: "0.8rem" }}>Size</div>
+                <div style={{ fontSize: "0.7rem" }}>Size</div>
                 <div
                   style={{
-                    fontSize: "1rem",
+                    fontSize: "0.8rem",
                     color: "#a36e29",
                     fontWeight: "bold",
                   }}
@@ -2083,13 +2083,13 @@ function ProductDetail() {
               <div
                 style={{
                   width: "100%",
-                  paddingLeft: "30px",
+                  paddingLeft: "15px",
                 }}
               >
-                <div style={{ fontSize: "0.8rem" }}>Metal</div>
+                <div style={{ fontSize: "0.7rem" }}>Metal</div>
                 <div
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: "0.8rem",
                     color: "#a36e29",
                     fontWeight: "bold",
                   }}
@@ -2109,13 +2109,13 @@ function ProductDetail() {
               <div
                 style={{
                   width: "100%",
-                  paddingLeft: "30px",
+                  paddingLeft: "15px",
                 }}
               >
-                <div style={{ fontSize: "0.8rem" }}>Stone</div>
+                <div style={{ fontSize: "0.7rem" }}>Stone</div>
                 <div
                   style={{
-                    fontSize: "1rem",
+                    fontSize: "0.8rem",
                     color: "#a36e29",
                     fontWeight: "bold",
                   }}
