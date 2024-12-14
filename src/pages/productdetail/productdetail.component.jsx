@@ -346,7 +346,7 @@ function ProductDetail() {
         if (sum && sum?.length > 0)
           setAverageRating(sum?.reduce((a, b) => a + b) / sum.length);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   }, [productDetail]);
 
   const handleWishList = async () => {
@@ -479,9 +479,8 @@ function ProductDetail() {
       "Dec",
     ];
 
-    return `${dayOfMonth}${daySuffix(dayOfMonth)} ${
-      monthNames[date.getMonth()]
-    }, ${date.getFullYear()}`;
+    return `${dayOfMonth}${daySuffix(dayOfMonth)} ${monthNames[date.getMonth()]
+      }, ${date.getFullYear()}`;
   };
 
   const getETA = async (pincode, id) => {
@@ -536,12 +535,9 @@ function ProductDetail() {
 
     if (userId !== -1) {
       navigate(
-        `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
-          productDetail?.hash
-        }&customization=${
-          productDetail?.customizations?.variants?.options[0]?.id || -1
-        }&discount=${selectedCouponId || 0}&coins=${
-          coinsIsRedeemed ? coinsRedeem : 0
+        `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${productDetail?.hash
+        }&customization=${productDetail?.customizations?.variants?.options[0]?.id || -1
+        }&discount=${selectedCouponId || 0}&coins=${coinsIsRedeemed ? coinsRedeem : 0
         }`
       );
     } else {
@@ -1488,9 +1484,9 @@ function ProductDetail() {
                             const discount =
                               item.amount === "0"
                                 ? (productDetail.customizations?.variants
-                                    ?.options[0]?.price *
-                                    item.percentage) /
-                                  100
+                                  ?.options[0]?.price *
+                                  item.percentage) /
+                                100
                                 : item.amount;
                             setDiscountAmount(discount);
                           }
@@ -1695,1265 +1691,1265 @@ function ProductDetail() {
       </Drawer>
 
       <div className="web">
-        <div>
-          <Grid container>
-            <Grid item xs={8}>
-              <Grid container spacing={1}>
-                {productDetail.images &&
-                  productDetail.images.map((image, index) => (
-                    <Grid item xs={6} key={image.id}>
-                      <img
-                        src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
-                        alt={`Product ${index + 1}`}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          setSelectedImageIndex(index);
-                          setImageModalOpen(true);
-                        }}
-                      />
-                    </Grid>
-                  ))}
-                {productDetail.video &&
-                  productDetail.video !==
-                    "Product Infographics doesn't exist." && (
-                    <Grid item xs={6}>
-                      <video
-                        controls
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                        autoPlay={true}
-                      >
-                        <source
-                          src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
-                          type="video/mp4"
-                        />
-                        Your browser does not support the video tag.
-                      </video>
-                    </Grid>
-                  )}
-              </Grid>
-              {productDetail && Object.keys(productDetail).length > 0 && (
-                <Dialog
-                  open={imageModalOpen}
-                  onClose={() => setImageModalOpen(false)}
-                  maxWidth="lg"
-                  fullWidth
-                >
-                  <DialogContent style={{ display: "flex", gap: "20px" }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 1,
-                        overflowY: "auto",
-                        p: 1,
+
+        <Grid container>
+          <Grid item xs={8}>
+            <Grid container spacing={1}>
+              {productDetail.images &&
+                productDetail.images.map((image, index) => (
+                  <Grid item xs={6} key={image.id}>
+                    <img
+                      src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
+                      alt={`Product ${index + 1}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        cursor: "pointer",
                       }}
+                      onClick={() => {
+                        setSelectedImageIndex(index);
+                        setImageModalOpen(true);
+                      }}
+                    />
+                  </Grid>
+                ))}
+              {productDetail.video &&
+                productDetail.video !==
+                "Product Infographics doesn't exist." && (
+                  <Grid item xs={6}>
+                    <video
+                      controls
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      autoPlay={true}
                     >
-                      {productDetail.images?.map((image, index) => (
+                      <source
+                        src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
+                        type="video/mp4"
+                      />
+                      Your browser does not support the video tag.
+                    </video>
+                  </Grid>
+                )}
+            </Grid>
+            {productDetail && Object.keys(productDetail).length > 0 && (
+              <Dialog
+                open={imageModalOpen}
+                onClose={() => setImageModalOpen(false)}
+                maxWidth="lg"
+                fullWidth
+              >
+                <DialogContent style={{ display: "flex", gap: "20px" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 1,
+                      overflowY: "auto",
+                      p: 1,
+                    }}
+                  >
+                    {productDetail.images?.map((image, index) => (
+                      <Box
+                        key={image.id}
+                        onClick={() => setSelectedImageIndex(index)}
+                        sx={{
+                          border:
+                            selectedImageIndex === index
+                              ? "2px solid #E0B872"
+                              : "2px solid transparent",
+                          cursor: "pointer",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        <img
+                          src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
+                          alt={`Thumbnail ${index + 1}`}
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            borderRadius: "10px",
+                          }}
+                        />
+                      </Box>
+                    ))}
+                    {productDetail.video &&
+                      productDetail.video !==
+                      "Product Infographics doesn't exist." && (
                         <Box
-                          key={image.id}
-                          onClick={() => setSelectedImageIndex(index)}
+                          onClick={() =>
+                            setSelectedImageIndex(
+                              productDetail.images?.length
+                            )
+                          }
                           sx={{
                             border:
-                              selectedImageIndex === index
+                              selectedImageIndex ===
+                                productDetail.images?.length
                                 ? "2px solid #E0B872"
                                 : "2px solid transparent",
                             cursor: "pointer",
                             borderRadius: "10px",
                           }}
                         >
-                          <img
-                            src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
-                            alt={`Thumbnail ${index + 1}`}
+                          <video
                             style={{
                               width: "100px",
                               height: "100px",
                               objectFit: "cover",
                               borderRadius: "10px",
                             }}
-                          />
-                        </Box>
-                      ))}
-                      {productDetail.video &&
-                        productDetail.video !==
-                          "Product Infographics doesn't exist." && (
-                          <Box
-                            onClick={() =>
-                              setSelectedImageIndex(
-                                productDetail.images?.length
-                              )
-                            }
-                            sx={{
-                              border:
-                                selectedImageIndex ===
-                                productDetail.images?.length
-                                  ? "2px solid #E0B872"
-                                  : "2px solid transparent",
-                              cursor: "pointer",
-                              borderRadius: "10px",
-                            }}
                           >
-                            <video
-                              style={{
-                                width: "100px",
-                                height: "100px",
-                                objectFit: "cover",
-                                borderRadius: "10px",
-                              }}
-                            >
-                              <source
-                                src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
-                                type="video/mp4"
-                              />
-                            </video>
-                          </Box>
-                        )}
-                    </Box>
-                    <Box
-                      sx={{
-                        flexGrow: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: "85vh",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      {selectedImageIndex < productDetail.images?.length ? (
-                        <img
-                          src={`https://api.sadashrijewelkart.com/assets/${productDetail.images[selectedImageIndex]?.file}`}
-                          alt={`Product ${selectedImageIndex + 1}`}
-                          style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            objectFit: "cover",
-                            height: "85vh",
-                            borderRadius: "10px",
-                          }}
-                        />
-                      ) : (
-                        <video
-                          controls
-                          style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            height: "85vh",
-                            borderRadius: "10px",
-                          }}
-                          autoPlay={true}
-                        >
-                          <source
-                            src={`https://api.sadashrijewelkart.com/assets/${productDetail.video?.file}`}
-                            type="video/mp4"
-                          />
-                          Your browser does not support the video tag.
-                        </video>
+                            <source
+                              src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
+                              type="video/mp4"
+                            />
+                          </video>
+                        </Box>
                       )}
-                    </Box>
-                  </DialogContent>
-                  <DialogActions>
-                    <IconButton
-                      onClick={() => {
-                        const totalItems = productDetail.video
-                          ? productDetail.images.length + 1
-                          : productDetail.images.length;
-                        setSelectedImageIndex((prev) =>
-                          prev === 0 ? totalItems - 1 : prev - 1
-                        );
-                      }}
-                    >
-                      <NavigateBefore />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        const totalItems = productDetail.video
-                          ? productDetail.images.length + 1
-                          : productDetail.images.length;
-                        setSelectedImageIndex((prev) =>
-                          prev === totalItems - 1 ? 0 : prev + 1
-                        );
-                      }}
-                    >
-                      <NavigateNext />
-                    </IconButton>
-                  </DialogActions>
-                </Dialog>
-              )}
-            </Grid>
-            <Grid item xs={4} style={{ paddingLeft: "6vh" }}>
-              <Box
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  marginTop: "60px",
-                }}
-              >
-                <Box
-                  style={{
-                    height: "2rem",
-                    backgroundColor: "white",
-                    color: "black",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderRadius: "100px",
-                    width: "max-content",
-                    paddingLeft: "2%",
-                    paddingRight: "2%",
-                  }}
-                >
-                  <Typography
-                    style={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      marginRight: "5px",
-                      color: "grey",
+                  </Box>
+                  <Box
+                    sx={{
+                      flexGrow: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "85vh",
+                      borderRadius: "10px",
                     }}
                   >
-                    {averageRating?.toFixed(2)}
-                  </Typography>
-                  <StarBorderRounded
-                    style={{ fontSize: "1.5rem", color: "orange" }}
-                  />
-                  <Typography
-                    style={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      marginLeft: "5px",
-                      color: "grey",
+                    {selectedImageIndex < productDetail.images?.length ? (
+                      <img
+                        src={`https://api.sadashrijewelkart.com/assets/${productDetail.images[selectedImageIndex]?.file}`}
+                        alt={`Product ${selectedImageIndex + 1}`}
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          objectFit: "cover",
+                          height: "85vh",
+                          borderRadius: "10px",
+                        }}
+                      />
+                    ) : (
+                      <video
+                        controls
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          height: "85vh",
+                          borderRadius: "10px",
+                        }}
+                        autoPlay={true}
+                      >
+                        <source
+                          src={`https://api.sadashrijewelkart.com/assets/${productDetail.video?.file}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  </Box>
+                </DialogContent>
+                <DialogActions>
+                  <IconButton
+                    onClick={() => {
+                      const totalItems = productDetail.video
+                        ? productDetail.images.length + 1
+                        : productDetail.images.length;
+                      setSelectedImageIndex((prev) =>
+                        prev === 0 ? totalItems - 1 : prev - 1
+                      );
                     }}
                   >
-                    ({totalReviewsCount} reviews)
-                  </Typography>
-                </Box>
-                <Box
-                  style={{
-                    height: "2rem",
-                    display: "flex",
-                    backgroundColor: "white",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginLeft: "10px",
-                    paddingLeft: "10px",
-                    paddingRight: "10px",
-                    borderRadius: "15%",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleWishList()}
-                >
-                  {productDetail.exists_in_wishlist || localWishlisted ? (
-                    <FavoriteIcon
-                      style={{ fontSize: "1.2rem", color: "#a36e29" }}
-                    />
-                  ) : (
-                    <FavoriteBorderOutlined
-                      style={{ fontSize: "1.2rem", color: "#a36e29" }}
-                    />
-                  )}
-                </Box>
-                <Box
-                  style={{
-                    height: "2rem",
-                    display: "flex",
-                    backgroundColor: "white",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginLeft: "10px",
-                    paddingLeft: "10px",
-                    paddingRight: "10px",
-                    borderRadius: "15%",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleClickOpen()}
-                >
-                  <ShareIcon style={{ fontSize: "1.2rem", color: "#a36e29" }} />
-                </Box>
-              </Box>
-
+                    <NavigateBefore />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      const totalItems = productDetail.video
+                        ? productDetail.images.length + 1
+                        : productDetail.images.length;
+                      setSelectedImageIndex((prev) =>
+                        prev === totalItems - 1 ? 0 : prev + 1
+                      );
+                    }}
+                  >
+                    <NavigateNext />
+                  </IconButton>
+                </DialogActions>
+              </Dialog>
+            )}
+          </Grid>
+          <Grid item xs={4} style={{ paddingLeft: "6vh" }}>
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                marginTop: "60px",
+              }}
+            >
               <Box
                 style={{
-                  widht: "100%",
+                  height: "2rem",
+                  backgroundColor: "white",
+                  color: "black",
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  marginTop: "3%",
+                  borderRadius: "100px",
+                  width: "max-content",
+                  paddingLeft: "2%",
+                  paddingRight: "2%",
                 }}
               >
                 <Typography
                   style={{
-                    fontWeight: "bold",
-                    color: "#a36e29",
                     fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1.2rem",
+                    fontSize: "0.8rem",
+                    marginRight: "5px",
+                    color: "grey",
                   }}
                 >
-                  ₹{productDetail?.customizations?.variants?.options[0]?.price}
+                  {averageRating?.toFixed(2)}
                 </Typography>
+                <StarBorderRounded
+                  style={{ fontSize: "1.5rem", color: "orange" }}
+                />
                 <Typography
                   style={{
-                    marginRight: "10px",
-                    marginLeft: "3%",
-                    color: "gray",
-                    textDecoration: "line-through",
                     fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1rem",
+                    fontSize: "0.8rem",
+                    marginLeft: "5px",
+                    color: "grey",
                   }}
                 >
-                  ₹
-                  {(
-                    productDetail?.customizations?.variants?.options[0]?.price *
-                    1.2
-                  ).toFixed(2)}
-                </Typography>
-                <Typography
-                  style={{
-                    marginRight: "auto",
-                    color: "green",
-                    fontFamily: '"Open Sans", sans-serif',
-                  }}
-                >
-                  (20% OFF)
+                  ({totalReviewsCount} reviews)
                 </Typography>
               </Box>
-              <div
+              <Box
                 style={{
-                  marginRight: "auto",
-                  color: "gray",
-                  fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "0.8rem",
+                  height: "2rem",
+                  display: "flex",
+                  backgroundColor: "white",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginLeft: "10px",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  borderRadius: "15%",
+                  cursor: "pointer",
                 }}
+                onClick={() => handleWishList()}
               >
-                (MRP is inclusive of all taxes)
-              </div>
-
-              <div
+                {productDetail.exists_in_wishlist || localWishlisted ? (
+                  <FavoriteIcon
+                    style={{ fontSize: "1.2rem", color: "#a36e29" }}
+                  />
+                ) : (
+                  <FavoriteBorderOutlined
+                    style={{ fontSize: "1.2rem", color: "#a36e29" }}
+                  />
+                )}
+              </Box>
+              <Box
                 style={{
-                  marginRight: "auto",
+                  height: "2rem",
+                  display: "flex",
+                  backgroundColor: "white",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginLeft: "10px",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  borderRadius: "15%",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleClickOpen()}
+              >
+                <ShareIcon style={{ fontSize: "1.2rem", color: "#a36e29" }} />
+              </Box>
+            </Box>
+
+            <Box
+              style={{
+                widht: "100%",
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+                marginTop: "3%",
+              }}
+            >
+              <Typography
+                style={{
+                  fontWeight: "bold",
                   color: "#a36e29",
                   fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "1.4rem",
-                  marginTop: "20px",
-                  fontWeight: "bold",
+                  fontSize: "1.2rem",
                 }}
               >
-                {menuItemName}
-              </div>
+                ₹{productDetail?.customizations?.variants?.options[0]?.price}
+              </Typography>
+              <Typography
+                style={{
+                  marginRight: "10px",
+                  marginLeft: "3%",
+                  color: "gray",
+                  textDecoration: "line-through",
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1rem",
+                }}
+              >
+                ₹
+                {(
+                  productDetail?.customizations?.variants?.options[0]?.price *
+                  1.2
+                ).toFixed(2)}
+              </Typography>
+              <Typography
+                style={{
+                  marginRight: "auto",
+                  color: "green",
+                  fontFamily: '"Open Sans", sans-serif',
+                }}
+              >
+                (20% OFF)
+              </Typography>
+            </Box>
+            <div
+              style={{
+                marginRight: "auto",
+                color: "gray",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
+              (MRP is inclusive of all taxes)
+            </div>
 
+            <div
+              style={{
+                marginRight: "auto",
+                color: "#a36e29",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "1.4rem",
+                marginTop: "20px",
+                fontWeight: "bold",
+              }}
+            >
+              {menuItemName}
+            </div>
+
+            <div
+              style={{
+                marginTop: "30px",
+                height: "50px",
+                background: "white",
+                marginRight: "8vh",
+                border: "1px solid #a36e29",
+                borderRadius: "10px",
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+                fontFamily: '"Open Sans", sans-serif',
+              }}
+            >
               <div
                 style={{
-                  marginTop: "30px",
-                  height: "50px",
-                  background: "white",
-                  marginRight: "8vh",
-                  border: "1px solid #a36e29",
-                  borderRadius: "10px",
-                  display: "flex",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  fontFamily: '"Open Sans", sans-serif',
+                  width: "100%",
+                  paddingLeft: "30px",
                 }}
               >
+                <div style={{ fontSize: "0.8rem" }}>Size</div>
                 <div
                   style={{
-                    width: "100%",
-                    paddingLeft: "30px",
+                    fontSize: "1rem",
+                    color: "#a36e29",
+                    fontWeight: "bold",
                   }}
                 >
-                  <div style={{ fontSize: "0.8rem" }}>Size</div>
-                  <div
-                    style={{
-                      fontSize: "1rem",
-                      color: "#a36e29",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {productDetail?.size}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    borderRight: "1px solid #a36e29",
-                    height: "100%",
-                  }}
-                />
-                <div
-                  style={{
-                    width: "100%",
-                    paddingLeft: "30px",
-                  }}
-                >
-                  <div style={{ fontSize: "0.8rem" }}>Metal</div>
-                  <div
-                    style={{
-                      fontSize: "0.7rem",
-                      color: "#a36e29",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {
-                      productDetail?.customizations?.variants?.options[0]
-                        ?.metal_info?.display_name
-                    }
-                  </div>
-                </div>
-                <div
-                  style={{
-                    borderRight: "1px solid #a36e29",
-                    height: "100%",
-                  }}
-                />
-                <div
-                  style={{
-                    width: "100%",
-                    paddingLeft: "30px",
-                  }}
-                >
-                  <div style={{ fontSize: "0.8rem" }}>Stone</div>
-                  <div
-                    style={{
-                      fontSize: "1rem",
-                      color: "#a36e29",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {
-                      productDetail?.customizations?.variants?.options[0]
-                        ?.stone_info?.display_stone_type
-                    }
-                  </div>
+                  {productDetail?.size}
                 </div>
               </div>
               <div
                 style={{
-                  marginTop: "10px",
-                  fontFamily: '"Open Sans", sans-serif',
-                  color: "white",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  marginRight: "8vh",
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
-                  borderRadius: "10px",
-                  textAlign: "center",
+                  borderRight: "1px solid #a36e29",
+                  height: "100%",
                 }}
-                onClick={() => toast.info("Coming soon!", generalToastStyle)}
+              />
+              <div
+                style={{
+                  width: "100%",
+                  paddingLeft: "30px",
+                }}
               >
-                Add Customization
+                <div style={{ fontSize: "0.8rem" }}>Metal</div>
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "#a36e29",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {
+                    productDetail?.customizations?.variants?.options[0]
+                      ?.metal_info?.display_name
+                  }
+                </div>
               </div>
-              {productDetail.admin_verified == 1 ? (
-                <>
-                  <div
-                    style={{
-                      display: "flex",
-                      marginRight: "8vh",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      style={{
-                        fontWeight: "bold",
-                        color: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
-                        fontSize: "0.9rem",
-                        fontWeight: "bold",
-                        marginRight: "5px",
-                        background: "transparent",
-                        border: "2px solid #a36e29",
-                        backgroundColor: "white",
-                      }}
-                      onClick={
-                        productDetail.quantity > 0
-                          ? addToCartHandler
-                          : handleCreateWishList
-                      }
-                    >
-                      {productDetail.quantity > 0
-                        ? productDetail.exists_in_cart
-                          ? "Go to Cart"
-                          : "Add to Cart"
-                        : "Add to Wishlist"}
-                      {productDetail.quantity > 0 && (
-                        <ShoppingCartOutlined
-                          style={{
-                            marginLeft: "10px",
-                          }}
-                        />
-                      )}
-                    </Button>
-                    {productDetail.quantity > 0 && (
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        style={{
-                          fontWeight: "bold",
-                          background:
-                            "linear-gradient(to right, #d4a76a, #a36e29)",
-                          fontFamily: '"Open Sans", sans-serif',
-                          fontSize: "0.9rem",
-                          fontWeight: "bold",
-                          marginLeft: "5px",
-                        }}
-                        onClick={() => setDrawerOpen(true)}
-                      >
-                        Buy Now
-                        <ShoppingBagOutlined
-                          style={{
-                            marginLeft: "10px",
-                            color: "white",
-                          }}
-                        />
-                      </Button>
-                    )}
-                  </div>
-                  <Typography
-                    style={{
-                      marginRight: "8vh",
-                      marginTop: "10px",
-                      fontFamily: '"Open Sans", sans-serif',
-                      color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
-                      fontSize: "0.9rem",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {productDetail.quantity > 0
-                      ? `Only ${productDetail.quantity} pieces left`
-                      : "Out of Stock"}
-                  </Typography>
-                </>
-              ) : (
+              <div
+                style={{
+                  borderRight: "1px solid #a36e29",
+                  height: "100%",
+                }}
+              />
+              <div
+                style={{
+                  width: "100%",
+                  paddingLeft: "30px",
+                }}
+              >
+                <div style={{ fontSize: "0.8rem" }}>Stone</div>
+                <div
+                  style={{
+                    fontSize: "1rem",
+                    color: "#a36e29",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {
+                    productDetail?.customizations?.variants?.options[0]
+                      ?.stone_info?.display_stone_type
+                  }
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                marginTop: "10px",
+                fontFamily: '"Open Sans", sans-serif',
+                color: "white",
+                fontWeight: "600",
+                cursor: "pointer",
+                background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                marginRight: "8vh",
+                paddingTop: "8px",
+                paddingBottom: "8px",
+                borderRadius: "10px",
+                textAlign: "center",
+              }}
+              onClick={() => toast.info("Coming soon!", generalToastStyle)}
+            >
+              Add Customization
+            </div>
+            {productDetail.admin_verified == 1 ? (
+              <>
                 <div
                   style={{
                     display: "flex",
                     marginRight: "8vh",
-                    marginTop: "30px",
+                    marginTop: "10px",
                   }}
                 >
                   <Button
                     variant="contained"
                     fullWidth
-                    disabled
                     style={{
                       fontWeight: "bold",
-                      background: "#cccccc",
+                      color: "#a36e29",
                       fontFamily: '"Open Sans", sans-serif',
                       fontSize: "0.9rem",
                       fontWeight: "bold",
+                      marginRight: "5px",
+                      background: "transparent",
+                      border: "2px solid #a36e29",
+                      backgroundColor: "white",
                     }}
+                    onClick={
+                      productDetail.quantity > 0
+                        ? addToCartHandler
+                        : handleCreateWishList
+                    }
                   >
-                    Currently Unavailable
+                    {productDetail.quantity > 0
+                      ? productDetail.exists_in_cart
+                        ? "Go to Cart"
+                        : "Add to Cart"
+                      : "Add to Wishlist"}
+                    {productDetail.quantity > 0 && (
+                      <ShoppingCartOutlined
+                        style={{
+                          marginLeft: "10px",
+                        }}
+                      />
+                    )}
                   </Button>
+                  {productDetail.quantity > 0 && (
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        fontWeight: "bold",
+                        background:
+                          "linear-gradient(to right, #d4a76a, #a36e29)",
+                        fontFamily: '"Open Sans", sans-serif',
+                        fontSize: "0.9rem",
+                        fontWeight: "bold",
+                        marginLeft: "5px",
+                      }}
+                      onClick={() => setDrawerOpen(true)}
+                    >
+                      Buy Now
+                      <ShoppingBagOutlined
+                        style={{
+                          marginLeft: "10px",
+                          color: "white",
+                        }}
+                      />
+                    </Button>
+                  )}
                 </div>
-              )}
-
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  marginRight: "8vh",
-                  marginTop: "20px",
-                }}
-              >
                 <Typography
                   style={{
+                    marginRight: "8vh",
+                    marginTop: "10px",
                     fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1.1rem",
+                    color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
+                    fontSize: "0.9rem",
                     fontWeight: "600",
-                    marginBottom: "-8px",
                   }}
                 >
-                  Saving Schemes
+                  {productDetail.quantity > 0
+                    ? `Only ${productDetail.quantity} pieces left`
+                    : "Out of Stock"}
                 </Typography>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
-                    alt="scheme1"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/scheme_2.gif"}
-                    alt="scheme2"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/scheme_3.gif"}
-                    alt="scheme2"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "10px",
-                    }}
-                  />
-                </Box>
-                <Typography
-                  style={{
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "1.1rem",
-                    fontWeight: "600",
-                    marginTop: "20px",
-                  }}
-                >
-                  Verify Product Credentials
-                </Typography>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "#a36e29",
-                      borderColor: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    BIS Care
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "#a36e29",
-                      borderColor: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    GIA Link
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "#a36e29",
-                      borderColor: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    IGI Link
-                  </Button>
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
+              </>
+            ) : (
+              <div
+                style={{
                   display: "flex",
-                  gap: 2,
                   marginRight: "8vh",
-                  marginTop: "20px",
-                }}
-              >
-                <Box
-                  sx={{
-                    borderRadius: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    borderRadius: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    borderRadius: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    borderRadius: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
-              </Box>
-              <Typography
-                sx={{
-                  display: "flex",
-                  alignItems: "start",
-                  color: "#666",
-                  fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "0.8rem",
-                  fontWeight: "500",
                   marginTop: "30px",
                 }}
               >
-                Enter your Pincode
-              </Typography>
-              <div
-                style={{
-                  height: "2.5rem",
-                  backgroundColor: "white",
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  marginTop: "5px",
-                  alignItems: "center",
-                  border: "2px solid #e1e1e1",
-                  borderRadius: "10px",
-                  marginBottom: "20px",
-                  fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "0.8rem",
-                  fontWeight: "bold",
-                  color: "#A36E29",
-                  marginRight: "8vh",
-                }}
-                onClick={openLocationModal}
-              >
-                {pincode}
-              </div>
-              {currentPosition.length > 0 ? (
-                <Typography
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled
                   style={{
-                    display: "flex",
-                    alignItems: "center",
+                    fontWeight: "bold",
+                    background: "#cccccc",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.9rem",
+                    fontWeight: "bold",
                   }}
                 >
-                  <LocalShippingOutlined className="delivery-icon" />
-                  <span
-                    style={{
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.8rem",
-                      fontWeight: "500",
-                      color: "grey",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    {`Free delivery by ${eta}`}
-                  </span>
-                </Typography>
-              ) : null}
+                  Currently Unavailable
+                </Button>
+              </div>
+            )}
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                marginRight: "8vh",
+                marginTop: "20px",
+              }}
+            >
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.1rem",
+                  fontWeight: "600",
+                  marginBottom: "-8px",
+                }}
+              >
+                Saving Schemes
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
+                  alt="scheme1"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "10px",
+                  }}
+                />
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/scheme_2.gif"}
+                  alt="scheme2"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "10px",
+                  }}
+                />
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/scheme_3.gif"}
+                  alt="scheme2"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "10px",
+                  }}
+                />
+              </Box>
+              <Typography
+                style={{
+                  fontFamily: '"Open Sans", sans-serif',
+                  fontSize: "1.1rem",
+                  fontWeight: "600",
+                  marginTop: "20px",
+                }}
+              >
+                Verify Product Credentials
+              </Typography>
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    color: "#a36e29",
+                    borderColor: "#a36e29",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  BIS Care
+                </Button>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    color: "#a36e29",
+                    borderColor: "#a36e29",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  GIA Link
+                </Button>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    color: "#a36e29",
+                    borderColor: "#a36e29",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  IGI Link
+                </Button>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                marginRight: "8vh",
+                marginTop: "20px",
+              }}
+            >
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                    "_blank"
+                  )
+                }
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/1.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                    "_blank"
+                  )
+                }
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/2.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                    "_blank"
+                  )
+                }
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/3.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  window.open(
+                    "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                    "_blank"
+                  )
+                }
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
+            </Box>
+            <Typography
+              sx={{
+                display: "flex",
+                alignItems: "start",
+                color: "#666",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "500",
+                marginTop: "30px",
+              }}
+            >
+              Enter your Pincode
+            </Typography>
+            <div
+              style={{
+                height: "2.5rem",
+                backgroundColor: "white",
+                display: "flex",
+                justifyContent: "flex-start",
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                marginTop: "5px",
+                alignItems: "center",
+                border: "2px solid #e1e1e1",
+                borderRadius: "10px",
+                marginBottom: "20px",
+                fontFamily: '"Open Sans", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "bold",
+                color: "#A36E29",
+                marginRight: "8vh",
+              }}
+              onClick={openLocationModal}
+            >
+              {pincode}
+            </div>
+            {currentPosition.length > 0 ? (
+              <Typography
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <LocalShippingOutlined className="delivery-icon" />
+                <span
+                  style={{
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "0.8rem",
+                    fontWeight: "500",
+                    color: "grey",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {`Free delivery by ${eta}`}
+                </span>
+              </Typography>
+            ) : null}
+
+            <div
+              style={{
+                marginRight: "8vh",
+                backgroundColor: "white",
+                marginTop: "20px",
+                borderRadius: "10px",
+                padding: "10px 25px",
+                fontFamily: '"Open Sans", sans-serif',
+                paddingBottom: "20px",
+              }}
+            >
+              <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                Product Description
+              </div>
+              <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                #{productDetail.hash?.toUpperCase()}
+              </Typography>
+
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: productDetail.description,
+                }}
+                style={{ fontSize: "0.9rem", marginTop: "12px" }}
+              ></div>
 
               <div
                 style={{
-                  marginRight: "8vh",
-                  backgroundColor: "white",
                   marginTop: "20px",
                   borderRadius: "10px",
-                  padding: "10px 25px",
+                  padding: "10px 20px",
                   fontFamily: '"Open Sans", sans-serif',
-                  paddingBottom: "20px",
+                  border: "1px solid #e1e1e1",
+                  boxShadow: "0px 0px 5px 0px #a36e29",
                 }}
               >
                 <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                  Product Description
+                  Metal Details
                 </div>
-                <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                  #{productDetail.hash?.toUpperCase()}
-                </Typography>
-
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: productDetail.description,
-                  }}
-                  style={{ fontSize: "0.9rem", marginTop: "12px" }}
-                ></div>
-
-                <div
-                  style={{
-                    marginTop: "20px",
-                    borderRadius: "10px",
-                    padding: "10px 20px",
-                    fontFamily: '"Open Sans", sans-serif',
-                    border: "1px solid #e1e1e1",
-                    boxShadow: "0px 0px 5px 0px #a36e29",
-                  }}
-                >
-                  <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    Metal Details
-                  </div>
-                  <Grid container spacing={2} style={{ marginTop: "8px" }}>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Gross Weight
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.gross_wt
-                          }{" "}
-                          g
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Net Weight
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.net_wt
-                          }{" "}
-                          g
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Stone Weight
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.stone_wt
-                          }{" "}
-                          g
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Metal
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                            textTransform: "capitalize",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.metal
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Quality
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.quality
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Wastage
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.wastage_prec
-                          }
-                          %
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Net Weight After Wastage
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.net_wt_after_wastage
-                          }{" "}
-                          g
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Making Charge
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ₹
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.making_charge_amount
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Stone Amount
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ₹
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.stone_amount
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Hallmark Charge
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ₹
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.hallmark_charge
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Rodium Charge
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ₹
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.rodium_charge
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        GST
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.gst_perc
-                          }
-                          %
-                        </div>
-                      </Typography>
-                    </Grid>
+                <Grid container spacing={2} style={{ marginTop: "8px" }}>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Gross Weight
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.gross_wt
+                        }{" "}
+                        g
+                      </div>
+                    </Typography>
                   </Grid>
-                </div>
-
-                <div
-                  style={{
-                    marginTop: "20px",
-                    borderRadius: "10px",
-                    padding: "10px 20px",
-                    fontFamily: '"Open Sans", sans-serif',
-                    border: "1px solid #e1e1e1",
-                    boxShadow: "0px 0px 5px 0px #a36e29",
-                  }}
-                >
-                  <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    Stone Details
-                  </div>
-                  <Grid container spacing={2} style={{ marginTop: "8px" }}>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Stone Type
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.stone_type
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Class
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.class
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Clarity
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.clarity
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Cut
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.cut
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Pieces
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.pieces
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Carat
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.carat
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Stone Weight
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.stone_wt
-                          }{" "}
-                          g
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Stone Rate
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          ₹
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.stone_rate
-                          }
-                        </div>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        GST
-                        <div
-                          style={{
-                            fontSize: "0.9rem",
-                            color: "black",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {
-                            productDetail.customizations?.variants?.options[0]
-                              ?.stone_info?.gst_perc
-                          }
-                          %
-                        </div>
-                      </Typography>
-                    </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Net Weight
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.net_wt
+                        }{" "}
+                        g
+                      </div>
+                    </Typography>
                   </Grid>
-                </div>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Stone Weight
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.stone_wt
+                        }{" "}
+                        g
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Metal
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.metal
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Quality
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.quality
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Wastage
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.wastage_prec
+                        }
+                        %
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Net Weight After Wastage
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.net_wt_after_wastage
+                        }{" "}
+                        g
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Making Charge
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ₹
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.making_charge_amount
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Stone Amount
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ₹
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.stone_amount
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Hallmark Charge
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ₹
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.hallmark_charge
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Rodium Charge
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ₹
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.rodium_charge
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      GST
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.gst_perc
+                        }
+                        %
+                      </div>
+                    </Typography>
+                  </Grid>
+                </Grid>
               </div>
-            </Grid>
+
+              <div
+                style={{
+                  marginTop: "20px",
+                  borderRadius: "10px",
+                  padding: "10px 20px",
+                  fontFamily: '"Open Sans", sans-serif',
+                  border: "1px solid #e1e1e1",
+                  boxShadow: "0px 0px 5px 0px #a36e29",
+                }}
+              >
+                <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                  Stone Details
+                </div>
+                <Grid container spacing={2} style={{ marginTop: "8px" }}>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Stone Type
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.stone_type
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Class
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.class
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Clarity
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.clarity
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Cut
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.cut
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Pieces
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.pieces
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Carat
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.carat
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Stone Weight
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.stone_wt
+                        }{" "}
+                        g
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Stone Rate
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ₹
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.stone_rate
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      GST
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.gst_perc
+                        }
+                        %
+                      </div>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </div>
+            </div>
           </Grid>
-        </div>
+        </Grid>
+
 
         {productDetail.recommended && productDetail.recommended.length > 0 && (
           <div className="container-similar">
@@ -3385,7 +3381,7 @@ function ProductDetail() {
                   Saving Schemes
                 </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <img
+                  <img
                     src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
                     alt="scheme1"
                     style={{
