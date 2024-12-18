@@ -1730,6 +1730,8 @@ function ProductDetail() {
                         objectFit: "cover",
                       }}
                       autoPlay={true}
+                      loop={true}
+                      muted={true}
                     >
                       <source
                         src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
@@ -1849,6 +1851,8 @@ function ProductDetail() {
                           borderRadius: "10px",
                         }}
                         autoPlay={true}
+                        loop={true}
+                        muted={true}
                       >
                         <source
                           src={`https://api.sadashrijewelkart.com/assets/${productDetail.video?.file}`}
