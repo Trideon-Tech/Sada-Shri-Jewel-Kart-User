@@ -1991,7 +1991,7 @@ function ProductDetail() {
                 marginTop: "3%",
               }}
             >
-                <ListItem
+              <ListItem
                 onClick={() =>
                   window.open("https://seller.sadashrijewelkart.com", "_blank")
                 }
@@ -2156,24 +2156,25 @@ function ProductDetail() {
                 </div>
               </div>
             </div>
-            <div
-              style={{
-                marginTop: "10px",
-                fontFamily: '"Open Sans", sans-serif',
-                color: "white",
-                fontWeight: "600",
-                cursor: "pointer",
-                background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                marginRight: "8vh",
-                paddingTop: "8px",
-                paddingBottom: "8px",
-                borderRadius: "10px",
-                textAlign: "center",
-              }}
-              onClick={() => setAddCustomizationModalOpen(true)}
-            >
-              Add Customization
-            </div>
+            {productDetail.customizations?.variants?.options[0]
+              ?.metal_info?.metal_type?.toLowerCase() !== "silver" && <div
+                style={{
+                  marginTop: "10px",
+                  fontFamily: '"Open Sans", sans-serif',
+                  color: "white",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                  marginRight: "8vh",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  borderRadius: "10px",
+                  textAlign: "center",
+                }}
+                onClick={() => setAddCustomizationModalOpen(true)}
+              >
+                Add Customization
+              </div>}
             {productDetail.admin_verified == 1 ? (
               <>
                 <div
