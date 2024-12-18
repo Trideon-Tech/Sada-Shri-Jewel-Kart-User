@@ -4,21 +4,22 @@ import Carousel from 'react-material-ui-carousel'
 export default function CarouselScheme() {
     var items = [
         {
-            imageName: "scheme_1.gif",
+            imageName: "22.webp",
             alt: "scheme1"
         },
         {
-            imageName: "scheme_2.gif",
+            imageName: "23.webp",
             alt: "scheme2"
         },
         {
-            imageName: "scheme_3.gif",
+            imageName: "24.webp",
             alt: "scheme3"
         }
     ]
 
+    // remove left and right arrows
     return (
-        <Carousel>
+        <Carousel navButtonsAlwaysInvisible indicators={false}>
             {
                 items.map((item, i) => <Item key={i} item={item} />)
             }
