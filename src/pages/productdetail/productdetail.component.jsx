@@ -51,7 +51,8 @@ import Navbar from "../../components/navbar/navbar.component";
 import Reviews from "../../components/reviews/reviews.component";
 import { useRefresh } from "../../RefreshContent";
 import ImageVideoCarousel from "./carousal.component";
-
+import CarouselScheme from "./carousal.scheme";
+import ModalAddCustomization from "./modal.addCustomization.component";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -103,7 +104,7 @@ function ProductDetail() {
   const [selectedCouponId, setSelectedCouponId] = useState();
   const [selectedCouponCode, setSelectedCouponCode] = useState();
   const [discountAmount, setDiscountAmount] = useState();
-
+  const [addCustomizationModalOpen, setAddCustomizationModalOpen] = useState(false);
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -769,6 +770,8 @@ function ProductDetail() {
           </ModalDialog>
         </ModalOverflow>
       </Modal>
+
+      {addCustomizationModalOpen && <ModalAddCustomization addCustomizationModalOpen={addCustomizationModalOpen} setAddCustomizationModalOpen={setAddCustomizationModalOpen} />}
       {/* Mobile */}
       <Modal
         open={mobileLocationModalOpen}
@@ -2141,7 +2144,7 @@ function ProductDetail() {
                 borderRadius: "10px",
                 textAlign: "center",
               }}
-              onClick={() => toast.info("Coming soon!", generalToastStyle)}
+              onClick={() => setAddCustomizationModalOpen(true)}
             >
               Add Customization
             </div>
@@ -2272,33 +2275,8 @@ function ProductDetail() {
                 Saving Schemes
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
-                  alt="scheme1"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "10px",
-                  }}
-                />
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/scheme_2.gif"}
-                  alt="scheme2"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "10px",
-                  }}
-                />
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/scheme_3.gif"}
-                  alt="scheme2"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "10px",
-                  }}
-                />
+                {/* Create image carousel for the schemes */}
+                <CarouselScheme />
               </Box>
               <Typography
                 style={{
@@ -3251,7 +3229,7 @@ function ProductDetail() {
                   textAlign: "center",
                   width: "88vw",
                 }}
-                onClick={() => toast.info("Coming soon!", generalToastStyle)}
+                onClick={() => setAddCustomizationModalOpen(true)}
               >
                 Add Customization
               </Button>
@@ -3381,33 +3359,7 @@ function ProductDetail() {
                   Saving Schemes
                 </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/scheme_1.gif"}
-                    alt="scheme1"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/scheme_2.gif"}
-                    alt="scheme2"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/scheme_3.gif"}
-                    alt="scheme2"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "10px",
-                    }}
-                  />
+                  <CarouselScheme />
                 </Box>
                 <Typography
                   style={{

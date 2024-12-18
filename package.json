@@ -27,6 +27,7 @@
     "react-img-zoom": "^0.1.0",
     "react-inner-image-zoom": "^1.0.5",
     "react-marquee-slider": "^1.1.5",
+    "react-material-ui-carousel": "^3.4.2",
     "react-pointer-zoom": "^1.5.1",
     "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
