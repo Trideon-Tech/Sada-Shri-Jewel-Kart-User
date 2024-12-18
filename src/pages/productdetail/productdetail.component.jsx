@@ -2033,6 +2033,21 @@ function ProductDetail() {
               (MRP is inclusive of all taxes)
             </div>
 
+            <Typography
+              style={{
+                marginRight: "8vh",
+                marginTop: "10px",
+                fontFamily: '"Open Sans", sans-serif',
+                color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
+                fontSize: "0.8rem",
+                fontWeight: "600",
+              }}
+            >
+              {productDetail.quantity > 0
+                ? `Only ${productDetail.quantity} pieces left`
+                : "Out of Stock"}
+            </Typography>
+
             <div
               style={{
                 marginRight: "auto",
@@ -2215,20 +2230,6 @@ function ProductDetail() {
                     </Button>
                   )}
                 </div>
-                <Typography
-                  style={{
-                    marginRight: "8vh",
-                    marginTop: "10px",
-                    fontFamily: '"Open Sans", sans-serif',
-                    color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
-                    fontSize: "0.9rem",
-                    fontWeight: "600",
-                  }}
-                >
-                  {productDetail.quantity > 0
-                    ? `Only ${productDetail.quantity} pieces left`
-                    : "Out of Stock"}
-                </Typography>
               </>
             ) : (
               <div
@@ -2247,7 +2248,6 @@ function ProductDetail() {
                     background: "#cccccc",
                     fontFamily: '"Open Sans", sans-serif',
                     fontSize: "0.9rem",
-                    fontWeight: "bold",
                   }}
                 >
                   Currently Unavailable
@@ -2260,7 +2260,7 @@ function ProductDetail() {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                marginRight: "8vh",
+                marginRight: "6vh",
                 marginTop: "20px",
               }}
             >
@@ -3300,20 +3300,6 @@ function ProductDetail() {
                       </Button>
                     )}
                   </div>
-                  <Typography
-                    style={{
-                      marginRight: "8vh",
-                      marginTop: "10px",
-                      fontFamily: '"Open Sans", sans-serif',
-                      color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
-                      fontSize: "0.8rem",
-                      fontWeight: "600",
-                    }}
-                  >
-                    {productDetail.quantity > 0
-                      ? `Only ${productDetail.quantity} pieces left`
-                      : "Out of Stock"}
-                  </Typography>
                 </>
               ) : (
                 <div
