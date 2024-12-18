@@ -20,6 +20,7 @@ import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
+import Button from "@mui/joy/Button";
 import {
   AppBar,
   Avatar,
@@ -282,8 +283,7 @@ const Navbar = () => {
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
     navigate(
-      `/jwellery/${category + "+" + menuItem.name}/${
-        menuItem.id
+      `/jwellery/${category + "+" + menuItem.name}/${menuItem.id
       }/${!isSubCategory}`
     );
   };
@@ -590,24 +590,22 @@ const Navbar = () => {
             </div>
             <div style={{ padding: "16px", borderTop: "1px solid #e0e0e0" }}>
               <ListItem
-                button
                 onClick={() =>
                   window.open("https://seller.sadashrijewelkart.com", "_blank")
                 }
               >
-                <div
+                <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.8rem",
+                    fontWeight: "bold",
                     color: "#a36e29",
-                    textDecoration: "underline",
-                    fontWeight: "600",
-                    width: "100%",
-                    textAlign: "center",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
+                    cursor: "pointer",
                   }}
-                >
+                  onClick={() => (window.location.href = "https://seller.sadashrijewelkart.com")}
+>
                   Become a Seller
-                </div>
+                </Typography>
               </ListItem>
             </div>
           </div>
@@ -838,25 +836,17 @@ const Navbar = () => {
               </React.Fragment>
             ))}
           </List>
-
-          <div
+          <Button
             style={{
-              marginTop: "auto",
-              marginBottom: "20px",
-              marginLeft: "20px",
-              fontFamily: '"Open Sans", sans-serif',
-              fontSize: "0.8rem",
+              fontWeight: "bold",
               color: "#a36e29",
-              textDecoration: "underline",
-              fontWeight: "600",
-              cursor: "pointer",
+              fontFamily: '"Open Sans", sans-serif',
+              fontSize: "1.2rem",
             }}
-            onClick={() =>
-              window.open("https://seller.sadashrijewelkart.com", "_blank")
-            }
+            onClick={() => window.open("https://seller.sadashrijewelkart.com", "_blank")}
           >
             Become a Seller
-          </div>
+          </Button>
         </Drawer>
         <AppBar elevation={0} position="fixed" className="appbar">
           <div className="rates">

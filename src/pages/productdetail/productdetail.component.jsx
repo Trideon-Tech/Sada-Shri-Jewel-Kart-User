@@ -18,6 +18,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
+import ListItem from "@mui/joy/ListItem";
 import {
   Box,
   Button,
@@ -1986,16 +1987,22 @@ function ProductDetail() {
                 marginTop: "3%",
               }}
             >
-              <Typography
-                style={{
-                  fontWeight: "bold",
-                  color: "#a36e29",
-                  fontFamily: '"Open Sans", sans-serif',
-                  fontSize: "1.2rem",
-                }}
+                <ListItem
+                onClick={() =>
+                  window.open("https://seller.sadashrijewelkart.com", "_blank")
+                }
               >
-                ₹{productDetail?.customizations?.variants?.options[0]?.price}
-              </Typography>
+                <Typography
+                  style={{
+                    fontWeight: "bold",
+                    color: "#a36e29",
+                    fontFamily: '"Open Sans", sans-serif',
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  ₹{productDetail?.customizations?.variants?.options[0]?.price}
+                </Typography>
+              </ListItem>
               <Typography
                 style={{
                   marginRight: "10px",
@@ -2215,7 +2222,6 @@ function ProductDetail() {
                           "linear-gradient(to right, #d4a76a, #a36e29)",
                         fontFamily: '"Open Sans", sans-serif',
                         fontSize: "0.9rem",
-                        fontWeight: "bold",
                         marginLeft: "5px",
                       }}
                       onClick={() => setDrawerOpen(true)}
