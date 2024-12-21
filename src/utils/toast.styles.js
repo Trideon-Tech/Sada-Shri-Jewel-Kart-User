@@ -18,7 +18,7 @@ export const generalToastStyle = {
     />
   ),
   style: {
-    fontFamily: '"Open Sans", sans-serif',
+    fontFamily: '"Roboto", sans-serif',
     fontSize: "0.8rem",
     fontWeight: 600,
   },

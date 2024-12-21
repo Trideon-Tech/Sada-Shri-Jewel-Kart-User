@@ -143,7 +143,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
             style={{
               fontSize: "1.5rem",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
             }}
           >
             {productDetails.name}
@@ -159,7 +159,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
           <Typography
             style={{
               fontSize: "0.7rem",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
             }}
           >
             {" "}
@@ -258,7 +258,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
               height: "22px",
               marginTop: "2%",
               "& input": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
               "& .MuiOutlinedInput-root": {
@@ -273,7 +273,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
                 },
               },
               "& .MuiInputLabel-root": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 color: "#00000",
               },
@@ -296,11 +296,11 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
               width: matches ? "50%" : "100%",
               marginTop: matches ? "5%" : "10%",
               "& .MuiInputBase-root": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
               "& textarea": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
               "& .MuiOutlinedInput-root": {
@@ -315,7 +315,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
                 },
               },
               "& .MuiInputLabel-root": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 color: "#5a5a5a",
               },
@@ -327,7 +327,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
             style={{
               width: "50%",
               background: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
             onClick={() => addReviewHandler()}
@@ -339,7 +339,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
       <Typography
         style={{
           fontWeight: "bold",
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "1.2rem",
           marginRight: "auto",
         }}

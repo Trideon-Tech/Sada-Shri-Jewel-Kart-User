@@ -264,7 +264,7 @@ export default function CartTotal({
                 <p
                   style={{
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                     margin: 0,
                     padding: 0,
@@ -297,7 +297,7 @@ export default function CartTotal({
                     fontSize: "1rem",
                     textAlign: "center",
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   Add your Pincode to
@@ -312,7 +312,7 @@ export default function CartTotal({
                     height: "3rem",
                     backgroundColor: "#F9F5EC",
                     border: 0,
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                   placeholder="Enter your pincode"
@@ -329,7 +329,7 @@ export default function CartTotal({
                       style={{
                         fontWeight: 600,
                         color: "#A36E29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         cursor: "pointer",
                       }}
@@ -374,7 +374,7 @@ export default function CartTotal({
                   <LocalShippingOutlined />
                   <span
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "bold",
                       marginLeft: "10px",
@@ -400,7 +400,7 @@ export default function CartTotal({
                 <div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "1rem",
                       fontWeight: "bold",
                       marginBottom: "3px",
@@ -410,7 +410,7 @@ export default function CartTotal({
                   </div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.6rem",
                       fontWeight: "bold",
                       marginTop: "3px",
@@ -427,7 +427,7 @@ export default function CartTotal({
                 >
                   <p
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.85rem",
                       fontWeight: "bold",
                       color: "#A36E29",
@@ -480,7 +480,7 @@ export default function CartTotal({
                 <p
                   style={{
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                     margin: 0,
                     padding: 0,
@@ -513,7 +513,7 @@ export default function CartTotal({
                     fontSize: "1rem",
                     textAlign: "center",
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   Add your Pincode to
@@ -528,7 +528,7 @@ export default function CartTotal({
                     height: "3rem",
                     backgroundColor: "#F9F5EC",
                     border: 0,
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                   placeholder="Enter your pincode"
@@ -545,7 +545,7 @@ export default function CartTotal({
                       style={{
                         fontWeight: 600,
                         color: "#A36E29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         cursor: "pointer",
                       }}
@@ -588,7 +588,7 @@ export default function CartTotal({
                   <LocalShippingOutlined />
                   <span
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "bold",
                       marginLeft: "10px",
@@ -614,7 +614,7 @@ export default function CartTotal({
                 <div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "1rem",
                       fontWeight: "bold",
                       marginBottom: "3px",
@@ -624,7 +624,7 @@ export default function CartTotal({
                   </div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.6rem",
                       fontWeight: "bold",
                       marginTop: "3px",
@@ -641,7 +641,7 @@ export default function CartTotal({
                 >
                   <p
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.85rem",
                       fontWeight: "bold",
                       color: "#A36E29",
@@ -703,7 +703,7 @@ export default function CartTotal({
             <Typography
               style={{
                 marginLeft: "2%",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginRight: "auto",
               }}
@@ -725,7 +725,7 @@ export default function CartTotal({
                 color: "#A36E29",
                 fontWeight: "bold",
                 textTransform: "none",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
               onClick={() => {
                 setCoinsApplied(!coinsApplied);
@@ -753,7 +753,7 @@ export default function CartTotal({
             <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginRight: "auto",
                 marginLeft: "2%",
@@ -776,7 +776,7 @@ export default function CartTotal({
                 color: "#A36E29",
                 fontWeight: "bold",
                 textTransform: "none",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
               onClick={openLocationModal}
             >
@@ -805,7 +805,7 @@ export default function CartTotal({
               style={{
                 marginLeft: "5%",
                 marginRight: "auto",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 color: selectedCouponCode ? "#A36E29" : "black",
                 fontWeight: selectedCouponCode ? "bold" : "normal",
@@ -845,7 +845,7 @@ export default function CartTotal({
               style={{
                 textAlign: "left",
                 fontWeight: "bold",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1.2rem",
               }}
             >
@@ -862,7 +862,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -870,7 +870,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "black",
                   fontWeight: "bold",
@@ -891,7 +891,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -899,7 +899,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "black",
                   fontWeight: "bold",
@@ -920,7 +920,7 @@ export default function CartTotal({
               >
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                 >
@@ -928,7 +928,7 @@ export default function CartTotal({
                 </Typography>
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     color: "black",
                     fontWeight: "bold",
@@ -949,7 +949,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -957,7 +957,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "black",
                   fontWeight: "bold",
@@ -981,7 +981,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   color: "black",
                   fontWeight: "bold",
@@ -991,7 +991,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.1rem",
                   color: "#A36E29",
                   fontWeight: "bold",
@@ -1013,7 +1013,7 @@ export default function CartTotal({
               backgroundColor: "#a36e29",
               borderRadius: "10px",
               elevation: "0",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "600",
               background:
@@ -1071,7 +1071,7 @@ export default function CartTotal({
             <Typography
               style={{
                 marginLeft: "2%",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginRight: "auto",
               }}
@@ -1093,7 +1093,7 @@ export default function CartTotal({
                 color: "#A36E29",
                 fontWeight: "bold",
                 textTransform: "none",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
               onClick={() => {
                 setCoinsApplied(!coinsApplied);
@@ -1121,7 +1121,7 @@ export default function CartTotal({
             <PinDropIcon style={{ fontSize: "2rem", color: "#A36E29" }} />
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginRight: "auto",
                 marginLeft: "2%",
@@ -1144,7 +1144,7 @@ export default function CartTotal({
                 color: "#A36E29",
                 fontWeight: "bold",
                 textTransform: "none",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
               onClick={() => setMobileLocationModalOpen(true)}
             >
@@ -1173,7 +1173,7 @@ export default function CartTotal({
               style={{
                 marginLeft: "5%",
                 marginRight: "auto",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 color: selectedCouponCode ? "#A36E29" : "black",
                 fontWeight: selectedCouponCode ? "bold" : "normal",
@@ -1213,7 +1213,7 @@ export default function CartTotal({
               style={{
                 textAlign: "left",
                 fontWeight: "bold",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1.2rem",
               }}
             >
@@ -1230,7 +1230,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -1238,7 +1238,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "black",
                   fontWeight: "bold",
@@ -1259,7 +1259,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -1267,7 +1267,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "black",
                   fontWeight: "bold",
@@ -1288,7 +1288,7 @@ export default function CartTotal({
               >
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                 >
@@ -1296,7 +1296,7 @@ export default function CartTotal({
                 </Typography>
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     color: "black",
                     fontWeight: "bold",
@@ -1317,7 +1317,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -1325,7 +1325,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "black",
                   fontWeight: "bold",
@@ -1349,7 +1349,7 @@ export default function CartTotal({
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   color: "black",
                   fontWeight: "bold",
@@ -1359,7 +1359,7 @@ export default function CartTotal({
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.1rem",
                   color: "#A36E29",
                   fontWeight: "bold",
@@ -1381,7 +1381,7 @@ export default function CartTotal({
               backgroundColor: "#a36e29",
               borderRadius: "10px",
               elevation: "0",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "600",
               background:

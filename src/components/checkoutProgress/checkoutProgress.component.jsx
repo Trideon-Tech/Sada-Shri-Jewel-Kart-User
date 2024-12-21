@@ -87,7 +87,7 @@ const CheckoutProgressBar = ({ activeStep }) => {
           >
             <span
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >

@@ -95,7 +95,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
             fontWeight: "bold",
             color: "#505050",
             marginBottom: "1%",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
           }}
         >
@@ -112,7 +112,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
         >
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -120,7 +120,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
           </Typography>
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -139,7 +139,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
         >
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -155,7 +155,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
           </Typography>
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -175,7 +175,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
           >
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -183,7 +183,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -203,7 +203,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
         >
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "bold",
             }}
@@ -212,7 +212,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
           </Typography>
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "bold",
             }}

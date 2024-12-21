@@ -27,7 +27,7 @@ const ContactUs = () => {
           variant="h4"
           sx={{
             marginBottom: "30px",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontWeight: 700,
             color: "#a36e29",
             marginTop: matches ? "30px" : "120px",
@@ -52,11 +52,11 @@ const ContactUs = () => {
             <LocationOnIcon sx={{ color: "#a36e29", fontSize: "1rem" }} />
             <Box>
               <Typography
-                sx={{ fontWeight: 600, fontFamily: '"Open Sans", sans-serif' }}
+                sx={{ fontWeight: 600, fontFamily: '"Roboto", sans-serif' }}
               >
                 Address
               </Typography>
-              <Typography sx={{ fontFamily: '"Open Sans", sans-serif' }}>
+              <Typography sx={{ fontFamily: '"Roboto", sans-serif' }}>
                 No. 1323/1324, 16th B Cross,
                 <br />
                 Housing Board Colony EWS 3rd Phase,
@@ -72,11 +72,11 @@ const ContactUs = () => {
             <PhoneIcon sx={{ color: "#a36e29", fontSize: "1rem" }} />
             <Box>
               <Typography
-                sx={{ fontWeight: 600, fontFamily: '"Open Sans", sans-serif' }}
+                sx={{ fontWeight: 600, fontFamily: '"Roboto", sans-serif' }}
               >
                 Phone
               </Typography>
-              <Typography sx={{ fontFamily: '"Open Sans", sans-serif' }}>
+              <Typography sx={{ fontFamily: '"Roboto", sans-serif' }}>
                 +91 98765 43210
               </Typography>
             </Box>
@@ -86,11 +86,11 @@ const ContactUs = () => {
             <EmailIcon sx={{ color: "#a36e29", fontSize: "1rem" }} />
             <Box>
               <Typography
-                sx={{ fontWeight: 600, fontFamily: '"Open Sans", sans-serif' }}
+                sx={{ fontWeight: 600, fontFamily: '"Roboto", sans-serif' }}
               >
                 Email
               </Typography>
-              <Typography sx={{ fontFamily: '"Open Sans", sans-serif' }}>
+              <Typography sx={{ fontFamily: '"Roboto", sans-serif' }}>
                 contact@sadashrijewelkart.com
               </Typography>
             </Box>

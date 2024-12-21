@@ -261,7 +261,7 @@ const Orders = () => {
             style={{
               fontWeight: 700,
               marginBottom: "20px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               textAlign: "center",
             }}
@@ -282,7 +282,7 @@ const Orders = () => {
                 fontWeight: "bold",
                 border: "2px solid #a36e29",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               onClick={() => {
@@ -299,7 +299,7 @@ const Orders = () => {
                 width: "48%",
                 fontWeight: "bold",
                 background: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               onClick={() => {
@@ -341,7 +341,7 @@ const Orders = () => {
             style={{
               fontWeight: 700,
               marginBottom: "20px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
             }}
           >
@@ -401,7 +401,7 @@ const Orders = () => {
                 style={{
                   textAlign: "left",
                   fontWeight: "bold",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                 }}
               >
@@ -430,7 +430,7 @@ const Orders = () => {
                   <Typography
                     style={{
                       color: "gray",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -439,7 +439,7 @@ const Orders = () => {
                   <Typography
                     style={{
                       color: "gray",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       marginLeft: "10px",
                     }}
@@ -453,7 +453,7 @@ const Orders = () => {
                   marginTop: "2%",
                   fontSize: "1rem",
                   fontWeight: "bold",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                 }}
               >
                 <span style={{ fontWeight: "normal" }}>Price :</span> ₹
@@ -473,7 +473,7 @@ const Orders = () => {
                 style={{
                   marginBottom: "20px",
                   fontWeight: "bold",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontWeight: "1rem",
                 }}
               >
@@ -537,7 +537,7 @@ const Orders = () => {
             style={{
               width: "100%",
               height: "100px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontWeight: "0.8rem",
               borderColor: "#e7e7e7",
               marginBottom: "20px",
@@ -576,7 +576,7 @@ const Orders = () => {
                 width: "32%",
                 fontWeight: "bold",
                 background: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               onClick={() => {
@@ -608,7 +608,7 @@ const Orders = () => {
         <Typography
           style={{
             marginTop: "20px",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.2rem",
             fontWeight: "bold",
           }}
@@ -637,7 +637,7 @@ const Orders = () => {
             bgcolor: "#f7f7f7",
             color: "#00000090",
             fontWeight: "bold",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
 
             [`& .${tabClasses.root}[aria-selected="true"]`]: {
@@ -748,7 +748,7 @@ const Orders = () => {
             label="Profile"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -758,7 +758,7 @@ const Orders = () => {
             label="Orders"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
                 color: "white",
@@ -771,7 +771,7 @@ const Orders = () => {
             label="Address"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -781,7 +781,7 @@ const Orders = () => {
             label="Wallet"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -813,7 +813,7 @@ const Orders = () => {
           <Typography
             style={{
               marginTop: "20px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               fontWeight: "bold",
             }}
@@ -839,7 +839,7 @@ const Orders = () => {
               bgcolor: "#f7f7f7",
               color: "#00000090",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
 
               [`& .${tabClasses.root}[aria-selected="true"]`]: {

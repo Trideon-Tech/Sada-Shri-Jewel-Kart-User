@@ -25,7 +25,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
         <Rating name="size-large" value={rating} size="medium" readOnly />
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
           }}
         >
@@ -34,7 +34,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
       </Box>
       <Typography
         style={{
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "0.8rem",
           marginTop: "10px",
         }}
@@ -47,7 +47,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
           fullWidth
           style={{
             background: "linear-gradient(to right, #d4a76a, #a36e29)",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
             marginTop: "10px",
             marginBottom: "10px",
@@ -63,7 +63,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
           disabled
           style={{
             background: "#cccccc",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
             marginTop: "10px",
             marginBottom: "10px",

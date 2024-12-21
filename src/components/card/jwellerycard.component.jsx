@@ -214,7 +214,7 @@ const JwelleryCard = ({
               style={{
                 fontWeight: "bold",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1.2rem",
               }}
             >
@@ -226,7 +226,7 @@ const JwelleryCard = ({
                 marginLeft: "3%",
                 color: "gray",
                 textDecoration: "line-through",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
               }}
             >
@@ -238,7 +238,7 @@ const JwelleryCard = ({
               marginBottom: "3%",
               color: "gray",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -253,7 +253,7 @@ const JwelleryCard = ({
                 marginTop: "3%",
                 marginBottom: "3%",
                 background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               onClick={handleAddToCart}
@@ -268,7 +268,7 @@ const JwelleryCard = ({
                 fontWeight: "bold",
                 marginTop: "3%",
                 marginBottom: "3%",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 background: "linear-gradient(to right, #d4a76a, #a36e29)",
               }}
@@ -361,7 +361,7 @@ const JwelleryCard = ({
               style={{
                 fontWeight: "bold",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
               }}
             >
@@ -373,7 +373,7 @@ const JwelleryCard = ({
                 marginLeft: "3%",
                 color: "gray",
                 textDecoration: "line-through",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -385,7 +385,7 @@ const JwelleryCard = ({
               marginBottom: "3%",
               color: "gray",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -399,7 +399,7 @@ const JwelleryCard = ({
                 fontWeight: "bold",
                 marginTop: "3%",
                 background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               onClick={handleAddToCart}
@@ -413,7 +413,7 @@ const JwelleryCard = ({
                 width: "100%",
                 fontWeight: "bold",
                 marginTop: "3%",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 background: "linear-gradient(to right, #d4a76a, #a36e29)",
                 fontSize: "0.8rem",
               }}

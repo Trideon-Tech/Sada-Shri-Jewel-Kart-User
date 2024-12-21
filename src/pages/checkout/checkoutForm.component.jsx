@@ -40,7 +40,7 @@ const SelectAddressStep = ({
           color: "black",
           fontWeight: "bold",
           marginBottom: "3%",
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "1.2rem",
         }}
       >
@@ -54,7 +54,7 @@ const SelectAddressStep = ({
       <Button
         fullWidth
         style={{
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "1rem",
           fontWeight: "bold",
           background:
@@ -92,7 +92,7 @@ const SelectPaymentMethodStep = ({
           color: "black",
           fontWeight: "bold",
           marginBottom: "3%",
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "1.2rem",
         }}
       >
@@ -120,7 +120,7 @@ const SelectPaymentMethodStep = ({
             width: "47%",
             minHeight: 50,
             border: "2px solid rgba(163,110,41,1)",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
           }}
           onClick={() => setActiveStep(activeStep - 1)}
@@ -132,7 +132,7 @@ const SelectPaymentMethodStep = ({
           style={{
             width: "47%",
             minHeight: 50,
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
             background:
               "linear-gradient(to right, #d4a76a, #a36e29)",

@@ -85,7 +85,7 @@ const SearchResult = () => {
               placeholder="Search for Jewellery..."
               style={{
                 width: "100%",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               value={searchTerm}
@@ -128,7 +128,7 @@ const SearchResult = () => {
                 >
                   <Typography
                     sx={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >

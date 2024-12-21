@@ -586,7 +586,7 @@ function ProductDetail() {
                 <p
                   style={{
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                     margin: 0,
                     padding: 0,
@@ -619,7 +619,7 @@ function ProductDetail() {
                     fontSize: "1rem",
                     textAlign: "center",
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   Add your Pincode to
@@ -634,7 +634,7 @@ function ProductDetail() {
                     height: "3rem",
                     backgroundColor: "#F9F5EC",
                     border: 0,
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                   placeholder="Enter your pincode"
@@ -651,7 +651,7 @@ function ProductDetail() {
                       style={{
                         fontWeight: 600,
                         color: "#A36E29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         cursor: "pointer",
                       }}
@@ -696,7 +696,7 @@ function ProductDetail() {
                   <LocalShippingOutlined />
                   <span
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "bold",
                       marginLeft: "10px",
@@ -722,7 +722,7 @@ function ProductDetail() {
                 <div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "1rem",
                       fontWeight: "bold",
                       marginBottom: "3px",
@@ -732,7 +732,7 @@ function ProductDetail() {
                   </div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.6rem",
                       fontWeight: "bold",
                       marginTop: "3px",
@@ -749,7 +749,7 @@ function ProductDetail() {
                 >
                   <p
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.85rem",
                       fontWeight: "bold",
                       color: "#A36E29",
@@ -804,7 +804,7 @@ function ProductDetail() {
                 <p
                   style={{
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                     margin: 0,
                     padding: 0,
@@ -837,7 +837,7 @@ function ProductDetail() {
                     fontSize: "1rem",
                     textAlign: "center",
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   Add your Pincode to
@@ -852,7 +852,7 @@ function ProductDetail() {
                     height: "3rem",
                     backgroundColor: "#F9F5EC",
                     border: 0,
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                   placeholder="Enter your pincode"
@@ -869,7 +869,7 @@ function ProductDetail() {
                       style={{
                         fontWeight: 600,
                         color: "#A36E29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         cursor: "pointer",
                       }}
@@ -912,7 +912,7 @@ function ProductDetail() {
                   <LocalShippingOutlined />
                   <span
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "bold",
                       marginLeft: "10px",
@@ -938,7 +938,7 @@ function ProductDetail() {
                 <div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "1rem",
                       fontWeight: "bold",
                       marginBottom: "3px",
@@ -948,7 +948,7 @@ function ProductDetail() {
                   </div>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.6rem",
                       fontWeight: "bold",
                       marginTop: "3px",
@@ -965,7 +965,7 @@ function ProductDetail() {
                 >
                   <p
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.85rem",
                       fontWeight: "bold",
                       color: "#A36E29",
@@ -1009,7 +1009,7 @@ function ProductDetail() {
         >
           <div
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               fontWeight: "bold",
             }}
@@ -1047,7 +1047,7 @@ function ProductDetail() {
             <Typography
               style={{
                 color: "#707070",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
             >
               Via WhatsApp
@@ -1083,7 +1083,7 @@ function ProductDetail() {
             <Typography
               style={{
                 color: "#707070",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
             >
               Copy URL
@@ -1111,7 +1111,7 @@ function ProductDetail() {
       >
         <div
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.6rem",
             fontWeight: "600",
             backgroundColor: "#E0B872",
@@ -1147,7 +1147,7 @@ function ProductDetail() {
                     fontWeight: "bold",
                     color: "black",
                     marginBottom: mediaQuery ? "3%" : "4%",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: mediaQuery ? "1.5rem" : "1.2rem",
                   }}
                 >
@@ -1215,7 +1215,7 @@ function ProductDetail() {
                     style={{
                       textAlign: "left",
                       fontWeight: "bold",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: mediaQuery ? "1rem" : "0.9rem",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
@@ -1247,7 +1247,7 @@ function ProductDetail() {
                       <Typography
                         style={{
                           color: "gray",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                         }}
                       >
@@ -1256,7 +1256,7 @@ function ProductDetail() {
                       <Typography
                         style={{
                           color: "gray",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                           marginLeft: "10px",
                         }}
@@ -1289,7 +1289,7 @@ function ProductDetail() {
                         <Typography
                           style={{
                             color: "gray",
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                             marginRight: "10px",
                           }}
@@ -1322,7 +1322,7 @@ function ProductDetail() {
                       <Typography
                         style={{
                           color: "gray",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                         }}
                       >
@@ -1331,7 +1331,7 @@ function ProductDetail() {
                       <Typography
                         style={{
                           color: "gray",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                           marginLeft: "10px",
                         }}
@@ -1346,7 +1346,7 @@ function ProductDetail() {
                       marginBottom: "10px",
                       fontSize: mediaQuery ? "1rem" : "0.9rem",
                       fontWeight: "bold",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                     }}
                   >
                     <span style={{ fontWeight: "normal" }}>Price :</span> ₹
@@ -1380,7 +1380,7 @@ function ProductDetail() {
                       />
                       <Typography
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontWeight: 600,
                           fontSize: mediaQuery ? "1rem" : "0.9rem",
                         }}
@@ -1391,7 +1391,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         color: "gray",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                       }}
                     >
@@ -1448,7 +1448,7 @@ function ProductDetail() {
                     <Typography
                       sx={{
                         fontSize: mediaQuery ? "1.2rem" : "1rem",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontWeight: "bold",
                         margin: 0,
                       }}
@@ -1508,7 +1508,7 @@ function ProductDetail() {
                           <Box>
                             <Typography
                               sx={{
-                                fontFamily: '"Open Sans", sans-serif',
+                                fontFamily: '"Roboto", sans-serif',
                                 fontWeight: "bold",
                                 fontSize: mediaQuery ? "1rem" : "0.9rem",
                                 color: "#a36e29",
@@ -1518,7 +1518,7 @@ function ProductDetail() {
                             </Typography>
                             <Typography
                               sx={{
-                                fontFamily: '"Open Sans", sans-serif',
+                                fontFamily: '"Roboto", sans-serif',
                                 fontSize: mediaQuery ? "0.8rem" : "0.75rem",
                                 color: "gray",
                               }}
@@ -1558,7 +1558,7 @@ function ProductDetail() {
               >
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontWeight: "bold",
                     fontSize: mediaQuery ? "1rem" : "0.9rem",
                     marginBottom: "16px",
@@ -1573,7 +1573,7 @@ function ProductDetail() {
                   >
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.9rem" : "0.85rem",
                         color: "gray",
                       }}
@@ -1582,7 +1582,7 @@ function ProductDetail() {
                     </Typography>
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.9rem" : "0.85rem",
                       }}
                     >
@@ -1599,7 +1599,7 @@ function ProductDetail() {
                   >
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.9rem" : "0.85rem",
                         color: "gray",
                       }}
@@ -1608,7 +1608,7 @@ function ProductDetail() {
                     </Typography>
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.9rem" : "0.85rem",
                         color: "#d32f2f",
                       }}
@@ -1622,7 +1622,7 @@ function ProductDetail() {
                   >
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.9rem" : "0.85rem",
                         color: "gray",
                       }}
@@ -1631,7 +1631,7 @@ function ProductDetail() {
                     </Typography>
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: mediaQuery ? "0.9rem" : "0.85rem",
                         color: "#2e7d32",
                       }}
@@ -1647,7 +1647,7 @@ function ProductDetail() {
                   >
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "1rem",
                         fontWeight: "bold",
                       }}
@@ -1656,7 +1656,7 @@ function ProductDetail() {
                     </Typography>
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "1rem",
                         fontWeight: "bold",
                       }}
@@ -1678,7 +1678,7 @@ function ProductDetail() {
                 fullWidth
                 sx={{
                   bgcolor: "#a36e29",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   width: mediaQuery ? "95%" : "90%",
                   marginTop: mediaQuery ? "" : "18px",
                   "&:hover": {
@@ -1918,7 +1918,7 @@ function ProductDetail() {
               >
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     marginRight: "5px",
                     color: "grey",
@@ -1931,7 +1931,7 @@ function ProductDetail() {
                 />
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     marginLeft: "5px",
                     color: "grey",
@@ -2002,7 +2002,7 @@ function ProductDetail() {
                   style={{
                     fontWeight: "bold",
                     color: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                   }}
                 >
@@ -2015,7 +2015,7 @@ function ProductDetail() {
                   marginLeft: "3%",
                   color: "gray",
                   textDecoration: "line-through",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                 }}
               >
@@ -2029,7 +2029,7 @@ function ProductDetail() {
                 style={{
                   marginRight: "auto",
                   color: "green",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                 }}
               >
                 (20% OFF)
@@ -2039,7 +2039,7 @@ function ProductDetail() {
               style={{
                 marginRight: "auto",
                 color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -2050,7 +2050,7 @@ function ProductDetail() {
               style={{
                 marginRight: "8vh",
                 marginTop: "10px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
                 fontSize: "0.8rem",
                 fontWeight: "600",
@@ -2065,7 +2065,7 @@ function ProductDetail() {
               style={{
                 marginRight: "auto",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1.4rem",
                 marginTop: "20px",
                 fontWeight: "bold",
@@ -2085,7 +2085,7 @@ function ProductDetail() {
                 display: "flex",
                 justifyContent: "space-around",
                 alignItems: "center",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
               }}
             >
               <div
@@ -2164,7 +2164,7 @@ function ProductDetail() {
                 <div
                   style={{
                     marginTop: "10px",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     color: "white",
                     fontWeight: "600",
                     cursor: "pointer",
@@ -2208,7 +2208,7 @@ function ProductDetail() {
                     style={{
                       fontWeight: "bold",
                       color: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.9rem",
                       marginRight: "5px",
                       background: "transparent",
@@ -2242,7 +2242,7 @@ function ProductDetail() {
                         fontWeight: "bold",
                         background:
                           "linear-gradient(to right, #d4a76a, #a36e29)",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.9rem",
                         marginLeft: "5px",
                       }}
@@ -2274,7 +2274,7 @@ function ProductDetail() {
                   style={{
                     fontWeight: "bold",
                     background: "#cccccc",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.9rem",
                   }}
                 >
@@ -2294,7 +2294,7 @@ function ProductDetail() {
             >
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.1rem",
                   fontWeight: "600",
                   marginBottom: "-8px",
@@ -2308,7 +2308,7 @@ function ProductDetail() {
               </Box>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.1rem",
                   fontWeight: "600",
                   marginTop: "20px",
@@ -2316,61 +2316,26 @@ function ProductDetail() {
               >
                 Verify Product Credentials
               </Typography>
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    color: "#a36e29",
-                    borderColor: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  BIS Care
-                </Button>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    color: "#a36e29",
-                    borderColor: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  GIA Link
-                </Button>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    color: "#a36e29",
-                    borderColor: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  IGI Link
-                </Button>
-              </Box>
             </Box>
 
-            <Box
+            <Grid
+              container
+              spacing={4} // Increased spacing between grid items
               sx={{
-                display: "flex",
-                gap: 2,
                 marginRight: "8vh",
                 marginTop: "20px",
+                marginBottom: "20px", // Added bottom margin
+                padding: "0 20px", // Added horizontal padding
               }}
             >
-              <Box
+              <Grid
+                item
+                xs={3}
                 sx={{
-                  borderRadius: "8px",
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2380,22 +2345,23 @@ function ProductDetail() {
                 }
               >
                 <img
-                  src={process.env.PUBLIC_URL + "/assets/1.svg"}
+                  src={process.env.PUBLIC_URL + "/assets/17.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "120px",
-                    height: "120px",
+                    width: "100px",
+                    height: "100px",
                     objectFit: "contain",
                   }}
                 />
-              </Box>
-              <Box
+              </Grid>
+              <Grid
+                item
+                xs={3}
                 sx={{
-                  borderRadius: "8px",
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2405,22 +2371,23 @@ function ProductDetail() {
                 }
               >
                 <img
-                  src={process.env.PUBLIC_URL + "/assets/2.svg"}
+                  src={process.env.PUBLIC_URL + "/assets/3.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "120px",
-                    height: "120px",
+                    width: "100px",
+                    height: "100px",
                     objectFit: "contain",
                   }}
                 />
-              </Box>
-              <Box
+              </Grid>
+              <Grid
+                item
+                xs={3}
                 sx={{
-                  borderRadius: "8px",
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2430,22 +2397,23 @@ function ProductDetail() {
                 }
               >
                 <img
-                  src={process.env.PUBLIC_URL + "/assets/3.svg"}
+                  src={process.env.PUBLIC_URL + "/assets/2.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "120px",
-                    height: "120px",
+                    width: "100px",
+                    height: "100px",
                     objectFit: "contain",
                   }}
                 />
-              </Box>
-              <Box
+              </Grid>
+              <Grid
+                item
+                xs={3}
                 sx={{
-                  borderRadius: "8px",
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2455,22 +2423,83 @@ function ProductDetail() {
                 }
               >
                 <img
-                  src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                  src={process.env.PUBLIC_URL + "/assets/1.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "120px",
-                    height: "120px",
+                    width: "100px",
+                    height: "100px",
                     objectFit: "contain",
                   }}
                 />
-              </Box>
-            </Box>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/14.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/15.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={3}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  padding: "10px", // Added padding around each grid item
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                  alt="Delivery Icon"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "contain",
+                  }}
+                />
+              </Grid>
+            </Grid>
             <Typography
               sx={{
                 display: "flex",
                 alignItems: "start",
                 color: "#666",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "500",
                 marginTop: "30px",
@@ -2491,7 +2520,7 @@ function ProductDetail() {
                 border: "2px solid #e1e1e1",
                 borderRadius: "10px",
                 marginBottom: "20px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "bold",
                 color: "#A36E29",
@@ -2511,7 +2540,7 @@ function ProductDetail() {
                 <LocalShippingOutlined className="delivery-icon" />
                 <span
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "500",
                     color: "grey",
@@ -2530,7 +2559,7 @@ function ProductDetail() {
                 marginTop: "20px",
                 borderRadius: "10px",
                 padding: "10px 25px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 paddingBottom: "20px",
               }}
             >
@@ -2553,7 +2582,7 @@ function ProductDetail() {
                   marginTop: "20px",
                   borderRadius: "10px",
                   padding: "10px 20px",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   border: "1px solid #e1e1e1",
                   boxShadow: "0px 0px 5px 0px #a36e29",
                 }}
@@ -2785,7 +2814,7 @@ function ProductDetail() {
                   marginTop: "20px",
                   borderRadius: "10px",
                   padding: "10px 20px",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   border: "1px solid #e1e1e1",
                   boxShadow: "0px 0px 5px 0px #a36e29",
                 }}
@@ -2967,7 +2996,7 @@ function ProductDetail() {
                   fontWeight: "bold",
                   marginTop: "5%",
                   marginBottom: "2%",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.2rem",
                 }}
               >
@@ -3056,7 +3085,7 @@ function ProductDetail() {
                 <Typography
                   style={{
                     fontWeight: "bold",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                   }}
                 >
@@ -3085,7 +3114,7 @@ function ProductDetail() {
                 >
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       color: "grey",
                       marginRight: "5px",
@@ -3098,7 +3127,7 @@ function ProductDetail() {
                   />
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       color: "grey",
                       marginLeft: "5px",
@@ -3151,7 +3180,7 @@ function ProductDetail() {
                   fontSize: "0.7rem",
                   color: "#666",
                   marginTop: "4px",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                 }}
               >
                 (MRP inclusive of all taxes)
@@ -3166,7 +3195,7 @@ function ProductDetail() {
                   display: "flex",
                   justifyContent: "space-around",
                   alignItems: "center",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   paddingRight: "10px",
                   width: "85vw",
                 }}
@@ -3249,7 +3278,7 @@ function ProductDetail() {
                       fontSize: "0.8rem",
                       marginTop: "10px",
                       marginBottom: "12px",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       color: "white",
                       fontWeight: "600",
                       cursor: "pointer",
@@ -3275,6 +3304,7 @@ function ProductDetail() {
                       }}
                     />
                   </Tooltip>
+
                 </div>
               }
               {productDetail.admin_verified == 1 ? (
@@ -3292,7 +3322,7 @@ function ProductDetail() {
                       style={{
                         fontWeight: "bold",
                         color: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         fontWeight: "bold",
                         marginRight: "5px",
@@ -3325,7 +3355,7 @@ function ProductDetail() {
                         fullWidth
                         style={{
                           fontWeight: "bold",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           background:
                             "linear-gradient(to right, #d4a76a, #a36e29)",
                           fontSize: "0.8rem",
@@ -3359,7 +3389,7 @@ function ProductDetail() {
                     style={{
                       fontWeight: "bold",
                       background: "#cccccc",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.9rem",
                       fontWeight: "bold",
                     }}
@@ -3379,7 +3409,7 @@ function ProductDetail() {
               >
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.1rem",
                     fontWeight: "600",
                     marginBottom: "-8px",
@@ -3392,7 +3422,7 @@ function ProductDetail() {
                 </Box>
                 <Typography
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.1rem",
                     fontWeight: "600",
                     marginTop: "20px",
@@ -3400,59 +3430,25 @@ function ProductDetail() {
                 >
                   Verify Product Credentials
                 </Typography>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "#a36e29",
-                      borderColor: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    BIS Care
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "#a36e29",
-                      borderColor: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    GIA Link
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                      color: "#a36e29",
-                      borderColor: "#a36e29",
-                      fontFamily: '"Open Sans", sans-serif',
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    IGI Link
-                  </Button>
-                </Box>
               </Box>
-              <Box
+              <Grid
+                container
+                spacing={4} // Increased spacing between grid items
                 sx={{
-                  display: "flex",
-                  marginRight: "8vh",
-                  marginTop: "20px",
+                  marginRight: "10vh",
+                  marginTop: "10px",
+                  marginBottom: "10px", // Added bottom margin
+                  padding: "0 20px", // Added horizontal padding
                 }}
               >
-                <Box
+                <Grid
+                  item
+                  xs={3}
                   sx={{
-                    borderRadius: "8px",
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
+                    padding: "7px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3462,22 +3458,23 @@ function ProductDetail() {
                   }
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
+                    src={process.env.PUBLIC_URL + "/assets/17.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "80px",
-                      height: "80px",
+                      width: "60px",
+                      height: "60px",
                       objectFit: "contain",
                     }}
                   />
-                </Box>
-                <Box
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
                   sx={{
-                    borderRadius: "8px",
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
+                    padding: "10px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3487,22 +3484,23 @@ function ProductDetail() {
                   }
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
+                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "80px",
-                      height: "80px",
+                      width: "60px",
+                      height: "60px",
                       objectFit: "contain",
                     }}
                   />
-                </Box>
-                <Box
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
                   sx={{
-                    borderRadius: "8px",
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
+                    padding: "10px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3512,22 +3510,23 @@ function ProductDetail() {
                   }
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
+                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "80px",
-                      height: "80px",
+                      width: "60px",
+                      height: "60px",
                       objectFit: "contain",
                     }}
                   />
-                </Box>
-                <Box
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
                   sx={{
-                    borderRadius: "8px",
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
+                    padding: "10px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3537,16 +3536,77 @@ function ProductDetail() {
                   }
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "80px",
-                      height: "80px",
+                      width: "60px",
+                      height: "60px",
                       objectFit: "contain",
                     }}
                   />
-                </Box>
-              </Box>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    padding: "10px", // Added padding around each grid item
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/14.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    padding: "10px", // Added padding around each grid item
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/15.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    padding: "10px", // Added padding around each grid item
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+              </Grid>
               <Grid container spacing={3}>
                 <Grid item xs={12} className="location-grid">
                   <Typography
@@ -3554,7 +3614,7 @@ function ProductDetail() {
                       display: "flex",
                       alignItems: "start",
                       color: "#666",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "500",
                       marginTop: "20px",
@@ -3575,7 +3635,7 @@ function ProductDetail() {
                       border: "2px solid #e1e1e1",
                       borderRadius: "10px",
                       marginBottom: "20px",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "bold",
                       color: "#A36E29",
@@ -3589,7 +3649,7 @@ function ProductDetail() {
                       <LocalShippingOutlined className="delivery-icon" />
                       <span
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                           fontWeight: "500",
                           color: "grey",
@@ -3607,7 +3667,7 @@ function ProductDetail() {
                     marginTop: "20px",
                     borderRadius: "10px",
                     padding: "10px 25px",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     paddingBottom: "20px",
                     width: "85vw",
                   }}
@@ -3630,7 +3690,7 @@ function ProductDetail() {
                       marginTop: "20px",
                       borderRadius: "10px",
                       padding: "10px 20px",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       border: "1px solid #e1e1e1",
                       boxShadow: "0px 0px 5px 0px #a36e29",
                     }}
@@ -3886,7 +3946,7 @@ function ProductDetail() {
                       marginTop: "20px",
                       borderRadius: "10px",
                       padding: "10px 20px",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       border: "1px solid #e1e1e1",
                       boxShadow: "0px 0px 5px 0px #a36e29",
                     }}
@@ -4085,7 +4145,7 @@ function ProductDetail() {
                   fontWeight: "bold",
                   marginTop: "2%",
                   paddingTop: "3%",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                 }}
               >

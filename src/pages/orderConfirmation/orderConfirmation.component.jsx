@@ -137,7 +137,7 @@ const OrderConfirmation = () => {
               <p
                 style={{
                   fontWeight: 600,
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: matches ? "1.4rem" : "1.2rem",
                 }}
               >
@@ -151,7 +151,7 @@ const OrderConfirmation = () => {
                   width: "200px",
                   backgroundColor: "white",
                   color: "#a36e29",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   marginBottom: matches ? "" : "20px",
                 }}
@@ -176,7 +176,7 @@ const OrderConfirmation = () => {
                   <div
                     style={{
                       display: "flex",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: matches ? "1.2rem" : "1rem",
                       justifyContent: "flex-start",
                       alignItems: "center",
@@ -237,7 +237,7 @@ const OrderConfirmation = () => {
                         style={{
                           fontWeight: 600,
                           color: "gray",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "1rem",
                         }}
                       >
@@ -245,7 +245,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "10px",
                         }}
@@ -254,7 +254,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "10px",
                           color: "gray",
@@ -272,7 +272,7 @@ const OrderConfirmation = () => {
                         style={{
                           fontWeight: 600,
                           color: "gray",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "1rem",
                         }}
                       >
@@ -280,7 +280,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "10px",
                         }}
@@ -289,7 +289,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "10px",
                         }}
@@ -298,7 +298,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "5px",
                         }}
@@ -307,7 +307,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "5px",
                         }}
@@ -316,7 +316,7 @@ const OrderConfirmation = () => {
                       </div>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.9rem",
                           marginTop: "5px",
                         }}
@@ -356,7 +356,7 @@ const OrderConfirmation = () => {
                         >
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "1.1rem",
                               fontWeight: "600",
                             }}
@@ -366,7 +366,7 @@ const OrderConfirmation = () => {
 
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                               marginTop: "18px",
                             }}
@@ -375,7 +375,7 @@ const OrderConfirmation = () => {
                           </div>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                               marginTop: "8px",
                             }}
@@ -391,7 +391,7 @@ const OrderConfirmation = () => {
                           </div>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                               marginTop: "8px",
                               color:
@@ -429,7 +429,7 @@ const OrderConfirmation = () => {
                           style={{
                             fontWeight: 600,
                             textAlign: "left",
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                           }}
                         >
@@ -444,7 +444,7 @@ const OrderConfirmation = () => {
                         >
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                             }}
                           >
@@ -452,7 +452,7 @@ const OrderConfirmation = () => {
                           </div>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
 
                               fontWeight: "bold",
@@ -470,7 +470,7 @@ const OrderConfirmation = () => {
                         >
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                             }}
                           >
@@ -478,7 +478,7 @@ const OrderConfirmation = () => {
                           </div>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
 
                               fontWeight: "bold",
@@ -502,7 +502,7 @@ const OrderConfirmation = () => {
                         >
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                             }}
                           >
@@ -510,7 +510,7 @@ const OrderConfirmation = () => {
                           </div>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
 
                               fontWeight: "bold",
@@ -529,7 +529,7 @@ const OrderConfirmation = () => {
                         >
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
                             }}
                           >
@@ -537,7 +537,7 @@ const OrderConfirmation = () => {
                           </div>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.9rem",
 
                               fontWeight: "bold",
@@ -563,7 +563,7 @@ const OrderConfirmation = () => {
                           style={{
                             fontWeight: 600,
                             textAlign: "left",
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                           }}
                         >
@@ -571,7 +571,7 @@ const OrderConfirmation = () => {
                         </div>
                         <div
                           style={{
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                             marginTop: "30px",
                           }}
@@ -580,7 +580,7 @@ const OrderConfirmation = () => {
                         </div>
                         <div
                           style={{
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                             marginTop: "10px",
                           }}
@@ -589,7 +589,7 @@ const OrderConfirmation = () => {
                         </div>
                         <div
                           style={{
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                             marginTop: "5px",
                           }}
@@ -598,7 +598,7 @@ const OrderConfirmation = () => {
                         </div>
                         <div
                           style={{
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                             marginTop: "5px",
                           }}
@@ -607,7 +607,7 @@ const OrderConfirmation = () => {
                         </div>
                         <div
                           style={{
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.9rem",
                             marginTop: "5px",
                           }}

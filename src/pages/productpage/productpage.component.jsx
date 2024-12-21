@@ -255,7 +255,7 @@ function Productpage() {
                   style={{
                     marginLeft: "auto",
                     marginRight: "1%",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                 >
@@ -270,14 +270,14 @@ function Productpage() {
                     minWidth: "10rem",
                     background: "none",
                     border: "none",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                   slotProps={{
                     listbox: {
                       sx: {
                         width: "100%",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                       },
                     },
@@ -346,7 +346,7 @@ function Productpage() {
         >
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.4rem",
               fontWeight: "bold",
               color: "#a36e29",
@@ -373,7 +373,7 @@ function Productpage() {
                     fontSize: "small",
                     textDecoration: "none",
                     color: "black",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   Home
@@ -383,7 +383,7 @@ function Productpage() {
                     fontSize: "small",
                     textDecoration: "none",
                     color: "black",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   Jwellery
@@ -393,7 +393,7 @@ function Productpage() {
                     fontSize: "small",
                     textDecoration: "none",
                     color: "black",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                   }}
                 >
                   {isSearchPage ? `Search Results` : menuItemName}
@@ -412,7 +412,7 @@ function Productpage() {
           >
             <div
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1.3rem",
                 fontWeight: "bold",
                 color: "#a36e29",
@@ -436,7 +436,7 @@ function Productpage() {
                 style={{
                   marginLeft: "auto",
                   marginRight: "1%",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -451,14 +451,14 @@ function Productpage() {
                   minWidth: "10rem",
                   background: "none",
                   border: "none",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
                 slotProps={{
                   listbox: {
                     sx: {
                       width: "100%",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     },
                   },
@@ -474,7 +474,7 @@ function Productpage() {
             style={{
               marginLeft: "4vw",
               marginBottom: "10px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.7rem",
               color: "#a36e29",
               textDecoration: "underline",

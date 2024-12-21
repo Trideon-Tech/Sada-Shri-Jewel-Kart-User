@@ -88,7 +88,7 @@ const OrderItem = ({
         <Typography
           style={{
             fontWeight: "bold",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: matches ? "1.2rem" : "1rem",
             color:
               titleColorType === "cancelled"
@@ -129,7 +129,7 @@ const OrderItem = ({
           <Typography
             style={{
               color: "#7e7e7e",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -137,7 +137,7 @@ const OrderItem = ({
           </Typography>
           <div
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
               fontWeight: "bold",
               color: "#a36e29",
@@ -215,7 +215,7 @@ const OrderItem = ({
               <Typography
                 style={{
                   color: "gray",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: matches ? "1rem" : "0.8rem",
                 }}
                 gutterBottom
@@ -227,7 +227,7 @@ const OrderItem = ({
           <Typography
             style={{
               marginTop: "2%",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: matches ? "1rem" : "0.8rem",
               color: "gray",
             }}
@@ -242,7 +242,7 @@ const OrderItem = ({
             style={{
               marginTop: "2%",
               color: "gray",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: matches ? "1rem" : "0.8rem",
             }}
           >
@@ -272,7 +272,7 @@ const OrderItem = ({
               border: "2px solid #a36e29",
               color: "#a36e29",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
             onClick={() => {
@@ -291,7 +291,7 @@ const OrderItem = ({
                 border: "2px solid #a36e29",
                 fontWeight: "bold",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
               onClick={() => {
@@ -311,7 +311,7 @@ const OrderItem = ({
                 height: "100%",
                 background:
                   "linear-gradient(to right, #d4a76a, #a36e29)",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -340,7 +340,7 @@ const OrderItem = ({
                 border: "2px solid #a36e29",
                 color: "#a36e29",
                 fontWeight: "bold",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginRight: "5px",
               }}
@@ -359,7 +359,7 @@ const OrderItem = ({
                 border: "2px solid #a36e29",
                 fontWeight: "bold",
                 color: "#a36e29",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginLeft: "5px",
               }}
@@ -379,7 +379,7 @@ const OrderItem = ({
               height: "100%",
               background:
                 "linear-gradient(to right, #d4a76a, #a36e29)",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
               marginTop: "10px",
             }}

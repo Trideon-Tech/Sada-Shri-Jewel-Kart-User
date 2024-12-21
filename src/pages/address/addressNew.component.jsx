@@ -126,7 +126,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
           <Typography
             style={{
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               color: "#00000060",
             }}
@@ -151,7 +151,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
           >
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
                 fontWeight: 600,
               }}
@@ -167,7 +167,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                   width: "100%",
                   height: "35px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -196,7 +196,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                     height: "35px",
                     marginTop: "20px",
                     "& input": {
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     },
                     "& .MuiOutlinedInput-root": {
@@ -225,7 +225,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                   height: "35px",
                   marginTop: "20px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -252,7 +252,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                   height: "35px",
                   marginTop: "20px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -279,7 +279,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                   height: "35px",
                   marginTop: "20px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -306,7 +306,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                   height: "35px",
                   marginTop: "20px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -333,7 +333,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                   height: "35px",
                   marginTop: "20px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -360,7 +360,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                 style={{
                   border: "2px solid #A36E29",
                   color: "#A36E29",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   marginTop: "20px",
                   height: "50px",
@@ -376,7 +376,7 @@ const AddressNew = ({ refreshAddress, setRefreshAddress }) => {
                 style={{
                   border: "2px solid #A36E29",
                   color: "white",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   marginTop: "20px",
                   height: "50px",

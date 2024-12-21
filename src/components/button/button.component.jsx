@@ -3,7 +3,7 @@ export default function ButtonComponent({buttonText, onClick, style}) {
         <div
             style={{
                 marginTop: "10px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 color: "white",
                 fontWeight: "600",
                 cursor: "pointer",

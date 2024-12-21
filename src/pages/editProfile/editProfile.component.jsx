@@ -113,7 +113,7 @@ const EditProfile = () => {
       >
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.2rem",
             fontWeight: "bold",
           }}
@@ -142,7 +142,7 @@ const EditProfile = () => {
             height: "100px",
             fontSize: "2.7rem",
             background: "#a36e29",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
           }}
         >
           {firstName.charAt(0)}
@@ -162,7 +162,7 @@ const EditProfile = () => {
                 width: "100%",
                 height: "35px",
                 "& input": {
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 },
                 "& .MuiOutlinedInput-root": {
@@ -190,7 +190,7 @@ const EditProfile = () => {
                 width: "100%",
                 height: "35px",
                 "& input": {
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 },
                 "& .MuiOutlinedInput-root": {
@@ -219,7 +219,7 @@ const EditProfile = () => {
                 height: "35px",
                 marginTop: "10px",
                 "& input": {
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 },
                 "& .MuiOutlinedInput-root": {
@@ -249,7 +249,7 @@ const EditProfile = () => {
                 height: "35px",
                 marginTop: "10px",
                 "& input": {
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 },
                 "& .MuiOutlinedInput-root": {
@@ -281,7 +281,7 @@ const EditProfile = () => {
                 height: "35px",
                 marginTop: "10px",
                 "& input": {
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 },
                 "& .MuiOutlinedInput-root": {
@@ -319,7 +319,7 @@ const EditProfile = () => {
             size="medium"
             variant="contained"
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               textTransform: "none",
               background:
@@ -363,7 +363,7 @@ const EditProfile = () => {
             label="Profile"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
                 color: "white",
@@ -376,7 +376,7 @@ const EditProfile = () => {
             label="Orders"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -386,7 +386,7 @@ const EditProfile = () => {
             label="Address"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -396,7 +396,7 @@ const EditProfile = () => {
             label="Wallet"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -426,7 +426,7 @@ const EditProfile = () => {
         >
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               fontWeight: "bold",
             }}
@@ -455,7 +455,7 @@ const EditProfile = () => {
               height: "100px",
               fontSize: "2.7rem",
               background: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
             }}
           >
             {firstName.charAt(0)}
@@ -475,7 +475,7 @@ const EditProfile = () => {
                   width: "100%",
                   height: "30px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -503,7 +503,7 @@ const EditProfile = () => {
                   width: "100%",
                   height: "30px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -532,7 +532,7 @@ const EditProfile = () => {
                   height: "30px",
                   marginTop: "10px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -562,7 +562,7 @@ const EditProfile = () => {
                   height: "30px",
                   marginTop: "10px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -594,7 +594,7 @@ const EditProfile = () => {
                   height: "30px",
                   marginTop: "10px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -632,7 +632,7 @@ const EditProfile = () => {
               size="medium"
               variant="contained"
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
                 textTransform: "none",
                 background:

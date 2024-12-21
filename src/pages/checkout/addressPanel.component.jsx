@@ -214,7 +214,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
               boxShadow: "0 2px 3px 0px #666666",
               minWidth: 220,
               backgroundColor: "white",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
             onChange={(e, newValue) => {
@@ -226,7 +226,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                 <Box component="span" sx={{ display: "block" }}>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "bold",
                     }}
@@ -235,7 +235,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Typography>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -243,7 +243,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Typography>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -251,7 +251,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Typography>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >{`${data.state} - ${data.pincode}`}</Typography>
@@ -287,7 +287,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   >
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "1rem",
                         fontWeight: "bold",
                       }}
@@ -304,7 +304,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Box>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -312,7 +312,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Typography>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -320,13 +320,13 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   </Typography>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >{`${selectedAddress?.city} ,${selectedAddress?.state}`}</Typography>
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -335,7 +335,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
 
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     }}
                   >
@@ -357,7 +357,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     <Typography
                       style={{
                         fontWeight: "bold",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "1rem",
                       }}
                     >
@@ -371,7 +371,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -399,7 +399,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -432,7 +432,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                           width: "100%",
                           height: "22px",
                           "& input": {
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.8rem",
                           },
                           "& .MuiOutlinedInput-root": {
@@ -463,7 +463,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -492,7 +492,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -520,7 +520,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -548,7 +548,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -578,7 +578,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         width: "100%",
                         height: "22px",
                         "& input": {
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         },
                         "& .MuiOutlinedInput-root": {
@@ -609,7 +609,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         textAlign: "center",
                         background: "#a36e29",
                         color: "white",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         paddingTop: "8px",
                         paddingBottom: "8px",
@@ -628,7 +628,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         textAlign: "center",
                         border: "1px solid #a36e29",
                         color: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         paddingTop: "8px",
                         paddingBottom: "8px",
@@ -676,7 +676,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
             <Typography
               style={{
                 fontWeight: "bold",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
               }}
             >
@@ -696,7 +696,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -724,7 +724,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -758,7 +758,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     width: "100%",
                     height: "22px",
                     "& input": {
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                     },
                     "& .MuiOutlinedInput-root": {
@@ -788,7 +788,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -817,7 +817,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -845,7 +845,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -873,7 +873,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -901,7 +901,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -929,7 +929,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                 size="md"
                 sx={{
                   fontWeight: 600,
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   background: "#a36e29",
                 }}
@@ -960,7 +960,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
         >
           <Typography
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
               fontWeight: "bold",
             }}

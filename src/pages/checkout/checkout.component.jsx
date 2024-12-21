@@ -124,7 +124,7 @@ const Checkout = () => {
                         fontWeight: "bold",
                         color: "black",
                         marginBottom: "3%",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "1rem",
                         paddingTop: "50px",
                       }}
@@ -165,7 +165,7 @@ const Checkout = () => {
                         fontWeight: "bold",
                         color: "black",
                         marginBottom: "3%",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "1rem",
                         paddingTop: "70px",
                       }}

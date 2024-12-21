@@ -24,14 +24,14 @@ const PaymentMethod = ({
       >
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
             fontWeight: "bold",
           }}
         >{`${selectedAddress?.name}`}</Typography>
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
           }}
         >
@@ -39,7 +39,7 @@ const PaymentMethod = ({
         </Typography>
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
           }}
         >
@@ -47,13 +47,13 @@ const PaymentMethod = ({
         </Typography>
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
           }}
         >{`${selectedAddress?.city} ,${selectedAddress?.state}`}</Typography>
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
           }}
         >
@@ -62,7 +62,7 @@ const PaymentMethod = ({
 
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
           }}
         >

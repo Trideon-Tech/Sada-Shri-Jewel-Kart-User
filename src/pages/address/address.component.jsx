@@ -61,7 +61,7 @@ const Address = () => {
         <Typography
           style={{
             marginTop: "20px",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.2rem",
             fontWeight: "bold",
           }}
@@ -139,7 +139,7 @@ const Address = () => {
           <Typography
             style={{
               marginTop: "20px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               fontWeight: "bold",
             }}
@@ -198,7 +198,7 @@ const Address = () => {
             label="Profile"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -208,7 +208,7 @@ const Address = () => {
             label="Orders"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -218,7 +218,7 @@ const Address = () => {
             label="Address"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
                 color: "white",
@@ -231,7 +231,7 @@ const Address = () => {
             label="Wallet"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}

@@ -99,7 +99,7 @@ export default function MyAccount() {
       >
         <DialogTitle
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.2rem",
             fontWeight: "bold",
           }}
@@ -109,7 +109,7 @@ export default function MyAccount() {
         <DialogContent>
           <DialogContentText
             style={{
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.9rem",
             }}
           >
@@ -124,7 +124,7 @@ export default function MyAccount() {
               border: "2px solid #a36e29",
               color: "#a36e29",
               width: "200px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "600",
             }}
@@ -138,7 +138,7 @@ export default function MyAccount() {
               border: "2px solid #a36e29",
               backgroundColor: "#a36e29",
               width: "200px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "600",
             }}
@@ -183,7 +183,7 @@ export default function MyAccount() {
               <Typography
                 style={{
                   fontWeight: "bold",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.2rem",
                   marginTop: "20px",
                 }}
@@ -193,7 +193,7 @@ export default function MyAccount() {
               <Typography
                 style={{
                   fontWeight: "bold",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   marginTop: "50px",
                 }}
@@ -202,7 +202,7 @@ export default function MyAccount() {
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   marginTop: "10px",
                   color: "#00000090",
@@ -212,7 +212,7 @@ export default function MyAccount() {
               </Typography>
               <Typography
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   color: "#00000090",
                 }}
@@ -223,7 +223,7 @@ export default function MyAccount() {
               <Link to={"/my-account"}>
                 <Button
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "bold",
                     color: "#a36e29",
@@ -240,7 +240,7 @@ export default function MyAccount() {
               <Link to={"/my-account/orders"}>
                 <Button
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "600",
                     color: "#353535",
@@ -253,7 +253,7 @@ export default function MyAccount() {
               <Link to={"/my-account/address"}>
                 <Button
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "600",
                     color: "#353535",
@@ -267,7 +267,7 @@ export default function MyAccount() {
               <Link to={"/my-account/wallet"}>
                 <Button
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     fontWeight: "600",
                     color: "#353535",
@@ -287,7 +287,7 @@ export default function MyAccount() {
               />
               <Button
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   fontWeight: "bold",
                   padding: 0,
@@ -302,7 +302,7 @@ export default function MyAccount() {
               </Button>
               <Button
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   fontWeight: "bold",
                   padding: 0,

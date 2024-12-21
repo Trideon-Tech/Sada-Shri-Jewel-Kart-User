@@ -53,7 +53,7 @@ const PriceFilter = ({ onFilterChange }) => {
         className="filter-heading"
         style={{
           textAlign: "left",
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "1rem",
         }}
       >
@@ -71,7 +71,7 @@ const PriceFilter = ({ onFilterChange }) => {
               className="label-text"
               style={{
                 marginLeft: "30px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 color: "grey",
               }}

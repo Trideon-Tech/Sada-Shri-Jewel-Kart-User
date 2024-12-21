@@ -112,7 +112,7 @@ function Footer() {
           <Grid item xs={matches ? 3 : 12}>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "1.2rem" : "1rem"}`,
                 fontWeight: "bold",
               }}
@@ -121,7 +121,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 marginTop: "10px",
@@ -135,7 +135,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 cursor: "pointer",
@@ -151,7 +151,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 cursor: "pointer",
@@ -167,7 +167,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 cursor: "pointer",
@@ -183,7 +183,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 cursor: "pointer",
@@ -197,7 +197,7 @@ function Footer() {
           <Grid item xs={matches ? 3 : 12}>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "1.2rem" : "1rem"}`,
                 fontWeight: "bold",
               }}
@@ -206,7 +206,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
                 marginTop: "10px",
@@ -218,7 +218,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
@@ -228,7 +228,7 @@ function Footer() {
             </Typography>
             <Typography
               style={{
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
                 color: "grey",
               }}
@@ -241,7 +241,7 @@ function Footer() {
         <Divider sx={{ margin: "30px 0" }} />
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: `${matches ? "0.9rem" : "0.6rem"}`,
             color: "grey",
             marginTop: "10px",

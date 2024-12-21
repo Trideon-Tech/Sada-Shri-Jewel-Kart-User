@@ -48,7 +48,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
             <Avatar
               sx={{
                 bgcolor: "gray",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
                 fontWeight: "bold",
               }}
@@ -69,7 +69,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
                 style={{
                   fontWeight: "bold",
                   color: "#000000",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                 }}
               >
@@ -78,7 +78,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
               <Typography
                 style={{
                   color: "#a0a0a0",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -96,7 +96,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
               textAlign: "left",
               color: "#000000",
               marginTop: "1%",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "bold",
             }}
@@ -107,7 +107,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
             style={{
               textAlign: "left",
               color: "#606060",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -140,7 +140,7 @@ const ReviewList = ({ reviewsData, totalPages }) => {
         style={{
           marginTop: "2%",
           marginBottom: "2%",
-          fontFamily: '"Open Sans", sans-serif',
+          fontFamily: '"Roboto", sans-serif',
           fontSize: "0.8rem",
         }}
         count={totalPages}

@@ -65,7 +65,7 @@ export default function CartItem({
           style={{
             textAlign: "left",
             fontWeight: "bold",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
           }}
         >
@@ -94,7 +94,7 @@ export default function CartItem({
             <Typography
               style={{
                 color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -103,7 +103,7 @@ export default function CartItem({
             <Typography
               style={{
                 color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginLeft: "10px",
               }}
@@ -136,7 +136,7 @@ export default function CartItem({
               <Typography
                 style={{
                   color: "gray",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   marginRight: "10px",
                 }}
@@ -147,7 +147,7 @@ export default function CartItem({
               {/* <Typography
                 style={{
                   color: "gray",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   marginRight: "10px",
                 }}
@@ -176,7 +176,7 @@ export default function CartItem({
                 >
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       fontWeight: "600",
                     }}
@@ -215,7 +215,7 @@ export default function CartItem({
             <Typography
               style={{
                 color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               }}
             >
@@ -224,7 +224,7 @@ export default function CartItem({
             <Typography
               style={{
                 color: "gray",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 marginLeft: "10px",
               }}
@@ -239,7 +239,7 @@ export default function CartItem({
             marginBottom: "10px",
             fontSize: "1rem",
             fontWeight: "bold",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
           }}
         >
           <span style={{ fontWeight: "normal" }}>Price :</span> ₹
@@ -348,7 +348,7 @@ export default function CartItem({
             style={{
               textAlign: "left",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
             }}
           >
@@ -377,7 +377,7 @@ export default function CartItem({
               <Typography
                 style={{
                   color: "gray",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -386,7 +386,7 @@ export default function CartItem({
               <Typography
                 style={{
                   color: "gray",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                   marginLeft: "10px",
                 }}
@@ -420,7 +420,7 @@ export default function CartItem({
                   <Typography
                     style={{
                       color: "gray",
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       marginRight: "10px",
                     }}
@@ -447,7 +447,7 @@ export default function CartItem({
                   >
                     <Typography
                       style={{
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                         fontWeight: "600",
                         textDecoration: "underline",
@@ -471,7 +471,7 @@ export default function CartItem({
               >
                 <div
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.6rem",
                     fontWeight: "600",
                     backgroundColor: "#E0B872",
@@ -513,7 +513,7 @@ export default function CartItem({
                     >
                       <Typography
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                           fontWeight: "600",
                         }}
@@ -534,7 +534,7 @@ export default function CartItem({
               marginTop: "4%",
               fontSize: "1rem",
               fontWeight: "bold",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
             }}
           >
             <span style={{ fontWeight: "normal" }}>Price :</span> ₹

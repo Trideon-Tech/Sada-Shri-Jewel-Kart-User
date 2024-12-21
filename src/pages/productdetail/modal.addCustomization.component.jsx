@@ -27,7 +27,7 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                         <Typography
                             style={{
                                 textAlign: "center",
-                                fontFamily: '"Open Sans", sans-serif',
+                                fontFamily: '"Roboto", sans-serif',
                                 fontSize: "1.2rem",
                                 fontWeight: "bold",
                             }}
@@ -48,7 +48,7 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                                     width: "100%",
                                     height: "30px",
                                     "& input": {
-                                        fontFamily: '"Open Sans", sans-serif',
+                                        fontFamily: '"Roboto", sans-serif',
                                         fontSize: "0.8rem",
                                     },
                                     "& .MuiOutlinedInput-root": {
@@ -78,7 +78,7 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                                     width: "100%",
                                     height: "30px",
                                     "& input": {
-                                        fontFamily: '"Open Sans", sans-serif',
+                                        fontFamily: '"Roboto", sans-serif',
                                         fontSize: "0.8rem",
                                     },
                                     "& .MuiOutlinedInput-root": {

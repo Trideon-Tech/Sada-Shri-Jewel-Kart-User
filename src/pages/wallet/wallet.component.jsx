@@ -45,7 +45,7 @@ const HistoryInfo = ({ logData, _ }) => {
           <p
             style={{
               margin: 0,
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
               fontWeight: "bold",
             }}
@@ -55,7 +55,7 @@ const HistoryInfo = ({ logData, _ }) => {
           <p
             style={{
               margin: 0,
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1rem",
             }}
           >
@@ -75,7 +75,7 @@ const HistoryInfo = ({ logData, _ }) => {
             style={{
               margin: 0,
               color: "#00000060",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -86,7 +86,7 @@ const HistoryInfo = ({ logData, _ }) => {
             style={{
               margin: 0,
               color: "#00000060",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
           >
@@ -187,7 +187,7 @@ const Wallet = () => {
       >
         <Typography
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.4rem",
             fontWeight: "bold",
             marginBottom: "30px",
@@ -226,7 +226,7 @@ const Wallet = () => {
             >
               <p
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.4rem",
                   fontWeight: 600,
                   color: "white",
@@ -238,7 +238,7 @@ const Wallet = () => {
                 style={{
                   margin: 0,
                   marginBottom: "auto",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "5rem",
                   fontWeight: 500,
                   color: "white",
@@ -282,7 +282,7 @@ const Wallet = () => {
                 border: "2px solid #A36E29",
                 fontWeight: 600,
                 borderRadius: "10px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
               }}
               onClick={() => setShowDebit(false)}
@@ -303,7 +303,7 @@ const Wallet = () => {
                 border: "2px solid #A36E29",
                 fontWeight: 600,
                 borderRadius: "10px",
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
               }}
               onClick={() => setShowDebit(true)}
@@ -377,7 +377,7 @@ const Wallet = () => {
           <Typography
             style={{
               marginTop: "20px",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               fontWeight: "bold",
             }}
@@ -415,7 +415,7 @@ const Wallet = () => {
               >
                 <div
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: matches ? "1.4rem" : "1.2rem",
                     fontWeight: 600,
                     color: "white",
@@ -428,7 +428,7 @@ const Wallet = () => {
                   style={{
                     margin: 0,
                     marginBottom: "auto",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: matches ? "5rem" : "3rem",
                     fontWeight: 500,
                     color: "white",
@@ -468,7 +468,7 @@ const Wallet = () => {
                   border: "2px solid #A36E29",
                   fontWeight: 600,
                   borderRadius: "10px",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: matches ? "1rem" : "0.8rem",
                 }}
                 onClick={() => setShowDebit(false)}
@@ -486,7 +486,7 @@ const Wallet = () => {
                   border: "2px solid #A36E29",
                   fontWeight: 600,
                   borderRadius: "10px",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: matches ? "1rem" : "0.8rem",
                 }}
                 onClick={() => setShowDebit(true)}
@@ -543,7 +543,7 @@ const Wallet = () => {
             label="Profile"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -553,7 +553,7 @@ const Wallet = () => {
             label="Orders"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -563,7 +563,7 @@ const Wallet = () => {
             label="Address"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
               },
             }}
@@ -573,7 +573,7 @@ const Wallet = () => {
             label="Wallet"
             sx={{
               "& .MuiBottomNavigationAction-label": {
-                fontFamily: '"Open Sans", sans-serif',
+                fontFamily: '"Roboto", sans-serif',
                 fontSize: "0.8rem",
                 fontWeight: "600",
                 color: "white",

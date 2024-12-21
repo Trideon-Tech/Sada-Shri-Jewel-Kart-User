@@ -190,7 +190,7 @@ const Register = () => {
                           borderTopRightRadius: 0,
                           borderBottomRightRadius: 0,
                           backgroundColor: "#a36e29",
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         }}
                       >
@@ -214,7 +214,7 @@ const Register = () => {
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
                             backgroundColor: "#a36e29",
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.8rem",
                           }}
                           onClick={() => sendOTPHandler()}
@@ -229,7 +229,7 @@ const Register = () => {
                           style={{
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
-                            fontFamily: '"Open Sans", sans-serif',
+                            fontFamily: '"Roboto", sans-serif',
                             fontSize: "0.8rem",
                           }}
                           disabled={true}
@@ -245,7 +245,7 @@ const Register = () => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -270,7 +270,7 @@ const Register = () => {
                   width: "100%",
                   height: "22px",
                   "& input": {
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   },
                   "& .MuiOutlinedInput-root": {
@@ -309,7 +309,7 @@ const Register = () => {
                   onClick={() => verifyOTPHandler()}
                   style={{
                     color: "white",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                     background:
                       "linear-gradient(to right, #d4a76a, #a36e29)",
@@ -327,7 +327,7 @@ const Register = () => {
                   onClick={handleRegister}
                   disabled={true}
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
                 >
@@ -344,7 +344,7 @@ const Register = () => {
               color: "#a36e29",
               textDecoration: "underline",
               cursor: "pointer",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
               marginTop: "-12px",
             }}

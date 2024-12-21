@@ -63,7 +63,7 @@ const CouponCard = ({
             color: "white",
             textAlign: "center",
             fontWeight: 600,
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.2rem",
             transform: "rotate(270deg)",
           }}
@@ -80,7 +80,7 @@ const CouponCard = ({
       >
         <div
           style={{
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1.1rem",
             fontWeight: "bold",
           }}
@@ -91,7 +91,7 @@ const CouponCard = ({
           style={{
             margin: 0,
             color: "#00000060",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "0.8rem",
           }}
         >
@@ -105,7 +105,7 @@ const CouponCard = ({
             backgroundColor: "transparent",
             fontWeight: "bold",
             color: "#A36E29",
-            fontFamily: '"Open Sans", sans-serif',
+            fontFamily: '"Roboto", sans-serif',
             fontSize: "1rem",
           }}
           onClick={() => handleSelectedCoupon()}
@@ -292,7 +292,7 @@ const Cart = () => {
                 <p
                   style={{
                     fontSize: "1.2rem",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontWeight: "bold",
                     margin: 0,
                   }}
@@ -319,7 +319,7 @@ const Cart = () => {
                   sx={{
                     width: "100%",
                     "& input": {
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       backgroundColor: "#f9f5ec",
                     },
@@ -340,7 +340,7 @@ const Cart = () => {
                     endAdornment: (
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                           color: "#A36E29",
                           fontWeight: "bold",
@@ -436,7 +436,7 @@ const Cart = () => {
               <Lottie animationData={emptyCartAnimation} loop={true} />
               <div
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.2rem",
                   fontWeight: "bold",
                 }}
@@ -445,7 +445,7 @@ const Cart = () => {
               </div>
               <div
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   marginTop: "10px",
                 }}
@@ -459,7 +459,7 @@ const Cart = () => {
                   padding: "10px",
                   fontWeight: "bold",
                   background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   fontWeight: "bold",
                   marginTop: "20px",
@@ -544,7 +544,7 @@ const Cart = () => {
               <Lottie animationData={emptyCartAnimation} loop={true} />
               <div
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1.2rem",
                   fontWeight: "bold",
                 }}
@@ -553,7 +553,7 @@ const Cart = () => {
               </div>
               <div
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   marginTop: "10px",
                 }}
@@ -567,7 +567,7 @@ const Cart = () => {
                   padding: "10px",
                   fontWeight: "bold",
                   background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
                   fontWeight: "bold",
                   marginTop: "20px",

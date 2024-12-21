@@ -366,7 +366,7 @@ const Navbar = () => {
                           >
                             <Typography
                               style={{
-                                fontFamily: '"Open Sans", sans-serif',
+                                fontFamily: '"Roboto", sans-serif',
                                 fontSize: "0.8rem",
                               }}
                             >
@@ -401,7 +401,7 @@ const Navbar = () => {
                       <AccountCircleIcon style={{ color: "#a36e29" }} />
                       <Typography
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         }}
                       >
@@ -413,7 +413,7 @@ const Navbar = () => {
                       <HowToRegRoundedIcon style={{ color: "#a36e29" }} />
                       <Typography
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         }}
                       >
@@ -426,7 +426,7 @@ const Navbar = () => {
                       <ExitToAppRoundedIcon style={{ color: "#a36e29" }} />
                       <Typography
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         }}
                       >
@@ -438,7 +438,7 @@ const Navbar = () => {
                       <LoginRoundedIcon style={{ color: "#a36e29" }} />
                       <Typography
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                         }}
                       >
@@ -490,7 +490,7 @@ const Navbar = () => {
               >
                 <div
                   style={{
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1rem",
                     fontWeight: "bold",
                   }}
@@ -518,7 +518,7 @@ const Navbar = () => {
                       </ListItemAvatar>
                       <div
                         style={{
-                          fontFamily: '"Open Sans", sans-serif',
+                          fontFamily: '"Roboto", sans-serif',
                           fontSize: "0.8rem",
                           flexGrow: 1,
                         }}
@@ -573,7 +573,7 @@ const Navbar = () => {
                               </ListItemAvatar>
                               <div
                                 style={{
-                                  fontFamily: '"Open Sans", sans-serif',
+                                  fontFamily: '"Roboto", sans-serif',
                                   fontSize: "0.8rem",
                                 }}
                               >
@@ -598,7 +598,7 @@ const Navbar = () => {
                   style={{
                     fontWeight: "bold",
                     color: "#a36e29",
-                    fontFamily: '"Open Sans", sans-serif',
+                    fontFamily: '"Roboto", sans-serif',
                     fontSize: "1.2rem",
                     cursor: "pointer",
                   }}
@@ -647,7 +647,7 @@ const Navbar = () => {
                   />
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.9rem",
                     }}
                   >
@@ -670,7 +670,7 @@ const Navbar = () => {
                   <Logout style={{ color: "#a36e29", marginRight: "10px" }} />
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.9rem",
                     }}
                   >
@@ -697,7 +697,7 @@ const Navbar = () => {
                   <Login style={{ color: "#a36e29", marginRight: "10px" }} />
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.9rem",
                     }}
                   >
@@ -721,7 +721,7 @@ const Navbar = () => {
                   <HowToReg style={{ color: "#a36e29", marginRight: "10px" }} />
                   <Typography
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.9rem",
                     }}
                   >
@@ -755,7 +755,7 @@ const Navbar = () => {
             >
               <div
                 style={{
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
               >
@@ -777,7 +777,7 @@ const Navbar = () => {
                   </ListItemAvatar>
                   <div
                     style={{
-                      fontFamily: '"Open Sans", sans-serif',
+                      fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
                       flexGrow: 1,
                     }}
@@ -822,7 +822,7 @@ const Navbar = () => {
                           </ListItemAvatar>
                           <div
                             style={{
-                              fontFamily: '"Open Sans", sans-serif',
+                              fontFamily: '"Roboto", sans-serif',
                               fontSize: "0.8rem",
                             }}
                           >
@@ -840,7 +840,7 @@ const Navbar = () => {
             style={{
               fontWeight: "bold",
               color: "#a36e29",
-              fontFamily: '"Open Sans", sans-serif',
+              fontFamily: '"Roboto", sans-serif',
               fontSize: "1.2rem",
               cursor: "pointer",
               textAlign: "center",
@@ -906,7 +906,7 @@ const Navbar = () => {
                     sx={{
                       "& .MuiBadge-badge": {
                         backgroundColor: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                       },
                     }}
@@ -920,7 +920,7 @@ const Navbar = () => {
                     sx={{
                       "& .MuiBadge-badge": {
                         backgroundColor: "#a36e29",
-                        fontFamily: '"Open Sans", sans-serif',
+                        fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
                       },
                     }}
@@ -952,7 +952,7 @@ const Navbar = () => {
                 placeholder="Search for Jewellery..."
                 style={{
                   width: "100%",
-                  fontFamily: '"Open Sans", sans-serif',
+                  fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
                 }}
                 value={searchTerm}
