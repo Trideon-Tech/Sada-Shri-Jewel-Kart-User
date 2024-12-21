@@ -603,7 +603,7 @@ const Navbar = () => {
                     cursor: "pointer",
                   }}
                   onClick={() => (window.location.href = "https://seller.sadashrijewelkart.com")}
->
+                >
                   Become a Seller
                 </Typography>
               </ListItem>
@@ -744,7 +744,7 @@ const Navbar = () => {
             },
           }}
         >
-          <List>
+          <List style={{ flexGrow: 1 }}>
             <ListItem
               style={{
                 display: "flex",
@@ -836,17 +836,20 @@ const Navbar = () => {
               </React.Fragment>
             ))}
           </List>
-          <Button
+          <Typography
             style={{
               fontWeight: "bold",
               color: "#a36e29",
               fontFamily: '"Open Sans", sans-serif',
               fontSize: "1.2rem",
+              cursor: "pointer",
+              textAlign: "center",
+              paddingBottom: "16px",
             }}
-            onClick={() => window.open("https://seller.sadashrijewelkart.com", "_blank")}
+            onClick={() => (window.location.href = "https://seller.sadashrijewelkart.com")}
           >
             Become a Seller
-          </Button>
+          </Typography>
         </Drawer>
         <AppBar elevation={0} position="fixed" className="appbar">
           <div className="rates">
