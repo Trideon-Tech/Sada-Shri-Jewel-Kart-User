@@ -2192,7 +2192,6 @@ function ProductDetail() {
                       color: "#a36e29",
                       fontFamily: '"Open Sans", sans-serif',
                       fontSize: "0.9rem",
-                      fontWeight: "bold",
                       marginRight: "5px",
                       background: "transparent",
                       border: "2px solid #a36e29",

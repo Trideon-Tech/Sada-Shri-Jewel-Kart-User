@@ -398,7 +398,7 @@ const JwelleryCard = ({
                 width: "100%",
                 fontWeight: "bold",
                 marginTop: "3%",
-                background: "#a36e29",
+                background: "linear-gradient(to right, #d4a76a, #a36e29)",
                 fontFamily: '"Open Sans", sans-serif',
                 fontSize: "0.8rem",
               }}
