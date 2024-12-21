@@ -19,6 +19,8 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
 import ListItem from "@mui/joy/ListItem";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Tooltip from '@mui/material/Tooltip';
 import {
   Box,
   Button,
@@ -2157,24 +2159,40 @@ function ProductDetail() {
               </div>
             </div>
             {productDetail.customizations?.variants?.options[0]
-              ?.metal_info?.metal_type?.toLowerCase() !== "silver" && <div
-                style={{
-                  marginTop: "10px",
-                  fontFamily: '"Open Sans", sans-serif',
-                  color: "white",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  marginRight: "8vh",
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
-                  borderRadius: "10px",
-                  textAlign: "center",
-                }}
-                onClick={() => setAddCustomizationModalOpen(true)}
-              >
-                Add Customization
-              </div>}
+              ?.metal_info?.metal_type?.toLowerCase() !== "silver" &&
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    marginTop: "10px",
+                    fontFamily: '"Open Sans", sans-serif',
+                    color: "white",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                    paddingTop: "8px",
+                    paddingBottom: "8px",
+                    borderRadius: "10px",
+                    textAlign: "center",
+                    flexGrow: 1,
+                  }}
+                  onClick={() => setAddCustomizationModalOpen(true)}
+                >
+                  Add Customization
+                </div>
+                <Tooltip title="Customizable on Weight and Size" placement="top">
+                  <InfoOutlinedIcon
+                    style={{
+                      fontSize: "1.2rem",
+                      marginRight: "6vh",
+                      color: "#a36e29",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  />
+                </Tooltip>
+
+              </div>
+            }
             {productDetail.admin_verified == 1 ? (
               <>
                 <div
@@ -3223,27 +3241,42 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
-              <Button
-                style={{
-                  fontSize: "0.8rem",
-                  marginTop: "10px",
-                  marginBottom: "12px",
-                  fontFamily: '"Open Sans", sans-serif',
-                  color: "white",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
-                  borderRadius: "10px",
-                  textAlign: "center",
-                  width: "88vw",
-                }}
-                onClick={() => setAddCustomizationModalOpen(true)}
-              >
-                Add Customization
-              </Button>
-
+              {productDetail.customizations?.variants?.options[0]
+                ?.metal_info?.metal_type?.toLowerCase() !== "silver" &&
+                <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                  <Button
+                    style={{
+                      fontSize: "0.8rem",
+                      marginTop: "10px",
+                      marginBottom: "12px",
+                      fontFamily: '"Open Sans", sans-serif',
+                      color: "white",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      paddingTop: "8px",
+                      paddingBottom: "8px",
+                      borderRadius: "10px",
+                      textAlign: "center",
+                      width: "88vw",
+                    }}
+                    onClick={() => setAddCustomizationModalOpen(true)}
+                  >
+                    Add Customization
+                  </Button>
+                  <Tooltip title="Customizable on Weight and Size" placement="top">
+                    <InfoOutlinedIcon
+                      style={{
+                        fontSize: "1.2rem",
+                        marginRight: "3vh",
+                        color: "#a36e29",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    />
+                  </Tooltip>
+                </div>
+              }
               {productDetail.admin_verified == 1 ? (
                 <>
                   <div
