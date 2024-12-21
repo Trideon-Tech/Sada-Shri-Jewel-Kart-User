@@ -2796,23 +2796,6 @@ function ProductDetail() {
                   </Grid>
                   <Grid item xs={4}>
                     <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Class
-                      <div
-                        style={{
-                          fontSize: "0.9rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.class
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                       Clarity
                       <div
                         style={{
@@ -2830,7 +2813,7 @@ function ProductDetail() {
                   </Grid>
                   <Grid item xs={4}>
                     <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Cut
+                      Color
                       <div
                         style={{
                           fontSize: "0.9rem",
@@ -2840,7 +2823,7 @@ function ProductDetail() {
                       >
                         {
                           productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.cut
+                            ?.stone_info?.class
                         }
                       </div>
                     </Typography>
@@ -2858,6 +2841,23 @@ function ProductDetail() {
                         {
                           productDetail.customizations?.variants?.options[0]
                             ?.stone_info?.pieces
+                        }
+                      </div>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                      Cut
+                      <div
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {
+                          productDetail.customizations?.variants?.options[0]
+                            ?.stone_info?.cut
                         }
                       </div>
                     </Typography>
@@ -3886,25 +3886,6 @@ function ProductDetail() {
                         <Typography
                           style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Class
-                          <div
-                            style={{
-                              fontSize: "0.9rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.class
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
                           Clarity
                           <div
                             style={{
@@ -3924,7 +3905,7 @@ function ProductDetail() {
                         <Typography
                           style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Cut
+                          Color
                           <div
                             style={{
                               fontSize: "0.9rem",
@@ -3934,7 +3915,7 @@ function ProductDetail() {
                           >
                             {
                               productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.cut
+                                ?.stone_info?.class
                             }
                           </div>
                         </Typography>
@@ -3954,6 +3935,25 @@ function ProductDetail() {
                             {
                               productDetail.customizations?.variants?.options[0]
                                 ?.stone_info?.pieces
+                            }
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
+                          Cut
+                          <div
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "black",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {
+                              productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.cut
                             }
                           </div>
                         </Typography>
