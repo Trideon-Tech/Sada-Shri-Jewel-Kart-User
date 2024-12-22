@@ -116,6 +116,8 @@ const Checkout = () => {
                       padding: !matches ? "0%" : "3%",
                       paddingRight: 0,
                       backgroundColor: !matches ? "white" : "#f8f8f8",
+                      paddingBottom: "0px",
+                      marginBottom: "0px",
                     }}
                   >
                     <Typography
@@ -125,7 +127,7 @@ const Checkout = () => {
                         color: "black",
                         marginBottom: "3%",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "1rem",
+                        fontSize: "1.2rem",
                         paddingTop: "50px",
                       }}
                     >
@@ -154,7 +156,7 @@ const Checkout = () => {
                 <Grid item xs={!matches ? 12 : 5}>
                   <Box
                     style={{
-                      padding: !matches ? "0%" : "3%",
+                      padding: !matches ? "0%" : "0%",
                       paddingRight: 0,
                       backgroundColor: !matches ? "white" : "#f8f8f8",
                     }}
@@ -166,7 +168,7 @@ const Checkout = () => {
                         color: "black",
                         marginBottom: "3%",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "1rem",
+                        fontSize: "1.2rem",
                         paddingTop: "70px",
                       }}
                     >

@@ -235,6 +235,7 @@ export default function CartItem({
         </Box>
         <Typography
           style={{
+            marginTop: "10px",
             marginBottom: "10px",
             fontSize: "1.2rem",
             fontWeight: "bold",

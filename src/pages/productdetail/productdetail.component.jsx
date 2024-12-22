@@ -2244,7 +2244,7 @@ function ProductDetail() {
                         background:
                           "linear-gradient(to right, #d4a76a, #a36e29)",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "0.8rem",
+                        fontSize: "1rem",
                         marginLeft: "5px",
                       }}
                       onClick={() => setDrawerOpen(true)}
@@ -2823,7 +2823,8 @@ function ProductDetail() {
                 </Grid>
               </div>
 
-              <div
+              {productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.stone_type && <div
                 style={{
                   marginTop: "20px",
                   borderRadius: "10px",
@@ -2994,7 +2995,7 @@ function ProductDetail() {
                     </Typography>
                   </Grid>
                 </Grid>
-              </div>
+              </div>}
             </div>
           </Grid>
         </Grid>
@@ -3372,7 +3373,7 @@ function ProductDetail() {
                           fontFamily: '"Roboto", sans-serif',
                           background:
                             "linear-gradient(to right, #d4a76a, #a36e29)",
-                          fontSize: "0.8rem",
+                          fontSize: "1rem",
                           marginLeft: "5px",
                         }}
                         onClick={() => setDrawerOpen(true)}
@@ -3955,7 +3956,8 @@ function ProductDetail() {
                     </Grid>
                   </div>
 
-                  <div
+                  {productDetail.customizations?.variants?.options[0]
+                                ?.stone_info?.stone_type && <div
                     style={{
                       marginTop: "20px",
                       borderRadius: "10px",
@@ -4144,7 +4146,7 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                     </Grid>
-                  </div>
+                  </div>}
                 </div>
               </Grid>
             </div>

@@ -430,7 +430,7 @@ const OrderConfirmation = () => {
                             fontWeight: 600,
                             textAlign: "left",
                             fontFamily: '"Roboto", sans-serif',
-                            fontSize: "0.9rem",
+                            fontSize: "1rem",
                           }}
                         >
                           Order Summary
