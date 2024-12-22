@@ -239,7 +239,7 @@ const JwelleryCard = ({
               color: "gray",
               fontWeight: "bold",
               fontFamily: '"Roboto", sans-serif',
-              fontSize: "0.8rem",
+              fontSize: "1rem",
             }}
           >
             {name.length > 25 ? `${name.substring(0, 25)}...` : name}

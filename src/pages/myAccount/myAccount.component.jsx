@@ -200,25 +200,31 @@ export default function MyAccount() {
               >
                 {localStorage.getItem("user_name")}
               </Typography>
-              <Typography
-                style={{
-                  fontFamily: '"Roboto", sans-serif',
-                  fontSize: "0.8rem",
-                  marginTop: "10px",
-                  color: "#00000090",
+              {localStorage.getItem("user_email") !== null &&
+              localStorage.getItem("user_email") !== "undefined" && (
+                <Typography
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "0.8rem",
+                    marginTop: "10px",
+                    color: "#00000090",
                 }}
               >
-                {localStorage.getItem("user_email")}
-              </Typography>
-              <Typography
-                style={{
-                  fontFamily: '"Roboto", sans-serif',
-                  fontSize: "0.8rem",
-                  color: "#00000090",
+                  {localStorage.getItem("user_email")}
+                </Typography>
+              )}
+              {localStorage.getItem("mobile") !== null &&
+              localStorage.getItem("mobile") !== "undefined" && (
+                <Typography
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "0.8rem",
+                    color: "#00000090",
                 }}
               >
-                <u>+91{localStorage.getItem("mobile")}</u>
-              </Typography>
+                <u>+{localStorage.getItem("mobile")}</u>
+                </Typography>)
+                }
 
               <Link to={"/my-account"}>
                 <Button

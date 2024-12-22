@@ -214,7 +214,9 @@ function Productpage() {
           <Grid container spacing={0}>
             <Grid item xs={3}>
               <Box className="filter-title">
-                <div className="heading">Filters</div>
+                <div className="heading" style={{ textTransform: "uppercase" }}>
+                  Filters
+                </div>
                 <div
                   className="clear"
                   onClick={() => {
@@ -256,7 +258,9 @@ function Productpage() {
                     marginLeft: "auto",
                     marginRight: "1%",
                     fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.8rem",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
                   }}
                 >
                   Sort by
@@ -272,6 +276,7 @@ function Productpage() {
                     border: "none",
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
+                    color: "grey",
                   }}
                   slotProps={{
                     listbox: {
@@ -438,6 +443,7 @@ function Productpage() {
                   marginRight: "1%",
                   fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
+                  textTransform: "uppercase",
                 }}
               >
                 Sort by
@@ -453,6 +459,7 @@ function Productpage() {
                   border: "none",
                   fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
+                  color: "grey",
                 }}
                 slotProps={{
                   listbox: {
@@ -460,6 +467,7 @@ function Productpage() {
                       width: "100%",
                       fontFamily: '"Roboto", sans-serif',
                       fontSize: "0.8rem",
+                      color: "grey",
                     },
                   },
                 }}
@@ -547,6 +555,7 @@ function Productpage() {
                   fontSize: "1.2rem",
                   fontWeight: "600",
                   marginBottom: "10px",
+                  textTransform: "uppercase",
                 }}
               >
                 Filters

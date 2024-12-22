@@ -66,7 +66,7 @@ export default function CartItem({
             textAlign: "left",
             fontWeight: "bold",
             fontFamily: '"Roboto", sans-serif',
-            fontSize: "1rem",
+            fontSize: "1.2rem",
           }}
         >
           {item?.name}
@@ -235,9 +235,8 @@ export default function CartItem({
         </Box>
         <Typography
           style={{
-            marginTop: "auto",
             marginBottom: "10px",
-            fontSize: "1rem",
+            fontSize: "1.2rem",
             fontWeight: "bold",
             fontFamily: '"Roboto", sans-serif',
           }}

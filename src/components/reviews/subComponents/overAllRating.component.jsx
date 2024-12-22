@@ -48,7 +48,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
           style={{
             background: "linear-gradient(to right, #d4a76a, #a36e29)",
             fontFamily: '"Roboto", sans-serif',
-            fontSize: "0.8rem",
+            fontSize: "1rem",
             marginTop: "10px",
             marginBottom: "10px",
           }}

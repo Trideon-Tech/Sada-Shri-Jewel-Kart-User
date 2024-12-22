@@ -648,7 +648,7 @@ const Navbar = () => {
                   <Typography
                     style={{
                       fontFamily: '"Roboto", sans-serif',
-                      fontSize: "0.9rem",
+                      fontSize: "0.8rem",
                     }}
                   >
                     My Account

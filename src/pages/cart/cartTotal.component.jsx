@@ -992,7 +992,7 @@ export default function CartTotal({
               <Typography
                 style={{
                   fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1.1rem",
+                  fontSize: "1rem",
                   color: "#A36E29",
                   fontWeight: "bold",
                 }}
@@ -1360,7 +1360,7 @@ export default function CartTotal({
               <Typography
                 style={{
                   fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1.1rem",
+                  fontSize: "1rem",
                   color: "#A36E29",
                   fontWeight: "bold",
                 }}

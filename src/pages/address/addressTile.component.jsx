@@ -179,6 +179,8 @@ const AddressTile = ({ address }) => {
           </Typography>
           <Typography
             style={{
+              fontWeight: 600,
+              color: "#00000060",
               fontFamily: '"Roboto", sans-serif',
               fontSize: matches ? "1rem" : "0.8rem",
             }}
@@ -188,6 +190,8 @@ const AddressTile = ({ address }) => {
 
           <Typography
             style={{
+              fontWeight: 600,
+              color: "#00000060",
               fontFamily: '"Roboto", sans-serif',
               fontSize: matches ? "1rem" : "0.8rem",
             }}

@@ -29,6 +29,7 @@ export default function CarouselScheme() {
 
 function Item(props) {
     return (
+        // only show the image when fully loaded
         <img
             src={process.env.PUBLIC_URL + `/assets/${props.item.imageName}`}
             alt={props.item.alt}

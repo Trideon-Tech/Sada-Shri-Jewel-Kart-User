@@ -188,7 +188,7 @@ const Wallet = () => {
         <Typography
           style={{
             fontFamily: '"Roboto", sans-serif',
-            fontSize: "1.4rem",
+            fontSize: "1.2rem",
             fontWeight: "bold",
             marginBottom: "30px",
           }}
@@ -227,7 +227,7 @@ const Wallet = () => {
               <p
                 style={{
                   fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1.4rem",
+                  fontSize: "1.2rem",
                   fontWeight: 600,
                   color: "white",
                 }}

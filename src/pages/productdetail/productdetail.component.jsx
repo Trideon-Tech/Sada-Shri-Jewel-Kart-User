@@ -1216,7 +1216,7 @@ function ProductDetail() {
                       textAlign: "left",
                       fontWeight: "bold",
                       fontFamily: '"Roboto", sans-serif',
-                      fontSize: mediaQuery ? "1rem" : "0.9rem",
+                      fontSize: mediaQuery ? "1rem" : "0.8rem",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -1344,7 +1344,7 @@ function ProductDetail() {
                     style={{
                       marginTop: "auto",
                       marginBottom: "10px",
-                      fontSize: mediaQuery ? "1rem" : "0.9rem",
+                      fontSize: mediaQuery ? "1rem" : "0.8rem",
                       fontWeight: "bold",
                       fontFamily: '"Roboto", sans-serif',
                     }}
@@ -1382,7 +1382,7 @@ function ProductDetail() {
                         style={{
                           fontFamily: '"Roboto", sans-serif',
                           fontWeight: 600,
-                          fontSize: mediaQuery ? "1rem" : "0.9rem",
+                          fontSize: mediaQuery ? "1rem" : "0.8rem",
                         }}
                       >
                         Available Coins: {coinsRedeem}
@@ -1510,7 +1510,7 @@ function ProductDetail() {
                               sx={{
                                 fontFamily: '"Roboto", sans-serif',
                                 fontWeight: "bold",
-                                fontSize: mediaQuery ? "1rem" : "0.9rem",
+                                fontSize: mediaQuery ? "1rem" : "0.8rem",
                                 color: "#a36e29",
                               }}
                             >
@@ -1560,7 +1560,7 @@ function ProductDetail() {
                   style={{
                     fontFamily: '"Roboto", sans-serif',
                     fontWeight: "bold",
-                    fontSize: mediaQuery ? "1rem" : "0.9rem",
+                    fontSize: mediaQuery ? "1rem" : "0.8rem",
                     marginBottom: "16px",
                   }}
                 >
@@ -1574,7 +1574,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        fontSize: mediaQuery ? "0.8rem" : "0.85rem",
                         color: "gray",
                       }}
                     >
@@ -1583,7 +1583,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        fontSize: mediaQuery ? "0.8rem" : "0.85rem",
                       }}
                     >
                       ₹
@@ -1600,7 +1600,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        fontSize: mediaQuery ? "0.8rem" : "0.85rem",
                         color: "gray",
                       }}
                     >
@@ -1609,7 +1609,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        fontSize: mediaQuery ? "0.8rem" : "0.85rem",
                         color: "#d32f2f",
                       }}
                     >
@@ -1623,7 +1623,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        fontSize: mediaQuery ? "0.8rem" : "0.85rem",
                         color: "gray",
                       }}
                     >
@@ -1632,7 +1632,7 @@ function ProductDetail() {
                     <Typography
                       style={{
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: mediaQuery ? "0.9rem" : "0.85rem",
+                        fontSize: mediaQuery ? "0.8rem" : "0.85rem",
                         color: "#2e7d32",
                       }}
                     >
@@ -2066,7 +2066,7 @@ function ProductDetail() {
                 marginRight: "auto",
                 color: "#a36e29",
                 fontFamily: '"Roboto", sans-serif',
-                fontSize: "1.4rem",
+                fontSize: "1.2rem",
                 marginTop: "20px",
                 fontWeight: "bold",
               }}
@@ -2174,6 +2174,7 @@ function ProductDetail() {
                     borderRadius: "10px",
                     textAlign: "center",
                     flexGrow: 1,
+                    textTransform: "uppercase",
                   }}
                   onClick={() => setAddCustomizationModalOpen(true)}
                 >
@@ -2209,7 +2210,7 @@ function ProductDetail() {
                       fontWeight: "bold",
                       color: "#a36e29",
                       fontFamily: '"Roboto", sans-serif',
-                      fontSize: "0.9rem",
+                      fontSize: "1rem",
                       marginRight: "5px",
                       background: "transparent",
                       border: "2px solid #a36e29",
@@ -2243,7 +2244,7 @@ function ProductDetail() {
                         background:
                           "linear-gradient(to right, #d4a76a, #a36e29)",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "0.9rem",
+                        fontSize: "0.8rem",
                         marginLeft: "5px",
                       }}
                       onClick={() => setDrawerOpen(true)}
@@ -2275,7 +2276,7 @@ function ProductDetail() {
                     fontWeight: "bold",
                     background: "#cccccc",
                     fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.9rem",
+                    fontSize: "0.8rem",
                   }}
                 >
                   Currently Unavailable
@@ -2295,7 +2296,7 @@ function ProductDetail() {
               <Typography
                 style={{
                   fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1.1rem",
+                  fontSize: "1rem",
                   fontWeight: "600",
                   marginBottom: "-8px",
                 }}
@@ -2306,16 +2307,6 @@ function ProductDetail() {
                 {/* Create image carousel for the schemes */}
                 <CarouselScheme />
               </Box>
-              <Typography
-                style={{
-                  fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1.1rem",
-                  fontWeight: "600",
-                  marginTop: "20px",
-                }}
-              >
-                Verify Product Credentials
-              </Typography>
             </Box>
 
             <Grid
@@ -2432,7 +2423,30 @@ function ProductDetail() {
                   }}
                 />
               </Grid>
+            </Grid>
 
+            {/* Verify Product Credentials */}
+
+            <Typography
+              style={{
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "bold",
+                marginBottom: "8px",
+              }}
+            >
+              Verify Product Credentials
+            </Typography>
+            <Grid
+              container
+              spacing={4} // Increased spacing between grid items
+              sx={{
+                marginRight: "8vh",
+                marginTop: "8px",
+                marginBottom: "20px", // Added bottom margin
+                padding: "0 20px", // Added horizontal padding
+              }}
+            >
               <Grid
                 item
                 xs={3}
@@ -2574,7 +2588,7 @@ function ProductDetail() {
                 dangerouslySetInnerHTML={{
                   __html: productDetail.description,
                 }}
-                style={{ fontSize: "0.9rem", marginTop: "12px" }}
+                style={{ fontSize: "0.8rem", marginTop: "12px" }}
               ></div>
 
               <div
@@ -2596,7 +2610,7 @@ function ProductDetail() {
                       Gross Weight
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2614,7 +2628,7 @@ function ProductDetail() {
                       Net Weight
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2632,7 +2646,7 @@ function ProductDetail() {
                       Stone Weight
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2650,7 +2664,7 @@ function ProductDetail() {
                       Metal
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                           textTransform: "capitalize",
@@ -2668,7 +2682,7 @@ function ProductDetail() {
                       Quality
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2685,7 +2699,7 @@ function ProductDetail() {
                       Wastage
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2703,7 +2717,7 @@ function ProductDetail() {
                       Net Weight After Wastage
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2721,7 +2735,7 @@ function ProductDetail() {
                       Making Charge
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2739,7 +2753,7 @@ function ProductDetail() {
                       Stone Amount
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2757,7 +2771,7 @@ function ProductDetail() {
                       Hallmark Charge
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2775,7 +2789,7 @@ function ProductDetail() {
                       Rodium Charge
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2793,7 +2807,7 @@ function ProductDetail() {
                       GST
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2828,7 +2842,7 @@ function ProductDetail() {
                       Stone Type
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2845,7 +2859,7 @@ function ProductDetail() {
                       Clarity
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2862,7 +2876,7 @@ function ProductDetail() {
                       Color
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2879,7 +2893,7 @@ function ProductDetail() {
                       Pieces
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2896,7 +2910,7 @@ function ProductDetail() {
                       Cut
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2913,7 +2927,7 @@ function ProductDetail() {
                       Carat
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2930,7 +2944,7 @@ function ProductDetail() {
                       Stone Weight
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2948,7 +2962,7 @@ function ProductDetail() {
                       Stone Rate
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem", 
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -2966,7 +2980,7 @@ function ProductDetail() {
                       GST
                       <div
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "1rem",
                           color: "black",
                           fontWeight: "bold",
                         }}
@@ -3209,7 +3223,7 @@ function ProductDetail() {
                   <div style={{ fontSize: "0.7rem" }}>Size</div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: "0.8rem",
                       color: "#a36e29",
                       fontWeight: "bold",
                     }}
@@ -3232,7 +3246,7 @@ function ProductDetail() {
                   <div style={{ fontSize: "0.7rem" }}>Metal</div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: "0.8rem",
                       color: "#a36e29",
                       fontWeight: "bold",
                     }}
@@ -3258,7 +3272,7 @@ function ProductDetail() {
                   <div style={{ fontSize: "0.7rem" }}>Stone</div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: "0.8rem",
                       color: "#a36e29",
                       fontWeight: "bold",
                     }}
@@ -3288,6 +3302,7 @@ function ProductDetail() {
                       borderRadius: "10px",
                       textAlign: "center",
                       width: "88vw",
+                      textTransform: "uppercase",
                     }}
                     onClick={() => setAddCustomizationModalOpen(true)}
                   >
@@ -3323,8 +3338,7 @@ function ProductDetail() {
                         fontWeight: "bold",
                         color: "#a36e29",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "0.8rem",
-                        fontWeight: "bold",
+                        fontSize: "1rem",
                         marginRight: "5px",
                         background: "transparent",
                         border: "2px solid #a36e29",
@@ -3390,7 +3404,7 @@ function ProductDetail() {
                       fontWeight: "bold",
                       background: "#cccccc",
                       fontFamily: '"Roboto", sans-serif',
-                      fontSize: "0.9rem",
+                      fontSize: "0.8rem",
                       fontWeight: "bold",
                     }}
                   >
@@ -3410,7 +3424,7 @@ function ProductDetail() {
                 <Typography
                   style={{
                     fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1.1rem",
+                    fontSize: "1rem",
                     fontWeight: "600",
                     marginBottom: "-8px",
                   }}
@@ -3682,7 +3696,7 @@ function ProductDetail() {
                     dangerouslySetInnerHTML={{
                       __html: productDetail.description,
                     }}
-                    style={{ fontSize: "0.9rem", marginTop: "12px" }}
+                    style={{ fontSize: "0.8rem", marginTop: "12px" }}
                   ></div>
 
                   <div
@@ -3706,7 +3720,7 @@ function ProductDetail() {
                           Gross Weight
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3726,7 +3740,7 @@ function ProductDetail() {
                           Net Weight
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3746,7 +3760,7 @@ function ProductDetail() {
                           Stone Weight
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3766,7 +3780,7 @@ function ProductDetail() {
                           Metal
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                               textTransform: "capitalize",
@@ -3786,7 +3800,7 @@ function ProductDetail() {
                           Quality
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3805,7 +3819,7 @@ function ProductDetail() {
                           Wastage
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3825,7 +3839,7 @@ function ProductDetail() {
                           Net Weight After Wastage
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3845,7 +3859,7 @@ function ProductDetail() {
                           Making Charge
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3865,7 +3879,7 @@ function ProductDetail() {
                           Stone Amount
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3885,7 +3899,7 @@ function ProductDetail() {
                           Hallmark Charge
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3905,7 +3919,7 @@ function ProductDetail() {
                           Rodium Charge
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3925,7 +3939,7 @@ function ProductDetail() {
                           GST
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3962,7 +3976,7 @@ function ProductDetail() {
                           Stone Type
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "0.8rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -3981,7 +3995,7 @@ function ProductDetail() {
                           Clarity
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4000,7 +4014,7 @@ function ProductDetail() {
                           Color
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4019,7 +4033,7 @@ function ProductDetail() {
                           Pieces
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "0.8rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4038,7 +4052,7 @@ function ProductDetail() {
                           Cut
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "0.8rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4057,7 +4071,7 @@ function ProductDetail() {
                           Carat
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4076,7 +4090,7 @@ function ProductDetail() {
                           Stone Weight
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4096,7 +4110,7 @@ function ProductDetail() {
                           Stone Rate
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
@@ -4116,7 +4130,7 @@ function ProductDetail() {
                           GST
                           <div
                             style={{
-                              fontSize: "0.9rem",
+                              fontSize: "1rem",
                               color: "black",
                               fontWeight: "bold",
                             }}
