@@ -163,6 +163,9 @@ const UserDetailsForm = () => {
                   setFirstName(e.target.value);
                 }}
                 sx={{
+                  '& label.Mui-focused': {
+                    color: '#a36e29',
+                  },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: "rgba(0, 0, 0, 0.23)",
@@ -173,6 +176,7 @@ const UserDetailsForm = () => {
                     "&.Mui-focused fieldset": {
                       borderColor: "#a36e29",
                     },
+                    
                   },
                 }}
               />
@@ -188,6 +192,9 @@ const UserDetailsForm = () => {
                   setLastName(e.target.value);
                 }}
                 sx={{
+                  '& label.Mui-focused': {
+                    color: '#a36e29',
+                  },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: "rgba(0, 0, 0, 0.23)",
@@ -212,6 +219,9 @@ const UserDetailsForm = () => {
                   setEmail(e.target.value);
                 }}
                 sx={{
+                  '& label.Mui-focused': {
+                    color: '#a36e29',
+                  },
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       borderColor: "rgba(0, 0, 0, 0.23)",
