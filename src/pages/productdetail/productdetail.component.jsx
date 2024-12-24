@@ -2303,22 +2303,37 @@ function ProductDetail() {
               >
                 Saving Schemes
               </Typography>
+
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {/* Create image carousel for the schemes */}
                 <CarouselScheme />
               </Box>
+
+              <Typography
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    marginBottom: "-8px",
+                  }}
+                >
+                  SadāShrī Jewelkart Promise:
+                </Typography>
+
+                <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+
+                  At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
+                </Typography>
             </Box>
 
             <Grid
               container
-              spacing={0.1}
-              xs={12}
+              xs={11.3}
+              spacing={0}
               sx={{
-                marginRight: "12vh",
                 marginTop: "10px",
                 marginBottom: "10px",
-                justifyContent: "flex-start",
-                paddingLeft: "10px",
+                justifyContent: "flex-start"
               }}
             >
               <Grid
@@ -2340,8 +2355,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/17.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -2365,8 +2380,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/3.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -2390,8 +2405,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/2.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -2415,8 +2430,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/1.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -2430,8 +2445,7 @@ function ProductDetail() {
                 fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
                 fontWeight: "bold",
-                marginBottom: "8px",
-                textAlign: "center",
+                marginBottom: "8px"
               }}
               xs={12}
             >
@@ -2440,11 +2454,10 @@ function ProductDetail() {
             <Grid
               container
               spacing={0.5}
-              xs={12}
+              xs={11.3}
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
+                marginTop: "10px",
                 marginBottom: "20px",
                 width: "100%",
               }}
@@ -2462,8 +2475,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/14.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -2482,8 +2495,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/15.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -2502,8 +2515,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/4.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "80px",
+                    height: "80px",
                     objectFit: "contain",
                   }}
                 />
@@ -3418,7 +3431,6 @@ function ProductDetail() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  marginRight: "8vh",
                   marginTop: "20px",
                 }}
               >
@@ -3432,20 +3444,36 @@ function ProductDetail() {
                 >
                   Saving Schemes
                 </Typography>
+
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <CarouselScheme />
                 </Box>
+
+                <Typography
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    marginBottom: "-8px",
+                  }}
+                >
+                  SadāShrī Jewelkart Promise:
+                </Typography>
+
+                <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+
+                  At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
+                </Typography>
               </Box>
               <Grid
                 container
-                spacing={0.1}
+                spacing={1}
                 xs={12}
                 sx={{
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
                   marginTop: "10px",
                   marginBottom: "10px",
-                  justifyContent: "flex-start",
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
               >
                 <Grid
@@ -3467,8 +3495,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/17.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "70px",
                       objectFit: "contain",
                     }}
                   />
@@ -3492,8 +3520,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/3.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "70px",
                       objectFit: "contain",
                     }}
                   />
@@ -3517,8 +3545,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/2.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "70px",
                       objectFit: "contain",
                     }}
                   />
@@ -3542,8 +3570,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/1.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "80px",
                       objectFit: "contain",
                     }}
                   />
@@ -3551,11 +3579,9 @@ function ProductDetail() {
               </Grid>
               <Typography
                 style={{
-                  textAlign: "center",
                   fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1.1rem",
-                  fontWeight: "600",
-                  marginTop: "20px",
+                  fontSize: "1rem",
+                  fontWeight: "600"
                 }}
               >
                 Verify Product Credentials
@@ -3566,11 +3592,9 @@ function ProductDetail() {
                 xs={12}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
                   marginRight: "10vh",
                   marginTop: "10px",
                   marginBottom: "10px",
-                  padding: "0 20px",
                 }}
               >
                 <Grid
@@ -3587,8 +3611,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/14.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "70px",
                       objectFit: "contain",
                     }}
                   />
@@ -3607,8 +3631,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/15.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "70px",
                       objectFit: "contain",
                     }}
                   />
@@ -3627,8 +3651,8 @@ function ProductDetail() {
                     src={process.env.PUBLIC_URL + "/assets/4.svg"}
                     alt="Delivery Icon"
                     style={{
-                      width: "60px",
-                      height: "60px",
+                      width: "70px",
+                      height: "70px",
                       objectFit: "contain",
                     }}
                   />

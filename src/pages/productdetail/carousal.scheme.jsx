@@ -24,11 +24,11 @@ export default function CarouselScheme() {
             indicators={false} 
             sx={{ 
                 width: {
-                    xs: "122%", // width for extra-small devices (phones)
-                    sm: "95%", // width for small devices (tablets)
-                    md: "100%", // width for medium and larger devices
+                    xs: "100%", // width for extra-small devices (phones)
+                    sm: "100%", // width for small devices (tablets)
+                    md: "98%", // width for medium and larger devices
                 },
-                margin: "auto" // center the carousel
+                // margin: "auto" // center the carousel
             }}
         >
             {
