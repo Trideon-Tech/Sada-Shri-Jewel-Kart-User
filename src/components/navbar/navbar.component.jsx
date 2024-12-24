@@ -812,7 +812,7 @@ const Navbar = () => {
                         <ListItem
                           button
                           key={subCategory.id}
-                          onClick={() => handleMenuItemClick(subCategory)}
+                          onClick={() => handleSubMenuItemClick(category.name, subCategory)}
                         >
                           <ListItemAvatar>
                             <Avatar

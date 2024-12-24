@@ -208,6 +208,7 @@ function Productpage() {
                 ?.imgPath || "/assets/productList bg.jpg")
             }
             style={{ width: "100%" }}
+            alt="product-list-bg"
           />
         </Box>
         <div className="product-container">
@@ -338,8 +339,8 @@ function Productpage() {
           style={{
             backgroundImage: `url(${
               process.env.PUBLIC_URL +
-              (images.find((img) => img.label === menuItemName)?.imgPath ||
-                "/assets/productList bg.jpg")
+              (images.find((img) => img.label === menuItemName?.split("+")[0])
+                ?.imgPath || "/assets/productList bg.jpg")
             })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -367,7 +368,6 @@ function Productpage() {
           <div
             style={{
               marginLeft: "5vw",
-              padding: "10px 0",
             }}
           >
             {isSearchPage ? (
