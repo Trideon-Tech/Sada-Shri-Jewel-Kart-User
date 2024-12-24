@@ -2160,38 +2160,38 @@ function ProductDetail() {
             </div>
             {productDetail.customizations?.variants?.options[0]
               ?.metal_info?.metal_type?.toLowerCase() !== "silver" &&
-              <div style={{ display: "flex" }}>
-                <div
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <Button
                   style={{
+                    fontSize: "0.8rem",
                     marginTop: "10px",
+                    marginBottom: "12px",
                     fontFamily: '"Roboto", sans-serif',
                     color: "white",
                     fontWeight: "600",
                     cursor: "pointer",
                     background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
                     borderRadius: "10px",
                     textAlign: "center",
-                    flexGrow: 1,
+                    width: "100%",
+                    marginRight: "8vh",
                     textTransform: "uppercase",
                   }}
                   onClick={() => setAddCustomizationModalOpen(true)}
                 >
                   Add Customization
-                </div>
-                <Tooltip title="Customizable on Weight and Size" placement="top">
-                  <InfoOutlinedIcon
-                    style={{
-                      fontSize: "1.2rem",
-                      marginRight: "6vh",
-                      color: "#a36e29",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  />
-                </Tooltip>
-
+                  <Tooltip title="Customizable on Weight and Size" placement="top">
+                    <InfoOutlinedIcon
+                      style={{
+                        fontSize: "0.8rem",
+                        marginBottom: "3vh",
+                        color: "white",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    />
+                  </Tooltip>
+                </Button>
               </div>
             }
             {productDetail.admin_verified == 1 ? (
@@ -2210,7 +2210,7 @@ function ProductDetail() {
                       fontWeight: "bold",
                       color: "#a36e29",
                       fontFamily: '"Roboto", sans-serif',
-                      fontSize: "1rem",
+                      fontSize: "0.8rem",
                       marginRight: "5px",
                       background: "transparent",
                       border: "2px solid #a36e29",
@@ -2244,7 +2244,7 @@ function ProductDetail() {
                         background:
                           "linear-gradient(to right, #d4a76a, #a36e29)",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "1rem",
+                        fontSize: "0.8rem",
                         marginLeft: "5px",
                       }}
                       onClick={() => setDrawerOpen(true)}
@@ -2311,12 +2311,14 @@ function ProductDetail() {
 
             <Grid
               container
-              spacing={4} // Increased spacing between grid items
+              spacing={0.1}
+              xs={12}
               sx={{
-                marginRight: "8vh",
-                marginTop: "20px",
-                marginBottom: "20px", // Added bottom margin
-                padding: "0 20px", // Added horizontal padding
+                marginRight: "12vh",
+                marginTop: "10px",
+                marginBottom: "10px",
+                justifyContent: "flex-start",
+                paddingLeft: "10px",
               }}
             >
               <Grid
@@ -2324,9 +2326,8 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2339,8 +2340,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/17.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2350,9 +2351,8 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2365,8 +2365,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/3.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2376,9 +2376,8 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2391,8 +2390,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/2.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2402,9 +2401,8 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
                 }}
                 onClick={() =>
                   window.open(
@@ -2417,8 +2415,8 @@ function ProductDetail() {
                   src={process.env.PUBLIC_URL + "/assets/1.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2433,18 +2431,22 @@ function ProductDetail() {
                 fontSize: "1rem",
                 fontWeight: "bold",
                 marginBottom: "8px",
+                textAlign: "center",
               }}
+              xs={12}
             >
               Verify Product Credentials
             </Typography>
             <Grid
               container
-              spacing={4} // Increased spacing between grid items
+              spacing={0.5}
+              xs={12}
               sx={{
-                marginRight: "8vh",
-                marginTop: "8px",
-                marginBottom: "20px", // Added bottom margin
-                padding: "0 20px", // Added horizontal padding
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+                marginBottom: "20px",
+                width: "100%",
               }}
             >
               <Grid
@@ -2452,17 +2454,16 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
                 }}
               >
                 <img
                   src={process.env.PUBLIC_URL + "/assets/14.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2472,17 +2473,17 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
+                  padding: "10px",
                 }}
               >
                 <img
                   src={process.env.PUBLIC_URL + "/assets/15.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2492,17 +2493,17 @@ function ProductDetail() {
                 xs={3}
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   cursor: "pointer",
-                  padding: "10px", // Added padding around each grid item
+                  padding: "10px",
                 }}
               >
                 <img
                   src={process.env.PUBLIC_URL + "/assets/4.svg"}
                   alt="Delivery Icon"
                   style={{
-                    width: "100px",
-                    height: "100px",
+                    width: "60px",
+                    height: "60px",
                     objectFit: "contain",
                   }}
                 />
@@ -2723,8 +2724,8 @@ function ProductDetail() {
                         }}
                       >
                         {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.metal_info?.net_wt_after_wastage
+                          parseFloat(productDetail.customizations?.variants?.options[0]
+                            ?.metal_info?.net_wt_after_wastage).toFixed(2)
                         }{" "}
                         g
                       </div>
@@ -2824,178 +2825,178 @@ function ProductDetail() {
               </div>
 
               {productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.stone_type && <div
-                style={{
-                  marginTop: "20px",
-                  borderRadius: "10px",
-                  padding: "10px 20px",
-                  fontFamily: '"Roboto", sans-serif',
-                  border: "1px solid #e1e1e1",
-                  boxShadow: "0px 0px 5px 0px #a36e29",
-                }}
-              >
-                <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                  Stone Details
-                </div>
-                <Grid container spacing={2} style={{ marginTop: "8px" }}>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Stone Type
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.stone_type
-                        }
-                      </div>
-                    </Typography>
+                ?.stone_info?.stone_type && <div
+                  style={{
+                    marginTop: "20px",
+                    borderRadius: "10px",
+                    padding: "10px 20px",
+                    fontFamily: '"Roboto", sans-serif',
+                    border: "1px solid #e1e1e1",
+                    boxShadow: "0px 0px 5px 0px #a36e29",
+                  }}
+                >
+                  <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                    Stone Details
+                  </div>
+                  <Grid container spacing={2} style={{ marginTop: "8px" }}>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Stone Type
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.stone_type
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Clarity
+                        <div
+                          style={{
+                            fontSize: "1rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.clarity
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Color
+                        <div
+                          style={{
+                            fontSize: "1rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.class
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Pieces
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.pieces
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Cut
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.cut
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Carat
+                        <div
+                          style={{
+                            fontSize: "1rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.carat
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Stone Weight
+                        <div
+                          style={{
+                            fontSize: "1rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.stone_wt
+                          }{" "}
+                          g
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        Stone Rate
+                        <div
+                          style={{
+                            fontSize: "1rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ₹
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.stone_rate
+                          }
+                        </div>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        GST
+                        <div
+                          style={{
+                            fontSize: "1rem",
+                            color: "black",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {
+                            productDetail.customizations?.variants?.options[0]
+                              ?.stone_info?.gst_perc
+                          }
+                          %
+                        </div>
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Clarity
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.clarity
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Color
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.class
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Pieces
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.pieces
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Cut
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.cut
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Carat
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.carat
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Stone Weight
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.stone_wt
-                        }{" "}
-                        g
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Stone Rate
-                      <div
-                        style={{
-                          fontSize: "1rem", 
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        ₹
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.stone_rate
-                        }
-                      </div>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      GST
-                      <div
-                        style={{
-                          fontSize: "1rem",
-                          color: "black",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.stone_info?.gst_perc
-                        }
-                        %
-                      </div>
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </div>}
+                </div>}
             </div>
           </Grid>
         </Grid>
@@ -3287,7 +3288,7 @@ function ProductDetail() {
               </div>
               {productDetail.customizations?.variants?.options[0]
                 ?.metal_info?.metal_type?.toLowerCase() !== "silver" &&
-                <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <div xs={12} style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
                   <Button
                     style={{
                       fontSize: "0.8rem",
@@ -3308,19 +3309,18 @@ function ProductDetail() {
                     onClick={() => setAddCustomizationModalOpen(true)}
                   >
                     Add Customization
+                    <Tooltip title="Customizable on Weight and Size" placement="top">
+                      <InfoOutlinedIcon
+                        style={{
+                          fontSize: "0.8rem",
+                          marginBottom: "3vh",
+                          color: "white",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      />
+                    </Tooltip>
                   </Button>
-                  <Tooltip title="Customizable on Weight and Size" placement="top">
-                    <InfoOutlinedIcon
-                      style={{
-                        fontSize: "1.2rem",
-                        marginRight: "3vh",
-                        color: "#a36e29",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    />
-                  </Tooltip>
-
                 </div>
               }
               {productDetail.admin_verified == 1 ? (
@@ -3328,7 +3328,7 @@ function ProductDetail() {
                   <div
                     style={{
                       display: "flex",
-                      width: "90%",
+                      width: "100%",
                       marginTop: "10px",
                     }}
                   >
@@ -3339,7 +3339,7 @@ function ProductDetail() {
                         fontWeight: "bold",
                         color: "#a36e29",
                         fontFamily: '"Roboto", sans-serif',
-                        fontSize: "1rem",
+                        fontSize: "0.8rem",
                         marginRight: "5px",
                         background: "transparent",
                         border: "2px solid #a36e29",
@@ -3373,7 +3373,7 @@ function ProductDetail() {
                           fontFamily: '"Roboto", sans-serif',
                           background:
                             "linear-gradient(to right, #d4a76a, #a36e29)",
-                          fontSize: "1rem",
+                          fontSize: "0.8rem",
                           marginLeft: "5px",
                         }}
                         onClick={() => setDrawerOpen(true)}
@@ -3435,25 +3435,17 @@ function ProductDetail() {
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <CarouselScheme />
                 </Box>
-                <Typography
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1.1rem",
-                    fontWeight: "600",
-                    marginTop: "20px",
-                  }}
-                >
-                  Verify Product Credentials
-                </Typography>
               </Box>
               <Grid
                 container
-                spacing={4} // Increased spacing between grid items
+                spacing={0.1}
+                xs={12}
                 sx={{
-                  marginRight: "10vh",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
                   marginTop: "10px",
-                  marginBottom: "10px", // Added bottom margin
-                  padding: "0 20px", // Added horizontal padding
+                  marginBottom: "10px",
+                  justifyContent: "flex-start",
                 }}
               >
                 <Grid
@@ -3461,9 +3453,8 @@ function ProductDetail() {
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "7px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3487,9 +3478,8 @@ function ProductDetail() {
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "10px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3513,9 +3503,8 @@ function ProductDetail() {
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "10px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3539,9 +3528,8 @@ function ProductDetail() {
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "10px", // Added padding around each grid item
                   }}
                   onClick={() =>
                     window.open(
@@ -3560,15 +3548,39 @@ function ProductDetail() {
                     }}
                   />
                 </Grid>
-
+              </Grid>
+              <Typography
+                style={{
+                  textAlign: "center",
+                  fontFamily: '"Roboto", sans-serif',
+                  fontSize: "1.1rem",
+                  fontWeight: "600",
+                  marginTop: "20px",
+                }}
+              >
+                Verify Product Credentials
+              </Typography>
+              <Grid
+                container
+                spacing={1}
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginRight: "10vh",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  padding: "0 20px",
+                }}
+              >
                 <Grid
                   item
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "10px", // Added padding around each grid item
+                    padding: "10px",
                   }}
                 >
                   <img
@@ -3586,9 +3598,9 @@ function ProductDetail() {
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "10px", // Added padding around each grid item
+                    padding: "10px",
                   }}
                 >
                   <img
@@ -3606,9 +3618,9 @@ function ProductDetail() {
                   xs={3}
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     cursor: "pointer",
-                    padding: "10px", // Added padding around each grid item
+                    padding: "10px",
                   }}
                 >
                   <img
@@ -3623,7 +3635,7 @@ function ProductDetail() {
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
-                <Grid item xs={12} className="location-grid">
+                <Grid item xs={11} className="location-grid">
                   <Typography
                     sx={{
                       display: "flex",
@@ -3957,196 +3969,196 @@ function ProductDetail() {
                   </div>
 
                   {productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.stone_type && <div
-                    style={{
-                      marginTop: "20px",
-                      borderRadius: "10px",
-                      padding: "10px 20px",
-                      fontFamily: '"Roboto", sans-serif',
-                      border: "1px solid #e1e1e1",
-                      boxShadow: "0px 0px 5px 0px #a36e29",
-                    }}
-                  >
-                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      Stone Details
-                    </div>
-                    <Grid container spacing={2} style={{ marginTop: "8px" }}>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Stone Type
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                    ?.stone_info?.stone_type && <div
+                      style={{
+                        marginTop: "20px",
+                        borderRadius: "10px",
+                        padding: "10px 20px",
+                        fontFamily: '"Roboto", sans-serif',
+                        border: "1px solid #e1e1e1",
+                        boxShadow: "0px 0px 5px 0px #a36e29",
+                      }}
+                    >
+                      <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                        Stone Details
+                      </div>
+                      <Grid container spacing={2} style={{ marginTop: "8px" }}>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.stone_type
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Clarity
-                          <div
-                            style={{
-                              fontSize: "1rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Stone Type
+                            <div
+                              style={{
+                                fontSize: "0.8rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.stone_type
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.clarity
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Color
-                          <div
-                            style={{
-                              fontSize: "1rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Clarity
+                            <div
+                              style={{
+                                fontSize: "1rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.clarity
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.class
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Pieces
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Color
+                            <div
+                              style={{
+                                fontSize: "1rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.class
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.pieces
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Cut
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Pieces
+                            <div
+                              style={{
+                                fontSize: "0.8rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.pieces
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.cut
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Carat
-                          <div
-                            style={{
-                              fontSize: "1rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Cut
+                            <div
+                              style={{
+                                fontSize: "0.8rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.cut
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.carat
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Stone Weight
-                          <div
-                            style={{
-                              fontSize: "1rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Carat
+                            <div
+                              style={{
+                                fontSize: "1rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.carat
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.stone_wt
-                            }{" "}
-                            g
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          Stone Rate
-                          <div
-                            style={{
-                              fontSize: "1rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Stone Weight
+                            <div
+                              style={{
+                                fontSize: "1rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.stone_wt
+                              }{" "}
+                              g
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            ₹
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.stone_rate
-                            }
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        >
-                          GST
-                          <div
-                            style={{
-                              fontSize: "1rem",
-                              color: "black",
-                              fontWeight: "bold",
-                            }}
+                            Stone Rate
+                            <div
+                              style={{
+                                fontSize: "1rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              ₹
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.stone_rate
+                              }
+                            </div>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.gst_perc
-                            }
-                            %
-                          </div>
-                        </Typography>
+                            GST
+                            <div
+                              style={{
+                                fontSize: "1rem",
+                                color: "black",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {
+                                productDetail.customizations?.variants?.options[0]
+                                  ?.stone_info?.gst_perc
+                              }
+                              %
+                            </div>
+                          </Typography>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </div>}
+                    </div>}
                 </div>
               </Grid>
             </div>

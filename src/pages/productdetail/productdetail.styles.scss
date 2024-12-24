@@ -206,7 +206,6 @@
 
       .container {
         width: 100%;
-        padding-right: 10px;
 
         .product-content {
           display: flex;
@@ -229,8 +228,7 @@
 
         .product-detail-section {
           flex: 1;
-          max-width: 100%;
-          margin: 20px;
+          max-width: 90%;
 
           .rating-reviews {
             font-family: "Roboto", sans-serif;

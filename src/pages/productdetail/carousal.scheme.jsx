@@ -19,7 +19,18 @@ export default function CarouselScheme() {
 
     // remove left and right arrows
     return (
-        <Carousel navButtonsAlwaysInvisible indicators={false}>
+        <Carousel 
+            navButtonsAlwaysInvisible 
+            indicators={false} 
+            sx={{ 
+                width: {
+                    xs: "122%", // width for extra-small devices (phones)
+                    sm: "95%", // width for small devices (tablets)
+                    md: "100%", // width for medium and larger devices
+                },
+                margin: "auto" // center the carousel
+            }}
+        >
             {
                 items.map((item, i) => <Item key={i} item={item} />)
             }
