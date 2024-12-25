@@ -2315,6 +2315,7 @@ function ProductDetail() {
                     fontSize: "1rem",
                     fontWeight: "600",
                     marginBottom: "-8px",
+                    marginTop: "2rem",
                   }}
                 >
                   SadāShrī Jewelkart Promise:
@@ -2445,7 +2446,8 @@ function ProductDetail() {
                 fontFamily: '"Roboto", sans-serif',
                 fontSize: "1rem",
                 fontWeight: "bold",
-                marginBottom: "8px"
+                marginBottom: "2rem",
+                marginTop: "2rem",
               }}
               xs={12}
             >
@@ -2693,7 +2695,7 @@ function ProductDetail() {
                   </Grid>
                   <Grid item xs={4}>
                     <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                      Quality
+                      Purity
                       <div
                         style={{
                           fontSize: "1rem",
@@ -3834,7 +3836,7 @@ function ProductDetail() {
                         <Typography
                           style={{ fontSize: "0.8rem", color: "grey" }}
                         >
-                          Quality
+                          Purity
                           <div
                             style={{
                               fontSize: "1rem",
