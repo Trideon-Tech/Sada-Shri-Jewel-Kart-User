@@ -2309,13 +2309,22 @@ function ProductDetail() {
                 <CarouselScheme />
               </Box>
 
-              <Typography
+              <div style={{
+                marginTop: "20px",
+                borderRadius: "10px",
+                padding: "10px 20px",
+                fontFamily: '"Roboto", sans-serif',
+                border: "1px solid #e1e1e1",
+                boxShadow: "0px 0px 5px 0px #a36e29",
+                marginBottom: "1rem",
+              }}>
+                <Typography
                   style={{
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "1rem",
                     fontWeight: "600",
-                    marginBottom: "-8px",
-                    marginTop: "2rem",
+                    marginBottom: "1rem",
+                    marginTop: "1rem",
                   }}
                 >
                   SadāShrī Jewelkart Promise:
@@ -2325,205 +2334,218 @@ function ProductDetail() {
 
                   At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
                 </Typography>
+              </div>
+
             </Box>
 
-            <Grid
-              container
-              xs={11.3}
-              spacing={0}
-              sx={{
-                marginTop: "10px",
-                marginBottom: "10px",
-                justifyContent: "flex-start"
-              }}
-            >
+            <div style={{
+              marginTop: "20px",
+              borderRadius: "10px",
+              padding: "10px 10px",
+              fontFamily: '"Roboto", sans-serif',
+              border: "1px solid #e1e1e1",
+              boxShadow: "0px 0px 5px 0px #a36e29",
+              width: "26.3rem",
+            }}>
               <Grid
-                item
-                xs={3}
+                container
+                xs={11.3}
+                spacing={0}
                 sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  justifyContent: "flex-start"
                 }}
-                onClick={() =>
-                  window.open(
-                    "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
-                    "_blank"
-                  )
-                }
               >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/17.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
                   }}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={3}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  window.open(
-                    "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
-                    "_blank"
-                  )
-                }
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/3.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                      "_blank"
+                    )
+                  }
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/17.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
                   }}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={3}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  window.open(
-                    "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
-                    "_blank"
-                  )
-                }
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/2.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                      "_blank"
+                    )
+                  }
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
                   }}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={3}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  window.open(
-                    "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
-                    "_blank"
-                  )
-                }
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/1.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                      "_blank"
+                    )
+                  }
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
                   }}
-                />
+                  onClick={() =>
+                    window.open(
+                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                      "_blank"
+                    )
+                  }
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
 
-            {/* Verify Product Credentials */}
+              {/* Verify Product Credentials */}
 
-            <Typography
-              style={{
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: "1rem",
-                fontWeight: "bold",
-                marginBottom: "2rem",
-                marginTop: "2rem",
-              }}
-              xs={12}
-            >
-              Verify Product Credentials
-            </Typography>
-            <Grid
-              container
-              spacing={0.5}
-              xs={11.3}
-              sx={{
-                display: "flex",
-                marginTop: "10px",
-                marginBottom: "20px",
-                width: "100%",
-              }}
-            >
-              <Grid
-                item
-                xs={3}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
+              <Typography
+                style={{
+                  fontFamily: '"Roboto", sans-serif',
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  marginBottom: "2rem",
+                  marginTop: "2rem",
+                  paddingLeft: "1rem",
                 }}
               >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/14.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
-                  }}
-                />
-              </Grid>
+                Verify Product Credentials
+              </Typography>
               <Grid
-                item
-                xs={3}
+                container
+                spacing={0.5}
+                xs={11.3}
                 sx={{
                   display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
-                  padding: "10px",
+                  marginTop: "10px",
+                  marginBottom: "20px",
+                  width: "100%",
                 }}
               >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/15.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
                   }}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={3}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  cursor: "pointer",
-                  padding: "10px",
-                }}
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/assets/4.svg"}
-                  alt="Delivery Icon"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "contain",
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/14.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
+                    padding: "10px",
                   }}
-                />
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/15.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    cursor: "pointer",
+                    padding: "10px",
+                  }}
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                    alt="Delivery Icon"
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
+            </div>
+
             <Typography
               sx={{
                 display: "flex",
@@ -3451,215 +3473,238 @@ function ProductDetail() {
                   <CarouselScheme />
                 </Box>
 
+                <div style={{
+                  marginTop: "20px",
+                  borderRadius: "10px",
+                  padding: "10px 20px",
+                  fontFamily: '"Roboto", sans-serif',
+                  border: "1px solid #e1e1e1",
+                  boxShadow: "0px 0px 5px 0px #a36e29",
+                }}>
+                  <Typography
+                    style={{
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "600",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    SadāShrī Jewelkart Promise:
+                  </Typography>
+
+                  <Typography style={{
+                    fontSize: "0.8rem",
+                    color: "grey",
+                    lineHeight: "1.5"
+                  }}>
+                    At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
+                  </Typography>
+                </div>
+              </Box>
+
+              <div style={{
+                marginTop: "20px",
+                borderRadius: "10px",
+                padding: "10px 20px",
+                fontFamily: '"Roboto", sans-serif',
+                border: "1px solid #e1e1e1",
+                boxShadow: "0px 0px 5px 0px #a36e29",
+              }}>
+                <Grid
+                  container
+                  spacing={1}
+                  xs={12}
+                  sx={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      window.open(
+                        "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                        "_blank"
+                      )
+                    }
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/17.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      window.open(
+                        "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                        "_blank"
+                      )
+                    }
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/3.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      window.open(
+                        "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                        "_blank"
+                      )
+                    }
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/2.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      window.open(
+                        "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                        "_blank"
+                      )
+                    }
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/1.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "80px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                </Grid>
                 <Typography
                   style={{
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "1rem",
-                    fontWeight: "600",
-                    marginBottom: "-8px",
+                    fontWeight: "600"
                   }}
                 >
-                  SadāShrī Jewelkart Promise:
+                  Verify Product Credentials
                 </Typography>
+                <Grid
+                  container
+                  spacing={1}
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    marginRight: "10vh",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                      padding: "10px",
+                    }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/14.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                      padding: "10px",
+                    }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/15.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                      padding: "10px",
+                    }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </div>
 
-                <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-
-                  At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
-                </Typography>
-              </Box>
-              <Grid
-                container
-                spacing={1}
-                xs={12}
-                sx={{
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/17.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/3.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/2.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
-                      "_blank"
-                    )
-                  }
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/1.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "80px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-              </Grid>
-              <Typography
-                style={{
-                  fontFamily: '"Roboto", sans-serif',
-                  fontSize: "1rem",
-                  fontWeight: "600"
-                }}
-              >
-                Verify Product Credentials
-              </Typography>
-              <Grid
-                container
-                spacing={1}
-                xs={12}
-                sx={{
-                  display: "flex",
-                  marginRight: "10vh",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                }}
-              >
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                    padding: "10px",
-                  }}
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/14.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                    padding: "10px",
-                  }}
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/15.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-                    padding: "10px",
-                  }}
-                >
-                  <img
-                    src={process.env.PUBLIC_URL + "/assets/4.svg"}
-                    alt="Delivery Icon"
-                    style={{
-                      width: "70px",
-                      height: "70px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Grid>
-              </Grid>
               <Grid container spacing={3}>
                 <Grid item xs={11} className="location-grid">
                   <Typography
