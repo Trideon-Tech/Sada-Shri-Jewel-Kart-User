@@ -335,7 +335,7 @@ const Navbar = () => {
               >
                 <div style={{ width: "100%" }}>
                   <InputBase
-                    placeholder="Search for Jwellery..."
+                    placeholder="Search for Jewellery..."
                     classes={{
                       root: "input-root",
                       input: "input-input",
