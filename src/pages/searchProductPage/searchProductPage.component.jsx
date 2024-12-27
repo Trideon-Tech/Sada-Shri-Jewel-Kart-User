@@ -128,6 +128,7 @@ function SearchProductpage() {
           <img
             src={process.env.PUBLIC_URL + "/assets/productList bg.jpg"}
             style={{ width: "100%" }}
+            alt="product-list-bg"
           />
         </Box>
         <div className="product-container">

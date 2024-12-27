@@ -213,8 +213,15 @@ function Footer() {
               }}
               align="left"
             >
-              Building No./Flat No.: NO 1323/1324Road/Street: 16TH B CROSS
-              HOUSING BOARD COLONY EWS 3RD PHASE Locality/Sub
+              Building No./Flat No.: NO 1323/1324
+              <br />
+              Road/Street: 16TH B CROSS
+              <br />
+              HOUSING BOARD COLONY EWS 3RD PHASE
+              <br />
+              Locality/Sub Locality: Yelahanka New Town
+              <br />
+              City/Town/ Village: Bengaluru
             </Typography>
             <Typography
               style={{
@@ -224,17 +231,11 @@ function Footer() {
               }}
               align="left"
             >
-              Locality: Yelahanka New TownCity/Town/ Village: Bengaluru
-            </Typography>
-            <Typography
-              style={{
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
-                color: "grey",
-              }}
-              align="left"
-            >
-              District: Bengaluru UrbanState: Karnataka PIN Code: 560064
+              District: Bengaluru Urban
+              <br />
+              State: Karnataka
+              <br />
+              PIN Code: 560064
             </Typography>
           </Grid>
         </Grid>

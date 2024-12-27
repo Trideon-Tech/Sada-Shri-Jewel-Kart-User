@@ -1,9 +1,22 @@
 import Checkbox from "@mui/joy/Checkbox";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./productFilter.styles.scss";
 
-const PriceFilter = ({ onFilterChange }) => {
+const PriceFilter = ({
+  selectedPriceRange,
+  handleSelectedPriceRange,
+  onFilterChange,
+  clearAll,
+  setClearAll,
+}) => {
   const [rangeList, setRangeList] = useState([]);
+
+  useEffect(() => {
+    if (clearAll) {
+      setRangeList([]);
+      setClearAll(false);
+    }
+  }, [clearAll]);
 
   const priceRanges = [
     { id: 1, label: "₹10,001 - ₹20,000", low: 10000, high: 20000 },
@@ -63,7 +76,7 @@ const PriceFilter = ({ onFilterChange }) => {
         <div key={range.id} className="price-option">
           <label>
             <Checkbox
-              checked={rangeList?.label?.includes(range.label)}
+              checked={clearAll ? false : rangeList.some(item => item.id === range.id)}
               onChange={(event) => handleCheckboxChange(event, range)}
               color="warning"
             />

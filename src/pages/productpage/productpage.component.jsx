@@ -34,8 +34,9 @@ function Productpage() {
   const [reloadNavbar, setReloadNavbar] = useState(1);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [clearAll, setClearAll] = useState(false);
   const navigate = useNavigate();
-  const [selectedPriceRange, setSelectedPriceRange] = useState({});
+  const [selectedPriceRange, setSelectedPriceRange] = useState([]);
 
   const images = [
     {
@@ -110,7 +111,6 @@ function Productpage() {
         }
       )
       .then(() => {
-        console.log(`Product with ID ${id} sent to API`);
         navigate("/cart");
       })
       .catch((error) => {
@@ -222,6 +222,8 @@ function Productpage() {
                   className="clear"
                   onClick={() => {
                     setSelectedPriceRange([]);
+                    setClearAll(true);
+                    // setRangeList([]);
                   }}
                 >
                   Clear All
@@ -230,11 +232,10 @@ function Productpage() {
               <Divider style={{ width: "90%" }} />
               <PriceFilter
                 selectedPriceRange={selectedPriceRange}
-                handleSelectedPriceRange={(range) => {
-                  console.log("range", range);
-                  setSelectedPriceRange(range);
-                }}
+                handleSelectedPriceRange={setSelectedPriceRange}
                 onFilterChange={handleFilterChange}
+                clearAll={clearAll}
+                setClearAll={setClearAll}
               />
             </Grid>
 
@@ -488,7 +489,6 @@ function Productpage() {
               textDecoration: "underline",
             }}
             onClick={() => {
-              console.log("hey");
               setIsDrawerOpen(true);
             }}
           >
