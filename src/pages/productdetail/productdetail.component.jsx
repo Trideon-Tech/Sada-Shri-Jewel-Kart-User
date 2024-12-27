@@ -108,6 +108,7 @@ function ProductDetail() {
   const [selectedCouponCode, setSelectedCouponCode] = useState();
   const [discountAmount, setDiscountAmount] = useState();
   const [addCustomizationModalOpen, setAddCustomizationModalOpen] = useState(false);
+  const [makingChargePercentage, setMakingChargePercentage] = useState(0);
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -228,6 +229,8 @@ function ProductDetail() {
         }
 
         setProductDetail((_) => detail);
+        setMakingChargePercentage(Math.ceil(detail.customizations?.variants?.options[0]
+          ?.metal_info?.making_charge_amount / detail?.customizations?.variants?.options[0]?.price * 100));
         setHasCustomization(detail.hasOwnProperty("customizations"));
         if (detail.hasOwnProperty("customizations")) {
           setCustomizationTypes(detail["customizations"]["fields"]);
@@ -2778,11 +2781,9 @@ function ProductDetail() {
                           fontWeight: "bold",
                         }}
                       >
-                        ₹
                         {
-                          productDetail.customizations?.variants?.options[0]
-                            ?.metal_info?.making_charge_amount
-                        }
+                          makingChargePercentage
+                        }%
                       </div>
                     </Typography>
                   </Grid>
@@ -2912,7 +2913,7 @@ function ProductDetail() {
                     </Grid>
                     <Grid item xs={4}>
                       <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Color
+                        Class
                         <div
                           style={{
                             fontSize: "1rem",
@@ -3948,11 +3949,9 @@ function ProductDetail() {
                               fontWeight: "bold",
                             }}
                           >
-                            ₹
                             {
-                              productDetail.customizations?.variants?.options[0]
-                                ?.metal_info?.making_charge_amount
-                            }
+                              makingChargePercentage
+                            }%
                           </div>
                         </Typography>
                       </Grid>
@@ -4096,7 +4095,7 @@ function ProductDetail() {
                           <Typography
                             style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            Color
+                            Class
                             <div
                               style={{
                                 fontSize: "1rem",
