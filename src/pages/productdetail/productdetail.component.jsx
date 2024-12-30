@@ -56,6 +56,8 @@ import { useRefresh } from "../../RefreshContent";
 import ImageVideoCarousel from "./carousal.component";
 import CarouselScheme from "./carousal.scheme";
 import ModalAddCustomization from "./modal.addCustomization.component";
+import PriceBreakoutDrawer from '../../components/drawers/PriceBreakoutDrawer';
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -109,6 +111,8 @@ function ProductDetail() {
   const [discountAmount, setDiscountAmount] = useState();
   const [addCustomizationModalOpen, setAddCustomizationModalOpen] = useState(false);
   const [makingChargePercentage, setMakingChargePercentage] = useState(0);
+  const [isPriceBreakoutOpen, setIsPriceBreakoutOpen] = useState(false);
+
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -139,7 +143,6 @@ function ProductDetail() {
         }
       )
       .then(() => {
-        console.log(`Product with ID ${productDetail.id} sent to API`);
         toast.info("Product Added to Cart", generalToastStyle);
         navigate("/cart");
       })
@@ -195,7 +198,6 @@ function ProductDetail() {
         }
       )
       .then(() => {
-        console.log(`Product with ID ${id} sent to API`);
         navigate("/cart");
       })
       .catch((error) => {
@@ -257,7 +259,6 @@ function ProductDetail() {
 
     const query = searchParams.get("drawer");
 
-    console.log(query, "query");
     if (query === "open") {
       mediaQuery ? setDrawerOpen(true) : setBottomDrawerOpen(true);
     }
@@ -340,7 +341,6 @@ function ProductDetail() {
         }
       )
       .then((response) => {
-        console.log("response", response?.data?.response?.totalPages);
         setTotalReviewsCount(
           response?.data?.response?.totalPages > 1
             ? Number(response?.data?.response?.totalPages) * 5
@@ -349,7 +349,6 @@ function ProductDetail() {
         const sum = response?.data?.response?.reviews.map((item) =>
           Number(item.rating)
         );
-        console.log(sum, " sum ");
         if (sum && sum?.length > 0)
           setAverageRating(sum?.reduce((a, b) => a + b) / sum.length);
       })
@@ -357,7 +356,6 @@ function ProductDetail() {
   }, [productDetail]);
 
   const handleWishList = async () => {
-    console.log(productDetail.exists_in_wishlist || localWishlisted);
     if (productDetail.exists_in_wishlist || localWishlisted) {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -442,8 +440,6 @@ function ProductDetail() {
           setCurrentPositionAddresss(locationResponse.data.display_name);
           setCurrentPositionPincode(locationResponse.data.address.postcode);
 
-          console.log("Comes here");
-          console.log(locationResponse.data.address.postcode);
           getETA(locationResponse.data.address.postcode, productDetail.id);
         });
       }
@@ -670,15 +666,12 @@ function ProductDetail() {
                     </p>
                   }
                   onChange={(event) => {
-                    console.log(event.target.value);
                     if (event.target.value.length == 6) {
                       setPincode(event.target.value);
                       localStorage.setItem(
                         "default_pincode",
                         event.target.value
                       );
-                      console.log("Sending");
-                      console.log(event.target.value);
                       getETAFromInput(event.target.value, productDetail.id);
                     }
                   }}
@@ -888,7 +881,6 @@ function ProductDetail() {
                     </p>
                   }
                   onChange={(event) => {
-                    console.log(event.target.value);
                     if (event.target.value.length == 6) {
                       setPincode(event.target.value);
                       localStorage.setItem(
@@ -2626,8 +2618,26 @@ function ProductDetail() {
                 paddingBottom: "20px",
               }}
             >
-              <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                Product Description
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                  Product Description
+                </div>
+                <Button
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        fontWeight: "bold",
+                        color: "#a36e29",
+                        fontFamily: '"Roboto", sans-serif',
+                        fontSize: "0.8rem",
+                        background: "transparent",
+                        border: "2px solid #a36e29",
+                        backgroundColor: "white",
+                  }}
+                  onClick={() => setIsPriceBreakoutOpen(true)}
+                >
+                  Price Breakdown
+                </Button>
               </div>
               <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                 #{productDetail.hash?.toUpperCase()}
@@ -4295,6 +4305,11 @@ function ProductDetail() {
         </div>
       </div>
       <Footer />
+      <PriceBreakoutDrawer 
+        open={isPriceBreakoutOpen}
+        onClose={() => setIsPriceBreakoutOpen(false)}
+        productDetails={productDetail}
+      />
     </div>
   );
 }
