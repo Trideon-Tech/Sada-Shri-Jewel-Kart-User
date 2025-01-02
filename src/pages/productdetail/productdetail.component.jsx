@@ -3875,7 +3875,7 @@ function ProductDetail() {
                           >
                             {
                               productDetail.customizations?.variants?.options[0]
-                                ?.metal_info?.stone_wt
+                                ?.stone_info?.stone_wt
                             }{" "}
                             g
                           </div>
