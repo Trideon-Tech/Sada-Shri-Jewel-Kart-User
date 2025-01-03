@@ -1988,11 +1988,7 @@ function ProductDetail() {
                 marginTop: "3%",
               }}
             >
-              <ListItem
-                onClick={() =>
-                  window.open("https://seller.sadashrijewelkart.com", "_blank")
-                }
-              >
+              <ListItem>
                 <Typography
                   style={{
                     fontWeight: "bold",
