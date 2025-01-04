@@ -202,7 +202,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 {/* Subtotal */}
                 <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3, display: "flex", justifyContent: "space-between" }}>
                     <div style={{ fontSize: "1rem" }}>SUBTOTAL</div>
-                    <div style={{ fontSize: "1rem" }}>₹{subtotal}</div>
+                    <div style={{ fontSize: "1rem" }}>₹{subtotal.toFixed(2)}</div>
                 </Typography>
 
             </Box>

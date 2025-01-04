@@ -2614,27 +2614,28 @@ function ProductDetail() {
                 paddingBottom: "20px",
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                  Product Description
-                </div>
-                <Button
-                      variant="contained"
-                      fullWidth
-                      style={{
-                        fontWeight: "bold",
-                        color: "#a36e29",
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: "0.8rem",
-                        background: "transparent",
-                        border: "2px solid #a36e29",
-                        backgroundColor: "white",
-                  }}
-                  onClick={() => setIsPriceBreakoutOpen(true)}
-                >
-                  Price Breakdown
-                </Button>
+              <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                Product Description
               </div>
+              <Button
+                variant="contained"
+                fullWidth
+                style={{
+                  fontWeight: "bold",
+                  color: "#a36e29",
+                  fontFamily: '"Roboto", sans-serif',
+                  fontSize: "0.8rem",
+                  background: "transparent",
+                  border: "2px solid #a36e29",
+                  backgroundColor: "white",
+                  paddingLeft: "0px",
+                  paddingRight: "0px",
+                  margin: "1rem 0rem",
+                }}
+                onClick={() => setIsPriceBreakoutOpen(true)}
+              >
+                Price Breakdown
+              </Button>
               <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                 #{productDetail.hash?.toUpperCase()}
               </Typography>
@@ -4301,7 +4302,7 @@ function ProductDetail() {
         </div>
       </div>
       <Footer />
-      <PriceBreakoutDrawer 
+      <PriceBreakoutDrawer
         open={isPriceBreakoutOpen}
         onClose={() => setIsPriceBreakoutOpen(false)}
         productDetails={productDetail}
