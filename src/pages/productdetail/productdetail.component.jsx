@@ -2311,11 +2311,11 @@ function ProductDetail() {
               fontFamily: '"Roboto", sans-serif',
               border: "1px solid #e1e1e1",
               boxShadow: "0px 0px 5px 0px #a36e29",
-              marginBottom: "1rem",
+              marginBottom: "0.5rem",
             }}>
               <div style={{
                 width: "24.3rem",
-                marginTop: "20px",
+                marginTop: "0.5rem",
                 borderRadius: "10px",
                 padding: "10px 10px",
                 fontFamily: '"Roboto", sans-serif',
@@ -2326,8 +2326,7 @@ function ProductDetail() {
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "1rem",
                     fontWeight: "600",
-                    marginBottom: "1rem",
-                    marginTop: "1rem",
+                    marginBottom: "0.5rem",
                   }}
                 >
                   SadāShrī Jewelkart Promise:
@@ -2339,7 +2338,7 @@ function ProductDetail() {
                 </Typography>
               </div>
               <div style={{
-                marginTop: "20px",
+                marginTop: "0.5rem",
                 borderRadius: "10px",
                 padding: "10px 10px",
                 fontFamily: '"Roboto", sans-serif',
@@ -2350,7 +2349,7 @@ function ProductDetail() {
                   xs={11.3}
                   spacing={0}
                   sx={{
-                    marginTop: "10px",
+                    marginTop: "0.5rem",
                     marginBottom: "10px",
                     justifyContent: "flex-start"
                   }}
@@ -2456,6 +2455,26 @@ function ProductDetail() {
                     />
                   </Grid>
                 </Grid>
+              </div>
+            </div>
+
+            <div style={{
+              width: "25.3rem",
+              marginTop: "1rem",
+              paddingRight: "1rem",
+              borderRadius: "10px",
+              fontFamily: '"Roboto", sans-serif',
+              border: "1px solid #e1e1e1",
+              boxShadow: "0px 0px 5px 0px #a36e29",
+              marginBottom: "1rem",
+            }}>
+              <div style={{
+                marginTop: "0.5rem",
+                borderRadius: "10px",
+                padding: "10px 10px",
+                fontFamily: '"Roboto", sans-serif',
+                width: "26.3rem",
+              }}>
 
                 {/* Verify Product Credentials */}
 
@@ -2465,7 +2484,7 @@ function ProductDetail() {
                     fontSize: "1rem",
                     fontWeight: "bold",
                     marginBottom: "2rem",
-                    marginTop: "2rem",
+                    marginTop: "0.5rem",
                     paddingLeft: "1rem",
                   }}
                 >
@@ -3472,7 +3491,7 @@ function ProductDetail() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  marginTop: "20px",
+                  marginTop: "0.5rem",
                 }}
               >
                 <Typography
@@ -3492,7 +3511,7 @@ function ProductDetail() {
               </Box>
 
               <div style={{
-                marginTop: "20px",
+                marginTop: "0.5rem",
                 borderRadius: "10px",
                 padding: "10px 20px",
                 fontFamily: '"Roboto", sans-serif',
@@ -3500,7 +3519,7 @@ function ProductDetail() {
                 boxShadow: "0px 0px 5px 0px #a36e29",
               }}>
                 <div style={{
-                  marginTop: "20px",
+                  marginTop: "0.5rem",
                   borderRadius: "10px",
                   padding: "10px 20px",
                   fontFamily: '"Roboto", sans-serif',
@@ -3510,7 +3529,7 @@ function ProductDetail() {
                       fontFamily: '"Roboto", sans-serif',
                       fontSize: "1rem",
                       fontWeight: "600",
-                      marginBottom: "12px",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     SadāShrī Jewelkart Promise:
@@ -3525,7 +3544,7 @@ function ProductDetail() {
                   </Typography>
                 </div>
                 <div style={{
-                  marginTop: "20px",
+                  marginTop: "0.5rem",
                   borderRadius: "10px",
                   padding: "10px 20px",
                   fontFamily: '"Roboto", sans-serif'
@@ -3535,8 +3554,8 @@ function ProductDetail() {
                     spacing={1}
                     xs={12}
                     sx={{
-                      marginTop: "10px",
-                      marginBottom: "10px",
+                      marginTop: "0.5rem",
+                      marginBottom: "0.5rem",
                       display: "flex",
                       justifyContent: "space-between",
                     }}
@@ -3642,6 +3661,22 @@ function ProductDetail() {
                       />
                     </Grid>
                   </Grid>
+                </div>
+              </div>
+              <div style={{
+                marginTop: "0.5rem",
+                borderRadius: "10px",
+                padding: "10px 20px",
+                fontFamily: '"Roboto", sans-serif',
+                border: "1px solid #e1e1e1",
+                boxShadow: "0px 0px 5px 0px #a36e29",
+              }}>
+                <div style={{
+                  marginTop: "0.5rem",
+                  borderRadius: "10px",
+                  padding: "10px 20px",
+                  fontFamily: '"Roboto", sans-serif'
+                }}>
                   <Typography
                     style={{
                       fontFamily: '"Roboto", sans-serif',
@@ -3658,8 +3693,8 @@ function ProductDetail() {
                     sx={{
                       display: "flex",
                       marginRight: "10vh",
-                      marginTop: "10px",
-                      marginBottom: "10px",
+                      marginTop: "0.5rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     <Grid
