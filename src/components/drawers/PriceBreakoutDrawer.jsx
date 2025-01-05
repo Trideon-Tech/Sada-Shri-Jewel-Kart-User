@@ -52,9 +52,9 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
             // Add additional charges
             baseAmount += parseFloat(metalInfo.making_charge_amount || 0) +
-                          parseFloat(metalInfo.stone_amount || 0) +
-                          parseFloat(metalInfo.hallmark_charge || 0) +
-                          parseFloat(metalInfo.rodium_charge || 0);
+                parseFloat(metalInfo.stone_amount || 0) +
+                parseFloat(metalInfo.hallmark_charge || 0) +
+                parseFloat(metalInfo.rodium_charge || 0);
         }
 
         // Add GST if present
@@ -168,31 +168,16 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                     </TableBody>
                 </Table>
 
-                {/* Making Charges */}
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3 }}>
-                    MAKING CHARGES
-                </Typography>
-                <Table>
-                    <TableHead>
-                        <TableRow style={{ textAlign: "center" }}>
-                            <TableCell style={{ textAlign: "center" }}>MC TYPE</TableCell>
-                            <TableCell style={{ textAlign: "center" }}>MC</TableCell>
-                            <TableCell style={{ textAlign: "center" }}>MC AMOUNT</TableCell>
-                            <TableCell style={{ textAlign: "center" }}></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow style={{ textAlign: "center" }}>
-                            <TableCell style={{ textAlign: "center" }}>{productDetails?.customizations?.variants?.options[0]
-                                ?.metal_info?.making_charge_type}</TableCell>
-                            <TableCell style={{ textAlign: "center" }}>{productDetails?.customizations?.variants?.options[0]
-                                ?.metal_info?.making_charge_value}</TableCell>
-                            <TableCell style={{ textAlign: "center" }}>₹{productDetails?.customizations?.variants?.options[0]
-                                ?.metal_info?.making_charge_amount}</TableCell>
-                            <TableCell style={{ textAlign: "center" }}></TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem" }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                        MAKING CHARGES
+                    </Typography>
+                    <Typography variant="subtitle1">
+                        ₹{productDetails?.customizations?.variants?.options[0]
+                            ?.metal_info?.making_charge_amount}
+                    </Typography>
+                </div>
+
 
                 {/* Subtotal */}
                 <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3, display: "flex", justifyContent: "space-between" }}>

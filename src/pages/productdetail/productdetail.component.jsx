@@ -21,6 +21,7 @@ import ModalOverflow from "@mui/joy/ModalOverflow";
 import ListItem from "@mui/joy/ListItem";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
@@ -2618,21 +2619,22 @@ function ProductDetail() {
                 <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                   Product Description
                 </div>
-                <Button
-                  variant="contained"
-                  fullWidth
+                <Typography
                   style={{
+                    fontSize: "1rem",
                     fontWeight: "bold",
-                    fontFamily: '"Roboto", sans-serif',
-                    background:
-                      "linear-gradient(to right, #d4a76a, #a36e29)",
-                    fontSize: "0.8rem",
-                    width: "50%",
+                    color: "#a36e29",
+                    cursor: "pointer",
+                    marginTop: "0.5rem",
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                   onClick={() => setIsPriceBreakoutOpen(true)}
                 >
-                  Price Breakdown
-                </Button>
+                    <AddIcon />  Price Breakup
+                </Typography>
               </div>
 
               <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
@@ -3794,23 +3796,19 @@ function ProductDetail() {
                     <div style={{ fontSize: "1rem", fontWeight: "bold", marginTop: "0.5rem" }}>
                       Product Description
                     </div>
-                    <Button
-                      variant="contained"
-                      fullWidth
+                    <Typography
                       style={{
+                        marginTop: "0.5rem",
+                        fontSize: "0.8rem",
                         fontWeight: "bold",
                         color: "#a36e29",
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: "0.6rem",
-                        background: "transparent",
-                        border: "2px solid #a36e29",
-                        backgroundColor: "white",
-                        width: "50%"
+                        cursor: "pointer",
+                        display: "flex",
                       }}
                       onClick={() => setIsPriceBreakoutOpen(true)}
                     >
-                      Price Breakdown
-                    </Button>
+                      <AddIcon style={{ fontSize: "1rem", marginTop: "0.2rem" }} /> Price Breakup
+                    </Typography>
                   </div>
 
                   <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
