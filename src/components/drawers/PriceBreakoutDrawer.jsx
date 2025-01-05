@@ -25,34 +25,41 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const calculateMetalPrice = (metalInfo) => {
         if (!metalInfo || !rates) return 0;
 
+        // Calculate net weight
+        const netWeight = parseFloat(metalInfo.gross_wt || 0) - parseFloat(metalInfo.stone_wt || 0);
+
+        // Calculate wastage weight
+        const wastageWeight = netWeight * (parseFloat(metalInfo.wastage_prec || 0) / 100);
+
+        // Calculate net weight after wastage
+        const netWeightAfterWastage = netWeight + wastageWeight;
+
         let baseAmount = 0;
         const rate = rates[metalInfo.quality] || 0;
 
         // Handle fixed price case (type 8)
         if (metalInfo.making_charge_type === 8) {
-            return parseFloat(metalInfo.making_charge_amount || 0);
-        }
+            baseAmount = parseFloat(metalInfo.making_charge_amount || 0);
+        } else {
+            // Calculate base amount based on weight
+            if (netWeightAfterWastage) {
+                baseAmount = netWeightAfterWastage * rate;
+            } else if (netWeight) {
+                baseAmount = netWeight * rate;
+            } else if (metalInfo.gross_wt) {
+                baseAmount = parseFloat(metalInfo.gross_wt) * rate;
+            }
 
-        // Calculate base amount based on weight priority
-        if (metalInfo.net_wt_after_wastage) {
-            baseAmount = metalInfo.net_wt_after_wastage * rate;
-        } else if (metalInfo.net_wt) {
-            baseAmount = metalInfo.net_wt * rate;
-        } else if (metalInfo.gross_wt) {
-            baseAmount = metalInfo.gross_wt * rate;
+            // Add additional charges
+            baseAmount += parseFloat(metalInfo.making_charge_amount || 0) +
+                          parseFloat(metalInfo.stone_amount || 0) +
+                          parseFloat(metalInfo.hallmark_charge || 0) +
+                          parseFloat(metalInfo.rodium_charge || 0);
         }
-
-        // Add additional charges
-        let totalAmount = baseAmount;
-        if (metalInfo.making_charge_amount) totalAmount += parseFloat(metalInfo.making_charge_amount);
-        if (metalInfo.hallmark_charge) totalAmount += parseFloat(metalInfo.hallmark_charge);
-        if (metalInfo.rodium_charge) totalAmount += parseFloat(metalInfo.rodium_charge);
-        if (metalInfo.stone_amount) totalAmount += parseFloat(metalInfo.stone_amount);
 
         // Add GST if present
-        if (metalInfo.gst_perc) {
-            totalAmount += (totalAmount * parseFloat(metalInfo.gst_perc)) / 100;
-        }
+        const gstAmount = baseAmount * (parseFloat(metalInfo.gst_perc || 0) / 100);
+        const totalAmount = baseAmount + gstAmount;
 
         return Number(totalAmount.toFixed(2));
     };
@@ -61,30 +68,18 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const calculateStonePrice = (stoneInfo) => {
         if (!stoneInfo) return 0;
 
-        // Calculate stone internal weight
-        const stonePieces = parseFloat(stoneInfo.pieces || 0);
-        console.log(stonePieces, "stonePieces");
-        const stoneCarat = parseFloat(stoneInfo.carat || 0);
-        console.log(stoneCarat, "stoneCarat");
-        const stoneInternalWeight = stonePieces && stoneCarat ?
-            Number((stoneCarat * 0.2 * stonePieces).toFixed(2)) : 0;
-        console.log(stoneInternalWeight, "stoneInternalWeight");
+        // Calculate stone weight
+        const stoneWeight = parseFloat(stoneInfo.pieces || 0) * parseFloat(stoneInfo.carat || 0) * 0.2;
 
         // Calculate base amount
         const stoneRate = parseFloat(stoneInfo.stone_rate || 0);
-        console.log(stoneRate, "stoneRate");
-        const baseAmount = stoneInternalWeight * stoneRate;
-        console.log(baseAmount, "baseAmount");
+        const baseAmount = stoneWeight * stoneRate;
 
         // Add GST
-        const stoneGSTPercent = parseFloat(stoneInfo.gst_perc || 0);
-        console.log(stoneGSTPercent, "stoneGSTPercent");
-        const gstAmount = baseAmount * (stoneGSTPercent / 100);
-        console.log(gstAmount, "gstAmount");
+        const gstAmount = baseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
+        const total = baseAmount + gstAmount;
 
-        const total = Number((baseAmount + gstAmount).toFixed(2));
-        console.log(total, "total");
-        return total;
+        return Number(total.toFixed(2));
     };
 
     // Calculate prices when product details or rates change

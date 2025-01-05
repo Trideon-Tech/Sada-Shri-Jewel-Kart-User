@@ -2614,28 +2614,27 @@ function ProductDetail() {
                 paddingBottom: "20px",
               }}
             >
-              <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                Product Description
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                  Product Description
+                </div>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  style={{
+                    fontWeight: "bold",
+                    fontFamily: '"Roboto", sans-serif',
+                    background:
+                      "linear-gradient(to right, #d4a76a, #a36e29)",
+                    fontSize: "0.8rem",
+                    width: "50%",
+                  }}
+                  onClick={() => setIsPriceBreakoutOpen(true)}
+                >
+                  Price Breakdown
+                </Button>
               </div>
-              <Button
-                variant="contained"
-                fullWidth
-                style={{
-                  fontWeight: "bold",
-                  color: "#a36e29",
-                  fontFamily: '"Roboto", sans-serif',
-                  fontSize: "0.8rem",
-                  background: "transparent",
-                  border: "2px solid #a36e29",
-                  backgroundColor: "white",
-                  paddingLeft: "0px",
-                  paddingRight: "0px",
-                  margin: "1rem 0rem",
-                }}
-                onClick={() => setIsPriceBreakoutOpen(true)}
-              >
-                Price Breakdown
-              </Button>
+
               <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                 #{productDetail.hash?.toUpperCase()}
               </Typography>
@@ -3791,9 +3790,29 @@ function ProductDetail() {
                     width: "85vw",
                   }}
                 >
-                  <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    Product Description
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ fontSize: "1rem", fontWeight: "bold", marginTop: "0.5rem" }}>
+                      Product Description
+                    </div>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        fontWeight: "bold",
+                        color: "#a36e29",
+                        fontFamily: '"Roboto", sans-serif',
+                        fontSize: "0.6rem",
+                        background: "transparent",
+                        border: "2px solid #a36e29",
+                        backgroundColor: "white",
+                        width: "50%"
+                      }}
+                      onClick={() => setIsPriceBreakoutOpen(true)}
+                    >
+                      Price Breakdown
+                    </Button>
                   </div>
+
                   <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                     #{productDetail.hash?.toUpperCase()}
                   </Typography>
