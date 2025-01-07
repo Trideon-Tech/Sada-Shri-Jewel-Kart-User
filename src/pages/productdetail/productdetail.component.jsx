@@ -94,6 +94,7 @@ function ProductDetail() {
   const [currentPosition, setCurrentPosition] = useState([]);
   const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
   const [currentPositionPincode, setCurrentPositionPincode] = useState("");
+  const [city, setCity] = useState("");
   const [eta, setETA] = useState("");
   const mediaQuery = useMediaQuery("(min-width:600px)");
   const [openShareDialog, setOpenShareDialog] = React.useState(false);
@@ -440,6 +441,8 @@ function ProductDetail() {
 
           setCurrentPositionAddresss(locationResponse.data.display_name);
           setCurrentPositionPincode(locationResponse.data.address.postcode);
+          console.log('city', locationResponse.data.address.city);
+          setCity(locationResponse.data.address.city);
 
           getETA(locationResponse.data.address.postcode, productDetail.id);
         });
@@ -637,8 +640,8 @@ function ProductDetail() {
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
-                  placeholder="Enter your pincode"
-                  inputProps={{ "aria-label": "Enter your Pincode" }}
+                  placeholder="Locate Me"
+                  inputProps={{ "aria-label": "Locate Me" }}
                   startDecorator={
                     <MyLocationIcon
                       style={{
@@ -852,8 +855,8 @@ function ProductDetail() {
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "0.8rem",
                   }}
-                  placeholder="Enter your pincode"
-                  inputProps={{ "aria-label": "Enter your Pincode" }}
+                  placeholder="Locate Me"
+                  inputProps={{ "aria-label": "Locate Me" }}
                   startDecorator={
                     <MyLocationIcon
                       style={{
@@ -2575,7 +2578,7 @@ function ProductDetail() {
                 marginTop: "30px",
               }}
             >
-              Enter your Pincode
+              Locate Me
             </Typography>
             <div
               style={{
@@ -2598,7 +2601,7 @@ function ProductDetail() {
               }}
               onClick={openLocationModal}
             >
-              {pincode}
+              {city}
             </div>
 
             {currentPosition.length > 0 ? (
@@ -2948,7 +2951,7 @@ function ProductDetail() {
                     </Grid>
                     <Grid item xs={4}>
                       <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-                        Class
+                        Color
                         <div
                           style={{
                             fontSize: "1rem",
@@ -3775,7 +3778,7 @@ function ProductDetail() {
                       marginTop: "20px",
                     }}
                   >
-                    Enter your Pincode
+                    Locate Me
                   </Typography>
                   <div
                     style={{
@@ -3797,7 +3800,7 @@ function ProductDetail() {
                     }}
                     onClick={openLocationModal}
                   >
-                    {pincode}
+                    {city}
                   </div>
                   {currentPosition.length > 0 ? (
                     <Typography className="delivery-info">
@@ -4167,7 +4170,7 @@ function ProductDetail() {
                           <Typography
                             style={{ fontSize: "0.8rem", color: "grey" }}
                           >
-                            Class
+                            Color
                             <div
                               style={{
                                 fontSize: "1rem",
