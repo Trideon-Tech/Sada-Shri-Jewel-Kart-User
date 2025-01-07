@@ -303,11 +303,12 @@ const Navbar = () => {
               {[...rates, ...rates, ...rates, ...rates].map((rate, index) => (
                 <div
                   style={{
-                    marginRight: "50px",
+                    marginRight: "4rem",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     height: "2.5rem",
+                    fontWeight: "bold",
                   }}
                   key={index}
                 >
