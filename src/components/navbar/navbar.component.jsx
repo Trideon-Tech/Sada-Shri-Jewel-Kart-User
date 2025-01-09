@@ -21,6 +21,10 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import Button from "@mui/joy/Button";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import Slide from "@mui/material/Slide";
 import {
   AppBar,
   Avatar,
@@ -44,6 +48,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import "./navbar.styles.scss";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Navbar = () => {
   const { refresh } = useRefresh();
   const matches = useMediaQuery("(min-width:600px)");
@@ -57,6 +65,7 @@ const Navbar = () => {
   let navigate = useNavigate();
   const [wishListItems, setWishListItems] = useState(0);
   const [cartLength, setCartLength] = useState(0);
+  const [logoutModal, setLogoutModal] = useState(false);
   const [rates, setRates] = useState([
     ["TODAY'S GOLD AND SILVER RATES", ""],
     ["GOLD 22KT (PER GM)", ""],
@@ -297,6 +306,63 @@ const Navbar = () => {
       }}
     >
       <div className="web">
+        {logoutModal && (
+          <Dialog
+            open={logoutModal}
+            style={{ borderRadius: "20px", margin: "10rem" }}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={() => setLogoutModal(false)}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogContent>
+                <DialogContentText
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  Are you sure you want to logout?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions style={{ padding: "1rem 2rem" }}>
+                <Button
+                  variant="outlined"
+                  style={{
+                    border: "2px solid #a36e29",
+                    color: "#a36e29",
+                    width: "200px",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                  }}
+                  onClick={() => {
+                    setLogoutModal(false);
+                    localStorage.clear();
+                    navigate("/");
+                  }}
+                >
+                  Yes
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    border: "2px solid #a36e29",
+                    backgroundColor: "#a36e29",
+                    width: "200px",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    color: "#fff",
+                  }}
+                  onClick={() => setLogoutModal(false)}
+                >
+                  Cancel
+                </Button>
+              </DialogActions>
+            </Dialog>
+          )
+        }
         <AppBar elevation={0} className="appbar">
           <div className="rates">
             <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
@@ -423,7 +489,7 @@ const Navbar = () => {
                     </MenuItem>
                   )}
                   {localStorage.getItem("token") ? (
-                    <MenuItem onClick={handleLogout}>
+                    <MenuItem onClick={() => setLogoutModal(true)}>
                       <ExitToAppRoundedIcon style={{ color: "#a36e29" }} />
                       <Typography
                         style={{
@@ -614,6 +680,70 @@ const Navbar = () => {
       </div>
       {/* MobileUI */}
       <div className="mobile">
+      {logoutModal && (
+          <Dialog
+            open={logoutModal}
+            TransitionComponent={Transition}
+            PaperProps={{
+              style: {
+                width: "100%",
+                maxWidth: "300px",
+                padding: "20px",
+                borderRadius: "8px",
+              },
+            }}
+            keepMounted
+            onClose={() => setLogoutModal(false)}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogContent>
+                <DialogContentText
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  Are you sure you want to logout?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions style={{ padding: "1rem 2rem" }}>
+                <Button
+                  variant="outlined"
+                  style={{
+                    border: "2px solid #a36e29",
+                    color: "#a36e29",
+                    width: "200px",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                  }}
+                  onClick={() => {
+                    setLogoutModal(false);
+                    localStorage.clear();
+                    navigate("/");
+                  }}
+                >
+                  Yes
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    border: "2px solid #a36e29",
+                    backgroundColor: "#a36e29",
+                    width: "200px",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    color: "#fff",
+                  }}
+                  onClick={() => setLogoutModal(false)}
+                >
+                  Cancel
+                </Button>
+              </DialogActions>
+            </Dialog>
+          )
+        }
         <Dialog
           open={openAuthDialog}
           onClose={() => setOpenAuthDialog(false)}
@@ -657,9 +787,8 @@ const Navbar = () => {
                 </div>
                 <div
                   onClick={() => {
-                    localStorage.removeItem("token");
+                    setLogoutModal(true);
                     setOpenAuthDialog(false);
-                    navigate("/");
                   }}
                   style={{
                     display: "flex",

@@ -69,20 +69,6 @@ const ContactUs = () => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
-            <PhoneIcon sx={{ color: "#a36e29", fontSize: "1rem" }} />
-            <Box>
-              <Typography
-                sx={{ fontWeight: 600, fontFamily: '"Roboto", sans-serif' }}
-              >
-                Phone
-              </Typography>
-              <Typography sx={{ fontFamily: '"Roboto", sans-serif' }}>
-                +91 98765 43210
-              </Typography>
-            </Box>
-          </Box>
-
-          <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
             <EmailIcon sx={{ color: "#a36e29", fontSize: "1rem" }} />
             <Box>
               <Typography

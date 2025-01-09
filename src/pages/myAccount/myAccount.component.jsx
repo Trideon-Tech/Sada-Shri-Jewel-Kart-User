@@ -28,6 +28,7 @@ export default function MyAccount() {
 
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [openLogout, setOpenLogout] = React.useState(false);
   const handleClickOpen = () => {
     console.log("trigereed");
     setOpen(true);
@@ -148,6 +149,60 @@ export default function MyAccount() {
           </Button>
         </DialogActions>
       </Dialog>
+      {openLogout && (
+        <Dialog
+          open={openLogout}
+          style={{ borderRadius: "20px", margin: "10rem"}}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={() => setOpenLogout(false)}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogContent>
+            <DialogContentText
+              style={{
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.9rem",
+              }}
+            >
+              Are you sure you want to logout?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions style={{ padding: "1rem 2rem" }}>
+            <Button
+              variant="outlined"
+              style={{
+                border: "2px solid #a36e29",
+                color: "#a36e29",
+                width: "200px",
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "600",
+              }}
+              onClick={() => {
+                localStorage.clear();
+                navigate("/");
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              variant="contained"
+              style={{
+                border: "2px solid #a36e29",
+                backgroundColor: "#a36e29",
+                width: "200px",
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "600",
+              }}
+              onClick={() => setOpenLogout(false)}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
       <Box
         style={{
           width: "100%",
@@ -201,30 +256,30 @@ export default function MyAccount() {
                 {localStorage.getItem("user_name")}
               </Typography>
               {localStorage.getItem("user_email") !== null &&
-              localStorage.getItem("user_email") !== "undefined" && (
-                <Typography
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.8rem",
-                    marginTop: "10px",
-                    color: "#00000090",
-                }}
-              >
-                  {localStorage.getItem("user_email")}
-                </Typography>
-              )}
+                localStorage.getItem("user_email") !== "undefined" && (
+                  <Typography
+                    style={{
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "0.8rem",
+                      marginTop: "10px",
+                      color: "#00000090",
+                    }}
+                  >
+                    {localStorage.getItem("user_email")}
+                  </Typography>
+                )}
               {localStorage.getItem("mobile") !== null &&
-              localStorage.getItem("mobile") !== "undefined" && (
-                <Typography
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.8rem",
-                    color: "#00000090",
-                }}
-              >
-                <u>+{localStorage.getItem("mobile")}</u>
-                </Typography>)
-                }
+                localStorage.getItem("mobile") !== "undefined" && (
+                  <Typography
+                    style={{
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "0.8rem",
+                      color: "#00000090",
+                    }}
+                  >
+                    <u>+{localStorage.getItem("mobile")}</u>
+                  </Typography>)
+              }
 
               <Link to={"/my-account"}>
                 <Button
@@ -300,8 +355,7 @@ export default function MyAccount() {
                   color: "#00000090",
                 }}
                 onClick={() => {
-                  localStorage.clear();
-                  navigate("/");
+                  setOpenLogout(true);
                 }}
               >
                 Logout
