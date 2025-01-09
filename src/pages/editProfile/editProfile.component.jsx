@@ -81,7 +81,7 @@ const EditProfile = () => {
             localStorage.setItem("user_name", userData.name);
             localStorage.setItem("user_email", userData.email);
             localStorage.setItem("mobile", userData.mobile);
-            toast.success("Profile updated successfully!", generalToastStyle);
+            toast.success("Successfully saved in profile!", generalToastStyle);
             await new Promise((resolve) => setTimeout(resolve, 1000));
             window.location.reload();
           });
