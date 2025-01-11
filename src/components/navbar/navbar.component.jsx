@@ -79,7 +79,7 @@ const Navbar = () => {
     const cartList = localStorage.getItem("cart_list") || "";
     if (cartList && cartList.length > 0) {
       const cartItems = cartList.split(",");
-      setCartLength(cartItems.length - 1);
+      setCartLength(cartItems.length);
     } else {
       setCartLength(0);
     }
@@ -224,6 +224,7 @@ const Navbar = () => {
       .then((response) => {
         console.log(response?.data);
         console.log(response?.data?.response?.length);
+        setCartLength(response?.data?.response?.length || 0);
         sessionStorage.setItem("cart", response?.data?.response?.length || 0);
       })
       .catch((error) => console.log("Error while fetching cart items", error));
