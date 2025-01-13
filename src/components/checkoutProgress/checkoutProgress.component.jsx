@@ -17,12 +17,12 @@ const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   alignItems: "center",
   ...(ownerState.active && {
     background:
-      "#a36e29",
+      "linear-gradient(to right, #d4a76a, #a36e29)",
     boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
   }),
   ...(ownerState.completed && {
     background:
-      "#a36e29",
+      "linear-gradient(to right, #d4a76a, #a36e29)",
     backgroundColor: "#A36E29",
   }),
 }));
