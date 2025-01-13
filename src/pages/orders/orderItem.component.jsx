@@ -1,4 +1,5 @@
-import { Box, Button, Card, Typography, useMediaQuery } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Card, Typography, useMediaQuery, Dialog } from "@mui/material";
 
 const OrderItem = ({
   titleColorType = "arriving",
@@ -8,6 +9,7 @@ const OrderItem = ({
   writeReview,
 }) => {
   const matches = useMediaQuery("(min-width:600px)");
+  const [showIframe, setShowIframe] = useState(false);
 
   const titleColors = {
     arriving: "#a36e29",
@@ -275,9 +277,7 @@ const OrderItem = ({
               fontFamily: '"Roboto", sans-serif',
               fontSize: "0.8rem",
             }}
-            onClick={() => {
-              window.location.href = "mailto:contact@sadashrijewelkart.com";
-            }}
+            onClick={() => setShowIframe(true)}
           >
             Need Help?
           </Button>
@@ -344,9 +344,7 @@ const OrderItem = ({
                 fontSize: "0.8rem",
                 marginRight: "5px",
               }}
-              onClick={() => {
-                window.location.href = "mailto:contact@sadashrijewelkart.com";
-              }}
+              onClick={() => setShowIframe(true)}
             >
               Need Help?
             </Button>
@@ -388,6 +386,26 @@ const OrderItem = ({
           </Button>
         </>
       )}
+      <Dialog
+        open={showIframe}
+        onClose={() => setShowIframe(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <iframe
+          title="Ticket Form"
+          width="600"
+          height="850"
+          src="https://crm.sadashrijewelkart.com/forms/ticket"
+          frameBorder="0"
+          allowFullScreen
+          style={{
+            width: "100%",
+            height: "850px",
+            border: "none",
+          }}
+        />
+      </Dialog>
     </Card>
   );
 };
