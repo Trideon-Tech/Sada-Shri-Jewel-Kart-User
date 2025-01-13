@@ -37,7 +37,7 @@ function Footer() {
             <Box
               sx={{
                 display: "flex",
-                gap: 2,
+                gap: 2.5,
                 mt: 3,
                 mb: 3,
               }}
@@ -47,8 +47,8 @@ function Footer() {
                   color: "#1877f2",
                   cursor: "pointer",
                   "&:hover": { color: "#1877f2" },
-                  height: "30px",
-                  width: "30px",
+                  height: "40px",
+                  width: "40px",
                 }}
                 onClick={() =>
                   window.open(
@@ -62,8 +62,8 @@ function Footer() {
                   color: "#e4405f",
                   cursor: "pointer",
                   "&:hover": { color: "#e4405f" },
-                  height: "30px",
-                  width: "30px",
+                  height: "40px",
+                  width: "40px",
                 }}
                 onClick={() =>
                   window.open(
@@ -77,8 +77,8 @@ function Footer() {
                   color: "#ff0000",
                   cursor: "pointer",
                   "&:hover": { color: "#ff0000" },
-                  height: "30px",
-                  width: "30px",
+                  height: "40px",
+                  width: "40px",
                 }}
                 onClick={() =>
                   window.open(
@@ -92,8 +92,8 @@ function Footer() {
                   color: "#bd081c",
                   cursor: "pointer",
                   "&:hover": { color: "#bd081c" },
-                  height: "30px",
-                  width: "30px",
+                  height: "40px",
+                  width: "40px",
                 }}
                 onClick={() =>
                   window.open(
