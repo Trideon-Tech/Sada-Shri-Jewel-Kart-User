@@ -49,7 +49,7 @@ function Productpage() {
     },
     {
       label: "GEMSTONE",
-      imgPath: "/assets/11.webp",
+      imgPath: "/assets/gemstone.webp",
     },
     {
       label: "SILVER JEWELLERY",

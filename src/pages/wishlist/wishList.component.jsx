@@ -109,12 +109,13 @@ const Wishlist = () => {
         }}
       >
         <img
-          src={process.env.PUBLIC_URL + "/assets/25.webp"}
+          src={process.env.PUBLIC_URL + "/assets/wishlistBanner.webp"}
           style={{
             width: "100%",
             height: "40vh",
             objectFit: "cover",
           }}
+          alt="wishlist banner"
         />
       </Box>
       <div

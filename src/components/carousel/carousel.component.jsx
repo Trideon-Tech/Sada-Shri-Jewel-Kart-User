@@ -17,16 +17,12 @@ const images = [
     imgPath: "/assets/36.webp",
   },
   {
-    label: "C2",
-    imgPath: "/assets/31.webp",
-  },
-  {
     label: "C5",
     imgPath: "/assets/32.webp",
   },
   {
     label: "C6",
-    imgPath: "/assets/35.webp",
+    imgPath: "/assets/landingPageBanner.webp",
   },
   {
     label: "C7",
@@ -41,16 +37,12 @@ const images = [
     imgPath: "/assets/36.webp",
   },
   {
-    label: "C2",
-    imgPath: "/assets/31.webp",
-  },
-  {
     label: "C5",
     imgPath: "/assets/32.webp",
   },
   {
     label: "C6",
-    imgPath: "/assets/35.webp",
+    imgPath: "/assets/landingPageBanner.webp",
   },
   {
     label: "C7",
@@ -65,16 +57,12 @@ const images = [
     imgPath: "/assets/36.webp",
   },
   {
-    label: "C2",
-    imgPath: "/assets/31.webp",
-  },
-  {
     label: "C5",
     imgPath: "/assets/32.webp",
   },
   {
-    label: "C6",
-    imgPath: "/assets/35.webp",
+    label: "C5",
+    imgPath: "/assets/landingPageBanner.webp",
   },
   {
     label: "C7",
@@ -89,16 +77,12 @@ const images = [
     imgPath: "/assets/36.webp",
   },
   {
-    label: "C2",
-    imgPath: "/assets/31.webp",
-  },
-  {
     label: "C5",
     imgPath: "/assets/32.webp",
   },
   {
     label: "C6",
-    imgPath: "/assets/35.webp",
+    imgPath: "/assets/landingPageBanner.webp",
   },
   {
     label: "C7",
