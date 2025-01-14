@@ -307,63 +307,6 @@ const Navbar = () => {
       }}
     >
       <div className="web">
-        {logoutModal && (
-          <Dialog
-            open={logoutModal}
-            style={{ borderRadius: "20px", margin: "10rem" }}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={() => setLogoutModal(false)}
-              aria-describedby="alert-dialog-slide-description"
-            >
-              <DialogContent>
-                <DialogContentText
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  Are you sure you want to logout?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions style={{ padding: "1rem 2rem" }}>
-                <Button
-                  variant="outlined"
-                  style={{
-                    border: "2px solid #a36e29",
-                    color: "#a36e29",
-                    width: "200px",
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                  }}
-                  onClick={() => {
-                    setLogoutModal(false);
-                    localStorage.clear();
-                    navigate("/");
-                  }}
-                >
-                  Yes
-                </Button>
-                <Button
-                  variant="contained"
-                  style={{
-                    border: "2px solid #a36e29",
-                    backgroundColor: "#a36e29",
-                    width: "200px",
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                    color: "#fff",
-                  }}
-                  onClick={() => setLogoutModal(false)}
-                >
-                  Cancel
-                </Button>
-              </DialogActions>
-            </Dialog>
-          )
-        }
         <AppBar elevation={0} className="appbar">
           <div className="rates">
             <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
