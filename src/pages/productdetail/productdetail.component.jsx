@@ -2177,21 +2177,12 @@ function ProductDetail() {
                     width: "100%",
                     marginRight: "8vh",
                     textTransform: "uppercase",
+                    height: "100%",
+                    padding: "0.6rem",
                   }}
                   onClick={() => setAddCustomizationModalOpen(true)}
                 >
                   Add Customization
-                  <Tooltip title="Customizable on Weight and Size" placement="top">
-                    <InfoOutlinedIcon
-                      style={{
-                        fontSize: "0.8rem",
-                        marginBottom: "3vh",
-                        color: "white",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    />
-                  </Tooltip>
                 </Button>
               </div>
             }

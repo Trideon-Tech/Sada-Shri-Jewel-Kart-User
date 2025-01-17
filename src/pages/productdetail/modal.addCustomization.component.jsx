@@ -100,6 +100,9 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                         </label>
 
                         <ButtonComponent style={{ marginTop: "40px", width: "100%" }} buttonText="Add Customization" onClick={() => { }} />
+                        <Typography style={{ fontFamily: '"Roboto", sans-serif', fontSize: "0.8rem", color: "grey" }}>
+                            *Customization is available only for weight and size.
+                        </Typography>
                     </div>
                 </ModalDialog>
             </ModalOverflow>
