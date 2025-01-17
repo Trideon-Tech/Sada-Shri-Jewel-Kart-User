@@ -1,11 +1,12 @@
 import { Facebook, Instagram, Pinterest, YouTube } from "@mui/icons-material";
-import { Box, Container, Divider, Grid, Typography } from "@mui/material";
+import { Box, Container, Divider, Grid, Typography, Dialog } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState } from "react";
 import * as React from "react";
 
 function Footer() {
   const matches = useMediaQuery("(min-width:600px)");
-
+  const [showIframe, setShowIframe] = useState(false);
   return (
     <Box
       component="footer"
@@ -30,6 +31,7 @@ function Footer() {
             }}
           >
             <img
+              alt="logo"
               src={process.env.PUBLIC_URL + "/assets/logo_dark_1.png"}
               width={matches ? 220 : 180}
               style={{ marginBottom: "10px" }}
@@ -191,6 +193,20 @@ function Footer() {
             >
               Refund Policy
             </Typography>
+
+            <Typography
+              style={{
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: `${matches ? "0.9rem" : "0.8rem"}`,
+                color: "grey",
+                cursor: "pointer",
+                marginTop: "1rem",
+                textDecoration: "underline",
+              }}
+              onClick={() => setShowIframe(true)}
+            >
+              Need Help?
+            </Typography>
           </Grid>
 
           {/* Column 3 */}
@@ -256,6 +272,26 @@ function Footer() {
           CIN: U46498KA2024PTC185784
         </Typography>
       </Container>
+      <Dialog
+        open={showIframe}
+        onClose={() => setShowIframe(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <iframe
+          title="Ticket Form"
+          width="600"
+          height="850"
+          src="https://crm.sadashrijewelkart.com/forms/ticket"
+          frameBorder="0"
+          allowFullScreen
+          style={{
+            width: "100%",
+            height: "850px",
+            border: "none",
+          }}
+        />
+      </Dialog>
     </Box>
   );
 }
