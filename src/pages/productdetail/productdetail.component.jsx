@@ -118,6 +118,7 @@ function ProductDetail() {
   const [addCustomizationModalOpen, setAddCustomizationModalOpen] = useState(false);
   const [makingChargePercentage, setMakingChargePercentage] = useState(0);
   const [isPriceBreakoutOpen, setIsPriceBreakoutOpen] = useState(false);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -237,6 +238,7 @@ function ProductDetail() {
         }
 
         setProductDetail((_) => detail);
+        setDiscountPercentage(parseFloat(detail.discount_perc) + 20);
         setMakingChargePercentage(Math.ceil(detail.customizations?.variants?.options[0]
           ?.metal_info?.making_charge_amount / detail?.customizations?.variants?.options[0]?.price * 100));
         setHasCustomization(detail.hasOwnProperty("customizations"));
@@ -2031,7 +2033,7 @@ function ProductDetail() {
                   fontFamily: '"Roboto", sans-serif',
                 }}
               >
-                (20% OFF)
+                ({discountPercentage}% OFF)
               </Typography>
             </Box>
             <div
