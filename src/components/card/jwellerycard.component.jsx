@@ -40,8 +40,8 @@ const JwelleryCard = ({
 
   const removeFromWishList = async () => {
     try {
+      console.log('Remove from wishlist', id);
       if (!id) return;
-
       setUnwishList(true);
 
       const token = localStorage.getItem("token");
@@ -66,7 +66,7 @@ const JwelleryCard = ({
           },
           data: {
             type: "wishlist_item",
-            wishlist_item_id: wishlistItem.id,
+            wishlist_item_id: wishlistItem.id ?? id,
           },
         }
       );
@@ -77,6 +77,7 @@ const JwelleryCard = ({
   };
 
   const handleCreateWishList = async () => {
+    console.log('Wishlist clicked');
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/signin");
@@ -84,6 +85,7 @@ const JwelleryCard = ({
     }
 
     if (isWishlisted || wishListed) {
+      console.log('Wishlist already exists');
       removeFromWishList();
       return;
     }
@@ -103,7 +105,7 @@ const JwelleryCard = ({
         },
       }
     );
-
+    console.log('Wishlist added');
     setWishListed(true);
     triggerRefresh();
   };

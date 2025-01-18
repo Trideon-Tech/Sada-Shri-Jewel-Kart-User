@@ -238,7 +238,7 @@ function ProductDetail() {
         }
 
         setProductDetail((_) => detail);
-        setDiscountPercentage(parseFloat(detail.discount_perc) + 20);
+        setDiscountPercentage(parseFloat(detail.discount_perc));
         setMakingChargePercentage(Math.ceil(detail.customizations?.variants?.options[0]
           ?.metal_info?.making_charge_amount / detail?.customizations?.variants?.options[0]?.price * 100));
         setHasCustomization(detail.hasOwnProperty("customizations"));
@@ -364,7 +364,9 @@ function ProductDetail() {
   }, [productDetail]);
 
   const handleWishList = async () => {
+    console.log('Wishlist clicked');
     if (productDetail.exists_in_wishlist || localWishlisted) {
+      console.log('Wishlist already exists');
       const token = localStorage.getItem("token");
       if (!token) {
         removeFromLocalWishlist();
@@ -386,6 +388,7 @@ function ProductDetail() {
       // triggerRefresh();
       window.location.reload();
     } else {
+      console.log('Wishlist not exists');
       await handleCreateWishList();
       navigate(0);
     }
@@ -2021,9 +2024,9 @@ function ProductDetail() {
                 }}
               >
                 ₹
-                {(
-                  productDetail?.customizations?.variants?.options[0]?.price *
-                  1.2
+                {parseFloat(
+                    productDetail?.customizations?.variants?.options[0]?.price *
+                    ((discountPercentage + 100) / 100)
                 ).toFixed(2)}
               </Typography>
               <Typography
@@ -3121,6 +3124,7 @@ function ProductDetail() {
                     clickHandler={handleCardClick}
                     addToCartClick={addToCartHandlerForRecommendations}
                     quantity={product.quantity}
+                    wishlistItem={product.wishlist_item_id}
                   />
                 ))}
               </div>
@@ -3272,11 +3276,11 @@ function ProductDetail() {
                 <Typography className="original-price">
                   ₹
                   {(
-                    productDetail?.customizations?.variants?.options[0]?.price *
-                    1.2
+                    parseFloat(productDetail?.customizations?.variants?.options[0]?.price *
+                    (discountPercentage + 100) / 100)
                   ).toFixed(2)}
                 </Typography>
-                <Typography className="discount">(20% OFF)</Typography>
+                <Typography className="discount">({discountPercentage}% OFF)</Typography>
               </div>
               <Typography
                 style={{
