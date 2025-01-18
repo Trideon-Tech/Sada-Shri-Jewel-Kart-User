@@ -98,7 +98,9 @@ function ProductDetail() {
   const [currentPosition, setCurrentPosition] = useState([]);
   const [currentPositionAddress, setCurrentPositionAddresss] = useState("");
   const [currentPositionPincode, setCurrentPositionPincode] = useState("");
-  const [city, setCity] = useState("");
+  const [currentPositionCity, setCurrentPositionCity] = useState("");
+  const [currentPositionState, setCurrentPositionState] = useState("");
+  const [currentPositionCountry, setCurrentPositionCountry] = useState("");
   const [eta, setETA] = useState("");
   const mediaQuery = useMediaQuery("(min-width:600px)");
   const [openShareDialog, setOpenShareDialog] = React.useState(false);
@@ -119,6 +121,9 @@ function ProductDetail() {
   const [makingChargePercentage, setMakingChargePercentage] = useState(0);
   const [isPriceBreakoutOpen, setIsPriceBreakoutOpen] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [city, setCity] = useState(localStorage.getItem("default_city") || "Unknown City");
+  const [state, setState] = useState(localStorage.getItem("default_state") || "Unknown State");
+  const [country, setCountry] = useState(localStorage.getItem("default_country") || "Unknown Country");
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -450,6 +455,9 @@ function ProductDetail() {
 
           setCurrentPositionAddresss(locationResponse.data.display_name);
           setCurrentPositionPincode(locationResponse.data.address.postcode);
+          setCurrentPositionCity(locationResponse.data.address.city);
+          setCurrentPositionState(locationResponse.data.address.state);
+          setCurrentPositionCountry(locationResponse.data.address.country);
           console.log('city', locationResponse.data.address.city);
           setCity(locationResponse.data.address.city);
 
@@ -537,6 +545,16 @@ function ProductDetail() {
 
         setCurrentPositionAddresss(address.formatted_address);
         setCurrentPositionPincode(postcodeComponent?.long_name || pincode);
+        setCurrentPositionCity(address.address_components.find((component) =>
+          component.types.includes("locality")
+        )?.long_name || "");
+        setCurrentPositionState(address.address_components.find((component) =>
+          component.types.includes("administrative_area_level_1")
+        )?.long_name || "");
+        setCurrentPositionCountry(address.address_components.find((component) =>
+          component.types.includes("country")
+        )?.long_name || "");
+        console.log(currentPositionCity, currentPositionState, currentPositionCountry, "city, state, country")
         setETA(() =>
           formatDate(etaResponse.data.response.data.estimated_delivery)
         );
@@ -767,6 +785,9 @@ function ProductDetail() {
                     }}
                     onClick={() => {
                       setPincode(currentPositionPincode);
+                      setCity(currentPositionCity);
+                      setState(currentPositionState);
+                      setCountry(currentPositionCountry);
                       localStorage.setItem(
                         "default_pincode",
                         currentPositionPincode
@@ -2601,7 +2622,7 @@ function ProductDetail() {
               }}
               onClick={openLocationModal}
             >
-              {city}
+              {`${city}, ${state}, ${country}`}
             </div>
 
             {currentPosition.length > 0 ? (
@@ -3815,7 +3836,7 @@ function ProductDetail() {
                     }}
                     onClick={openLocationModal}
                   >
-                    {city}
+                    {`${city}, ${state}, ${country}`}
                   </div>
                   {currentPosition.length > 0 ? (
                     <Typography className="delivery-info">

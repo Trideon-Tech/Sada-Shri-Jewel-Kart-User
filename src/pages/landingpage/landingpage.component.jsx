@@ -23,6 +23,10 @@ const LandingPage = () => {
 
         console.log(locationResponse.data.address.postcode);
         localStorage.setItem("default_pincode", locationResponse.data.address.postcode);
+        localStorage.setItem("default_city", locationResponse.data.address.city);
+        localStorage.setItem("default_state", locationResponse.data.address.state);
+        localStorage.setItem("default_country", locationResponse.data.address.country);
+        console.log(locationResponse.data.address);
       });
     }
   };
