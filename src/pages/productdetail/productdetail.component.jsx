@@ -121,9 +121,9 @@ function ProductDetail() {
   const [makingChargePercentage, setMakingChargePercentage] = useState(0);
   const [isPriceBreakoutOpen, setIsPriceBreakoutOpen] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [city, setCity] = useState(localStorage.getItem("default_city") || "Unknown City");
-  const [state, setState] = useState(localStorage.getItem("default_state") || "Unknown State");
-  const [country, setCountry] = useState(localStorage.getItem("default_country") || "Unknown Country");
+  const [city, setCity] = useState(localStorage.getItem("default_city") || "");
+  const [state, setState] = useState(localStorage.getItem("default_state") || "");
+  const [country, setCountry] = useState(localStorage.getItem("default_country") || "");
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -256,6 +256,7 @@ function ProductDetail() {
             detail["customizations"]["variants"]["options"]
           );
         }
+        getETA(localStorage.getItem("default_pincode"), detail.id);
       })
       .catch((error) => {
         console.log(error);
@@ -511,7 +512,7 @@ function ProductDetail() {
     let etaResponse = await axios.get(
       `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
     );
-
+    setCurrentPosition([1, 2]);
     setETA(() => formatDate(etaResponse.data.response.data.estimated_delivery));
   };
 
@@ -2046,8 +2047,8 @@ function ProductDetail() {
               >
                 ₹
                 {parseFloat(
-                    productDetail?.customizations?.variants?.options[0]?.price *
-                    ((discountPercentage + 100) / 100)
+                  productDetail?.customizations?.variants?.options[0]?.price *
+                  ((discountPercentage + 100) / 100)
                 ).toFixed(2)}
               </Typography>
               <Typography
@@ -3298,7 +3299,7 @@ function ProductDetail() {
                   ₹
                   {(
                     parseFloat(productDetail?.customizations?.variants?.options[0]?.price *
-                    (discountPercentage + 100) / 100)
+                      (discountPercentage + 100) / 100)
                   ).toFixed(2)}
                 </Typography>
                 <Typography className="discount">({discountPercentage}% OFF)</Typography>
