@@ -94,8 +94,7 @@ const Wishlist = () => {
   }, []);
 
   const handleCardClick = (productName, hash, menuItemName) => {
-    console.log(hash);
-    console.log(`/item/${menuItemName}/${productName}-${hash}`);
+    console.log("handle card click");
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
   };
 

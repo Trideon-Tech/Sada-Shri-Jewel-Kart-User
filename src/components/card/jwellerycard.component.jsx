@@ -71,6 +71,7 @@ const JwelleryCard = ({
         }
       );
       triggerRefresh();
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
