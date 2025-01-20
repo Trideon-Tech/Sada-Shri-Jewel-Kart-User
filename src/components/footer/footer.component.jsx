@@ -107,7 +107,7 @@ function Footer() {
             </Box>
             <img
               src={process.env.PUBLIC_URL + "/assets/payments.webp"}
-              width={matches ? 220 : 180}
+              width={matches ? 220 : 220}
             />
           </Grid>
 

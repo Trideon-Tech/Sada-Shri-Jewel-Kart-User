@@ -13,7 +13,12 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
         >
             <ModalOverflow>
                 <ModalDialog
-                    style={{ width: "30vw", height: "30vw", padding: "30px" }}
+                    style={{
+                        width: "90vw",
+                        maxWidth: "500px",
+                        height: "auto",
+                        padding: "20px"
+                    }}
                 >
                     <div
                         style={{
@@ -21,21 +26,21 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                             flexDirection: "column",
                             width: "100%",
                             height: "100%",
-                            gap: "20px"
+                            gap: "15px"
                         }}
                     >
                         <Typography
                             style={{
                                 textAlign: "center",
                                 fontFamily: '"Roboto", sans-serif',
-                                fontSize: "1.2rem",
+                                fontSize: "1rem",
                                 fontWeight: "bold",
                             }}
                         >
                             Add Customization
                         </Typography>
 
-                        <Typography style={{ textAlign: "center" }}>
+                        <Typography style={{ textAlign: "center", fontSize: "0.9rem" }}>
                             Please set the customization you want to add.
                         </Typography>
 
@@ -64,7 +69,7 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                                     },
                                 }}
                                 value={""}
-                                placeholder="First Name"
+                                placeholder="Size"
                                 onChange={(event) => { }}
                             />
                         </label>
@@ -94,12 +99,12 @@ export default function ModalAddCustomization({ addCustomizationModalOpen, setAd
                                     },
                                 }}
                                 value={""}
-                                placeholder="First Name"
+                                placeholder="Weight"
                                 onChange={(event) => { }}
                             />
                         </label>
 
-                        <ButtonComponent style={{ marginTop: "40px", width: "100%" }} buttonText="Add Customization" onClick={() => { }} />
+                        <ButtonComponent style={{ marginTop: "30px", width: "100%" }} buttonText="Add Customization" onClick={() => { }} />
                         <Typography style={{ fontFamily: '"Roboto", sans-serif', fontSize: "0.8rem", color: "grey" }}>
                             *Customization is available only for weight and size.
                         </Typography>

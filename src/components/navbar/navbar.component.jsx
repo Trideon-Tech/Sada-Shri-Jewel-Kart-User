@@ -627,7 +627,7 @@ const Navbar = () => {
       <div className="mobile">
         {logoutModal && <Dialog
           open={logoutModal}
-          style={{ borderRadius: "20px", margin: "10rem" }}
+          style={{ borderRadius: "20px"}}
           TransitionComponent={Transition}
           keepMounted
           onClose={() => setLogoutModal(false)}

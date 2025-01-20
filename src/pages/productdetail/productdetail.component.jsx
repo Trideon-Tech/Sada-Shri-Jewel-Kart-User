@@ -3400,8 +3400,6 @@ function ProductDetail() {
                   <Button
                     style={{
                       fontSize: "0.8rem",
-                      marginTop: "10px",
-                      marginBottom: "12px",
                       fontFamily: '"Roboto", sans-serif',
                       color: "white",
                       fontWeight: "600",
@@ -3417,17 +3415,6 @@ function ProductDetail() {
                     onClick={() => setAddCustomizationModalOpen(true)}
                   >
                     Add Customization
-                    <Tooltip title="Customizable on Weight and Size" placement="top">
-                      <InfoOutlinedIcon
-                        style={{
-                          fontSize: "0.8rem",
-                          marginBottom: "3vh",
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      />
-                    </Tooltip>
                   </Button>
                 </div>
               }
