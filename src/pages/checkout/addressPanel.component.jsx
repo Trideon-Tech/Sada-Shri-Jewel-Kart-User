@@ -607,7 +607,6 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                     <div
                       style={{
                         textAlign: "center",
-                        background: "#a36e29",
                         color: "white",
                         fontFamily: '"Roboto", sans-serif',
                         fontSize: "0.8rem",
@@ -616,6 +615,8 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                         borderRadius: "10px",
                         cursor: "pointer",
                         fontWeight: "bold",
+                        background:
+                          "linear-gradient(to right, #d4a76a, #a36e29)",
                       }}
                       onClick={addNewAddress}
                     >
@@ -931,7 +932,8 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
                   fontWeight: 600,
                   fontFamily: '"Roboto", sans-serif',
                   fontSize: "0.8rem",
-                  background: "#a36e29",
+                  background:
+                    "linear-gradient(to right, #d4a76a, #a36e29)",
                 }}
                 onClick={addNewAddress}
                 fullWidth
