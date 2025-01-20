@@ -625,69 +625,59 @@ const Navbar = () => {
       </div>
       {/* MobileUI */}
       <div className="mobile">
-      {logoutModal && (
-          <Dialog
-            open={logoutModal}
-            TransitionComponent={Transition}
-            PaperProps={{
-              style: {
-                width: "100%",
-                maxWidth: "300px",
-                padding: "20px",
-                borderRadius: "8px",
-              },
-            }}
-            keepMounted
-            onClose={() => setLogoutModal(false)}
-              aria-describedby="alert-dialog-slide-description"
+        {logoutModal && <Dialog
+          open={logoutModal}
+          style={{ borderRadius: "20px", margin: "10rem" }}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={() => setLogoutModal(false)}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogContent>
+            <DialogContentText
+              style={{
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.9rem",
+              }}
             >
-              <DialogContent>
-                <DialogContentText
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  Are you sure you want to logout?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions style={{ padding: "1rem 2rem" }}>
-                <Button
-                  variant="outlined"
-                  style={{
-                    border: "2px solid #a36e29",
-                    color: "#a36e29",
-                    width: "200px",
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                  }}
-                  onClick={() => {
-                    setLogoutModal(false);
-                    localStorage.clear();
-                    navigate("/");
-                  }}
-                >
-                  Yes
-                </Button>
-                <Button
-                  variant="contained"
-                  style={{
-                    border: "2px solid #a36e29",
-                    backgroundColor: "#a36e29",
-                    width: "200px",
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                    color: "#fff",
-                  }}
-                  onClick={() => setLogoutModal(false)}
-                >
-                  Cancel
-                </Button>
-              </DialogActions>
-            </Dialog>
-          )
+              Are you sure you want to logout?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions style={{ padding: "1rem 2rem" }}>
+            <Button
+              variant="outlined"
+              style={{
+                border: "2px solid #a36e29",
+                color: "#a36e29",
+                width: "200px",
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "600",
+              }}
+              onClick={() => {
+                localStorage.clear();
+                navigate("/");
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              variant="contained"
+              style={{
+                border: "2px solid #a36e29",
+                backgroundColor: "#a36e29",
+                width: "200px",
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "1rem",
+                fontWeight: "600",
+                color: "white",
+              }}
+              onClick={() => setLogoutModal(false)}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
         }
         <Dialog
           open={openAuthDialog}

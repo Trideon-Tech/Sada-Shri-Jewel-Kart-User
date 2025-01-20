@@ -254,7 +254,8 @@ const Cart = () => {
         }
       )
       .then((response) => {
-        setRefreshCart(refreshCart + 1);
+        setRefreshCart((prev) => prev + 1);
+        window.location.reload();
       })
       .catch((error) => console.log("Error while removing  card items", error));
   };
