@@ -245,7 +245,7 @@ function ProductDetail() {
         setProductDetail((_) => detail);
         setDiscountPercentage(parseFloat(detail.discount_perc));
         setMakingChargePercentage(Math.ceil(detail.customizations?.variants?.options[0]
-          ?.metal_info?.making_charge_amount / detail?.customizations?.variants?.options[0]?.price * 100));
+          ?.metal_info?.making_charge_value));
         setHasCustomization(detail.hasOwnProperty("customizations"));
         if (detail.hasOwnProperty("customizations")) {
           setCustomizationTypes(detail["customizations"]["fields"]);
@@ -370,9 +370,7 @@ function ProductDetail() {
   }, [productDetail]);
 
   const handleWishList = async () => {
-    console.log('Wishlist clicked');
     if (productDetail.exists_in_wishlist || localWishlisted) {
-      console.log('Wishlist already exists');
       const token = localStorage.getItem("token");
       if (!token) {
         removeFromLocalWishlist();
@@ -394,7 +392,6 @@ function ProductDetail() {
       // triggerRefresh();
       window.location.reload();
     } else {
-      console.log('Wishlist not exists');
       await handleCreateWishList();
       navigate(0);
     }
@@ -459,7 +456,6 @@ function ProductDetail() {
           setCurrentPositionCity(locationResponse.data.address.city);
           setCurrentPositionState(locationResponse.data.address.state);
           setCurrentPositionCountry(locationResponse.data.address.country);
-          console.log('city', locationResponse.data.address.city);
           setCity(locationResponse.data.address.city);
 
           getETA(locationResponse.data.address.postcode, productDetail.id);
@@ -555,7 +551,6 @@ function ProductDetail() {
         setCurrentPositionCountry(address.address_components.find((component) =>
           component.types.includes("country")
         )?.long_name || "");
-        console.log(currentPositionCity, currentPositionState, currentPositionCountry, "city, state, country")
         setETA(() =>
           formatDate(etaResponse.data.response.data.estimated_delivery)
         );

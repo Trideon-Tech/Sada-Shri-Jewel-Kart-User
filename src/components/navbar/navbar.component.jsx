@@ -204,6 +204,7 @@ const Navbar = () => {
         tempRates[3][1] = response?.data?.response?.jewellery_inventory?.silver;
 
         setRates(() => tempRates);
+        console.log(tempRates);
       })
       .catch((error) => console.error("Error fetching menu items:", error));
 
@@ -313,16 +314,16 @@ const Navbar = () => {
               {[...rates, ...rates, ...rates, ...rates].map((rate, index) => (
                 <div
                   style={{
-                    marginRight: "4rem",
+                    marginRight: index % 4 === 0 ? "4rem" : "2rem",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     height: "2.5rem",
-                    fontWeight: "bold",
+                    fontWeight: index % 4 === 0 ? "bold" : "normal",
                   }}
                   key={index}
                 >
-                  {rate === rates[0] ? `${rate}` : `${rate[0]}: ₹ ${rate[1]}`}
+                  {index % 4 === 0 ? `${rate[0]}` : `${rate[0]}: ₹ ${rate[1]}`}
                 </div>
               ))}
             </Marquee>
@@ -931,16 +932,17 @@ const Navbar = () => {
               {rates.map((rate, index) => (
                 <div
                   style={{
-                    marginRight: "50px",
+                    marginRight: index % 4 === 0 ? "50px" : "25px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     height: "2rem",
                     fontSize: "0.8rem",
+                    fontWeight: index % 4 === 0 ? "bold" : "normal",
                   }}
                   key={index}
                 >
-                  {rate === rates[0] ? `${rate}` : `${rate[0]}: ₹ ${rate[1]}`}
+                  {index % 4 === 0 ? `${rate[0]}` : `${rate[0]}: ₹ ${rate[1]}`}
                 </div>
               ))}
             </Marquee>
