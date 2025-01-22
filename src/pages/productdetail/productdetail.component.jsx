@@ -2791,7 +2791,7 @@ function ProductDetail() {
                         >
                           {
                             productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.quality
+                              ?.metal_info?.display_name
                           }
                         </div>
                       </Typography>
@@ -3982,7 +3982,7 @@ function ProductDetail() {
                             >
                               {
                                 productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.quality
+                                  ?.metal_info?.display_name
                               }
                             </div>
                           </Typography>
