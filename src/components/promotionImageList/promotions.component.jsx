@@ -56,7 +56,7 @@ export default function PromotionImageList() {
                 borderRadius: "20px",
                 cursor: "pointer",
               }}
-              src={process.env.PUBLIC_URL + "/assets/11.webp"}
+              src={process.env.PUBLIC_URL + "/assets/gemstone.webp"}
               onClick={() => navigate("/jwellery/GEMSTONE/13/false")}
             />
           </Grid>

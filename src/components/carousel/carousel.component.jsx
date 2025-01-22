@@ -8,30 +8,10 @@ import "./carousel.styles.scss";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
-  {
-    label: "C1",
-    imgPath: "/assets/33.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/36.webp",
-  },
-  {
-    label: "C5",
-    imgPath: "/assets/32.webp",
-  },
-  {
-    label: "C6",
-    imgPath: "/assets/landingPageBanner.webp",
-  },
-  {
-    label: "C7",
-    imgPath: "/assets/34.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/33.webp",
-  },
+  // {
+  //   label: "C1",
+  //   imgPath: "/assets/33.webp",
+  // },
   {
     label: "C1",
     imgPath: "/assets/36.webp",
@@ -48,10 +28,30 @@ const images = [
     label: "C7",
     imgPath: "/assets/34.webp",
   },
+  // {
+  //   label: "C1",
+  //   imgPath: "/assets/33.webp",
+  // },
   {
     label: "C1",
-    imgPath: "/assets/33.webp",
+    imgPath: "/assets/36.webp",
   },
+  {
+    label: "C5",
+    imgPath: "/assets/32.webp",
+  },
+  {
+    label: "C6",
+    imgPath: "/assets/landingPageBanner.webp",
+  },
+  {
+    label: "C7",
+    imgPath: "/assets/34.webp",
+  },
+  // {
+  //   label: "C1",
+  //   imgPath: "/assets/33.webp",
+  // },
   {
     label: "C1",
     imgPath: "/assets/36.webp",
@@ -68,10 +68,10 @@ const images = [
     label: "C7",
     imgPath: "/assets/34.webp",
   },
-  {
-    label: "C1",
-    imgPath: "/assets/33.webp",
-  },
+  // {
+  //   label: "C1",
+  //   imgPath: "/assets/33.webp",
+  // },
   {
     label: "C1",
     imgPath: "/assets/36.webp",
@@ -91,102 +91,35 @@ const images = [
 ];
 
 const imagesMobile = [
-  {
-    label: "C1",
-    imgPath: "/assets/37.webp",
-  },
+  // {
+  //   label: "C1",
+  //   imgPath: "/assets/37.webp",
+  // },
   {
     label: "C1",
     imgPath: "/assets/38.webp",
   },
-  {
-    label: "C2",
-    imgPath: "/assets/39.webp",
-  },
+  // {
+  //   label: "C2",
+  //   imgPath: "/assets/39.webp",
+  // },
   {
     label: "C5",
     imgPath: "/assets/40.webp",
   },
   {
     label: "C6",
-    imgPath: "/assets/41.webp",
+    imgPath: "/assets/landingPageBanner.webp",
   },
+  // {
+  //   label: "C6",
+  //   imgPath: "/assets/41.webp",
+  // },
   {
     label: "C7",
     imgPath: "/assets/42.webp",
   },
-  {
-    label: "C1",
-    imgPath: "/assets/37.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/38.webp",
-  },
-  {
-    label: "C2",
-    imgPath: "/assets/39.webp",
-  },
-  {
-    label: "C5",
-    imgPath: "/assets/40.webp",
-  },
-  {
-    label: "C6",
-    imgPath: "/assets/41.webp",
-  },
-  {
-    label: "C7",
-    imgPath: "/assets/42.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/37.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/38.webp",
-  },
-  {
-    label: "C2",
-    imgPath: "/assets/39.webp",
-  },
-  {
-    label: "C5",
-    imgPath: "/assets/40.webp",
-  },
-  {
-    label: "C6",
-    imgPath: "/assets/41.webp",
-  },
-  {
-    label: "C7",
-    imgPath: "/assets/42.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/37.webp",
-  },
-  {
-    label: "C1",
-    imgPath: "/assets/38.webp",
-  },
-  {
-    label: "C2",
-    imgPath: "/assets/39.webp",
-  },
-  {
-    label: "C5",
-    imgPath: "/assets/40.webp",
-  },
-  {
-    label: "C6",
-    imgPath: "/assets/41.webp",
-  },
-  {
-    label: "C7",
-    imgPath: "/assets/42.webp",
-  },
+  
 ];
 
 function CarouselPanel() {
