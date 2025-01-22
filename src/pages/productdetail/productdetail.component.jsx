@@ -243,6 +243,7 @@ function ProductDetail() {
         }
 
         setProductDetail((_) => detail);
+        console.log("detail", detail);
         setDiscountPercentage(parseFloat(detail.discount_perc));
         setMakingChargePercentage(Math.ceil(detail.customizations?.variants?.options[0]
           ?.metal_info?.making_charge_value));
@@ -2989,7 +2990,7 @@ function ProductDetail() {
                           >
                             {
                               productDetail.customizations?.variants?.options[0]
-                                ?.stone_info?.class
+                                ?.stone_info?.color
                             }
                           </div>
                         </Typography>
@@ -4180,7 +4181,7 @@ function ProductDetail() {
                               >
                                 {
                                   productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.class
+                                    ?.stone_info?.color
                                 }
                               </div>
                             </Typography>
