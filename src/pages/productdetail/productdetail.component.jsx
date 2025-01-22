@@ -228,12 +228,14 @@ function ProductDetail() {
       .then((response) => {
         const detail = response?.data?.response;
 
-        const fetchedImages = detail.images
-          .filter((item) => item.type === "img")
-          .map(
+        if (detail?.images?.length > 0) {
+          const fetchedImages = detail.images
+            .filter((item) => item.type === "img")
+            .map(
             (item) => `https://api.sadashrijewelkart.com/assets/${item?.file}`
           );
         setImages(fetchedImages);
+        }
 
         if (detail.video !== "Product Infographics doesn't exist.") {
           const fetchedVideo = detail.video
