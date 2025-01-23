@@ -1,6 +1,10 @@
-import { useEffect } from "react";
+import { Dialog, Fab } from "@mui/material";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import "./App.css";
+
+import { Help } from "@mui/icons-material";
 import SearchResult from "./components/navbar/searchResult.component";
 import Address from "./pages/address/address.component";
 import Cart from "./pages/cart/cart.component";
@@ -22,6 +26,8 @@ import Wishlist from "./pages/wishlist/wishList.component";
 import { RefreshProvider } from "./RefreshContent";
 
 function App() {
+  const [showIframe, setShowIframe] = useState(false);
+
   const playClickSound = () => {
     const audio = new Audio(process.env.PUBLIC_URL + "/assets/click.mp3");
     audio.play();
@@ -35,6 +41,27 @@ function App() {
 
   return (
     <div className="App">
+      <Dialog
+        open={showIframe}
+        onClose={() => setShowIframe(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <iframe
+          title="Ticket Form"
+          width="600"
+          height="850"
+          src="https://crm.sadashrijewelkart.com/forms/ticket"
+          frameBorder="0"
+          allowFullScreen
+          style={{
+            width: "100%",
+            height: "850px",
+            border: "none",
+          }}
+        />
+      </Dialog>
+
       <RefreshProvider>
         <BrowserRouter>
           <Routes>
@@ -67,6 +94,19 @@ function App() {
             <Route path="/search-result" element={<SearchResult />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>
+          <Fab
+            aria-label="support"
+            style={{
+              position: "fixed",
+              bottom: 16,
+              right: 16,
+              backgroundColor: "#a36e29",
+              color: "#fff2e0",
+            }}
+            onClick={() => setShowIframe(true)}
+          >
+            <Help />
+          </Fab>
         </BrowserRouter>
       </RefreshProvider>
     </div>
