@@ -30,7 +30,7 @@ const Checkout = () => {
         : -1;
       axios
         .get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${product}&hash=${hash}&user_id=${userId}`
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/details.php?name=${product}&hash=${hash}&user_id=${userId}`
         )
         .then((response) => {
           if (customization == -1)
@@ -66,7 +66,7 @@ const Checkout = () => {
     } else {
       axios
         .get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
             "user_id"
           )}`,
           {

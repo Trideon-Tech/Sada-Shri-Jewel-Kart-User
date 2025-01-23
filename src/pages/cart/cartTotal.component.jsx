@@ -67,7 +67,7 @@ export default function CartTotal({
     if (!token) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -114,7 +114,7 @@ export default function CartTotal({
       setLoadingEstimation(true);
       axios
         .get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pinCode}&product_id=1`
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pinCode}&product_id=1`
         )
         .then((response) => {
           setEstimatedDelivery(
@@ -197,7 +197,7 @@ export default function CartTotal({
 
   const getETA = async (pincode, id) => {
     let etaResponse = await axios.get(
-      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+      `${process.env.REACT_APP_API_URL}/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
     );
 
     setETA(() => formatDate(etaResponse.data.response.data.estimated_delivery));
@@ -205,7 +205,7 @@ export default function CartTotal({
 
   const getETAFromInput = async (pincode, id) => {
     let etaResponse = await axios.get(
-      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+      `${process.env.REACT_APP_API_URL}/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
     );
 
     // Getting lat lng from Pincode

@@ -180,7 +180,7 @@ const OrderItem = ({
         >
           <img
             height={"150px"}
-            src={`https://api.sadashrijewelkart.com/assets/${orderInfo?.images[0]?.file}`}
+            src={`${process.env.REACT_APP_API_URL}/assets/${orderInfo?.images[0]?.file}`}
           />
         </Box>
         <Box

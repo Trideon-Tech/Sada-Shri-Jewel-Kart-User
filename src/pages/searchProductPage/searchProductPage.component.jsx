@@ -93,7 +93,7 @@ function SearchProductpage() {
 
   const getProduct = () => {
     const searchTerm = query.get("search");
-    const endpoint = `https://api.sadashrijewelkart.com/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
+    const endpoint = `${process.env.REACT_APP_API_URL}/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
     axios
       .get(endpoint)
       .then((response) => {

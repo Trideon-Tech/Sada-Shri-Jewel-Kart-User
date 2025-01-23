@@ -113,7 +113,7 @@ const Wallet = () => {
     if (!token) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -136,7 +136,7 @@ const Wallet = () => {
 
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {

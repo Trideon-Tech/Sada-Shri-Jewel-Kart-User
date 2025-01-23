@@ -25,7 +25,7 @@ const OrderConfirmation = () => {
     if (!token) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=order_confirmation_details&order_record_id=${searchParams.get(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/orders.php?type=order_confirmation_details&order_record_id=${searchParams.get(
           "order_record_id"
         )}`,
         {
@@ -343,7 +343,7 @@ const OrderConfirmation = () => {
                         elevation={1}
                       >
                         <img
-                          src={`https://api.sadashrijewelkart.com/assets/${o?.images[0]?.file}`}
+                          src={`${process.env.REACT_APP_API_URL}/assets/${o?.images[0]?.file}`}
                           height={150}
                           style={{
                             borderRadius: "10px",

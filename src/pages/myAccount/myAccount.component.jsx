@@ -42,7 +42,7 @@ export default function MyAccount() {
       console.log("token===", localStorage.getItem("user_id"));
 
       await axios.delete(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/user.php`,
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/user.php`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

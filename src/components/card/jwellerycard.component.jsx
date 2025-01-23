@@ -58,7 +58,7 @@ const JwelleryCard = ({
       }
 
       await axios.delete(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ const JwelleryCard = ({
     formData.append("product_id", id);
 
     await axios.post(
-      "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+      `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
       formData,
       {
         headers: {
@@ -185,7 +185,7 @@ const JwelleryCard = ({
           {image?.length ? (
             <img
               src={encodeURI(
-                `https://api.sadashrijewelkart.com/assets/${image}`
+                `${process.env.REACT_APP_API_URL}/assets/${image}`
               )}
               alt={name}
               onClick={() => clickHandler(name, hash)}
@@ -332,7 +332,7 @@ const JwelleryCard = ({
           {image?.length ? (
             <img
               src={encodeURI(
-                `https://api.sadashrijewelkart.com/assets/${image}`
+                `${process.env.REACT_APP_API_URL}/assets/${image}`
               )}
               alt={name}
               onClick={() => clickHandler(name, hash)}

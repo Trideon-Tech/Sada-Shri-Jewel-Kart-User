@@ -50,7 +50,7 @@ const Orders = () => {
     if (!token) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/orders.php?type=all_orders&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -121,7 +121,7 @@ const Orders = () => {
 
   const writeReview = (item) => {
     axios
-      .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
+      .get(`${process.env.REACT_APP_API_URL}/v1.0.0/user/landing.php`)
       .then((response) => {
         setCategories(response.data.response.categories);
 
@@ -157,7 +157,7 @@ const Orders = () => {
 
     axios
       .post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/orders.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/orders.php`,
         formData,
         {
           headers: {
@@ -206,7 +206,7 @@ const Orders = () => {
 
     axios
       .post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/orders.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/orders.php`,
         formData,
         {
           headers: {
@@ -381,7 +381,7 @@ const Orders = () => {
             >
               {selectedOrder?.images ? (
                 <img
-                  src={`https://api.sadashrijewelkart.com/assets/${selectedOrder?.images[0]?.file}`}
+                  src={`${process.env.REACT_APP_API_URL}/assets/${selectedOrder?.images[0]?.file}`}
                   style={{ height: "100%", width: "100%", objectFit: "cover" }}
                 />
               ) : null}

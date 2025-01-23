@@ -11,7 +11,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
     // Fetch rates when component mounts
     useEffect(() => {
-        axios.get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
+        axios.get(`${process.env.REACT_APP_API_URL}/v1.0.0/user/landing.php`)
             .then((response) => {
                 setRates(response?.data?.response?.jewellery_inventory || {});
             })

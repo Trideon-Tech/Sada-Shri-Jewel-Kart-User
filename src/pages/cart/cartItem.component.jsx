@@ -45,7 +45,7 @@ export default function CartItem({
       >
         {item?.images ? (
           <img
-            src={`https://api.sadashrijewelkart.com/assets/${item?.images[0]?.file}`}
+            src={`${process.env.REACT_APP_API_URL}/assets/${item?.images[0]?.file}`}
             style={{ height: "100%", width: "100%", objectFit: "cover" }}
           />
         ) : null}
@@ -324,7 +324,7 @@ export default function CartItem({
         >
           {item?.images ? (
             <img
-              src={`https://api.sadashrijewelkart.com/assets/${item?.images[0]?.file}`}
+              src={`${process.env.REACT_APP_API_URL}/assets/${item?.images[0]?.file}`}
               style={{
                 height: "120px",
                 width: "120px",
