@@ -52,7 +52,6 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://sadashrijewelkart.com/",
   "browserslist": {
     "production": [
       ">0.2%",
