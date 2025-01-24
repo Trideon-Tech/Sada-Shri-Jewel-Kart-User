@@ -69,7 +69,7 @@ const ImageVideoCarousel = ({ images, video }) => {
         </IconButton>
         <div className="selected-item" onClick={() => setDialogOpen(true)}>
           {selectedIndex === images.length && video !== null ? (
-            <video controls autoPlay>
+            <video controls autoPlay loop muted>
               <source src={video} type="video/mp4" />
             </video>
           ) : images.length > 0 ? (
@@ -166,31 +166,51 @@ const ImageVideoCarousel = ({ images, video }) => {
               onTouchStart={(e) => {
                 const touch = e.touches[0];
                 let startX = touch.clientX;
-                
+
                 const handleTouchMove = (e) => {
                   const touch = e.touches[0];
                   const diffX = touch.clientX - startX;
-                  
-                  if (Math.abs(diffX) > 50) { // Threshold for swipe
-                    if (diffX > 0) { // Swipe right
-                      selectItem(selectedIndex === 0 ? (video ? images.length : images.length - 1) : selectedIndex - 1);
-                    } else { // Swipe left
-                      selectItem(selectedIndex === (video ? images.length : images.length - 1) ? 0 : selectedIndex + 1);
+
+                  if (Math.abs(diffX) > 50) {
+                    // Threshold for swipe
+                    if (diffX > 0) {
+                      // Swipe right
+                      selectItem(
+                        selectedIndex === 0
+                          ? video
+                            ? images.length
+                            : images.length - 1
+                          : selectedIndex - 1
+                      );
+                    } else {
+                      // Swipe left
+                      selectItem(
+                        selectedIndex ===
+                          (video ? images.length : images.length - 1)
+                          ? 0
+                          : selectedIndex + 1
+                      );
                     }
                     startX = touch.clientX;
                   }
                 };
 
-                document.addEventListener('touchmove', handleTouchMove);
-                document.addEventListener('touchend', () => {
-                  document.removeEventListener('touchmove', handleTouchMove);
-                }, { once: true });
+                document.addEventListener("touchmove", handleTouchMove);
+                document.addEventListener(
+                  "touchend",
+                  () => {
+                    document.removeEventListener("touchmove", handleTouchMove);
+                  },
+                  { once: true }
+                );
               }}
             >
               {selectedIndex === images.length && video !== null ? (
                 <video
                   controls
-                  autoPlay
+                  autoPlay={true}
+                  loop={true}
+                  muted={true}
                   style={{ width: "100%", height: "calc(100vh - 120px)" }}
                 >
                   <source src={video} type="video/mp4" />
