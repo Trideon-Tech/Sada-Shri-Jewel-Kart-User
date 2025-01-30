@@ -152,7 +152,7 @@ const Cart = () => {
       for (let item of cartListItems) {
         if (item.length > 0) {
           const { data } = await axios.get(
-            `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?type=product_details_on_id&user_id=-1&product_id=${item}`
+            `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/details.php?type=product_details_on_id&user_id=-1&product_id=${item}`
           );
           console.log(data);
           detailsList.push(data?.response);
@@ -168,7 +168,7 @@ const Cart = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
         const { data } = await axios.get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/coupons/all.php?type=all_coupons`,
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/coupons/all.php?type=all_coupons`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -195,7 +195,7 @@ const Cart = () => {
       }
       axios
         .get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
             "user_id"
           )}`,
           {
@@ -225,7 +225,7 @@ const Cart = () => {
 
     try {
       await axios.post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
         wishlistData,
         {
           headers: {
@@ -244,7 +244,7 @@ const Cart = () => {
 
     axios
       .delete(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

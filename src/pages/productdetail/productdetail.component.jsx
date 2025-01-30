@@ -141,7 +141,7 @@ function ProductDetail() {
 
     axios
       .put(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php`,
         {
           product: productDetail.id,
           customization:
@@ -168,7 +168,7 @@ function ProductDetail() {
 
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -195,7 +195,7 @@ function ProductDetail() {
 
     axios
       .put(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php`,
         {
           product: id,
           customization:
@@ -223,7 +223,7 @@ function ProductDetail() {
       : -1;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}&user_id=${userId}`
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/details.php?name=${menuItemName}&hash=${hashId}&user_id=${userId}`
       )
       .then((response) => {
         const detail = response?.data?.response;
@@ -232,14 +232,14 @@ function ProductDetail() {
           const fetchedImages = detail.images
             .filter((item) => item.type === "img")
             .map(
-            (item) => `https://api.sadashrijewelkart.com/assets/${item?.file}`
+            (item) => `${process.env.REACT_APP_API_URL}/assets/${item?.file}`
           );
         setImages(fetchedImages);
         }
 
         if (detail.video !== "Product Infographics doesn't exist.") {
           const fetchedVideo = detail.video
-            ? `https://api.sadashrijewelkart.com/assets/${detail?.video?.file}`
+            ? `${process.env.REACT_APP_API_URL}/assets/${detail?.video?.file}`
             : "";
           setVideo(fetchedVideo);
         }
@@ -288,7 +288,7 @@ function ProductDetail() {
     if (!token) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -310,7 +310,7 @@ function ProductDetail() {
         const token = localStorage.getItem("token");
         if (!token) return;
         const { data } = await axios.get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/coupons/all.php?type=all_coupons`,
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/coupons/all.php?type=all_coupons`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -349,7 +349,7 @@ function ProductDetail() {
     if (!productDetail.id) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/reviews.php?type=all&page=1&page_size=10&product_id=${productDetail.id}`,
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/reviews.php?type=all&page=1&page_size=10&product_id=${productDetail.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -380,7 +380,7 @@ function ProductDetail() {
         return;
       }
       await axios.delete(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php`,
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -415,7 +415,7 @@ function ProductDetail() {
       formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
       formData.append("product_id", productDetail.id);
       await axios.post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
         formData,
         {
           headers: {
@@ -509,7 +509,7 @@ function ProductDetail() {
 
   const getETA = async (pincode, id) => {
     let etaResponse = await axios.get(
-      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+      `${process.env.REACT_APP_API_URL}/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
     );
     setCurrentPosition([1, 2]);
     setETA(() => formatDate(etaResponse.data.response.data.estimated_delivery));
@@ -517,7 +517,7 @@ function ProductDetail() {
 
   const getETAFromInput = async (pincode, id) => {
     let etaResponse = await axios.get(
-      `https://api.sadashrijewelkart.com/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
+      `${process.env.REACT_APP_API_URL}/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${id}`
     );
 
     // Getting lat lng from Pincode using Google Geocoding API
@@ -1219,7 +1219,7 @@ function ProductDetail() {
                 >
                   {productDetail?.images ? (
                     <img
-                      src={`https://api.sadashrijewelkart.com/assets/${productDetail?.images[0]?.file}`}
+                      src={`${process.env.REACT_APP_API_URL}/assets/${productDetail?.images[0]?.file}`}
                       style={{
                         height: "100%",
                         width: "100%",
@@ -1733,7 +1733,7 @@ function ProductDetail() {
                 productDetail.images.map((image, index) => (
                   <Grid item xs={6} key={image.id}>
                     <img
-                      src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
+                      src={`${process.env.REACT_APP_API_URL}/assets/${image.file}`}
                       alt={`Product ${index + 1}`}
                       style={{
                         width: "100%",
@@ -1764,7 +1764,7 @@ function ProductDetail() {
                       muted={true}
                     >
                       <source
-                        src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
+                        src={`${process.env.REACT_APP_API_URL}/assets/${productDetail.video.file}`}
                         type="video/mp4"
                       />
                       Your browser does not support the video tag.
@@ -1803,7 +1803,7 @@ function ProductDetail() {
                         }}
                       >
                         <img
-                          src={`https://api.sadashrijewelkart.com/assets/${image.file}`}
+                          src={`${process.env.REACT_APP_API_URL}/assets/${image.file}`}
                           alt={`Thumbnail ${index + 1}`}
                           style={{
                             width: "100px",
@@ -1842,7 +1842,7 @@ function ProductDetail() {
                             }}
                           >
                             <source
-                              src={`https://api.sadashrijewelkart.com/assets/${productDetail.video.file}`}
+                              src={`${process.env.REACT_APP_API_URL}/assets/${productDetail.video.file}`}
                               type="video/mp4"
                             />
                           </video>
@@ -1861,7 +1861,7 @@ function ProductDetail() {
                   >
                     {selectedImageIndex < productDetail.images?.length ? (
                       <img
-                        src={`https://api.sadashrijewelkart.com/assets/${productDetail.images[selectedImageIndex]?.file}`}
+                        src={`${process.env.REACT_APP_API_URL}/assets/${productDetail.images[selectedImageIndex]?.file}`}
                         alt={`Product ${selectedImageIndex + 1}`}
                         style={{
                           maxWidth: "100%",
@@ -1885,7 +1885,7 @@ function ProductDetail() {
                         muted={true}
                       >
                         <source
-                          src={`https://api.sadashrijewelkart.com/assets/${productDetail.video?.file}`}
+                          src={`${process.env.REACT_APP_API_URL}/assets/${productDetail.video?.file}`}
                           type="video/mp4"
                         />
                         Your browser does not support the video tag.

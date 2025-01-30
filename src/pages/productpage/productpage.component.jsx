@@ -96,7 +96,7 @@ function Productpage() {
 
     axios
       .put(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php`,
         {
           product: id,
           customization:
@@ -130,7 +130,7 @@ function Productpage() {
   const handleFetchFilteredData = async () => {
     if (isSearchPage) {
       // Call search API if on search page
-      const searchEndpoint = `https://api.sadashrijewelkart.com/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
+      const searchEndpoint = `${process.env.REACT_APP_API_URL}/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
       const response = await axios.get(searchEndpoint);
       setJwellery(response?.data?.response);
       setFilteredJwellery(response?.data?.response);
@@ -146,10 +146,10 @@ function Productpage() {
       let apiUrl;
       if (isSubCategory !== "false") {
         // If it's a subcategory
-        apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
+        apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
       } else {
         // If it's a main category
-        apiUrl = `https://api.sadashrijewelkart.com/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
+        apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
       }
 
       const response = await axios.get(apiUrl, { params });

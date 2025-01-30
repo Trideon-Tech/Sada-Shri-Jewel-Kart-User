@@ -118,7 +118,7 @@ const Navbar = () => {
       formData.append("wishlist_id", localStorage.getItem("default_wishlist"));
       formData.append("product_id", id);
       await axios.post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
         formData,
         {
           headers: {
@@ -143,7 +143,7 @@ const Navbar = () => {
       }
       setCartLength(sessionStorage.getItem("cart"));
       const { data } = await axios.get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -174,7 +174,7 @@ const Navbar = () => {
       }
 
       const { data } = await axios.get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
         )}`,
         {
@@ -192,7 +192,7 @@ const Navbar = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
+      .get(`${process.env.REACT_APP_API_URL}/v1.0.0/user/landing.php`)
       .then((response) => {
         setMenuItems(response?.data?.response?.categories);
         setSearchIndex(response?.data?.response?.search_index || []);
@@ -212,7 +212,7 @@ const Navbar = () => {
     if (!token) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -231,7 +231,7 @@ const Navbar = () => {
       .catch((error) => console.log("Error while fetching cart items", error));
 
     axios
-      .get("https://api.sadashrijewelkart.com/v1.0.0/user/landing.php")
+      .get(`${process.env.REACT_APP_API_URL}/v1.0.0/user/landing.php`)
       .then((response) => {
         console.log("landing page:: ", response);
         setMenuItems(response.data.response.categories);

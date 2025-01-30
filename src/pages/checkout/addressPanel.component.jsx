@@ -43,7 +43,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
     const token = localStorage.getItem("token");
     axios
       .get(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/details.php?key=address",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/details.php?key=address`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -113,7 +113,7 @@ const AddressPanel = ({ selectedAddress, setSelectedAddress }) => {
 
     const token = localStorage.getItem("token");
     axios
-      .post("https://api.sadashrijewelkart.com/v1.0.0/user/add.php", formData, {
+      .post(`${process.env.REACT_APP_API_URL}/v1.0.0/user/add.php`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

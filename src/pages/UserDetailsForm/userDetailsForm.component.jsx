@@ -32,7 +32,7 @@ const UserDetailsForm = () => {
     items.forEach((item) => {
       axios
         .put(
-          "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const UserDetailsForm = () => {
     formData.append("email", email);
     try {
       const { data: userData } = await axios.post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/auth.php`,
         formData,
         {
           headers: {
@@ -90,7 +90,7 @@ const UserDetailsForm = () => {
       wishlistData.append("wishlist_items", "[]");
 
       await axios.post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php`,
         wishlistData,
         {
           headers: {
@@ -101,7 +101,7 @@ const UserDetailsForm = () => {
       );
 
       const { data: defaultWishlists } = await axios.get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {

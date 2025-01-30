@@ -162,7 +162,7 @@ const CheckoutForm = ({ cartItems }) => {
     const token = localStorage.getItem("token");
     axios
       .get(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/details.php?key=address",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/details.php?key=address`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -205,7 +205,7 @@ const CheckoutForm = ({ cartItems }) => {
     }
 
     const options = {
-      key: "rzp_test_u3HTPcwIbGNSAp",
+      key: process.env.REACT_APP_RAZORPAY_KEY,
       amount: data.amount_due.toString(),
       currency: data.currency,
       name: "Sadāshrī Jewelkart",
@@ -227,7 +227,7 @@ const CheckoutForm = ({ cartItems }) => {
         formData.append("coupon_id", queryParams.get("discount"));
         axios
           .post(
-            "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",
+            `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/payment.php`,
             formData,
             {
               headers: {
@@ -285,7 +285,7 @@ const CheckoutForm = ({ cartItems }) => {
     const token = localStorage.getItem("token");
     axios
       .post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/payment.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/payment.php`,
         formData,
         {
           headers: {

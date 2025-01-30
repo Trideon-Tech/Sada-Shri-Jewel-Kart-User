@@ -30,7 +30,7 @@ export default function CartTotal({ items, coinValueDiscount }) {
         const token = localStorage.getItem("token");
         if (!token) return;
         const { data } = await axios.get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/coupons/all.php?type=all_coupons`,
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/coupons/all.php?type=all_coupons`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

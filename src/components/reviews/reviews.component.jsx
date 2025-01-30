@@ -59,7 +59,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
     const token = localStorage.getItem("token");
     axios
       .post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/products/reviews.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/reviews.php`,
         formData,
         {
           headers: {
@@ -87,7 +87,7 @@ const Reviews = ({ productDetails, rating, reviewsCount }) => {
     if (!productDetails.id) return;
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/products/reviews.php?type=all&page=1&page_size=10&product_id=${productDetails.id}`,
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/reviews.php?type=all&page=1&page_size=10&product_id=${productDetails.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

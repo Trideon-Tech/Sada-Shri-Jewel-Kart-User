@@ -27,7 +27,7 @@ const AddressTile = ({ address }) => {
   const deleteAddress = () => {
     const token = localStorage.getItem("token");
     axios
-      .delete(`https://api.sadashrijewelkart.com/v1.0.0/user/add.php`, {
+      .delete(`${process.env.REACT_APP_API_URL}/v1.0.0/user/add.php`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

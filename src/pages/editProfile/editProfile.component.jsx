@@ -55,7 +55,7 @@ const EditProfile = () => {
     const token = localStorage.getItem("token");
     axios
       .post(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/auth.php",
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/auth.php`,
         formData,
         {
           headers: {
@@ -69,7 +69,7 @@ const EditProfile = () => {
         // Get updated user profile
         axios
           .get(
-            `https://api.sadashrijewelkart.com/v1.0.0/user/userProfile.php?type=getUserProfile`,
+            `${process.env.REACT_APP_API_URL}/v1.0.0/user/userProfile.php?type=getUserProfile`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

@@ -33,7 +33,7 @@ const Register = () => {
     cartItems.forEach((item) => {
       axios
         .put(
-          "https://api.sadashrijewelkart.com/v1.0.0/user/products/cart.php",
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ const Register = () => {
 
     //call API for OTP verification
     axios
-      .post("https://api.sadashrijewelkart.com/v1.0.0/user/otp.php", formData, {
+      .post(`${process.env.REACT_APP_API_URL}/v1.0.0/user/otp.php`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -94,7 +94,7 @@ const Register = () => {
     //call API for OTP verification
     axios
       .get(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${mobile}`
+        `${process.env.REACT_APP_API_URL}/v1.0.0/user/otp.php?type=verify_otp&otp=${otp}&mobile=${mobile}`
       )
       .then((response) => {
         if (
