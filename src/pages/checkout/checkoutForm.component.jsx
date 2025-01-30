@@ -205,7 +205,7 @@ const CheckoutForm = ({ cartItems }) => {
     }
 
     const options = {
-      key: "rzp_test_u3HTPcwIbGNSAp",
+      key: process.env.REACT_APP_RAZORPAY_KEY,
       amount: data.amount_due.toString(),
       currency: data.currency,
       name: "Sadāshrī Jewelkart",
