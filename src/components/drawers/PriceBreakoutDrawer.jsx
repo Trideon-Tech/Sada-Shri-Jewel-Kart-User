@@ -111,7 +111,8 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         return quality && rates[quality] ? rates[quality] : 0;
     };
 
-    const calculatePaymentDetails = (data) => {
+    const calculatePaymentDetails = (productDetails) => {
+        console.log("productDetails", "productDetails");
         const metalInfo = productDetails?.customizations?.variants?.options[0]?.metal_info || {};
         const finalPrice = parseFloat(productDetails?.customizations?.variants?.options[0]?.price || 0);
         
@@ -124,12 +125,12 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         const hallmarkCharge = parseFloat(metalInfo.hallmark_charge || 0);
         const stoneAmount = parseFloat(metalInfo.stone_amount || 0);
         
+        const additionalCharges = parseFloat(hallmarkCharge) + parseFloat(stoneAmount);
         // Calculate base metal amount
-        let metalBaseAmount = netWeight * rate;
-        
+        const metalBaseAmount = netWeight * rate;
         // Calculate GST (3% of base amount + making charges)
         const gstPercentage = parseFloat(metalInfo.gst_perc || 0);
-        const metalGst = (metalBaseAmount + makingCharges) * (gstPercentage / 100);
+        const metalGst = (metalBaseAmount + makingCharges + additionalCharges) * (gstPercentage / 100);
         
         // Calculate tax (5% of base amount + making charges)
         const taxPercentage = 5;
@@ -138,8 +139,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         // Stone calculations
         const stoneGstPercentage = parseFloat(metalInfo.stone_info?.gst_perc || 0);
         const stoneGst = stoneAmount * (stoneGstPercentage / 100);
-
-        metalBaseAmount = metalBaseAmount - metalGst - metalTax + hallmarkCharge;
         
         // Calculate subtotal
         const subTotal = metalBaseAmount + metalGst + metalTax + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
@@ -149,6 +148,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
             taxAmount: metalTax,
             subTotal: finalPrice, // Use the final price as subtotal
             totalAmount: finalPrice,
+            additionalCharges: additionalCharges,
             metal_calculation: {
                 base_amount: metalBaseAmount,
                 gst_perc: gstPercentage,
@@ -188,44 +188,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                     </IconButton>
                 </Box>
 
-                {/* Gold Price Breakup */}
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 2 }}>
-                    METAL DETAILS
-                </Typography>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>METAL</TableCell>
-                            <TableCell>RATE</TableCell>
-                            <TableCell>WEIGHT</TableCell>
-                            <TableCell>FINAL VALUE</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>{productDetails?.customizations?.variants?.options[0]?.metal_info?.display_name || '-'}</TableCell>
-                            <TableCell>₹{getMetalRate()}/g</TableCell>
-                            <TableCell>{productDetails?.customizations?.variants?.options[0]?.metal_info?.net_wt || 0} g</TableCell>
-                            <TableCell>₹{metalPrice.toFixed(2)}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-
-                {/* Stone Price Breakup */}
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3 }}>
-                    STONE PRICE BREAKUP
-                </Typography>
-                <Table>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>{productDetails?.customizations?.variants?.options[0]?.stone_info?.stone_type || '-'}</TableCell>
-                            <TableCell>{productDetails?.customizations?.variants?.options[0]?.stone_info?.stone_rate || 0}</TableCell>
-                            <TableCell>{productDetails?.customizations?.variants?.options[0]?.stone_info?.stone_wt || 0} g</TableCell>
-                            <TableCell>₹{stonePrice.toFixed(2)}</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-
                 {/* Price Breakout Details */}
                 <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3 }}>
                     PRICE BREAKOUT DETAILS
@@ -237,6 +199,14 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                             <TableCell align="right">₹{paymentDetails?.metal_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
                         <TableRow>
+                            <TableCell>Additional Charges</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.additionalCharges?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Making Charges</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.making_charge_amount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
                             <TableCell>Metal GST ({paymentDetails?.metal_calculation?.gst_perc}%)</TableCell>
                             <TableCell align="right">₹{paymentDetails?.metal_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
@@ -244,18 +214,18 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                             <TableCell>Metal Tax</TableCell>
                             <TableCell align="right">₹{paymentDetails?.taxAmount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell>Making Charges</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.making_charge_amount?.toFixed(2) || '0.00'}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Stone Amount</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.stone_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
+                        {paymentDetails?.stone_calculation?.base_amount > 0 && (
+                            <>
+                                <TableRow>
+                                    <TableCell>Stone Amount</TableCell>
+                                    <TableCell align="right">₹{paymentDetails?.stone_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>Stone GST ({paymentDetails?.stone_calculation?.gst_perc}%)</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.stone_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
-                        </TableRow>
+                                    <TableCell align="right">₹{paymentDetails?.stone_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
+                                </TableRow>
+                            </>
+                        )}
                     </TableBody>
                 </Table>
 
