@@ -8,6 +8,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [metalPrice, setMetalPrice] = useState(0);
     const [stonePrice, setStonePrice] = useState(0);
     const [rates, setRates] = useState({});
+    const [paymentDetails, setPaymentDetails] = useState(null);
 
     // Fetch rates when component mounts
     useEffect(() => {
@@ -110,6 +111,63 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         return quality && rates[quality] ? rates[quality] : 0;
     };
 
+    const calculatePaymentDetails = (data) => {
+        const metalInfo = productDetails?.customizations?.variants?.options[0]?.metal_info || {};
+        const finalPrice = parseFloat(productDetails?.customizations?.variants?.options[0]?.price || 0);
+        
+        // Start with the final price and work backwards
+        const netWeight = parseFloat(metalInfo.net_wt_after_wastage || 0);
+        const rate = rates[metalInfo.quality] || 0;
+        
+        // Get the fixed values
+        const makingCharges = parseFloat(metalInfo.making_charge_amount || 0);
+        const hallmarkCharge = parseFloat(metalInfo.hallmark_charge || 0);
+        const stoneAmount = parseFloat(metalInfo.stone_amount || 0);
+        
+        // Calculate base metal amount
+        let metalBaseAmount = netWeight * rate;
+        
+        // Calculate GST (3% of base amount + making charges)
+        const gstPercentage = parseFloat(metalInfo.gst_perc || 0);
+        const metalGst = (metalBaseAmount + makingCharges) * (gstPercentage / 100);
+        
+        // Calculate tax (5% of base amount + making charges)
+        const taxPercentage = 5;
+        const metalTax = (metalBaseAmount + makingCharges) * (taxPercentage / 100);
+        
+        // Stone calculations
+        const stoneGstPercentage = parseFloat(metalInfo.stone_info?.gst_perc || 0);
+        const stoneGst = stoneAmount * (stoneGstPercentage / 100);
+
+        metalBaseAmount = metalBaseAmount - metalGst - metalTax + hallmarkCharge;
+        
+        // Calculate subtotal
+        const subTotal = metalBaseAmount + metalGst + metalTax + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
+
+        return {
+            taxRate: taxPercentage,
+            taxAmount: metalTax,
+            subTotal: finalPrice, // Use the final price as subtotal
+            totalAmount: finalPrice,
+            metal_calculation: {
+                base_amount: metalBaseAmount,
+                gst_perc: gstPercentage,
+                making_charge_amount: makingCharges,
+                hallmark_charge: hallmarkCharge,
+                gst_amount: metalGst,
+            },
+            stone_calculation: {
+                base_amount: stoneAmount,
+                gst_perc: stoneGstPercentage,
+                gst_amount: stoneGst,
+            }
+        };
+    };
+
+    useEffect(() => {
+        setPaymentDetails(calculatePaymentDetails(productDetails));
+    }, [productDetails]);
+
     return (
         <Drawer
             anchor="right"
@@ -132,7 +190,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
                 {/* Gold Price Breakup */}
                 <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 2 }}>
-                    GOLD PRICE BREAKUP
+                    METAL DETAILS
                 </Typography>
                 <Table>
                     <TableHead>
@@ -168,23 +226,46 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                     </TableBody>
                 </Table>
 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                        MAKING CHARGES
-                    </Typography>
-                    <Typography variant="subtitle1">
-                        ₹{productDetails?.customizations?.variants?.options[0]
-                            ?.metal_info?.making_charge_amount}
-                    </Typography>
-                </div>
-
-
-                {/* Subtotal */}
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3, display: "flex", justifyContent: "space-between" }}>
-                    <div style={{ fontSize: "1rem" }}>SUBTOTAL</div>
-                    <div style={{ fontSize: "1rem" }}>₹{subtotal.toFixed(2)}</div>
+                {/* Price Breakout Details */}
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mt: 3 }}>
+                    PRICE BREAKOUT DETAILS
                 </Typography>
+                <Table>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Metal Base Amount</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Metal GST ({paymentDetails?.metal_calculation?.gst_perc}%)</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Metal Tax</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.taxAmount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Making Charges</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.making_charge_amount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Stone Amount</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.stone_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Stone GST ({paymentDetails?.stone_calculation?.gst_perc}%)</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.stone_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
 
+                {/* Final Amount */}
+                <Box sx={{ mt: 3, borderTop: '1px solid rgba(224, 224, 224, 1)', pt: 2 }}>
+                    <Typography sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                        <span>Total Amount</span>
+                        <span>₹{paymentDetails?.totalAmount?.toFixed(2) || '0.00'}</span>
+                    </Typography>
+                </Box>
             </Box>
         </Drawer>
     );
