@@ -156,6 +156,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 making_charge_amount: makingCharges,
                 hallmark_charge: hallmarkCharge,
                 gst_amount: metalGst,
+                wastage: metalInfo.net_wt_after_wastage,
             },
             stone_calculation: {
                 gst_perc: stoneInfo.gst_perc,
@@ -204,32 +205,51 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                             <TableCell>Making Charges</TableCell>
                             <TableCell align="right">₹{paymentDetails?.metal_calculation?.making_charge_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
-                        {paymentDetails?.stone_calculation?.stone_amount > 0 && ((
-                            <TableRow>
-                                <TableCell>Stone Amount</TableCell>
-                                <TableCell align="right">₹{paymentDetails?.stone_calculation?.stone_amount?.toFixed(2) || '0.00'}</TableCell>
-                            </TableRow>
-                        ) ||
-                            <TableRow>
-                                <TableCell>Stone Amount</TableCell>
-                                <TableCell align="right">₹{paymentDetails?.stone_calculation?.stone_amount?.toFixed(2) || '0.00'}</TableCell>
-                            </TableRow>
+
+                        <TableRow>
+                            <TableCell>Wastage</TableCell>
+                            <TableCell align="right">{paymentDetails?.metal_calculation?.wastage?.toFixed(2) || '0.00'} g</TableCell>
+                        </TableRow>
+
+                        {paymentDetails?.stone_calculation?.stone_amount > 0 && (
+                            <>
+                                <TableRow>
+                                    <TableCell>Stone Amount</TableCell>
+                                    <TableCell align="right">₹{paymentDetails?.stone_calculation?.stone_amount?.toFixed(2) || '0.00'}</TableCell>
+                                </TableRow>
+                                {/* Stone Details */}
+                                <TableRow>
+                                    <TableCell colSpan={2} sx={{ pl: 4}}>
+                                        <Box sx={{ pl: 2 }}>
+                                            <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
+                                                <span>Pieces</span>
+                                                <span>{productDetails?.customizations?.variants?.options[0]?.stone_info?.pieces || '0'}</span>
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
+                                                <span>Carat</span>
+                                                <span>{productDetails?.customizations?.variants?.options[0]?.stone_info?.carat || '0'}</span>
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
+                                                <span>Weight (Pieces * Carat * 0.2)</span>
+                                                <span>{((productDetails?.customizations?.variants?.options[0]?.stone_info?.carat || 0) * 
+                                                        (productDetails?.customizations?.variants?.options[0]?.stone_info?.pieces || 0) * 
+                                                        0.2).toFixed(2)} g</span>
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
+                                                <span>Rate</span>
+                                                <span>₹{productDetails?.customizations?.variants?.options[0]?.stone_info?.stone_rate || '0'}</span>
+                                            </Typography>
+                                        </Box>
+                                    </TableCell>
+                                </TableRow>
+                            </>
                         )}
+
                         <TableRow>
                             <TableCell>Additional Charges</TableCell>
                             <TableCell align="right">₹{paymentDetails?.additionalCharges?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
 
-                        <TableRow>
-                            <TableCell>Metal GST ({paymentDetails?.metal_calculation?.gst_perc}%)</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
-                        </TableRow>
-                        {paymentDetails?.stone_calculation?.stone_amount > 0 && (
-                            <TableRow>
-                                <TableCell>Stone GST ({paymentDetails?.stone_calculation?.gst_perc}%)</TableCell>
-                                <TableCell align="right">₹{paymentDetails?.stone_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
-                            </TableRow>
-                        )}
                         {/* toTAL GST AMOUNT */}
                         <TableRow>
                             <TableCell>Total GST Amount</TableCell>
@@ -239,7 +259,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 </Table>
 
                 {/* Final Amount */}
-                <Box sx={{ mt: 3, borderTop: '1px solid rgba(224, 224, 224, 1)', pt: 2 }}>
+                <Box sx={{ mt: 3, pt: 2 }}>
                     <Typography sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
                         <span>Total Amount</span>
                         <span>₹{paymentDetails?.totalAmount?.toFixed(2) || '0.00'}</span>

@@ -1237,6 +1237,7 @@ function ProductDetail() {
                         width: "100%",
                         objectFit: "cover",
                       }}
+                      alt={productDetail?.name}
                     />
                   ) : null}
                 </Box>
