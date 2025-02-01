@@ -3583,7 +3583,7 @@ function ProductDetail() {
                 <div style={{
                   marginTop: "0.5rem",
                   borderRadius: "10px",
-                  padding: "10px 20px",
+                  padding: "10px 10px",
                   fontFamily: '"Roboto", sans-serif'
                 }}>
                   <Grid
@@ -3711,7 +3711,7 @@ function ProductDetail() {
                 <div style={{
                   marginTop: "0.5rem",
                   borderRadius: "10px",
-                  padding: "10px 20px",
+                  padding: "10px 10px",
                   fontFamily: '"Roboto", sans-serif'
                 }}>
                   <Typography
