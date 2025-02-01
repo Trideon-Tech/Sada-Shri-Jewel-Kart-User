@@ -125,6 +125,18 @@ function ProductDetail() {
   const [state, setState] = useState(localStorage.getItem("default_state") || "");
   const [country, setCountry] = useState(localStorage.getItem("default_country") || "");
 
+  useEffect(() => {
+    if (productDetail?.customizations?.variants?.options[0]) {
+      setMakingChargePercentage(Math.ceil(productDetail.customizations.variants.options[0]?.metal_info?.making_charge_value));
+      setDiscountPercentage(parseFloat(productDetail.discount_perc));
+    }
+  }, [productDetail]);
+
+  // Add useEffect to reset drawer state when productDetail changes
+  useEffect(() => {
+    setIsPriceBreakoutOpen(false);
+  }, [productDetail]);
+
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
     if (!token) {

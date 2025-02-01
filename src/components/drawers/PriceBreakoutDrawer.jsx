@@ -20,7 +20,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 console.error("Error fetching rates:", error);
                 setRates({});
             });
-    }, []);
+    }, [paymentDetails]);
 
     // Function to calculate metal price
     const calculateMetalPrice = (metalInfo) => {
@@ -69,18 +69,17 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const calculateStonePrice = (stoneInfo) => {
         if (!stoneInfo) return 0;
 
-        // Calculate stone weight
+        // 1. Stone Weight calculation
         const stoneWeight = parseFloat(stoneInfo.pieces || 0) * parseFloat(stoneInfo.carat || 0) * 0.2;
 
-        // Calculate base amount
-        const stoneRate = parseFloat(stoneInfo.stone_rate || 0);
-        const baseAmount = stoneWeight * stoneRate;
+        // 2. Stone Amount calculation
+        const stoneBaseAmount = parseFloat(stoneInfo.stone_rate || 0) * stoneWeight;
 
-        // Add GST
-        const gstAmount = baseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
-        const total = baseAmount + gstAmount;
+        // Add GST if present
+        const stoneGst = stoneBaseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
+        const stoneNetAmount = stoneBaseAmount + stoneGst;
 
-        return Number(total.toFixed(2));
+        return Number(stoneNetAmount.toFixed(2));
     };
 
     // Calculate prices when product details or rates change
@@ -114,38 +113,40 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const calculatePaymentDetails = (productDetails) => {
         console.log("productDetails", "productDetails");
         const metalInfo = productDetails?.customizations?.variants?.options[0]?.metal_info || {};
+        const stoneInfo = productDetails?.customizations?.variants?.options[0]?.stone_info || {};
+
         const finalPrice = parseFloat(productDetails?.customizations?.variants?.options[0]?.price || 0);
-        
+
         // Start with the final price and work backwards
         const netWeight = parseFloat(metalInfo.net_wt_after_wastage || 0);
         const rate = rates[metalInfo.quality] || 0;
-        
+
         // Get the fixed values
         const makingCharges = parseFloat(metalInfo.making_charge_amount || 0);
         const hallmarkCharge = parseFloat(metalInfo.hallmark_charge || 0);
         const stoneAmount = parseFloat(metalInfo.stone_amount || 0);
-        
+
         const additionalCharges = parseFloat(hallmarkCharge) + parseFloat(stoneAmount);
         // Calculate base metal amount
         const metalBaseAmount = netWeight * rate;
         // Calculate GST (3% of base amount + making charges)
         const gstPercentage = parseFloat(metalInfo.gst_perc || 0);
         const metalGst = (metalBaseAmount + makingCharges + additionalCharges) * (gstPercentage / 100);
-        
-        // Calculate tax (5% of base amount + making charges)
-        const taxPercentage = 5;
-        const metalTax = (metalBaseAmount + makingCharges) * (taxPercentage / 100);
-        
-        // Stone calculations
-        const stoneGstPercentage = parseFloat(metalInfo.stone_info?.gst_perc || 0);
-        const stoneGst = stoneAmount * (stoneGstPercentage / 100);
-        
+
+        // 1. Stone Weight calculation
+        const stoneWeight = parseFloat(stoneInfo.pieces || 0) * parseFloat(stoneInfo.carat || 0) * 0.2;
+
+        // 2. Stone Amount calculation
+        const stoneBaseAmount = parseFloat(stoneInfo.stone_rate || 0) * stoneWeight;
+
+        // Add GST if present
+        const stoneGst = stoneBaseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
+        const stoneNetAmount = stoneBaseAmount + stoneGst;
+
         // Calculate subtotal
-        const subTotal = metalBaseAmount + metalGst + metalTax + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
+        const subTotal = metalBaseAmount + metalGst + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
 
         return {
-            taxRate: taxPercentage,
-            taxAmount: metalTax,
             subTotal: finalPrice, // Use the final price as subtotal
             totalAmount: finalPrice,
             additionalCharges: additionalCharges,
@@ -157,9 +158,10 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 gst_amount: metalGst,
             },
             stone_calculation: {
-                base_amount: stoneAmount,
-                gst_perc: stoneGstPercentage,
+                gst_perc: stoneInfo.gst_perc,
                 gst_amount: stoneGst,
+                stone_amount: stoneBaseAmount,
+                stone_in_metal: stoneInfo.stone_amount,
             }
         };
     };
@@ -199,33 +201,40 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                             <TableCell align="right">₹{paymentDetails?.metal_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>Additional Charges</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.additionalCharges?.toFixed(2) || '0.00'}</TableCell>
-                        </TableRow>
-                        <TableRow>
                             <TableCell>Making Charges</TableCell>
                             <TableCell align="right">₹{paymentDetails?.metal_calculation?.making_charge_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
+                        {paymentDetails?.stone_calculation?.stone_amount > 0 && ((
+                            <TableRow>
+                                <TableCell>Stone Amount</TableCell>
+                                <TableCell align="right">₹{paymentDetails?.stone_calculation?.stone_amount?.toFixed(2) || '0.00'}</TableCell>
+                            </TableRow>
+                        ) ||
+                            <TableRow>
+                                <TableCell>Stone Amount</TableCell>
+                                <TableCell align="right">₹{paymentDetails?.stone_calculation?.stone_amount?.toFixed(2) || '0.00'}</TableCell>
+                            </TableRow>
+                        )}
+                        <TableRow>
+                            <TableCell>Additional Charges</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.additionalCharges?.toFixed(2) || '0.00'}</TableCell>
+                        </TableRow>
+
                         <TableRow>
                             <TableCell>Metal GST ({paymentDetails?.metal_calculation?.gst_perc}%)</TableCell>
                             <TableCell align="right">₹{paymentDetails?.metal_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell>Metal Tax</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.taxAmount?.toFixed(2) || '0.00'}</TableCell>
-                        </TableRow>
-                        {paymentDetails?.stone_calculation?.base_amount > 0 && (
-                            <>
-                                <TableRow>
-                                    <TableCell>Stone Amount</TableCell>
-                                    <TableCell align="right">₹{paymentDetails?.stone_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Stone GST ({paymentDetails?.stone_calculation?.gst_perc}%)</TableCell>
-                                    <TableCell align="right">₹{paymentDetails?.stone_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
-                                </TableRow>
-                            </>
+                        {paymentDetails?.stone_calculation?.stone_amount > 0 && (
+                            <TableRow>
+                                <TableCell>Stone GST ({paymentDetails?.stone_calculation?.gst_perc}%)</TableCell>
+                                <TableCell align="right">₹{paymentDetails?.stone_calculation?.gst_amount?.toFixed(2) || '0.00'}</TableCell>
+                            </TableRow>
                         )}
+                        {/* toTAL GST AMOUNT */}
+                        <TableRow>
+                            <TableCell>Total GST Amount</TableCell>
+                            <TableCell align="right">₹{((Number(paymentDetails?.metal_calculation?.gst_amount || 0) + Number(paymentDetails?.stone_calculation?.gst_amount || 0))).toFixed(2)}</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
 
