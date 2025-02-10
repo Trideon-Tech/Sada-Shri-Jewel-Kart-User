@@ -86,6 +86,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     useEffect(() => {
         if (!productDetails?.customizations?.variants?.options[0]) return;
 
+        console.log("productDetails", productDetails);
         const metalInfo = productDetails.customizations.variants.options[0].metal_info;
         const stoneInfo = productDetails.customizations.variants.options[0].stone_info;
 
@@ -114,6 +115,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         console.log("productDetails", "productDetails");
         const metalInfo = productDetails?.customizations?.variants?.options[0]?.metal_info || {};
         const stoneInfo = productDetails?.customizations?.variants?.options[0]?.stone_info || {};
+        const wastageAmount = metalInfo.wastage_wt * rates[metalInfo.quality] || 0;
 
         const finalPrice = parseFloat(productDetails?.customizations?.variants?.options[0]?.price || 0);
 
@@ -157,6 +159,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 hallmark_charge: hallmarkCharge,
                 gst_amount: metalGst,
                 wastage: metalInfo.net_wt_after_wastage,
+                wastage_amount: wastageAmount,
             },
             stone_calculation: {
                 gst_perc: stoneInfo.gst_perc,
@@ -208,7 +211,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
                         <TableRow>
                             <TableCell>Wastage</TableCell>
-                            <TableCell align="right">{paymentDetails?.metal_calculation?.wastage?.toFixed(2) || '0.00'} g</TableCell>
+                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.wastage_amount?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
 
                         {paymentDetails?.stone_calculation?.stone_amount > 0 && (
