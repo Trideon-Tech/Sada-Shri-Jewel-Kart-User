@@ -73,7 +73,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         const stoneWeight = parseFloat(stoneInfo.pieces || 0) * parseFloat(stoneInfo.carat || 0) * 0.2;
 
         // 2. Stone Amount calculation
-        const stoneBaseAmount = parseFloat(stoneInfo.stone_rate || 0) * stoneWeight;
+        const stoneBaseAmount = parseFloat(stoneInfo.stone_rate || 0) * parseFloat(stoneInfo.carat || 0);
 
         // Add GST if present
         const stoneGst = stoneBaseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
@@ -139,7 +139,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         const stoneWeight = parseFloat(stoneInfo.pieces || 0) * parseFloat(stoneInfo.carat || 0) * 0.2;
 
         // 2. Stone Amount calculation
-        const stoneBaseAmount = parseFloat(stoneInfo.stone_rate || 0) * stoneWeight;
+        const stoneBaseAmount = parseFloat(stoneInfo.stone_rate || 0) * parseFloat(stoneInfo.carat || 0);
 
         // Add GST if present
         const stoneGst = stoneBaseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
