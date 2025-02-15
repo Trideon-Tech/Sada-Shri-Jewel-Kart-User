@@ -176,8 +176,14 @@ const Cart = () => {
             },
           }
         );
-
-        if (Array.isArray(data?.response)) setCouponList(data?.response);
+        console.log(data?.response);
+        if (Array.isArray(data?.response))
+          setCouponList(
+            data?.response.filter(
+              (c) =>
+                c.is_active === "1" && new Date(c.coupon_validity) > new Date()
+            )
+          );
       } catch (err) {
         console.log("fetching coupons failed ", err);
       }
@@ -195,7 +201,9 @@ const Cart = () => {
       }
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+          `${
+            process.env.REACT_APP_API_URL
+          }/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
             "user_id"
           )}`,
           {
