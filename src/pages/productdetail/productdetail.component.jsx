@@ -10,19 +10,20 @@ import {
   ShoppingCartOutlined,
   StarBorderRounded,
 } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
 import ShareIcon from "@mui/icons-material/Share";
+import ListItem from "@mui/joy/ListItem";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
-import ListItem from "@mui/joy/ListItem";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import Tooltip from '@mui/material/Tooltip';
-import AddIcon from '@mui/icons-material/Add';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Card,
@@ -37,9 +38,6 @@ import {
   Slide,
   Typography,
   useMediaQuery,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -51,8 +49,10 @@ import { generalToastStyle } from "../../utils/toast.styles";
 
 import "./productdetail.styles.scss";
 
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Input } from "@mui/joy";
 import JwelleryCard from "../../components/card/jwellerycard.component";
+import PriceBreakoutDrawer from "../../components/drawers/PriceBreakoutDrawer";
 import Footer from "../../components/footer/footer.component";
 import Navbar from "../../components/navbar/navbar.component";
 import Reviews from "../../components/reviews/reviews.component";
@@ -60,8 +60,6 @@ import { useRefresh } from "../../RefreshContent";
 import ImageVideoCarousel from "./carousal.component";
 import CarouselScheme from "./carousal.scheme";
 import ModalAddCustomization from "./modal.addCustomization.component";
-import PriceBreakoutDrawer from '../../components/drawers/PriceBreakoutDrawer';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -117,17 +115,27 @@ function ProductDetail() {
   const [selectedCouponId, setSelectedCouponId] = useState();
   const [selectedCouponCode, setSelectedCouponCode] = useState();
   const [discountAmount, setDiscountAmount] = useState();
-  const [addCustomizationModalOpen, setAddCustomizationModalOpen] = useState(false);
+  const [addCustomizationModalOpen, setAddCustomizationModalOpen] =
+    useState(false);
   const [makingChargePercentage, setMakingChargePercentage] = useState(0);
   const [isPriceBreakoutOpen, setIsPriceBreakoutOpen] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [city, setCity] = useState(localStorage.getItem("default_city") || "");
-  const [state, setState] = useState(localStorage.getItem("default_state") || "");
-  const [country, setCountry] = useState(localStorage.getItem("default_country") || "");
+  const [state, setState] = useState(
+    localStorage.getItem("default_state") || ""
+  );
+  const [country, setCountry] = useState(
+    localStorage.getItem("default_country") || ""
+  );
 
   useEffect(() => {
     if (productDetail?.customizations?.variants?.options[0]) {
-      setMakingChargePercentage(Math.ceil(productDetail.customizations.variants.options[0]?.metal_info?.making_charge_value));
+      setMakingChargePercentage(
+        Math.ceil(
+          productDetail.customizations.variants.options[0]?.metal_info
+            ?.making_charge_value
+        )
+      );
       setDiscountPercentage(parseFloat(productDetail.discount_perc));
     }
   }, [productDetail]);
@@ -180,7 +188,9 @@ function ProductDetail() {
 
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+        `${
+          process.env.REACT_APP_API_URL
+        }/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -243,10 +253,12 @@ function ProductDetail() {
         if (detail?.images?.length > 0) {
           const fetchedImages = detail.images
             .filter((item) => item.type === "img")
+            .sort((a, b) => a.file.localeCompare(b.file))
             .map(
-            (item) => `${process.env.REACT_APP_API_URL}/assets/${item?.file}`
-          );
-        setImages(fetchedImages);
+              (item) => `${process.env.REACT_APP_API_URL}/assets/${item?.file}`
+            );
+
+          setImages(fetchedImages);
         }
 
         if (detail.video !== "Product Infographics doesn't exist.") {
@@ -259,8 +271,12 @@ function ProductDetail() {
         setProductDetail((_) => detail);
         console.log("detail", detail);
         setDiscountPercentage(parseFloat(detail.discount_perc));
-        setMakingChargePercentage(Math.ceil(detail.customizations?.variants?.options[0]
-          ?.metal_info?.making_charge_value));
+        setMakingChargePercentage(
+          Math.ceil(
+            detail.customizations?.variants?.options[0]?.metal_info
+              ?.making_charge_value
+          )
+        );
         setHasCustomization(detail.hasOwnProperty("customizations"));
         if (detail.hasOwnProperty("customizations")) {
           setCustomizationTypes(detail["customizations"]["fields"]);
@@ -300,7 +316,9 @@ function ProductDetail() {
     if (!token) return;
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
+        `${
+          process.env.REACT_APP_API_URL
+        }/v1.0.0/user/wallet.php?type=wallet&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -381,7 +399,7 @@ function ProductDetail() {
         if (sum && sum?.length > 0)
           setAverageRating(sum?.reduce((a, b) => a + b) / sum.length);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }, [productDetail]);
 
   const handleWishList = async () => {
@@ -515,8 +533,9 @@ function ProductDetail() {
       "Dec",
     ];
 
-    return `${dayOfMonth}${daySuffix(dayOfMonth)} ${monthNames[date.getMonth()]
-      }, ${date.getFullYear()}`;
+    return `${dayOfMonth}${daySuffix(dayOfMonth)} ${
+      monthNames[date.getMonth()]
+    }, ${date.getFullYear()}`;
   };
 
   const getETA = async (pincode, id) => {
@@ -557,15 +576,21 @@ function ProductDetail() {
 
         setCurrentPositionAddresss(address.formatted_address);
         setCurrentPositionPincode(postcodeComponent?.long_name || pincode);
-        setCurrentPositionCity(address.address_components.find((component) =>
-          component.types.includes("locality")
-        )?.long_name || "");
-        setCurrentPositionState(address.address_components.find((component) =>
-          component.types.includes("administrative_area_level_1")
-        )?.long_name || "");
-        setCurrentPositionCountry(address.address_components.find((component) =>
-          component.types.includes("country")
-        )?.long_name || "");
+        setCurrentPositionCity(
+          address.address_components.find((component) =>
+            component.types.includes("locality")
+          )?.long_name || ""
+        );
+        setCurrentPositionState(
+          address.address_components.find((component) =>
+            component.types.includes("administrative_area_level_1")
+          )?.long_name || ""
+        );
+        setCurrentPositionCountry(
+          address.address_components.find((component) =>
+            component.types.includes("country")
+          )?.long_name || ""
+        );
         setETA(() =>
           formatDate(etaResponse.data.response.data.estimated_delivery)
         );
@@ -580,9 +605,12 @@ function ProductDetail() {
 
     if (userId !== -1) {
       navigate(
-        `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${productDetail?.hash
-        }&customization=${productDetail?.customizations?.variants?.options[0]?.id || -1
-        }&discount=${selectedCouponId || 0}&coins=${coinsIsRedeemed ? coinsRedeem : 0
+        `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
+          productDetail?.hash
+        }&customization=${
+          productDetail?.customizations?.variants?.options[0]?.id || -1
+        }&discount=${selectedCouponId || 0}&coins=${
+          coinsIsRedeemed ? coinsRedeem : 0
         }`
       );
     } else {
@@ -815,7 +843,12 @@ function ProductDetail() {
         </ModalOverflow>
       </Modal>
 
-      {addCustomizationModalOpen && <ModalAddCustomization addCustomizationModalOpen={addCustomizationModalOpen} setAddCustomizationModalOpen={setAddCustomizationModalOpen} />}
+      {addCustomizationModalOpen && (
+        <ModalAddCustomization
+          addCustomizationModalOpen={addCustomizationModalOpen}
+          setAddCustomizationModalOpen={setAddCustomizationModalOpen}
+        />
+      )}
       {/* Mobile */}
       <Modal
         open={mobileLocationModalOpen}
@@ -1531,9 +1564,9 @@ function ProductDetail() {
                             const discount =
                               item.amount === "0"
                                 ? (productDetail.customizations?.variants
-                                  ?.options[0]?.price *
-                                  item.percentage) /
-                                100
+                                    ?.options[0]?.price *
+                                    item.percentage) /
+                                  100
                                 : item.amount;
                             setDiscountAmount(discount);
                           }
@@ -1738,32 +1771,33 @@ function ProductDetail() {
       </Drawer>
 
       <div className="web">
-
         <Grid container>
           <Grid item xs={8}>
             <Grid container spacing={1}>
               {productDetail.images &&
-                productDetail.images.map((image, index) => (
-                  <Grid item xs={6} key={image.id}>
-                    <img
-                      src={`${process.env.REACT_APP_API_URL}/assets/${image.file}`}
-                      alt={`Product ${index + 1}`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setSelectedImageIndex(index);
-                        setImageModalOpen(true);
-                      }}
-                    />
-                  </Grid>
-                ))}
+                productDetail.images
+                  .sort((a, b) => a.file.localeCompare(b.file))
+                  .map((image, index) => (
+                    <Grid item xs={6} key={image.id}>
+                      <img
+                        src={`${process.env.REACT_APP_API_URL}/assets/${image.file}`}
+                        alt={`Product ${index + 1}`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          setSelectedImageIndex(index);
+                          setImageModalOpen(true);
+                        }}
+                      />
+                    </Grid>
+                  ))}
               {productDetail.video &&
                 productDetail.video !==
-                "Product Infographics doesn't exist." && (
+                  "Product Infographics doesn't exist." && (
                   <Grid item xs={6}>
                     <video
                       controls
@@ -1829,17 +1863,15 @@ function ProductDetail() {
                     ))}
                     {productDetail.video &&
                       productDetail.video !==
-                      "Product Infographics doesn't exist." && (
+                        "Product Infographics doesn't exist." && (
                         <Box
                           onClick={() =>
-                            setSelectedImageIndex(
-                              productDetail.images?.length
-                            )
+                            setSelectedImageIndex(productDetail.images?.length)
                           }
                           sx={{
                             border:
                               selectedImageIndex ===
-                                productDetail.images?.length
+                              productDetail.images?.length
                                 ? "2px solid #E0B872"
                                 : "2px solid transparent",
                             cursor: "pointer",
@@ -2059,7 +2091,7 @@ function ProductDetail() {
                 ₹
                 {parseFloat(
                   productDetail?.customizations?.variants?.options[0]?.price *
-                  ((discountPercentage + 100) / 100)
+                    ((discountPercentage + 100) / 100)
                 ).toFixed(2)}
               </Typography>
               <Typography
@@ -2195,9 +2227,15 @@ function ProductDetail() {
                 </div>
               </div>
             </div>
-            {productDetail.customizations?.variants?.options[0]
-              ?.metal_info?.metal_type?.toLowerCase() !== "silver" &&
-              <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+            {productDetail.customizations?.variants?.options[0]?.metal_info?.metal_type?.toLowerCase() !==
+              "silver" && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
                 <Button
                   style={{
                     fontSize: "0.8rem",
@@ -2221,7 +2259,7 @@ function ProductDetail() {
                   Add Customization
                 </Button>
               </div>
-            }
+            )}
             {productDetail.admin_verified == 1 ? (
               <>
                 <div
@@ -2318,7 +2356,7 @@ function ProductDetail() {
                 flexDirection: "column",
                 gap: 2,
                 marginRight: "6vh",
-                marginTop: "20px"
+                marginTop: "20px",
               }}
             >
               <Typography
@@ -2336,27 +2374,30 @@ function ProductDetail() {
                 {/* Create image carousel for the schemes */}
                 <CarouselScheme />
               </Box>
-
             </Box>
 
-            <div style={{
-              width: "25.3rem",
-              marginTop: "20px",
-              paddingRight: "1rem",
-              borderRadius: "10px",
-              fontFamily: '"Roboto", sans-serif',
-              border: "1px solid #e1e1e1",
-              boxShadow: "0px 0px 5px 0px #a36e29",
-              marginBottom: "0.5rem",
-            }}>
-              <div style={{
-                width: "24.3rem",
-                marginTop: "0.5rem",
+            <div
+              style={{
+                width: "25.3rem",
+                marginTop: "20px",
+                paddingRight: "1rem",
                 borderRadius: "10px",
-                padding: "10px 10px",
                 fontFamily: '"Roboto", sans-serif',
-                marginBottom: "1rem",
-              }}>
+                border: "1px solid #e1e1e1",
+                boxShadow: "0px 0px 5px 0px #a36e29",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <div
+                style={{
+                  width: "24.3rem",
+                  marginTop: "0.5rem",
+                  borderRadius: "10px",
+                  padding: "10px 10px",
+                  fontFamily: '"Roboto", sans-serif',
+                  marginBottom: "1rem",
+                }}
+              >
                 <Typography
                   style={{
                     fontFamily: '"Roboto", sans-serif',
@@ -2369,17 +2410,23 @@ function ProductDetail() {
                 </Typography>
 
                 <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
-
-                  At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
+                  At SadāShrī Jewelkart, we are committed to delivering timeless
+                  elegance and unmatched quality. Our promise is to offer
+                  authentic, certified jewelry and exceptional customer service,
+                  ensuring every purchase brings joy and trust. From carefully
+                  sourced gemstones to exquisite craftsmanship, we strive to
+                  make every moment precious for you.
                 </Typography>
               </div>
-              <div style={{
-                marginTop: "0.5rem",
-                borderRadius: "10px",
-                padding: "10px 10px",
-                fontFamily: '"Roboto", sans-serif',
-                width: "26.3rem",
-              }}>
+              <div
+                style={{
+                  marginTop: "0.5rem",
+                  borderRadius: "10px",
+                  padding: "10px 10px",
+                  fontFamily: '"Roboto", sans-serif',
+                  width: "26.3rem",
+                }}
+              >
                 <Grid
                   container
                   xs={11.3}
@@ -2387,7 +2434,7 @@ function ProductDetail() {
                   sx={{
                     marginTop: "0.5rem",
                     marginBottom: "10px",
-                    justifyContent: "flex-start"
+                    justifyContent: "flex-start",
                   }}
                 >
                   <Grid
@@ -2494,24 +2541,27 @@ function ProductDetail() {
               </div>
             </div>
 
-            <div style={{
-              width: "25.3rem",
-              marginTop: "1rem",
-              paddingRight: "1rem",
-              borderRadius: "10px",
-              fontFamily: '"Roboto", sans-serif',
-              border: "1px solid #e1e1e1",
-              boxShadow: "0px 0px 5px 0px #a36e29",
-              marginBottom: "1rem",
-            }}>
-              <div style={{
-                marginTop: "0.5rem",
+            <div
+              style={{
+                width: "25.3rem",
+                marginTop: "1rem",
+                paddingRight: "1rem",
                 borderRadius: "10px",
-                padding: "10px 10px",
                 fontFamily: '"Roboto", sans-serif',
-                width: "26.3rem",
-              }}>
-
+                border: "1px solid #e1e1e1",
+                boxShadow: "0px 0px 5px 0px #a36e29",
+                marginBottom: "1rem",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: "0.5rem",
+                  borderRadius: "10px",
+                  padding: "10px 10px",
+                  fontFamily: '"Roboto", sans-serif',
+                  width: "26.3rem",
+                }}
+              >
                 {/* Verify Product Credentials */}
 
                 <Typography
@@ -2688,7 +2738,7 @@ function ProductDetail() {
                   }}
                   onClick={() => setIsPriceBreakoutOpen(true)}
                 >
-                  <AddIcon />  Price Breakup
+                  <AddIcon /> Price Breakup
                 </Typography>
               </div>
 
@@ -2839,10 +2889,10 @@ function ProductDetail() {
                             fontWeight: "bold",
                           }}
                         >
-                          {
-                            parseFloat(productDetail.customizations?.variants?.options[0]
-                              ?.metal_info?.net_wt_after_wastage).toFixed(2)
-                          }{" "}
+                          {parseFloat(
+                            productDetail.customizations?.variants?.options[0]
+                              ?.metal_info?.net_wt_after_wastage
+                          ).toFixed(2)}{" "}
                           g
                         </div>
                       </Typography>
@@ -2857,9 +2907,7 @@ function ProductDetail() {
                             fontWeight: "bold",
                           }}
                         >
-                          {
-                            makingChargePercentage
-                          }%
+                          {makingChargePercentage}%
                         </div>
                       </Typography>
                     </Grid>
@@ -2939,7 +2987,8 @@ function ProductDetail() {
                 </AccordionDetails>
               </Accordion>
 
-              {productDetail.customizations?.variants?.options[0]?.stone_info?.stone_type && (
+              {productDetail.customizations?.variants?.options[0]?.stone_info
+                ?.stone_type && (
                 <Accordion
                   sx={{
                     marginTop: "20px",
@@ -2953,14 +3002,18 @@ function ProductDetail() {
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                   >
-                    <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                    <Typography
+                      style={{ fontSize: "1rem", fontWeight: "bold" }}
+                    >
                       Stone Details
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid container spacing={2} style={{ marginTop: "8px" }}>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Stone Type
                           <div
                             style={{
@@ -2977,7 +3030,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Clarity
                           <div
                             style={{
@@ -2994,7 +3049,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Color
                           <div
                             style={{
@@ -3011,7 +3068,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Pieces
                           <div
                             style={{
@@ -3028,7 +3087,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Cut
                           <div
                             style={{
@@ -3045,7 +3106,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Carat
                           <div
                             style={{
@@ -3062,7 +3125,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Stone Weight
                           <div
                             style={{
@@ -3080,7 +3145,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           Stone Rate
                           <div
                             style={{
@@ -3098,7 +3165,9 @@ function ProductDetail() {
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
-                        <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                        <Typography
+                          style={{ fontSize: "0.8rem", color: "grey" }}
+                        >
                           GST
                           <div
                             style={{
@@ -3120,10 +3189,8 @@ function ProductDetail() {
                 </Accordion>
               )}
             </div>
-
           </Grid>
         </Grid>
-
 
         {productDetail.recommended && productDetail.recommended.length > 0 && (
           <div className="container-similar">
@@ -3308,12 +3375,16 @@ function ProductDetail() {
                 </Typography>
                 <Typography className="original-price">
                   ₹
-                  {(
-                    parseFloat(productDetail?.customizations?.variants?.options[0]?.price *
-                      (discountPercentage + 100) / 100)
+                  {parseFloat(
+                    (productDetail?.customizations?.variants?.options[0]
+                      ?.price *
+                      (discountPercentage + 100)) /
+                      100
                   ).toFixed(2)}
                 </Typography>
-                <Typography className="discount">({discountPercentage}% OFF)</Typography>
+                <Typography className="discount">
+                  ({discountPercentage}% OFF)
+                </Typography>
               </div>
               <Typography
                 style={{
@@ -3410,9 +3481,16 @@ function ProductDetail() {
                   </div>
                 </div>
               </div>
-              {productDetail.customizations?.variants?.options[0]
-                ?.metal_info?.metal_type?.toLowerCase() !== "silver" &&
-                <div xs={12} style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+              {productDetail.customizations?.variants?.options[0]?.metal_info?.metal_type?.toLowerCase() !==
+                "silver" && (
+                <div
+                  xs={12}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                  }}
+                >
                   <Button
                     style={{
                       fontSize: "0.8rem",
@@ -3433,7 +3511,7 @@ function ProductDetail() {
                     Add Customization
                   </Button>
                 </div>
-              }
+              )}
               {productDetail.admin_verified == 1 ? (
                 <>
                   <div
@@ -3548,20 +3626,24 @@ function ProductDetail() {
                 </Box>
               </Box>
 
-              <div style={{
-                marginTop: "0.5rem",
-                borderRadius: "10px",
-                padding: "10px 20px",
-                fontFamily: '"Roboto", sans-serif',
-                border: "1px solid #e1e1e1",
-                boxShadow: "0px 0px 5px 0px #a36e29",
-              }}>
-                <div style={{
+              <div
+                style={{
                   marginTop: "0.5rem",
                   borderRadius: "10px",
                   padding: "10px 20px",
                   fontFamily: '"Roboto", sans-serif',
-                }}>
+                  border: "1px solid #e1e1e1",
+                  boxShadow: "0px 0px 5px 0px #a36e29",
+                }}
+              >
+                <div
+                  style={{
+                    marginTop: "0.5rem",
+                    borderRadius: "10px",
+                    padding: "10px 20px",
+                    fontFamily: '"Roboto", sans-serif',
+                  }}
+                >
                   <Typography
                     style={{
                       fontFamily: '"Roboto", sans-serif',
@@ -3573,20 +3655,29 @@ function ProductDetail() {
                     SadāShrī Jewelkart Promise:
                   </Typography>
 
-                  <Typography style={{
-                    fontSize: "0.8rem",
-                    color: "grey",
-                    lineHeight: "1.5"
-                  }}>
-                    At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
+                  <Typography
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "grey",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    At SadāShrī Jewelkart, we are committed to delivering
+                    timeless elegance and unmatched quality. Our promise is to
+                    offer authentic, certified jewelry and exceptional customer
+                    service, ensuring every purchase brings joy and trust. From
+                    carefully sourced gemstones to exquisite craftsmanship, we
+                    strive to make every moment precious for you.
                   </Typography>
                 </div>
-                <div style={{
-                  marginTop: "0.5rem",
-                  borderRadius: "10px",
-                  padding: "10px 10px",
-                  fontFamily: '"Roboto", sans-serif'
-                }}>
+                <div
+                  style={{
+                    marginTop: "0.5rem",
+                    borderRadius: "10px",
+                    padding: "10px 10px",
+                    fontFamily: '"Roboto", sans-serif',
+                  }}
+                >
                   <Grid
                     container
                     spacing={1}
@@ -3701,25 +3792,29 @@ function ProductDetail() {
                   </Grid>
                 </div>
               </div>
-              <div style={{
-                marginTop: "0.5rem",
-                borderRadius: "10px",
-                padding: "10px 20px",
-                fontFamily: '"Roboto", sans-serif',
-                border: "1px solid #e1e1e1",
-                boxShadow: "0px 0px 5px 0px #a36e29",
-              }}>
-                <div style={{
+              <div
+                style={{
                   marginTop: "0.5rem",
                   borderRadius: "10px",
-                  padding: "10px 10px",
-                  fontFamily: '"Roboto", sans-serif'
-                }}>
+                  padding: "10px 20px",
+                  fontFamily: '"Roboto", sans-serif',
+                  border: "1px solid #e1e1e1",
+                  boxShadow: "0px 0px 5px 0px #a36e29",
+                }}
+              >
+                <div
+                  style={{
+                    marginTop: "0.5rem",
+                    borderRadius: "10px",
+                    padding: "10px 10px",
+                    fontFamily: '"Roboto", sans-serif',
+                  }}
+                >
                   <Typography
                     style={{
                       fontFamily: '"Roboto", sans-serif',
                       fontSize: "1rem",
-                      fontWeight: "600"
+                      fontWeight: "600",
                     }}
                   >
                     Verify Product Credentials
@@ -3799,7 +3894,6 @@ function ProductDetail() {
                 </div>
               </div>
 
-
               <Grid container spacing={3}>
                 <Grid item xs={11} className="location-grid">
                   <Typography
@@ -3865,8 +3959,16 @@ function ProductDetail() {
                     width: "85vw",
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div style={{ fontSize: "1rem", fontWeight: "bold", marginTop: "0.5rem" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                        marginTop: "0.5rem",
+                      }}
+                    >
                       Product Description
                     </div>
                     <Typography
@@ -3880,7 +3982,10 @@ function ProductDetail() {
                       }}
                       onClick={() => setIsPriceBreakoutOpen(true)}
                     >
-                      <AddIcon style={{ fontSize: "1rem", marginTop: "0.2rem" }} /> Price Breakup
+                      <AddIcon
+                        style={{ fontSize: "1rem", marginTop: "0.2rem" }}
+                      />{" "}
+                      Price Breakup
                     </Typography>
                   </div>
 
@@ -3907,14 +4012,18 @@ function ProductDetail() {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      <Typography
+                        style={{ fontSize: "1rem", fontWeight: "bold" }}
+                      >
                         Metal Details
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Grid container spacing={2} style={{ marginTop: "8px" }}>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Gross Weight
                             <div
                               style={{
@@ -3924,15 +4033,17 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.gross_wt
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.gross_wt
                               }{" "}
                               g
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Net Weight
                             <div
                               style={{
@@ -3942,15 +4053,17 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.net_wt
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.net_wt
                               }{" "}
                               g
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Stone Weight
                             <div
                               style={{
@@ -3960,15 +4073,17 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.stone_wt
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.stone_wt
                               }{" "}
                               g
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Metal
                             <div
                               style={{
@@ -3979,14 +4094,16 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.metal
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.metal
                               }
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Purity
                             <div
                               style={{
@@ -3996,14 +4113,16 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.display_name
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.display_name
                               }
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Wastage
                             <div
                               style={{
@@ -4013,15 +4132,17 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.wastage_prec
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.wastage_prec
                               }
                               %
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Net Weight After Wastage
                             <div
                               style={{
@@ -4030,16 +4151,18 @@ function ProductDetail() {
                                 fontWeight: "bold",
                               }}
                             >
-                              {
-                                parseFloat(productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.net_wt_after_wastage).toFixed(2)
-                              }{" "}
+                              {parseFloat(
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.net_wt_after_wastage
+                              ).toFixed(2)}{" "}
                               g
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Making Charge
                             <div
                               style={{
@@ -4048,14 +4171,14 @@ function ProductDetail() {
                                 fontWeight: "bold",
                               }}
                             >
-                              {
-                                makingChargePercentage
-                              }%
+                              {makingChargePercentage}%
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Stone Amount
                             <div
                               style={{
@@ -4066,14 +4189,16 @@ function ProductDetail() {
                             >
                               ₹
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.stone_amount
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.stone_amount
                               }
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Hallmark Charge
                             <div
                               style={{
@@ -4084,14 +4209,16 @@ function ProductDetail() {
                             >
                               ₹
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.hallmark_charge
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.hallmark_charge
                               }
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             Rodium Charge
                             <div
                               style={{
@@ -4102,14 +4229,16 @@ function ProductDetail() {
                             >
                               ₹
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.rodium_charge
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.rodium_charge
                               }
                             </div>
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                          <Typography
+                            style={{ fontSize: "0.8rem", color: "grey" }}
+                          >
                             GST
                             <div
                               style={{
@@ -4119,8 +4248,8 @@ function ProductDetail() {
                               }}
                             >
                               {
-                                productDetail.customizations?.variants?.options[0]
-                                  ?.metal_info?.gst_perc
+                                productDetail.customizations?.variants
+                                  ?.options[0]?.metal_info?.gst_perc
                               }
                               %
                             </div>
@@ -4130,7 +4259,8 @@ function ProductDetail() {
                     </AccordionDetails>
                   </Accordion>
 
-                  {productDetail.customizations?.variants?.options[0]?.stone_info?.stone_type && (
+                  {productDetail.customizations?.variants?.options[0]
+                    ?.stone_info?.stone_type && (
                     <Accordion
                       sx={{
                         marginTop: "20px",
@@ -4144,14 +4274,22 @@ function ProductDetail() {
                         aria-controls="panel2a-content"
                         id="panel2a-header"
                       >
-                        <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                        <Typography
+                          style={{ fontSize: "1rem", fontWeight: "bold" }}
+                        >
                           Stone Details
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Grid container spacing={2} style={{ marginTop: "8px" }}>
+                        <Grid
+                          container
+                          spacing={2}
+                          style={{ marginTop: "8px" }}
+                        >
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Stone Type
                               <div
                                 style={{
@@ -4161,14 +4299,16 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.stone_type
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.stone_type
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Clarity
                               <div
                                 style={{
@@ -4178,14 +4318,16 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.clarity
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.clarity
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Color
                               <div
                                 style={{
@@ -4195,14 +4337,16 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.color
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.color
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Pieces
                               <div
                                 style={{
@@ -4212,14 +4356,16 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.pieces
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.pieces
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Cut
                               <div
                                 style={{
@@ -4229,14 +4375,16 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.cut
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.cut
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Carat
                               <div
                                 style={{
@@ -4246,14 +4394,16 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.carat
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.carat
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Stone Weight
                               <div
                                 style={{
@@ -4263,15 +4413,17 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.stone_wt
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.stone_wt
                                 }{" "}
                                 g
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               Stone Rate
                               <div
                                 style={{
@@ -4282,14 +4434,16 @@ function ProductDetail() {
                               >
                                 ₹
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.stone_rate
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.stone_rate
                                 }
                               </div>
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
+                            <Typography
+                              style={{ fontSize: "0.8rem", color: "grey" }}
+                            >
                               GST
                               <div
                                 style={{
@@ -4299,8 +4453,8 @@ function ProductDetail() {
                                 }}
                               >
                                 {
-                                  productDetail.customizations?.variants?.options[0]
-                                    ?.stone_info?.gst_perc
+                                  productDetail.customizations?.variants
+                                    ?.options[0]?.stone_info?.gst_perc
                                 }
                                 %
                               </div>
