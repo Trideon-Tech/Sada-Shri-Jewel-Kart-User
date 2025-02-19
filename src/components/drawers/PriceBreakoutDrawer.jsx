@@ -7,6 +7,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [subtotal, setSubtotal] = useState(0);
     const [metalPrice, setMetalPrice] = useState(0);
     const [stonePrice, setStonePrice] = useState(0);
+    const [metalBaseAmount, setMetalBaseAmount] = useState(0);
     const [rates, setRates] = useState({});
     const [paymentDetails, setPaymentDetails] = useState(null);
 
@@ -24,6 +25,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
     // Function to calculate metal price
     const calculateMetalPrice = (metalInfo) => {
+        console.log("metalInfo", "rates", metalInfo, rates)
         if (!metalInfo || !rates) return 0;
 
         // Calculate net weight
@@ -56,6 +58,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 parseFloat(metalInfo.stone_amount || 0) +
                 parseFloat(metalInfo.hallmark_charge || 0) +
                 parseFloat(metalInfo.rodium_charge || 0);
+            setMetalBaseAmount(baseAmount);
         }
 
         // Add GST if present
@@ -104,6 +107,19 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         setSubtotal(calculatedMetalPrice + calculatedStonePrice);
 
     }, [productDetails, rates]);
+
+    // Add this useEffect to initialize values when the component mounts
+    useEffect(() => {
+        if (productDetails) {
+            const metalInfo = productDetails.customizations?.variants?.options[0]?.metal_info;
+            const stoneInfo = productDetails.customizations?.variants?.options[0]?.stone_info;
+
+            // Calculate and set initial prices
+            setMetalPrice(calculateMetalPrice(metalInfo));
+            setStonePrice(calculateStonePrice(stoneInfo));
+            setSubtotal(calculateMetalPrice(metalInfo) + calculateStonePrice(stoneInfo));
+        }
+    }, []); // Run only once on mount
 
     // Safely get the metal rate
     const getMetalRate = () => {
@@ -202,7 +218,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                     <TableBody>
                         <TableRow>
                             <TableCell>Metal Base Amount</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.base_amount?.toFixed(2) || '0.00'}</TableCell>
+                            <TableCell align="right">₹{metalBaseAmount.toFixed(2)}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>Making Charges</TableCell>
