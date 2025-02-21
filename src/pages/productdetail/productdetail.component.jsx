@@ -215,11 +215,11 @@ function ProductDetail() {
     const container = scrollRef.current;
     const container1 = scrollRef1.current;
     if (container) {
-      const scrollAmount = direction === 1 ? container.scrollWidth / 3 : -container.scrollWidth / 3; // Adjust scroll amount as needed
+      const scrollAmount = direction === 1 ? container.scrollWidth / 12 : -container.scrollWidth / 12; // Adjusted scroll amount
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
     if (container1) {
-      const scrollAmount = direction === 1 ? container1.scrollWidth / 3 : -container1.scrollWidth / 3; // Adjust scroll amount as needed
+      const scrollAmount = direction === 1 ? container1.scrollWidth / 18 : -container1.scrollWidth / 18; // Increased scroll amount for better visibility
       container1.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
@@ -3849,7 +3849,7 @@ function ProductDetail() {
                     xs={12}
                     sx={{
                       display: "flex",
-                      marginRight: "10vh",
+                      marginRight: "12vh",
                       marginTop: "0.5rem",
                       marginBottom: "0.5rem",
                     }}
@@ -4045,9 +4045,7 @@ function ProductDetail() {
                     <AccordionDetails>
                       <Grid container spacing={2} style={{ marginTop: "8px" }}>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Gross Weight
                             <div
                               style={{
@@ -4065,9 +4063,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Net Weight
                             <div
                               style={{
@@ -4085,9 +4081,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Stone Weight
                             <div
                               style={{
@@ -4105,9 +4099,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Metal
                             <div
                               style={{
@@ -4125,9 +4117,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Purity
                             <div
                               style={{
@@ -4144,9 +4134,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Wastage
                             <div
                               style={{
@@ -4164,9 +4152,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Net Weight After Wastage
                             <div
                               style={{
@@ -4184,9 +4170,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Making Charge
                             <div
                               style={{
@@ -4200,9 +4184,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Stone Amount
                             <div
                               style={{
@@ -4220,9 +4202,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Hallmark Charge
                             <div
                               style={{
@@ -4240,9 +4220,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             Rodium Charge
                             <div
                               style={{
@@ -4260,9 +4238,7 @@ function ProductDetail() {
                           </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                          <Typography
-                            style={{ fontSize: "0.8rem", color: "grey" }}
-                          >
+                          <Typography style={{ fontSize: "0.8rem", color: "grey" }}>
                             GST
                             <div
                               style={{

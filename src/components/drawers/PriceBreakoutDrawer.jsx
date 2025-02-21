@@ -55,17 +55,15 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
             }
 
             // Add additional charges
-            baseAmount += parseFloat(metalInfo.making_charge_amount || 0) +
-                parseFloat(metalInfo.stone_amount || 0) +
-                parseFloat(metalInfo.hallmark_charge || 0) +
-                parseFloat(metalInfo.rodium_charge || 0);
+            baseAmount += 
+                parseFloat(metalInfo.stone_amount || 0);
             setMetalBaseAmount(baseAmount);
         }
 
         // Add GST if present
-        const gstAmount = baseAmount * (parseFloat(metalInfo.gst_perc || 0) / 100);
-        const totalAmount = baseAmount + gstAmount + parseFloat(metalInfo.making_charge_amount || 0);
-        setTotalAmount(totalAmount);
+        const totalAmount = baseAmount + parseFloat(metalInfo.making_charge_amount || 0) +
+            parseFloat(metalInfo.hallmark_charge || 0) +
+            parseFloat(metalInfo.rodium_charge || 0);
         return Number(totalAmount.toFixed(2));
     };
 
@@ -163,6 +161,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Calculate subtotal
         const subTotal = metalBaseAmount + metalGst + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
+        console.log(metalBaseAmount, metalGst, makingCharges, hallmarkCharge, stoneAmount, stoneGst)
         setTotalAmount(subTotal);
         return {
             subTotal: subTotal, // Use the final price as subtotal
