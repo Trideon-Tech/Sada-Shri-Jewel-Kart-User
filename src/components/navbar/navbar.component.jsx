@@ -804,7 +804,7 @@ const Navbar = () => {
           onClose={() => setOpenDrawer(false)}
           PaperProps={{
             sx: {
-              width: "100%",
+              width: "90%",
               height: "100%",
             },
           }}

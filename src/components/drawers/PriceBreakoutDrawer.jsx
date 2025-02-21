@@ -10,6 +10,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [metalBaseAmount, setMetalBaseAmount] = useState(0);
     const [rates, setRates] = useState({});
     const [paymentDetails, setPaymentDetails] = useState(null);
+    const [totalAmount, setTotalAmount] = useState(null);
 
     // Fetch rates when component mounts
     useEffect(() => {
@@ -63,8 +64,8 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Add GST if present
         const gstAmount = baseAmount * (parseFloat(metalInfo.gst_perc || 0) / 100);
-        const totalAmount = baseAmount + gstAmount;
-
+        const totalAmount = baseAmount + gstAmount + parseFloat(metalInfo.making_charge_amount || 0);
+        setTotalAmount(totalAmount);
         return Number(totalAmount.toFixed(2));
     };
 
@@ -128,7 +129,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     };
 
     const calculatePaymentDetails = (productDetails) => {
-        console.log("productDetails", "productDetails");
         const metalInfo = productDetails?.customizations?.variants?.options[0]?.metal_info || {};
         const stoneInfo = productDetails?.customizations?.variants?.options[0]?.stone_info || {};
         const wastageAmount = metalInfo.wastage_wt * rates[metalInfo.quality] || 0;
@@ -163,9 +163,9 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Calculate subtotal
         const subTotal = metalBaseAmount + metalGst + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
-
+        setTotalAmount(subTotal);
         return {
-            subTotal: finalPrice, // Use the final price as subtotal
+            subTotal: subTotal, // Use the final price as subtotal
             totalAmount: finalPrice,
             additionalCharges: additionalCharges,
             metal_calculation: {
@@ -196,7 +196,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
             open={open}
             onClose={onClose}
             PaperProps={{
-                sx: { width: { xs: '100%', sm: '500px' } }
+                sx: { width: { xs: '90%', sm: '500px' } }
             }}
         >
             <Box sx={{ p: 3 }}>
@@ -238,7 +238,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                                 </TableRow>
                                 {/* Stone Details */}
                                 <TableRow>
-                                    <TableCell colSpan={2} sx={{ pl: 4}}>
+                                    <TableCell colSpan={2} sx={{ pl: 4 }}>
                                         <Box sx={{ pl: 2 }}>
                                             <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
                                                 <span>Pieces</span>
@@ -250,9 +250,9 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                                             </Typography>
                                             <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
                                                 <span>Weight (Pieces * Carat * 0.2)</span>
-                                                <span>{((productDetails?.customizations?.variants?.options[0]?.stone_info?.carat || 0) * 
-                                                        (productDetails?.customizations?.variants?.options[0]?.stone_info?.pieces || 0) * 
-                                                        0.2).toFixed(2)} g</span>
+                                                <span>{((productDetails?.customizations?.variants?.options[0]?.stone_info?.carat || 0) *
+                                                    (productDetails?.customizations?.variants?.options[0]?.stone_info?.pieces || 0) *
+                                                    0.2).toFixed(2)} g</span>
                                             </Typography>
                                             <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', justifyContent: 'space-between', pb: 1 }}>
                                                 <span>Rate</span>
@@ -281,7 +281,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 <Box sx={{ mt: 3, pt: 2 }}>
                     <Typography sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
                         <span>Total Amount</span>
-                        <span>₹{paymentDetails?.totalAmount?.toFixed(2) || '0.00'}</span>
+                        <span>₹{totalAmount?.toFixed(2) || '0.00'}</span>
                     </Typography>
                 </Box>
             </Box>
