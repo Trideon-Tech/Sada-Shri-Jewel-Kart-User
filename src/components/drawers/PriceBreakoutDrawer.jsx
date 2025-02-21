@@ -26,7 +26,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
     // Function to calculate metal price
     const calculateMetalPrice = (metalInfo) => {
-        console.log("metalInfo", "rates", metalInfo, rates)
         if (!metalInfo || !rates) return 0;
 
         // Calculate net weight
@@ -64,6 +63,15 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         const totalAmount = baseAmount + parseFloat(metalInfo.making_charge_amount || 0) +
             parseFloat(metalInfo.hallmark_charge || 0) +
             parseFloat(metalInfo.rodium_charge || 0);
+
+        // Calculate GST (3% of base amount + making charges)
+        const gstPercentage = parseFloat(metalInfo.gst_perc || 0);
+        const metalGst = (totalAmount) * (gstPercentage / 100);
+
+        console.log(metalGst, totalAmount)
+        setTotalAmount(metalGst + totalAmount);
+
+            // setTotalAmount()
         return Number(totalAmount.toFixed(2));
     };
 
@@ -88,7 +96,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     useEffect(() => {
         if (!productDetails?.customizations?.variants?.options[0]) return;
 
-        console.log("productDetails", productDetails);
         const metalInfo = productDetails.customizations.variants.options[0].metal_info;
         const stoneInfo = productDetails.customizations.variants.options[0].stone_info;
 
@@ -99,8 +106,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         // Calculate stone price
         const calculatedStonePrice = calculateStonePrice(stoneInfo);
         setStonePrice(calculatedStonePrice);
-        console.log(calculatedStonePrice, "calculatedStonePrice");
-        console.log(calculatedMetalPrice, "calculatedMetalPrice");
 
         // Set total
         setSubtotal(calculatedMetalPrice + calculatedStonePrice);
@@ -161,7 +166,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Calculate subtotal
         const subTotal = metalBaseAmount + metalGst + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
-        console.log(metalBaseAmount, metalGst, makingCharges, hallmarkCharge, stoneAmount, stoneGst)
+        console.log("metalinfo 2", metalBaseAmount, metalGst, makingCharges, hallmarkCharge, stoneAmount, stoneGst)
         setTotalAmount(subTotal);
         return {
             subTotal: subTotal, // Use the final price as subtotal
