@@ -37,6 +37,8 @@ function Productpage() {
   const [clearAll, setClearAll] = useState(false);
   const navigate = useNavigate();
   const [selectedPriceRange, setSelectedPriceRange] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
 
   const images = [
     {
@@ -127,50 +129,82 @@ function Productpage() {
   };
   const [selectedSort, setSelectedSort] = useState("Review | Top");
 
-  const handleFetchFilteredData = async () => {
+  const handleFetchFilteredData = async (page = 1) => {
+    if (isFetching) return;
+    setIsFetching(true);
+    console.log("current page", page);
+    
     if (isSearchPage) {
-      // Call search API if on search page
-      const searchEndpoint = `${process.env.REACT_APP_API_URL}/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
-      const response = await axios.get(searchEndpoint);
-      setJwellery(response?.data?.response);
-      setFilteredJwellery(response?.data?.response);
-      setProductsLoaded(true);
+        // Call search API if on search page
+        const searchEndpoint = `${process.env.REACT_APP_API_URL}/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
+        const response = await axios.get(searchEndpoint);
+        setJwellery(response?.data?.response);
+        setFilteredJwellery(response?.data?.response);
+        setProductsLoaded(true);
     } else if (menuItemId) {
-      // Call products API for category pages
-      const params = {};
-      params.user_id = localStorage.getItem("user_id") || -1;
+        // Call products API for category pages
+        const params = {};
+        params.user_id = localStorage.getItem("user_id") || -1;
 
-      if (selectedSort !== "Featured" && selectedSort)
-        params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
+        if (selectedSort !== "Featured" && selectedSort)
+            params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
 
-      let apiUrl;
-      if (isSubCategory !== "false") {
-        // If it's a subcategory
-        apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
-      } else {
-        // If it's a main category
-        apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}`;
-      }
+        let apiUrl;
+        if (isSubCategory !== "false") {
+            // If it's a subcategory
+            apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
+        } else {
+            // If it's a main category
+            apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}&page=${page}`;
+        }
 
-      const response = await axios.get(apiUrl, { params });
-      setJwellery(response?.data?.response);
-      setFilteredJwellery(response?.data?.response);
-      setProductsLoaded(true);
+        const response = await axios.get(apiUrl, { params });
+        
+        // Check if there are no more products to fetch
+        console.log(response.data.response);
+        if (response?.data?.response.length === 0) {
+          console.log("set is fetching");
+            setIsFetching(true); // Stop fetching
+            return; // Exit the function
+        }
+
+        setJwellery((prevJwellery) => [...prevJwellery, ...response?.data?.response]);
+        setFilteredJwellery((prevFiltered) => [...prevFiltered, ...response?.data?.response]);
+        setProductsLoaded(true);
     }
+    setIsFetching(false);
+  };
+
+  let isThrottled = false; // Throttle flag
+
+  const handleScroll = () => {
+    const isAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 5; // Allow a small threshold
+    if (!isAtBottom || isFetching || isThrottled) return;
+
+    isThrottled = true; // Set throttle flag
+    console.log("page number updated from " + currentPage);
+    setCurrentPage((prevPage) => prevPage + 1);
+
+    // Reset throttle flag after a delay
+    setTimeout(() => {
+      isThrottled = false;
+    }, 1000); // Adjust the delay as needed
   };
 
   useEffect(() => {
-    (async () => {
-      await handleFetchFilteredData();
-    })();
-  }, [
-    refresh,
-    menuItemId,
-    isSubCategory,
-    selectedSort,
-    searchTerm,
-    isSearchPage,
-  ]);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await handleFetchFilteredData(currentPage);
+    };
+
+    const debounceFetch = setTimeout(fetchData, 300); // Debounce for 300ms
+
+    return () => clearTimeout(debounceFetch); // Cleanup on unmount or dependency change
+  }, [currentPage, refresh, menuItemId, isSubCategory, selectedSort, searchTerm, isSearchPage]);
 
   useEffect(() => {
     if (selectedPriceRange.length > 0) {

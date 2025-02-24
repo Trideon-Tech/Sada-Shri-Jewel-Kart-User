@@ -11,7 +11,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [rates, setRates] = useState({});
     const [paymentDetails, setPaymentDetails] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
-    const [totalGST, setTotalGST] = useState(null);
+    const [totalGST, setTotalGST] = useState(0);
 
     // Fetch rates when component mounts
     useEffect(() => {
