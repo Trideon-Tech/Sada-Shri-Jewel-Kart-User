@@ -11,6 +11,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [rates, setRates] = useState({});
     const [paymentDetails, setPaymentDetails] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
+    const [totalGST, setTotalGST] = useState(null);
 
     // Fetch rates when component mounts
     useEffect(() => {
@@ -166,7 +167,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Calculate subtotal
         const subTotal = metalBaseAmount + metalGst + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
-        console.log("metalinfo 2", metalBaseAmount, metalGst, makingCharges, hallmarkCharge, stoneAmount, stoneGst)
+        setTotalGST(metalGst + stoneGst);
         setTotalAmount(subTotal);
         return {
             subTotal: subTotal, // Use the final price as subtotal
@@ -276,7 +277,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                         {/* toTAL GST AMOUNT */}
                         <TableRow>
                             <TableCell>Total GST Amount</TableCell>
-                            <TableCell align="right">₹{((Number(paymentDetails?.metal_calculation?.gst_amount || 0) + Number(paymentDetails?.stone_calculation?.gst_amount || 0))).toFixed(2)}</TableCell>
+                            <TableCell align="right">₹{totalGST.toFixed(2)}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

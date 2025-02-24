@@ -3224,8 +3224,8 @@ function ProductDetail() {
                 <span style={{ color: "#A36E29" }}> {` like `}</span> these
               </Typography>
 
-              <div className="scroll-wrapper" style={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
-                <IconButton className="scroll-btn left" style={{ height: "max-content"}} onClick={() => scroll(-1)}>
+              <div className="scroll-wrapper" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <IconButton className="scroll-btn left" style={{ height: "max-content" }} onClick={() => scroll(-1)}>
                   <ArrowBackIcon />
                 </IconButton>
 
@@ -3419,6 +3419,20 @@ function ProductDetail() {
                 }}
               >
                 (MRP inclusive of all taxes)
+              </Typography>
+              <Typography
+                style={{
+                  marginRight: "8vh",
+                  marginTop: "10px",
+                  fontFamily: '"Roboto", sans-serif',
+                  color: productDetail.quantity > 0 ? "#4CAF50" : "#f44336",
+                  fontSize: "0.8rem",
+                  fontWeight: "600",
+                }}
+              >
+                {productDetail.quantity > 0
+                  ? `Only ${productDetail.quantity} pieces left`
+                  : "Out of Stock"}
               </Typography>
               <div
                 style={{
@@ -4485,52 +4499,52 @@ function ProductDetail() {
                 You May Also{" "}
                 <span style={{ color: "#A36E29" }}> {` Like `}</span> These
               </Typography>
-                <div className="products-scroll-container" ref={scrollRef}>
-                  {productDetail.recommended.map((product) => (
-                    <JwelleryCard
-                      key={product.id}
-                      id={product.id}
-                      image={product.images[0].file}
-                      name={product.name}
-                      hash={product.hash}
-                      price={product.customizations?.variants?.options[0]?.price}
-                      isWishlisted={product.exists_in_wishlist}
-                      isInCart={product.exists_in_cart}
-                      clickHandler={handleCardClick}
-                      addToCartClick={addToCartHandlerForRecommendations}
-                      quantity={product.quantity}
-                    />
-                  ))}
+              <div className="products-scroll-container" ref={scrollRef}>
+                {productDetail.recommended.map((product) => (
+                  <JwelleryCard
+                    key={product.id}
+                    id={product.id}
+                    image={product.images[0].file}
+                    name={product.name}
+                    hash={product.hash}
+                    price={product.customizations?.variants?.options[0]?.price}
+                    isWishlisted={product.exists_in_wishlist}
+                    isInCart={product.exists_in_cart}
+                    clickHandler={handleCardClick}
+                    addToCartClick={addToCartHandlerForRecommendations}
+                    quantity={product.quantity}
+                  />
+                ))}
               </div>
               <IconButton
-                  className="scroll-btn left"
-                  style={{
-                    // position: "absolute",
-                    left: "5px", // Adjust this value to control overlap
-                    height: "max-content",
-                    zIndex: 1,
-                    background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                    color: "white",
-                    margin: "1rem"
-                  }}
-                  onClick={() => scroll(-1)}
-                >
-                  <ArrowBackIcon />
-                </IconButton>
-                <IconButton
-                  className="scroll-btn right"
-                  style={{
-                    // position: "absolute",
-                    right: "5px", // Adjust this value to control overlap
-                    height: "max-content",
-                    zIndex: 1,
-                    background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                    color: "white"
-                  }}
-                  onClick={() => scroll(1)}
-                >
-                  <ArrowForwardIcon />
-                </IconButton>
+                className="scroll-btn left"
+                style={{
+                  // position: "absolute",
+                  left: "5px", // Adjust this value to control overlap
+                  height: "max-content",
+                  zIndex: 1,
+                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                  color: "white",
+                  margin: "1rem"
+                }}
+                onClick={() => scroll(-1)}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+              <IconButton
+                className="scroll-btn right"
+                style={{
+                  // position: "absolute",
+                  right: "5px", // Adjust this value to control overlap
+                  height: "max-content",
+                  zIndex: 1,
+                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                  color: "white"
+                }}
+                onClick={() => scroll(1)}
+              >
+                <ArrowForwardIcon />
+              </IconButton>
             </div>
           </div>
         )}
