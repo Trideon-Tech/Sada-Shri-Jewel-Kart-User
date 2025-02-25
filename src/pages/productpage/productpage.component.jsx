@@ -180,7 +180,8 @@ function Productpage() {
   let isThrottled = false; // Throttle flag
 
   const handleScroll = () => {
-    const isAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 5; // Allow a small threshold
+    const footerHeight = document.querySelector('footer')?.offsetHeight || 0; // Get the footer height
+    const isAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - footerHeight; // Trigger when just above the footer
     if (!isAtBottom || isFetching || isThrottled) return;
 
     isThrottled = true; // Set throttle flag
@@ -364,7 +365,7 @@ function Productpage() {
                   ))
                 )}
               </Grid>
-              {isBottomLoading && productsLoaded && (
+              {isBottomLoading && !isFetching && productsLoaded && (
                 <CircularProgress
                   style={{
                     margin: "auto",
