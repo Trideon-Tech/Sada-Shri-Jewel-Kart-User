@@ -181,7 +181,7 @@ function Productpage() {
   let isThrottled = false; // Throttle flag
 
   const handleScroll = () => {
-    const footerHeight = footerRef.current ? footerRef.current.offsetHeight :1800;
+    const footerHeight = footerRef.current && footerRef.current.offsetHeight !== 0 ? footerRef.current.offsetHeight : 1800;
     console.log("footer height", footerHeight);
     const isAtBottom = 
       window.innerHeight + document.documentElement.scrollTop >= 
