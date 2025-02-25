@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRefresh } from "../../RefreshContent";
 import JwelleryCard from "../../components/card/jwellerycard.component";
@@ -40,6 +40,7 @@ function Productpage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [isBottomLoading, setIsBottomLoading] = useState(false);
+  const footerRef = useRef(null);
 
   const images = [
     {
@@ -180,8 +181,11 @@ function Productpage() {
   let isThrottled = false; // Throttle flag
 
   const handleScroll = () => {
-    const footerHeight = document.querySelector('footer')?.offsetHeight || 0; // Get the footer height
-    const isAtBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - footerHeight; // Trigger when just above the footer
+    const footerHeight = footerRef.current ? footerRef.current.offsetHeight :1800;
+    console.log("footer height", footerHeight);
+    const isAtBottom = 
+      window.innerHeight + document.documentElement.scrollTop >= 
+      document.documentElement.scrollHeight - footerHeight; // Adjusted for mobile view
     if (!isAtBottom || isFetching || isThrottled) return;
 
     isThrottled = true; // Set throttle flag
@@ -378,7 +382,7 @@ function Productpage() {
             </Grid>
           </Grid>
         </div>
-        <Footer />
+        <Footer ref={footerRef} />
       </div>
       {/* Mobile UI */}
       <div className="mobile" style={{ height: "max-content" }}>
@@ -583,6 +587,16 @@ function Productpage() {
               ))
             )}
           </Grid>
+          {isBottomLoading && !isFetching && productsLoaded && (
+            <CircularProgress
+              style={{
+                margin: "auto",
+                display: "flex",
+                height: "50px",
+                marginTop: "20px",
+              }}
+            />
+          )}
           <Drawer
             anchor="right"
             open={isDrawerOpen}
@@ -615,7 +629,7 @@ function Productpage() {
             </div>
           </Drawer>
         </div>
-        <Footer />
+        <Footer ref={footerRef} />
       </div>
     </div>
   );

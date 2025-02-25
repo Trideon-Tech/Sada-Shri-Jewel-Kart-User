@@ -1,14 +1,15 @@
 import { Facebook, Instagram, Pinterest, YouTube } from "@mui/icons-material";
 import { Box, Container, Divider, Grid, Typography, Dialog } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import * as React from "react";
 
-function Footer() {
+const Footer = forwardRef((props, ref) => {
   const matches = useMediaQuery("(min-width:600px)");
   const [showIframe, setShowIframe] = useState(false);
   return (
     <Box
+      ref={ref}
       component="footer"
       style={{
         marginTop: "80px",
@@ -294,6 +295,6 @@ function Footer() {
       </Dialog>
     </Box>
   );
-}
+});
 
 export default Footer;
