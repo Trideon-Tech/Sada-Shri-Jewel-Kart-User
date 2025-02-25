@@ -39,6 +39,7 @@ function Productpage() {
   const [selectedPriceRange, setSelectedPriceRange] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
+  const [isBottomLoading, setIsBottomLoading] = useState(false);
 
   const images = [
     {
@@ -132,46 +133,47 @@ function Productpage() {
   const handleFetchFilteredData = async (page = 1) => {
     if (isFetching) return;
     setIsFetching(true);
-    console.log("current page", page);
-    
+
+    setIsBottomLoading(true);
     if (isSearchPage) {
-        // Call search API if on search page
-        const searchEndpoint = `${process.env.REACT_APP_API_URL}/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
-        const response = await axios.get(searchEndpoint);
-        setJwellery(response?.data?.response);
-        setFilteredJwellery(response?.data?.response);
-        setProductsLoaded(true);
+      // Call search API if on search page
+      const searchEndpoint = `${process.env.REACT_APP_API_URL}/v1.0.0/user/search.php?type=search&search_term=${searchTerm}`;
+      const response = await axios.get(searchEndpoint);
+      setJwellery(response?.data?.response);
+      setFilteredJwellery(response?.data?.response);
+      setProductsLoaded(true);
     } else if (menuItemId) {
-        // Call products API for category pages
-        const params = {};
-        params.user_id = localStorage.getItem("user_id") || -1;
+      // Call products API for category pages
+      const params = {};
+      params.user_id = localStorage.getItem("user_id") || -1;
 
-        if (selectedSort !== "Featured" && selectedSort)
-            params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
+      if (selectedSort !== "Featured" && selectedSort)
+        params[sortOrders[selectedSort].param] = sortOrders[selectedSort].order;
 
-        let apiUrl;
-        if (isSubCategory !== "false") {
-            // If it's a subcategory
-            apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
-        } else {
-            // If it's a main category
-            apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}&page=${page}`;
-        }
+      let apiUrl;
+      if (isSubCategory !== "false") {
+        // If it's a subcategory
+        apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=sub-category&sub_category=${menuItemId}`;
+      } else {
+        // If it's a main category
+        apiUrl = `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/all.php?match-type=category&category=${menuItemId}&page=${page}`;
+      }
 
-        const response = await axios.get(apiUrl, { params });
-        
-        // Check if there are no more products to fetch
-        console.log(response.data.response);
-        if (response?.data?.response.length === 0) {
-          console.log("set is fetching");
-            setIsFetching(true); // Stop fetching
-            return; // Exit the function
-        }
+      const response = await axios.get(apiUrl, { params });
 
-        setJwellery((prevJwellery) => [...prevJwellery, ...response?.data?.response]);
-        setFilteredJwellery((prevFiltered) => [...prevFiltered, ...response?.data?.response]);
-        setProductsLoaded(true);
+      // Check if there are no more products to fetch
+      if (response?.data?.response.length === 0) {
+        setIsFetching(true); // Stop fetching
+        setIsBottomLoading(false);
+
+        return; // Exit the function
+      }
+
+      setJwellery((prevJwellery) => [...prevJwellery, ...response?.data?.response]);
+      setFilteredJwellery((prevFiltered) => [...prevFiltered, ...response?.data?.response]);
+      setProductsLoaded(true);
     }
+    setIsBottomLoading(false);
     setIsFetching(false);
   };
 
@@ -182,7 +184,6 @@ function Productpage() {
     if (!isAtBottom || isFetching || isThrottled) return;
 
     isThrottled = true; // Set throttle flag
-    console.log("page number updated from " + currentPage);
     setCurrentPage((prevPage) => prevPage + 1);
 
     // Reset throttle flag after a delay
@@ -363,6 +364,16 @@ function Productpage() {
                   ))
                 )}
               </Grid>
+              {isBottomLoading && productsLoaded && (
+                <CircularProgress
+                  style={{
+                    margin: "auto",
+                    display: "flex",
+                    height: "50px",
+                    marginTop: "20px",
+                  }}
+                />
+              )}
             </Grid>
           </Grid>
         </div>
@@ -372,11 +383,10 @@ function Productpage() {
       <div className="mobile" style={{ height: "max-content" }}>
         <div
           style={{
-            backgroundImage: `url(${
-              process.env.PUBLIC_URL +
+            backgroundImage: `url(${process.env.PUBLIC_URL +
               (images.find((img) => img.label === menuItemName?.split("+")[0])
                 ?.imgPath || "/assets/productList bg.jpg")
-            })`,
+              })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             padding: "5px",
