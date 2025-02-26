@@ -12,6 +12,8 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [paymentDetails, setPaymentDetails] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
     const [totalGST, setTotalGST] = useState(0);
+    const [metalGSTState, setMetalGSTState] = useState(0);
+    const [stoneGSTState, setStoneGSTState] = useState(0);
 
     // Fetch rates when component mounts
     useEffect(() => {
@@ -70,6 +72,9 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
         const metalGst = (totalAmount) * (gstPercentage / 100);
 
         console.log(metalGst, totalAmount)
+
+        setTotalGST(metalGst);
+
         setTotalAmount(metalGst + totalAmount);
 
             // setTotalAmount()
@@ -88,6 +93,8 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Add GST if present
         const stoneGst = stoneBaseAmount * (parseFloat(stoneInfo.gst_perc || 0) / 100);
+
+        setTotalGST((prev) => prev + stoneGst)
         const stoneNetAmount = stoneBaseAmount + stoneGst;
 
         return Number(stoneNetAmount.toFixed(2));
@@ -102,11 +109,9 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Calculate metal price
         const calculatedMetalPrice = calculateMetalPrice(metalInfo);
-        setMetalPrice(calculatedMetalPrice);
 
         // Calculate stone price
         const calculatedStonePrice = calculateStonePrice(stoneInfo);
-        setStonePrice(calculatedStonePrice);
 
         // Set total
         setSubtotal(calculatedMetalPrice + calculatedStonePrice);
@@ -167,7 +172,6 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
 
         // Calculate subtotal
         const subTotal = metalBaseAmount + metalGst + makingCharges + hallmarkCharge + stoneAmount + stoneGst;
-        setTotalGST(metalGst + stoneGst);
         setTotalAmount(subTotal);
         return {
             subTotal: subTotal, // Use the final price as subtotal
