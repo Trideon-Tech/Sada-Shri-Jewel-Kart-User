@@ -12,6 +12,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
     const [paymentDetails, setPaymentDetails] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
     const [totalGST, setTotalGST] = useState(0);
+    const [makingchargeAmount, setMakingchargeAmount] = useState(0);
     const [metalGSTState, setMetalGSTState] = useState(0);
     const [stoneGSTState, setStoneGSTState] = useState(0);
 
@@ -56,6 +57,8 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                 baseAmount = parseFloat(metalInfo.gross_wt) * rate;
             }
 
+            metalInfo.making_charge_amount = parseFloat(baseAmount * metalInfo.making_charge_value / 100);
+            setMakingchargeAmount(metalInfo.making_charge_amount);
             // Add additional charges
             baseAmount += 
                 parseFloat(metalInfo.stone_amount || 0);
@@ -231,7 +234,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                         </TableRow>
                         <TableRow>
                             <TableCell>Making Charges</TableCell>
-                            <TableCell align="right">₹{paymentDetails?.metal_calculation?.making_charge_amount?.toFixed(2) || '0.00'}</TableCell>
+                            <TableCell align="right">₹{makingchargeAmount.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
 
                         <TableRow>
@@ -274,7 +277,7 @@ const PriceBreakoutDrawer = ({ open, onClose, productDetails }) => {
                         )}
 
                         <TableRow>
-                            <TableCell>Additional Charges</TableCell>
+                            <TableCell>HM | Stone Charges</TableCell>
                             <TableCell align="right">₹{paymentDetails?.additionalCharges?.toFixed(2) || '0.00'}</TableCell>
                         </TableRow>
 
