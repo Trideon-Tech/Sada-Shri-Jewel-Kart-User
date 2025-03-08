@@ -63,7 +63,8 @@ import CarouselScheme from "./carousal.scheme";
 import ModalAddCustomization from "./modal.addCustomization.component";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
+import { Paper } from "@mui/material";
+import ButtonBase from '@mui/material/ButtonBase';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -82,6 +83,7 @@ function ProductDetail() {
   const [menuItemName, hashId] = product.split("-");
 
   const location = useLocation();
+  const previousLocation = useRef(location.pathname);
 
   const [productDetail, setProductDetail] = useState({});
   const [hasCustomization, setHasCustomization] = useState();
@@ -147,6 +149,27 @@ function ProductDetail() {
   useEffect(() => {
     setIsPriceBreakoutOpen(false);
   }, [productDetail]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      window.location.reload(); // Reload the page when the back button is pressed
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+  
+  useEffect(() => {
+    previousLocation.current = location.pathname;
+  }, [location]);
+
+  const handleItemClick = (item) => {
+    console.log(`/item/${menuItemName}/${item.master_product_details.name}-${item.master_product_details.hash}`);
+    navigate(`/item/${undefined}/${item.master_product_details.name}-${item.master_product_details.hash}`);
+  };
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -2389,16 +2412,44 @@ function ProductDetail() {
               </Box>
             </Box>
 
-            <div
-              style={{
-                width: "25.3rem",
-                marginTop: "20px",
-                paddingRight: "1rem",
-                borderRadius: "10px",
-                fontFamily: '"Roboto", sans-serif',
+            {productDetail?.product_variants?.length > 0 && (<Box
+              sx={{
+                width: "80%",
+                p: 3,
                 border: "1px solid #e1e1e1",
                 boxShadow: "0px 0px 5px 0px #a36e29",
-                marginBottom: "0.5rem",
+                borderRadius: 2,
+                marginTop: "20px",
+              }}
+            >
+              {productDetail?.product_variants?.length > 0 && (
+                <Grid container spacing={2}>
+                  {productDetail?.product_variants?.map((item) => (
+                    <Grid item xs={12} sm={4} key={item}>
+                      <ButtonBase onClick={() => handleCardClick(item.master_product_details.name, item.master_product_details.hash)}>
+                      <Paper
+                        sx={{
+                          p: 2,
+                          textAlign: "center",
+                          borderRadius: 1,
+                        }}
+                      >
+                        {item.name}
+                      </Paper>
+                    </ButtonBase>
+                  </Grid>
+                ))}
+              </Grid>)}
+            </Box>)}
+
+            <Box
+              sx={{
+                width: "80%",
+                p: 3,
+                border: "1px solid #e1e1e1",
+                boxShadow: "0px 0px 5px 0px #a36e29",
+                borderRadius: 2,
+                marginTop: "20px",
               }}
             >
               <div
@@ -2552,18 +2603,16 @@ function ProductDetail() {
                   </Grid>
                 </Grid>
               </div>
-            </div>
+            </Box>
 
-            <div
-              style={{
-                width: "25.3rem",
-                marginTop: "1rem",
-                paddingRight: "1rem",
-                borderRadius: "10px",
-                fontFamily: '"Roboto", sans-serif',
+            <Box
+              sx={{
+                width: "80%",
+                p: 3,
                 border: "1px solid #e1e1e1",
                 boxShadow: "0px 0px 5px 0px #a36e29",
-                marginBottom: "1rem",
+                borderRadius: 2,
+                marginTop: "20px",
               }}
             >
               <div
@@ -2661,7 +2710,7 @@ function ProductDetail() {
                   </Grid>
                 </Grid>
               </div>
-            </div>
+            </Box>
 
             <Typography
               sx={{
@@ -3661,6 +3710,46 @@ function ProductDetail() {
 
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <CarouselScheme />
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  p: 3,
+                  bgcolor: "lightgray",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  minHeight: "100vh",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "80%",
+                    p: 3,
+                    bgcolor: "white",
+                    boxShadow: 3,
+                    borderRadius: 2,
+                  }}
+                >
+                  <Grid container spacing={2}>
+                    {[1, 2, 3].map((item) => (
+                      <Grid item xs={12} sm={4} key={item}>
+                        <ButtonBase onClick={() => handleItemClick(item)}>
+                          <Paper
+                            sx={{
+                              p: 2,
+                              textAlign: "center",
+                              bgcolor: "lightblue",
+                              borderRadius: 1,
+                            }}
+                          >
+                            {item.name}
+                          </Paper>
+                        </ButtonBase>
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Box>
               </Box>
 
