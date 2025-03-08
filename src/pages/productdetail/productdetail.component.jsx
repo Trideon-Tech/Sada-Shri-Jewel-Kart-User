@@ -86,6 +86,7 @@ function ProductDetail() {
   const previousLocation = useRef(location.pathname);
 
   const [productDetail, setProductDetail] = useState({});
+  const [productVariants, setProductVariants] = useState([]);
   const [hasCustomization, setHasCustomization] = useState();
   const [customizationTypes, setCustomizationTypes] = useState([]);
   const [customizationOptions, setCustomizationOptions] = useState({});
@@ -2425,13 +2426,16 @@ function ProductDetail() {
               {productDetail?.product_variants?.length > 0 && (
                 <Grid container spacing={2}>
                   {productDetail?.product_variants?.map((item) => (
-                    <Grid item xs={12} sm={4} key={item}>
+                    <Grid item xs={12} sm={4} key={item} >
                       <ButtonBase onClick={() => handleCardClick(item.master_product_details.name, item.master_product_details.hash)}>
                       <Paper
                         sx={{
                           p: 2,
                           textAlign: "center",
                           borderRadius: 1,
+                          
+                          border: item.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
+                          boxShadow: item.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
                         }}
                       >
                         {item.name}
