@@ -3287,7 +3287,7 @@ function ProductDetail() {
                     <JwelleryCard
                       id={product.id}
                       key={product.id}
-                      image={product.images[0].file}
+                      image={product.images && product?.images[0]?.file}
                       name={product.name}
                       hash={product.hash}
                       price={product.customizations?.variants?.options[0]?.price}
@@ -4597,7 +4597,7 @@ function ProductDetail() {
                   <JwelleryCard
                     key={product.id}
                     id={product.id}
-                    image={product.images[0].file}
+                    image={product?.images && product?.images[0]?.file}
                     name={product.name}
                     hash={product.hash}
                     price={product.customizations?.variants?.options[0]?.price}
