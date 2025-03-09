@@ -133,6 +133,7 @@ function ProductDetail() {
   const [country, setCountry] = useState(
     localStorage.getItem("default_country") || ""
   );
+  const [variantMenuItem, setMenuItem] = useState(productDetail?.name);
 
   useEffect(() => {
     if (productDetail?.customizations?.variants?.options[0]) {
@@ -162,7 +163,7 @@ function ProductDetail() {
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
-  
+
   useEffect(() => {
     previousLocation.current = location.pathname;
   }, [location]);
@@ -337,6 +338,11 @@ function ProductDetail() {
   };
 
   const handleCardClick = (productName, hash) => {
+    navigate(`/item/${menuItemName}/${productName}-${hash}`);
+    navigate(0);
+  };
+
+  const handleVariantCardClick = (productName, hash, menuItemName) => {
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
     navigate(0);
   };
@@ -2423,27 +2429,39 @@ function ProductDetail() {
                 marginTop: "20px",
               }}
             >
+              <Typography style={{ fontSize: "1rem", fontWeight: "600", marginBottom: "10px" }}>
+                Select Variant
+              </Typography>
               {productDetail?.product_variants?.length > 0 && (
                 <Grid container spacing={2}>
                   {productDetail?.product_variants?.map((item) => (
                     <Grid item xs={12} sm={4} key={item} >
-                      <ButtonBase onClick={() => handleCardClick(item.master_product_details.name, item.master_product_details.hash)}>
-                      <Paper
-                        sx={{
-                          p: 2,
-                          textAlign: "center",
-                          borderRadius: 1,
-                          
-                          border: item.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
-                          boxShadow: item.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
-                        }}
-                      >
-                        {item.name}
-                      </Paper>
-                    </ButtonBase>
-                  </Grid>
-                ))}
-              </Grid>)}
+                      <ButtonBase onClick={() => handleVariantCardClick(item.master_product_details.name, item.master_product_details.hash, menuItemName)}>
+                        <Paper
+                          sx={{
+                            p: 2,
+                            textAlign: "center",
+                            borderRadius: 1,
+                            border: item.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
+                            boxShadow: item.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
+                          }}
+                        >
+                          {item.name}
+                          <Typography
+                            sx={{
+                              fontSize: "0.8rem",
+                              color: "#a36e29",
+                              fontWeight: "bold",
+                              marginTop: "5px",
+                            }}
+                          >
+                            ₹{item.price}
+                          </Typography>
+                        </Paper>
+                      </ButtonBase>
+                    </Grid>
+                  ))}
+                </Grid>)}
             </Box>)}
 
             <Box
