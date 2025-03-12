@@ -3737,42 +3737,50 @@ function ProductDetail() {
 
               <Box
                 sx={{
+                  marginTop: "1rem",
+                  width: "86%",
                   p: 3,
-                  bgcolor: "lightgray",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  minHeight: "100vh",
+                  bgcolor: "white",
+                  borderRadius: 2,
+                  border: "1px solid #e1e1e1",
+                  boxShadow: "0px 0px 5px 0px #a36e29",
                 }}
               >
-                <Box
-                  sx={{
-                    width: "80%",
-                    p: 3,
-                    bgcolor: "white",
-                    boxShadow: 3,
-                    borderRadius: 2,
-                  }}
-                >
-                  <Grid container spacing={2}>
-                    {[1, 2, 3].map((item) => (
-                      <Grid item xs={12} sm={4} key={item}>
-                        <ButtonBase onClick={() => handleItemClick(item)}>
-                          <Paper
-                            sx={{
-                              p: 2,
-                              textAlign: "center",
-                              bgcolor: "lightblue",
-                              borderRadius: 1,
-                            }}
-                          >
-                            {item.name}
-                          </Paper>
-                        </ButtonBase>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
+                <Grid container spacing={2} style={{ display: "flex"}}>
+                  <Typography style={{ fontSize: "1rem", fontWeight: "600", marginBottom: "10px" }}>
+                    Select Variant
+                  </Typography>
+                  {productDetail?.product_variants?.length > 0 && (
+                    <Grid container spacing={2}>
+                      {productDetail?.product_variants?.map((item) => (
+                        <Grid item xs={6} sm={4} key={item} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+                          <ButtonBase onClick={() => handleVariantCardClick(item.master_product_details.name, item.master_product_details.hash, menuItemName)}>
+                            <Paper
+                              sx={{
+                                p: 2,
+                                textAlign: "center",
+                                borderRadius: 1,
+                                border: item.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
+                                boxShadow: item.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
+                              }}
+                            >
+                              {item.name}
+                              <Typography
+                                sx={{
+                                  fontSize: "0.8rem",
+                                  color: "#a36e29",
+                                  fontWeight: "bold",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                ₹{item.price}
+                              </Typography>
+                            </Paper>
+                          </ButtonBase>
+                        </Grid>
+                      ))}
+                    </Grid>)}
+                </Grid>
               </Box>
 
               <div
