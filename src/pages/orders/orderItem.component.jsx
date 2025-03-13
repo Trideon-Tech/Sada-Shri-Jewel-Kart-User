@@ -179,8 +179,13 @@ const OrderItem = ({
           }}
         >
           <img
+            alt="product"
             height={"150px"}
-            src={`${process.env.REACT_APP_API_URL}/assets/${orderInfo?.images[0]?.file}`}
+            src={
+              orderInfo?.images?.length > 0
+                ? `${process.env.REACT_APP_API_URL}/assets/${orderInfo.images[0].file}`
+                : "default-image-url"
+            }
           />
         </Box>
         <Box
