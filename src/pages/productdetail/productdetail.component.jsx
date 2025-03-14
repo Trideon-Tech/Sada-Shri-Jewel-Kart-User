@@ -168,11 +168,6 @@ function ProductDetail() {
     previousLocation.current = location.pathname;
   }, [location]);
 
-  const handleItemClick = (item) => {
-    console.log(`/item/${menuItemName}/${item.master_product_details.name}-${item.master_product_details.hash}`);
-    navigate(`/item/${undefined}/${item.master_product_details.name}-${item.master_product_details.hash}`);
-  };
-
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -312,7 +307,6 @@ function ProductDetail() {
         }
 
         setProductDetail((_) => detail);
-        console.log("detail", detail);
         setDiscountPercentage(parseFloat(detail.discount_perc));
         setMakingChargePercentage(
           Math.ceil(
@@ -3779,6 +3773,33 @@ function ProductDetail() {
                           </ButtonBase>
                         </Grid>
                       ))}
+                      {productDetail?.product_variants?.length > 0 && (
+                        <Grid item xs={12} sm={4} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+                          <ButtonBase onClick={() => handleVariantCardClick(productDetail?.master_product_details.name, productDetail?.master_product_details.hash, menuItemName)}>
+                            <Paper
+                              sx={{
+                                p: 2,
+                                textAlign: "center",
+                                borderRadius: 1,
+                                border: "1px solid #e1e1e1",
+                                boxShadow: "0px 0px 5px 0px #e1e1e1",
+                              }}
+                            >
+                              {productDetail?.product_variants[0]?.master_product_details.name}
+                              <Typography
+                                sx={{
+                                  fontSize: "0.8rem",
+                                  color: "#a36e29",
+                                  fontWeight: "bold",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                ₹{productDetail?.product_variants[0]?.master_product_details.price}
+                              </Typography>
+                            </Paper>
+                          </ButtonBase>
+                        </Grid>
+                      )}
                     </Grid>)}
                 </Grid>
               </Box>
