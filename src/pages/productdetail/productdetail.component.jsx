@@ -2431,35 +2431,6 @@ function ProductDetail() {
               </Typography>
               {productDetail?.product_variants?.length > 0 && (
                 <Grid container spacing={2}>
-                  {productDetail?.product_variants?.findIndex(item => item.product_id === productDetail.id) !== -1 && <Grid item xs={12} sm={4} >
-                    <ButtonBase style={{width: "100%"}} onClick={() => handleVariantCardClick(productDetail.name, productDetail.hash, menuItemName)}>
-                      <Paper
-                        sx={{
-                          width: "100%",
-                          p: 2,
-                          textAlign: "center",
-                          borderRadius: 1,
-                          border: !productDetail.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
-                          boxShadow: !productDetail.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
-                        }}
-                      >
-                        {truncateText(productDetail.name, 9)}
-                        <Typography
-                          sx={{
-                            fontSize: "0.8rem",
-                            color: "#a36e29",
-                            fontWeight: "bold",
-                            marginTop: "5px",
-                          }}
-                        >
-                          {parseFloat(
-                            (productDetail?.customizations?.variants?.options[0]
-                              ?.price) 
-                          ).toFixed(2)}
-                        </Typography>
-                      </Paper>
-                    </ButtonBase>
-                  </Grid>}
                   {productDetail?.product_variants?.map((item) => (
                     <Grid item xs={12} sm={4} key={item}>
                       <ButtonBase style={{width: "100%"}} onClick={() => handleVariantCardClick(item.master_product_details.name, item.master_product_details.hash, menuItemName)}>
@@ -2489,6 +2460,35 @@ function ProductDetail() {
                       </ButtonBase>
                     </Grid>
                   ))}
+                  {productDetail?.product_variants?.findIndex(item => item.product_id === productDetail.id) !== -1 && <Grid item xs={12} sm={4} >
+                    <ButtonBase style={{width: "100%"}} onClick={() => handleVariantCardClick(productDetail.name, productDetail.hash, menuItemName)}>
+                      <Paper
+                        sx={{
+                          width: "100%",
+                          p: 2,
+                          textAlign: "center",
+                          borderRadius: 1,
+                          border: !productDetail.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
+                          boxShadow: !productDetail.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
+                        }}
+                      >
+                        {truncateText(productDetail.name, 9)}
+                        <Typography
+                          sx={{
+                            fontSize: "0.8rem",
+                            color: "#a36e29",
+                            fontWeight: "bold",
+                            marginTop: "5px",
+                          }}
+                        >
+                          ₹{parseFloat(
+                            (productDetail?.customizations?.variants?.options[0]
+                              ?.price) 
+                          ).toFixed(2)}
+                        </Typography>
+                      </Paper>
+                    </ButtonBase>
+                  </Grid>}
                 </Grid>)}
             </Box>)}
 
