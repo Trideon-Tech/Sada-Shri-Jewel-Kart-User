@@ -3735,7 +3735,6 @@ function ProductDetail() {
                 <div
                   style={{
                     display: "flex",
-                    marginRight: "8vh",
                     marginTop: "30px",
                   }}
                 >
@@ -3779,7 +3778,7 @@ function ProductDetail() {
                 </Box>
               </Box>
 
-              <Box
+              {productDetail?.product_variants?.length > 0 && (<Box
                 sx={{
                   marginTop: "1rem",
                   width: "86%",
@@ -3879,7 +3878,7 @@ function ProductDetail() {
                       )}
                     </Grid>)}
                 </Grid>
-              </Box>
+              </Box>)}
 
               <div
                 style={{
