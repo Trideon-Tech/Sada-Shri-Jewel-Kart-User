@@ -2709,7 +2709,11 @@ function ProductDetail() {
                       justifyContent: "flex-start",
                       cursor: "pointer",
                     }}
-                  >
+                    onClick={() => {
+                      if (productDetail.IGI) {
+                        window.open(productDetail.IGI, "_blank", "noopener,noreferrer");
+                      }
+                    }}>
                     <img
                       src={process.env.PUBLIC_URL + "/assets/14.svg"}
                       alt="Delivery Icon"
@@ -2728,6 +2732,11 @@ function ProductDetail() {
                       justifyContent: "flex-start",
                       cursor: "pointer",
                       padding: "10px",
+                    }}
+                    onClick={() => {
+                      if (productDetail.GIA) {
+                        window.open(productDetail.GIA, "_blank", "noopener,noreferrer");
+                      }
                     }}
                   >
                     <img
@@ -2748,6 +2757,11 @@ function ProductDetail() {
                       justifyContent: "flex-start",
                       cursor: "pointer",
                       padding: "10px",
+                    }}
+                    onClick={() => {
+                      if (productDetail.BIS) {
+                        window.open(productDetail.BIS, "_blank", "noopener,noreferrer");
+                      }
                     }}
                   >
                     <img
@@ -4080,6 +4094,11 @@ function ProductDetail() {
                         cursor: "pointer",
                         padding: "10px",
                       }}
+                      onClick={() => {
+                        if (productDetail.IGI) {
+                          window.open(productDetail.IGI, "_blank", "noopener,noreferrer");
+                        }
+                      }}
                     >
                       <img
                         src={process.env.PUBLIC_URL + "/assets/14.svg"}
@@ -4100,6 +4119,11 @@ function ProductDetail() {
                         cursor: "pointer",
                         padding: "10px",
                       }}
+                      onClick={() => {
+                        if (productDetail.GIA) {
+                          window.open(productDetail.GIA, "_blank", "noopener,noreferrer");
+                        }
+                      }}
                     >
                       <img
                         src={process.env.PUBLIC_URL + "/assets/15.svg"}
@@ -4119,6 +4143,11 @@ function ProductDetail() {
                         justifyContent: "flex-start",
                         cursor: "pointer",
                         padding: "10px",
+                      }}
+                      onClick={() => {
+                        if (productDetail.BIS) {
+                          window.open(productDetail.BIS, "_blank", "noopener,noreferrer");
+                        }
                       }}
                     >
                       <img
