@@ -24,6 +24,8 @@ import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 import Wallet from "./pages/wallet/wallet.component";
 import Wishlist from "./pages/wishlist/wishList.component";
 import { RefreshProvider } from "./RefreshContent";
+import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
+
 
 function App() {
   const [showIframe, setShowIframe] = useState(false);
@@ -94,19 +96,24 @@ function App() {
             <Route path="/search-result" element={<SearchResult />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>
-          <Fab
-            aria-label="support"
-            style={{
-              position: "fixed",
-              bottom: 16,
-              right: 16,
-              backgroundColor: "#a36e29",
-              color: "#fff2e0",
-            }}
-            onClick={() => setShowIframe(true)}
-          >
-            <Help />
-          </Fab>
+          <Draggable enableUserSelectHack={false} cancel="button">
+            <Fab
+              aria-label="support"
+              style={{
+                position: "fixed",
+                bottom: 16,
+                right: 16,
+                backgroundColor: "#a36e29",
+                color: "#fff2e0",
+                touchAction: "none",
+                zIndex: 1000,
+              }}
+              onClick={() => setShowIframe(true)}
+            >
+              <Help />
+            </Fab>
+          </Draggable>
+          
         </BrowserRouter>
       </RefreshProvider>
     </div>
