@@ -1580,7 +1580,7 @@ function ProductDetail() {
                     }}
                   >
                     {couponList.map((item) => (
-                      <Box
+                      item.is_active === "1" && <Box
                         key={item.id}
                         sx={{
                           border: "1px solid #e0e0e0",
