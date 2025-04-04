@@ -124,6 +124,7 @@ function ProductDetail() {
   const [addCustomizationModalOpen, setAddCustomizationModalOpen] =
     useState(false);
   const [makingChargePercentage, setMakingChargePercentage] = useState(0);
+  const [makingChargeAmount, setMakingChargeAmount] = useState(0);
   const [isPriceBreakoutOpen, setIsPriceBreakoutOpen] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [city, setCity] = useState(localStorage.getItem("default_city") || "");
@@ -136,6 +137,7 @@ function ProductDetail() {
   const [variantMenuItem, setMenuItem] = useState(productDetail?.name);
 
   useEffect(() => {
+    console.log("productDetail", productDetail);
     if (productDetail?.customizations?.variants?.options[0]) {
       setMakingChargePercentage(
         Math.ceil(
@@ -143,6 +145,7 @@ function ProductDetail() {
             ?.making_charge_value
         )
       );
+      setMakingChargeAmount(productDetail.customizations.variants.options[0]?.metal_info?.making_charge_amount)
       setDiscountPercentage(parseFloat(productDetail.discount_perc));
     }
   }, [productDetail]);
@@ -314,6 +317,7 @@ function ProductDetail() {
               ?.making_charge_value
           )
         );
+        setMakingChargeAmount(productDetail.customizations.variants.options[0]?.metal_info?.making_charge_amount)
         setHasCustomization(detail.hasOwnProperty("customizations"));
         if (detail.hasOwnProperty("customizations")) {
           setCustomizationTypes(detail["customizations"]["fields"]);
@@ -2432,7 +2436,7 @@ function ProductDetail() {
               {productDetail?.product_variants?.length > 0 && (
                 <Grid container spacing={2}>
                   {productDetail?.product_variants?.findIndex(item => item.product_id === productDetail.id) !== -1 && <Grid item xs={12} sm={4} >
-                    <ButtonBase style={{width: "100%"}} onClick={() => handleVariantCardClick(productDetail.name, productDetail.hash, menuItemName)}>
+                    <ButtonBase style={{ width: "100%" }} onClick={() => handleVariantCardClick(productDetail.name, productDetail.hash, menuItemName)}>
                       <Paper
                         sx={{
                           width: "100%",
@@ -2454,7 +2458,7 @@ function ProductDetail() {
                         >
                           ₹{parseFloat(
                             (productDetail?.customizations?.variants?.options[0]
-                              ?.price) 
+                              ?.price)
                           ).toFixed(2)}
                         </Typography>
                       </Paper>
@@ -2463,34 +2467,34 @@ function ProductDetail() {
                   {productDetail?.product_variants
                     ?.sort((a, b) => b.id - a.id) // Sort in descending order
                     .map((item) => (
-                    <Grid item xs={12} sm={4} key={item}>
-                      <ButtonBase style={{width: "100%"}} onClick={() => handleVariantCardClick(item.master_product_details.name, item.master_product_details.hash, menuItemName)}>
-                        <Paper
-                          sx={{
-                            width: "100%",
-                            p: 2,
-                            textAlign: "center",
-                            borderRadius: 1,
-                            border: item.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
-                            boxShadow: item.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
-                          }}
-                        >
-                          {truncateText(item.name,9)}
-                          <Typography
+                      <Grid item xs={12} sm={4} key={item}>
+                        <ButtonBase style={{ width: "100%" }} onClick={() => handleVariantCardClick(item.master_product_details.name, item.master_product_details.hash, menuItemName)}>
+                          <Paper
                             sx={{
                               width: "100%",
-                              fontSize: "0.8rem",
-                              color: "#a36e29",
-                              fontWeight: "bold",
-                              marginTop: "5px",
+                              p: 2,
+                              textAlign: "center",
+                              borderRadius: 1,
+                              border: item.is_current_product_variant ? "1px solid #a36e29" : "1px solid #e1e1e1",
+                              boxShadow: item.is_current_product_variant ? "0px 0px 5px 0px #a36e29" : "0px 0px 5px 0px #e1e1e1",
                             }}
                           >
-                            ₹{item.price}
-                          </Typography>
-                        </Paper>
-                      </ButtonBase>
-                    </Grid>
-                  ))}
+                            {truncateText(item.name, 9)}
+                            <Typography
+                              sx={{
+                                width: "100%",
+                                fontSize: "0.8rem",
+                                color: "#a36e29",
+                                fontWeight: "bold",
+                                marginTop: "5px",
+                              }}
+                            >
+                              ₹{item.price}
+                            </Typography>
+                          </Paper>
+                        </ButtonBase>
+                      </Grid>
+                    ))}
                 </Grid>)}
             </Box>)}
 
@@ -2774,6 +2778,56 @@ function ProductDetail() {
                       }}
                     />
                   </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                      padding: "10px",
+                    }}
+                    onClick={() => {
+                      if (productDetail.GSI) {
+                        window.open(productDetail.GSI, "_blank", "noopener,noreferrer");
+                      }
+                    }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                      padding: "10px",
+                    }}
+                    onClick={() => {
+                      if (productDetail.SGL) {
+                        window.open(productDetail.SGL, "_blank", "noopener,noreferrer");
+                      }
+                    }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                      alt="Delivery Icon"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
                 </Grid>
               </div>
             </Box>
@@ -3035,7 +3089,9 @@ function ProductDetail() {
                             fontWeight: "bold",
                           }}
                         >
-                          {makingChargePercentage}%
+                          {productDetail?.customizations?.variants?.options[0]
+                            ?.metal_info?.display_name?.includes("Silver") ? `₹${makingChargePercentage}` : `${makingChargePercentage}%`}
+                          {/* {makingChargePercentage}% */}
                         </div>
                       </Typography>
                     </Grid>
@@ -4159,6 +4215,56 @@ function ProductDetail() {
                         }}
                       />
                     </Grid>
+                    <Grid
+                      item
+                      xs={3}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        cursor: "pointer",
+                        padding: "10px",
+                      }}
+                      onClick={() => {
+                        if (productDetail.GSI) {
+                          window.open(productDetail.GSI, "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                    >
+                      <img
+                        src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                        alt="Delivery Icon"
+                        style={{
+                          width: "70px",
+                          height: "70px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={3}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        cursor: "pointer",
+                        padding: "10px",
+                      }}
+                      onClick={() => {
+                        if (productDetail.SGL) {
+                          window.open(productDetail.SGL, "_blank", "noopener,noreferrer");
+                        }
+                      }}
+                    >
+                      <img
+                        src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                        alt="Delivery Icon"
+                        style={{
+                          width: "70px",
+                          height: "70px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -4424,7 +4530,9 @@ function ProductDetail() {
                                 fontWeight: "bold",
                               }}
                             >
-                              {makingChargePercentage}%
+                              {productDetail?.customizations?.variants?.options[0]
+                                ?.metal_info?.display_name?.includes("Silver") ? `₹${makingChargePercentage}` : `${makingChargePercentage}%`}
+                              {/* {makingChargePercentage}% */}
                             </div>
                           </Typography>
                         </Grid>
