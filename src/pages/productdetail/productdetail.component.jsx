@@ -2794,7 +2794,7 @@ function ProductDetail() {
                     }}
                   >
                     <img
-                      src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                      src={process.env.PUBLIC_URL + "/assets/Frame 13.png"}
                       alt="Delivery Icon"
                       style={{
                         width: "80px",
@@ -2819,7 +2819,7 @@ function ProductDetail() {
                     }}
                   >
                     <img
-                      src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                      src={process.env.PUBLIC_URL + "/assets/Frame 14.png"}
                       alt="Delivery Icon"
                       style={{
                         width: "80px",
@@ -4231,7 +4231,7 @@ function ProductDetail() {
                       }}
                     >
                       <img
-                        src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                        src={process.env.PUBLIC_URL + "/assets/Frame 13.png"}
                         alt="Delivery Icon"
                         style={{
                           width: "70px",
@@ -4256,7 +4256,7 @@ function ProductDetail() {
                       }}
                     >
                       <img
-                        src={process.env.PUBLIC_URL + "/assets/4.svg"}
+                        src={process.env.PUBLIC_URL + "/assets/Frame 14.png"}
                         alt="Delivery Icon"
                         style={{
                           width: "70px",
