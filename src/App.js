@@ -24,7 +24,7 @@ import UserDetailsForm from "./pages/UserDetailsForm/userDetailsForm.component";
 import Wallet from "./pages/wallet/wallet.component";
 import Wishlist from "./pages/wishlist/wishList.component";
 import { RefreshProvider } from "./RefreshContent";
-import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
+import Draggable from 'react-draggable'; // Both at the same time
 
 
 function App() {
@@ -36,10 +36,10 @@ function App() {
   };
 
   // Add click sound to entire app
-  useEffect(() => {
-    document.addEventListener("click", playClickSound);
-    return () => document.removeEventListener("click", playClickSound);
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("click", playClickSound);
+  //   return () => document.removeEventListener("click", playClickSound);
+  // }, []);
 
   return (
     <div className="App">
@@ -96,26 +96,30 @@ function App() {
             <Route path="/search-result" element={<SearchResult />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>
-          <Draggable enableUserSelectHack={false} cancel="button">
-            <Fab
-              aria-label="support"
-              style={{
-                position: "fixed",
-                bottom: 16,
-                right: 16,
-                backgroundColor: "#a36e29",
-                color: "#fff2e0",
-                touchAction: "none",
-                zIndex: 1000,
-              }}
-              onClick={() => setShowIframe(true)}
-            >
-              <Help />
-            </Fab>
-          </Draggable>
-          
         </BrowserRouter>
       </RefreshProvider>
+      <Draggable>
+        <div
+          style={{
+            position: "fixed",
+            bottom: "20px", // adjust as needed
+            right: "20px",
+            zIndex: 1000,
+            touchAction: "none",
+          }}
+        >
+          <Fab
+            aria-label="support"
+            style={{
+              backgroundColor: "#a36e29",
+              color: "#fff2e0",
+            }}
+            onClick={() => setShowIframe(true)}
+          >
+            <Help />
+          </Fab>
+        </div>
+      </Draggable>
     </div>
   );
 }

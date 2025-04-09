@@ -125,7 +125,7 @@ const Register = () => {
             if (queryParams.get("redirect_to") == null) {
               navigate("/");
             } else {
-              navigate(`${queryParams.get("redirect_to")}?drawer=close`);
+              navigate(`${queryParams.get("redirect_to")}?drawer=open`);
             }
           } else {
             navigate("/user-details");
