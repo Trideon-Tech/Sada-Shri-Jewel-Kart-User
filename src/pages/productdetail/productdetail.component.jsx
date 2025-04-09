@@ -1538,7 +1538,7 @@ function ProductDetail() {
                 </Box>
               </Card>
 
-              <Card
+              {localStorage.getItem("token") && <Card
                 sx={{
                   p: mediaQuery ? 2 : 1.5,
                   mb: mediaQuery ? 3 : 1,
@@ -1664,7 +1664,7 @@ function ProductDetail() {
                     ))}
                   </Box>
                 </Box>
-              </Card>
+              </Card>}
 
               <Card
                 sx={{
