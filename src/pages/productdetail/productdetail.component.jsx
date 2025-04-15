@@ -382,8 +382,8 @@ function ProductDetail() {
   useEffect(() => {
     (async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
+        // const token = localStorage.getItem("token");
+        // if (!token) return;
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/v1.0.0/user/coupons/all.php?type=all_coupons`,
           {
@@ -1538,7 +1538,7 @@ function ProductDetail() {
                 </Box>
               </Card>
 
-              {localStorage.getItem("token") && <Card
+              <Card
                 sx={{
                   p: mediaQuery ? 2 : 1.5,
                   mb: mediaQuery ? 3 : 1,
@@ -1664,7 +1664,7 @@ function ProductDetail() {
                     ))}
                   </Box>
                 </Box>
-              </Card>}
+              </Card>
 
               <Card
                 sx={{

@@ -166,7 +166,7 @@ function Productpage() {
       if (response?.data?.response.length === 0) {
         setIsFetching(true); // Stop fetching
         setIsBottomLoading(false);
-
+        setProductsLoaded(true);
         return; // Exit the function
       }
 

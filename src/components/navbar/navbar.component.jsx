@@ -283,7 +283,7 @@ const Navbar = () => {
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
-    navigate(`/jwellery/${menuItem.name}/${menuItem.id}/${!isSubCategory}`);
+    window.location.href = `/jwellery/${menuItem.name}/${menuItem.id}/${!isSubCategory}`;
   };
 
   const handleSubMenuItemClick = (category, menuItem) => {
@@ -293,10 +293,7 @@ const Navbar = () => {
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
-    navigate(
-      `/jwellery/${category + "+" + menuItem.name}/${menuItem.id
-      }/${!isSubCategory}`
-    );
+      window.location.href = `/jwellery/${category + "+" + menuItem.name}/${menuItem.id}/${!isSubCategory}`;
   };
 
   return (
