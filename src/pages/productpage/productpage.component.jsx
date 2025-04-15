@@ -368,6 +368,14 @@ function Productpage() {
                     </Grid>
                   ))
                 )}
+                {
+                  filteredJwellery.length === 0 && (<p style={{
+                    margin: "auto",
+                    display: "flex",
+                    height: "50px",
+                    marginTop: "10rem",
+                  }} >No Product found</p>)
+                }
               </Grid>
               {isBottomLoading && !isFetching && productsLoaded && (
                 <CircularProgress
