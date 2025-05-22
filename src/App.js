@@ -27,6 +27,7 @@ import { RefreshProvider } from "./RefreshContent";
 import Draggable from 'react-draggable'; // Both at the same time
 import Schemes_main from "./pages/schemes/Schemes_main";
 import Schemes_form from "./pages/schemes/Schemes_form";
+import Schemes_Redeem from "./pages/schemes/Schemes_Redeem";
 
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/schemes" element={<Schemes_main />} />
             <Route path="/schemes/form" element={<Schemes_form />} />
+            <Route path="/schemes/redeem" element={<Schemes_Redeem />} />
           </Routes>
         </BrowserRouter>
       </RefreshProvider>

@@ -143,7 +143,9 @@ const Navbar = () => {
       }
       setCartLength(sessionStorage.getItem("cart"));
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
+        `${
+          process.env.REACT_APP_API_URL
+        }/v1.0.0/user/products/wishlist.php?type=wishlist&user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -174,7 +176,9 @@ const Navbar = () => {
       }
 
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
+        `${
+          process.env.REACT_APP_API_URL
+        }/v1.0.0/user/products/wishlist.php?type=wishlist_items&wishlist_id=${localStorage.getItem(
           "default_wishlist"
         )}`,
         {
@@ -212,7 +216,9 @@ const Navbar = () => {
     if (!token) return;
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
+        `${
+          process.env.REACT_APP_API_URL
+        }/v1.0.0/user/products/cart.php?user_id=${localStorage.getItem(
           "user_id"
         )}`,
         {
@@ -283,7 +289,9 @@ const Navbar = () => {
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
-    window.location.href = `/jwellery/${menuItem.name}/${menuItem.id}/${!isSubCategory}`;
+    window.location.href = `/jwellery/${menuItem.name}/${
+      menuItem.id
+    }/${!isSubCategory}`;
   };
 
   const handleSubMenuItemClick = (category, menuItem) => {
@@ -293,7 +301,9 @@ const Navbar = () => {
     const isSubCategory =
       menuItem.sub_categories && menuItem.sub_categories.length > 0;
 
-      window.location.href = `/jwellery/${category + "+" + menuItem.name}/${menuItem.id}/${!isSubCategory}`;
+    window.location.href = `/jwellery/${category + "+" + menuItem.name}/${
+      menuItem.id
+    }/${!isSubCategory}`;
   };
 
   return (
@@ -304,7 +314,7 @@ const Navbar = () => {
         width: "100%",
       }}
     >
-      <div className="web">
+      <div className="web" >
         <AppBar elevation={0} className="appbar">
           <div className="rates">
             <Marquee velocity={20} direction="ltr" scatterRandomly={false}>
@@ -317,6 +327,7 @@ const Navbar = () => {
                     alignItems: "center",
                     height: "2.5rem",
                     fontWeight: index % 4 === 0 ? "bold" : "normal",
+                    
                   }}
                   key={index}
                 >
@@ -325,7 +336,8 @@ const Navbar = () => {
               ))}
             </Marquee>
           </div>
-          <div variant="dense" className="toolbar">
+          <div variant="dense" className="toolbar"
+          >
             <IconButton onClick={() => setOpenWebDrawer(true)}>
               <MenuOutlined style={{ color: "#a36e29" }} />
             </IconButton>
@@ -611,7 +623,10 @@ const Navbar = () => {
                     fontSize: "1.2rem",
                     cursor: "pointer",
                   }}
-                  onClick={() => (window.location.href = "https://seller.sadashrijewelkart.com")}
+                  onClick={() =>
+                    (window.location.href =
+                      "https://seller.sadashrijewelkart.com")
+                  }
                 >
                   Become a Seller
                 </Typography>
@@ -622,60 +637,61 @@ const Navbar = () => {
       </div>
       {/* MobileUI */}
       <div className="mobile">
-        {logoutModal && <Dialog
-          open={logoutModal}
-          style={{ borderRadius: "20px"}}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={() => setLogoutModal(false)}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogContent>
-            <DialogContentText
-              style={{
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: "0.9rem",
-              }}
-            >
-              Are you sure you want to logout?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions style={{ padding: "1rem 2rem" }}>
-            <Button
-              variant="outlined"
-              style={{
-                border: "2px solid #a36e29",
-                color: "#a36e29",
-                width: "200px",
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: "1rem",
-                fontWeight: "600",
-              }}
-              onClick={() => {
-                localStorage.clear();
-                navigate("/");
-              }}
-            >
-              Yes
-            </Button>
-            <Button
-              variant="contained"
-              style={{
-                border: "2px solid #a36e29",
-                backgroundColor: "#a36e29",
-                width: "200px",
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: "1rem",
-                fontWeight: "600",
-                color: "white",
-              }}
-              onClick={() => setLogoutModal(false)}
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
-        }
+        {logoutModal && (
+          <Dialog
+            open={logoutModal}
+            style={{ borderRadius: "20px" }}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={() => setLogoutModal(false)}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogContent>
+              <DialogContentText
+                style={{
+                  fontFamily: '"Roboto", sans-serif',
+                  fontSize: "0.9rem",
+                }}
+              >
+                Are you sure you want to logout?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions style={{ padding: "1rem 2rem" }}>
+              <Button
+                variant="outlined"
+                style={{
+                  border: "2px solid #a36e29",
+                  color: "#a36e29",
+                  width: "200px",
+                  fontFamily: '"Roboto", sans-serif',
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                }}
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/");
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  border: "2px solid #a36e29",
+                  backgroundColor: "#a36e29",
+                  width: "200px",
+                  fontFamily: '"Roboto", sans-serif',
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  color: "white",
+                }}
+                onClick={() => setLogoutModal(false)}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
         <Dialog
           open={openAuthDialog}
           onClose={() => setOpenAuthDialog(false)}
@@ -874,7 +890,9 @@ const Navbar = () => {
                         <ListItem
                           button
                           key={subCategory.id}
-                          onClick={() => handleSubMenuItemClick(category.name, subCategory)}
+                          onClick={() =>
+                            handleSubMenuItemClick(category.name, subCategory)
+                          }
                         >
                           <ListItemAvatar>
                             <Avatar
@@ -908,7 +926,9 @@ const Navbar = () => {
               textAlign: "center",
               paddingBottom: "16px",
             }}
-            onClick={() => (window.location.href = "https://seller.sadashrijewelkart.com")}
+            onClick={() =>
+              (window.location.href = "https://seller.sadashrijewelkart.com")
+            }
           >
             Become a Seller
           </Typography>
