@@ -1,48 +1,51 @@
-import * as React from "react";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
 import image from "../../assets/images/22.png";
 import ButtonComponent from "../button/button.component";
-import Box from "@mui/material/Box";
 
 const Scheme_Card = ({ data, onJoin }) => {
   console.log("Benefits:", data.benefits);
   let benefitsArray = [];
   let rulesArray = [];
 
-try {
-  if (typeof data.benefits === "string") {
-    benefitsArray = JSON.parse(data.benefits);
-  } else if (Array.isArray(data.benefits)) {
-    benefitsArray = data.benefits;
-  }
-} catch (err) {
-  console.error("Error parsing benefits:", err);
-}
-
-if (typeof data.rules === "string") {
   try {
-    // Try to parse string as JSON
-    const parsed = JSON.parse(data.rules);
-    // Check if parsed is array, else fallback to empty array
-    rulesArray = Array.isArray(parsed) ? parsed : [];
-  } catch (e) {
-    // Parsing failed — fallback to splitting by commas
-    rulesArray = data.rules.split(",").map((r) => r.trim());
+    if (typeof data.benefits === "string") {
+      benefitsArray = JSON.parse(data.benefits);
+    } else if (Array.isArray(data.benefits)) {
+      benefitsArray = data.benefits;
+    }
+  } catch (err) {
+    console.error("Error parsing benefits:", err);
   }
-} else if (Array.isArray(data.rules)) {
-  rulesArray = data.rules;
-} else {
-  // If rules is undefined or not array/string, fallback empty array
-  rulesArray = [];
-}
+
+  if (typeof data.rules === "string") {
+    try {
+      const parsed = JSON.parse(data.rules);
+      rulesArray = Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      rulesArray = data.rules.split(",").map((r) => r.trim());
+    }
+  } else if (Array.isArray(data.rules)) {
+    rulesArray = data.rules;
+  } else {
+    rulesArray = [];
+  }
 
   return (
-    <Card sx={{ maxWidth: 450, borderRadius: "10px", display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%" }}>
+    <Card
+      sx={{
+        maxWidth: 450,
+        borderRadius: "10px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+      }}
+    >
       <CardMedia sx={{ height: 180 }} image={image} title="scheme image" />
 
       <CardContent>
@@ -57,16 +60,6 @@ if (typeof data.rules === "string") {
           {data?.name || "Scheme"}
         </Typography>
 
-        {/* <Typography
-          sx={{
-            fontWeight: "700",
-            fontSize: "24px",
-            fontFamily: "open sans",
-          }}
-        >
-          {data?.description || "Turn Daily Savings into Timeless Treasures"}
-        </Typography> */}
-
         <ul
           style={{
             fontFamily: "open sans",
@@ -74,44 +67,42 @@ if (typeof data.rules === "string") {
             fontSize: "17px",
           }}
         >
-         {benefitsArray.map((point, i) => (
-          <li key={i} style={{ marginBottom: "8px" }}>
-         {point}</li>
-))}
-
-
+          {benefitsArray.map((point, i) => (
+            <li key={i} style={{ marginBottom: "8px" }}>
+              {point}
+            </li>
+          ))}
         </ul>
 
         {rulesArray.length > 0 && (
-  <>
-    <Typography
-      sx={{
-        fontWeight: "700",
-        fontSize: "18px",
-        marginTop: "16px",
-        fontFamily: "open sans",
-        color: "#A36E29",
-      }}
-    >
-      Rules
-    </Typography>
+          <>
+            <Typography
+              sx={{
+                fontWeight: "700",
+                fontSize: "18px",
+                marginTop: "16px",
+                fontFamily: "open sans",
+                color: "#A36E29",
+              }}
+            >
+              Rules
+            </Typography>
 
-    <ul
-      style={{
-        fontFamily: "open sans",
-        fontWeight: "600",
-        fontSize: "17px",
-      }}
-    >
-      {rulesArray.map((rule, i) => (
-        <li key={i} style={{ marginBottom: "6px" }}>
-          {rule}
-        </li>
-      ))}
-    </ul>
-  </>
-)}
-
+            <ul
+              style={{
+                fontFamily: "open sans",
+                fontWeight: "600",
+                fontSize: "17px",
+              }}
+            >
+              {rulesArray.map((rule, i) => (
+                <li key={i} style={{ marginBottom: "6px" }}>
+                  {rule}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </CardContent>
 
       <Box
@@ -140,14 +131,13 @@ if (typeof data.rules === "string") {
           justifyContent: "center",
           alignItems: "center",
           // marginLeft: "50px",
-          padding:"16px",
+          padding: "16px",
         }}
       >
-      
         <ButtonComponent
           buttonText={"Join Now"}
           onClick={() => {
-            onJoin()
+            onJoin(data.id);
           }}
           style={{
             width: "100%",
@@ -165,7 +155,6 @@ if (typeof data.rules === "string") {
             alignItems: "center",
           }}
         />
-       
       </Box>
     </Card>
   );

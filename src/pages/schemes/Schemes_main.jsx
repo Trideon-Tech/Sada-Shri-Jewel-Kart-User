@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/navbar.component";
-import { Box, Typography, Container, Card } from "@mui/material";
-
-import Scheme_Card from "../../components/scheme_card/Scheme_Card";
 import ringLogo from "../../assets/images/2 1.svg";
-import { useTheme, useMediaQuery } from "@mui/material";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+import Navbar from "../../components/navbar/navbar.component";
+import Scheme_Card from "../../components/scheme_card/Scheme_Card";
 import Schemes_CardForMobile from "../../components/scheme_card/Schemes_CardForMobile";
-import { HandymanOutlined } from "@mui/icons-material";
 
 const Schemes_main = () => {
   const [card, setCard] = useState([]);
@@ -20,19 +19,18 @@ const Schemes_main = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
 
-  const handleJoinClick = () => {
-    navigate("/schemes/form");
-  }
+  const handleJoinClick = (id) => {
+    navigate(`/schemes/form?plan=${id}`);
+  };
 
-   useEffect(() => {
-  fetch("http://localhost/Sada-Shri-Jewel-Kart-Backend/v1.0.0/scheme/scheme_api.php") 
-    .then((res) => res.json())
-    .then((data) =>  {
-    // console.log("Fetched data from backend:", data);
-    setCard(data)})
-    .catch((err) => console.error("Failed to fetch schemes:", err));
-}, []);
-
+  useEffect(() => {
+    axios
+      .get("https://api.sadashrijewelkart.com/v1.0.0/user/schemes/all.php")
+      .then((response) => {
+        setCard(response.data.response);
+      })
+      .catch((err) => console.error("Failed to fetch schemes:", err));
+  }, []);
 
   return (
     <Container maxWidth="4xl" disableGutters>
@@ -44,7 +42,7 @@ const Schemes_main = () => {
           style={{
             background:
               "linear-gradient(to bottom,rgb(249, 236, 220),rgb(231, 192, 125))",
-              minHeight:"100vh"
+            minHeight: "100vh",
           }}
         >
           <Box
