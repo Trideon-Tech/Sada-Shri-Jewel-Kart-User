@@ -1,6 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -30,20 +29,6 @@ const Schemes_form = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
    const navigate = useNavigate();
 
-
-
-   useEffect(() => {
-  const script = document.createElement('script');
-  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-  script.async = true;
-  document.body.appendChild(script);
-
-  return () => {
-    document.body.removeChild(script);
-  };
-}, []);
-
-
 // added the function for local conn
   const handleStartScheme = async () => {
   try {
@@ -72,7 +57,7 @@ const handlePayment = async () => {
   
   try {
     // 1. Create order by calling PHP
-    const response = await fetch(`${process.env.REACT_APP_API_URL}v1.0.0/scheme/create_order.php`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}Sada-Shri-Jewel-Kart-Backend/v1.0.0/scheme/create_order.php`, {
       
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -82,8 +67,8 @@ const handlePayment = async () => {
     const data = await response.json();
 
     if (!data.order_id) throw new Error("Order not created");
- console.log("🔑 Razorpay Key:", process.env.REACT_APP_RAZORPAY_KEY_ID);
-    
+
+    // 2. Open Razorpay popup
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: data.amount,
@@ -97,7 +82,7 @@ const handlePayment = async () => {
         console.log("Order ID:", response.razorpay_order_id);
         console.log("Signature:", response.razorpay_signature);
 
-        
+        // 🔄 Now you can send this to PHP again to save it (optional)
       },
     };
 
@@ -240,22 +225,13 @@ const handlePayment = async () => {
 
               <FormControl fullWidth sx={{ mb: 3 }}>
               
- <TextField
- value={amount}
- onChange={(e) => {
- console.log(e.target.value); // Does this show?
- setAmount(e.target.value);
- }}
-/>
-   </FormControl>
+  
+  
 
-                {/* <TextField
-                                  placeholder="Enter the amount you want"
-                  
+                <TextField
+                  placeholder="Enter the amount you want"
                   value={amount}
-                  
-                  onChange={(e) => {console.log(e.target.value); setAmount(e.target.value)}}
-
+                  onChange={(e) => setAmount(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -285,8 +261,8 @@ const handlePayment = async () => {
                     ),
                   }}
                   sx={{ borderRadius: "10px", backgroundColor: "#fff" }}
-                  />
-                 </FormControl> */}
+                />
+              </FormControl>
             </CardContent>
 
             <CardActions sx={{ justifyContent: "center", mb: 2 }}>
@@ -474,14 +450,8 @@ const handlePayment = async () => {
         </FormControl>
 
         <FormControl sx={{ width: "100%", mt: 3 }}>
-        
           <TextField
-            
             placeholder="Enter the amount you want"
-            onChange={(e) => {
-             console.log(e.target.value); // Does this show?
-                setAmount(e.target.value);
-                 }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
