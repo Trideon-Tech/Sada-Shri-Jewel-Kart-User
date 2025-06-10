@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar.component";
 import { Box, Typography, Container, Card } from "@mui/material";
 
@@ -10,11 +12,28 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Schemes_CardForMobile from "../../components/scheme_card/Schemes_CardForMobile";
+import { HandymanOutlined } from "@mui/icons-material";
 
 const Schemes_main = () => {
-  const [card, setCard] = useState(["", "", ""]);
+  const [card, setCard] = useState([]);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
+
+  const handleJoinClick = () => {
+    navigate("/schemes/form");
+  }
+
+   useEffect(() => {
+  fetch("http://localhost/Sada-Shri-Jewel-Kart-Backend/v1.0.0/scheme/scheme_api.php") 
+    .then((res) => res.json())
+    .then((data) =>  {
+    // console.log("Fetched data from backend:", data);
+    setCard(data)})
+    .catch((err) => console.error("Failed to fetch schemes:", err));
+}, []);
+
+
   return (
     <Container maxWidth="4xl" disableGutters>
       {/* Optional Navbar */}
@@ -225,7 +244,7 @@ const Schemes_main = () => {
             }}
           >
             {card.map((item, index) => (
-              <Scheme_Card key={index} data={item} />
+              <Scheme_Card key={index} data={item} onJoin={handleJoinClick} />
             ))}
           </Box>
         </Box>

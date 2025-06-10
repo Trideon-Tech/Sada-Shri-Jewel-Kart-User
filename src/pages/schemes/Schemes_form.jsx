@@ -1,4 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   CardActions,
@@ -18,19 +22,108 @@ import scheme_steps from "../../assets/images/scheme_steps.png";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { InputAdornment } from "@mui/material";
 
+
 const Schemes_form = () => {
+  const [selectedPlan, setSelectedPlan] = useState("");
+  const [amount, setAmount] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+   const navigate = useNavigate();
+
+
+
+   useEffect(() => {
+  const script = document.createElement('script');
+  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+
+
+// added the function for local conn
+  const handleStartScheme = async () => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/start-scheme`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: 10000, 
+      }),
+    });
+
+    
+
+    const data = await response.json();
+    console.log("Response:", data);
+    alert("Scheme started successfully!");
+  } catch (error) {
+    console.error("Error starting scheme:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
+const handlePayment = async () => {
+  
+  try {
+    // 1. Create order by calling PHP
+    const response = await fetch(`${process.env.REACT_APP_API_URL}v1.0.0/scheme/create_order.php`, {
+      
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: Number(amount)}), // change 100 to your amount
+    });
+
+    const data = await response.json();
+
+    if (!data.order_id) throw new Error("Order not created");
+ console.log("🔑 Razorpay Key:", process.env.REACT_APP_RAZORPAY_KEY_ID);
+    
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+      amount: data.amount,
+      currency: data.currency,
+      name: "SadāShrī Jewelkart",
+      description: "Gold Scheme",
+      order_id: data.order_id,
+      handler: function (response) {
+        alert("Payment successful!");
+        console.log("Payment ID:", response.razorpay_payment_id);
+        console.log("Order ID:", response.razorpay_order_id);
+        console.log("Signature:", response.razorpay_signature);
+
+        
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    alert("Something went wrong");
+    console.error(error);
+  }
+};
+
+
+
   return (
     <>
       <Box>
         <Navbar />
       </Box>
+
+
+
       {isMobile ? (
         <div>
           <div
             style={{
-              height: "95vh",
+              height: "70vh",
               background:
                 "linear-gradient(to bottom ,rgb(231, 223, 213),rgb(234, 210, 167))",
             }}
@@ -54,6 +147,8 @@ const Schemes_form = () => {
               <Typography
                 style={{
                   textAlign: "center",
+                  mt:{xs:0,lg:0},
+                  px:2,
                   fontFamily: "Open Sans",
                   fontWeight: 700,
                   fontSize: "28px",
@@ -112,40 +207,55 @@ const Schemes_form = () => {
               width: "90%",
               maxWidth: "360px",
               margin: "auto",
-
+              
               borderRadius: "12px",
               boxShadow: 3,
               position: "relative",
-              top: "-226px",
+              top: "-100px",
               //margin:"0px 20px"
             }}
-          >
+           >
             <CardContent sx={{ textAlign: "center", pt: 3 }}>
               <FormControl fullWidth sx={{ mb: 3 }}>
-                <Select
-                  defaultValue=""
-                  displayEmpty
-                  sx={{
-                    borderRadius: "7px",
-                    fontSize: "14px",
-                    backgroundColor: "#f9f9f9",
-                  }}
-                >
-                  <MenuItem value="">
-                    Turn Daily Savings into Timeless Treasures
-                  </MenuItem>
-                  <MenuItem>
-                    Turn Daily Savings into Timeless Treasures
-                  </MenuItem>
-                  <MenuItem>
-                    Turn Daily Savings into Timeless Treasures
-                  </MenuItem>
-                </Select>
+              
+               <Select
+               value={selectedPlan}
+               onChange={(e) => setSelectedPlan(e.target.value)}
+               displayEmpty
+               sx={{
+                borderRadius: "7px",
+                fontSize: "14px",
+                backgroundColor: "#f9f9f9",
+                }}>
+                
+           <MenuItem value="">
+           Turn Daily Savings into Timeless Treasures
+           </MenuItem>
+           <MenuItem value="plan1">  Plan 1  </MenuItem>
+           <MenuItem value="plan2">  Plan 2 </MenuItem>
+           <MenuItem value="plan3"> Plan 3 </MenuItem>
+           </Select>
+
               </FormControl>
 
               <FormControl fullWidth sx={{ mb: 3 }}>
-                <TextField
-                  placeholder="Enter the amount you want"
+              
+ <TextField
+ value={amount}
+ onChange={(e) => {
+ console.log(e.target.value); // Does this show?
+ setAmount(e.target.value);
+ }}
+/>
+   </FormControl>
+
+                {/* <TextField
+                                  placeholder="Enter the amount you want"
+                  
+                  value={amount}
+                  
+                  onChange={(e) => {console.log(e.target.value); setAmount(e.target.value)}}
+
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -175,13 +285,14 @@ const Schemes_form = () => {
                     ),
                   }}
                   sx={{ borderRadius: "10px", backgroundColor: "#fff" }}
-                />
-              </FormControl>
+                  />
+                 </FormControl> */}
             </CardContent>
 
             <CardActions sx={{ justifyContent: "center", mb: 2 }}>
               <ButtonComponent
                 buttonText={"Start Now"}
+                onClick={handlePayment}
                 style={{
                   width: "180px",
                   height: "36px",
@@ -251,11 +362,16 @@ const Schemes_form = () => {
       ) : (
        <Box>
   <Box
+  //card is 370px from the top
     sx={{
-      minHeight: "80vh",
+      // minHeight: "60vh",
+      height:"570px",
+      paddingY : 6,
       backgroundColor: "#F9F5EC",
-      position: "relative",
-      padding: { xs: "24px", md: "0" },
+      paddingTop: { xs: 2, md: 3 }, 
+      paddingBottom: 6, 
+      // position: "relative",
+      // padding: { xs: "24px", md: "0" },
     }}
   >
     <Box
@@ -272,11 +388,20 @@ const Schemes_form = () => {
 
     <Box
       sx={{
-        position: { xs: "relative", lg: "absolute" },
-        top: { xs: "20px", lg: "100px" },
-        left: { xs: "0", lg: "531px" },
+        // position: { xs: "relative", lg: "absolute" },
+        // top: { xs: "20px", lg: "100px" },
+        // left: { xs: "0", lg: "531px" },
         textAlign: "center",
-        padding: { xs: "0 16px" },
+        // padding: { xs: "0 16px" },
+        // minHeight : "300px",
+        display : "flex",
+        alignItems :"center",
+        justifyContent :"center",
+        flexDirection : "column",
+        px :2,
+        mt:{ xs: 1, lg: 2},
+
+        
       }}
     >
       <Typography
@@ -313,22 +438,29 @@ const Schemes_form = () => {
         Save Now. Shine Forever.
       </Typography>
     </Box>
-
+  
     <Card
       sx={{
         width: { xs: "100%", sm: "90%", md: "80%", lg: "710px" },
-        height: "auto",
-        position: { xs: "relative", lg: "absolute" },
-        top: { xs: "40px", lg: "290px" },
-        left: { xs: "0", lg: "401px" },
+        // height: "auto",
+        // position: { xs: "relative", lg: "absolute" },
+        // top: { xs: "40px", lg: "290px" },
+        // left: { xs: "0", lg: "401px" },
         borderRadius: "12px",
-        margin: { xs: "24px auto 0", lg: 0 },
+        marginTop : -8,
+        // margin: { xs: "24px auto 0", lg: 0 },
+        position:"relative",
+        zIndex:1,
         p: { xs: 2, sm: 3 },
+        mx: "auto",
       }}
-    >
+     >
       <CardContent sx={{ textAlign: "center" }}>
         <FormControl sx={{ width: "100%" }}>
-          <Select sx={{ borderRadius: "7px" }} defaultValue="">
+          <Select   value={selectedPlan}
+              onChange={(e) => setSelectedPlan(e.target.value)}
+                    sx={{ borderRadius: "7px" }}
+                    displayEmpty>
             <MenuItem value="">
               Turn Daily Savings into Timeless Treasures
             </MenuItem>
@@ -342,8 +474,14 @@ const Schemes_form = () => {
         </FormControl>
 
         <FormControl sx={{ width: "100%", mt: 3 }}>
+        
           <TextField
+            
             placeholder="Enter the amount you want"
+            onChange={(e) => {
+             console.log(e.target.value); // Does this show?
+                setAmount(e.target.value);
+                 }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -386,6 +524,7 @@ const Schemes_form = () => {
       >
         <ButtonComponent
           buttonText={"Start Now"}
+          onClick={handlePayment}
           style={{
             width: "250px",
             height: "40px",
@@ -429,7 +568,8 @@ const Schemes_form = () => {
   {/* Second Section (How does it work) */}
   <Box
     sx={{
-      mt: { xs: "48px", lg: "170px" },
+      // mt: { xs: "48px", lg: "170px" },
+      mt: { xs: "24px", lg: "80px" },
       textAlign: "center",
       px: { xs: 2, sm: 4 },
     }}
@@ -447,19 +587,26 @@ const Schemes_form = () => {
     </Typography>
 
     <Box
-      component="img"
-      src={scheme_steps}
-      alt="Steps"
-      sx={{
-        width: { xs: "100%", sm: "90%", md: "80%", lg: "1018px" },
-        maxWidth: "100%",
-        height: "auto",
-        margin: "0 auto",
-        display: "block",
-        position: { xs: "relative", lg: "absolute" },
-        top: { xs: 0, lg: "900px" },
-        left: { xs: 0, lg: "247px" },
-      }}
+  sx={{
+    mt: { xs: "48px", lg: "170px" },
+    textAlign: "center",
+    px: { xs: 2, sm: 4 },
+    display: "flex",
+    justifyContent: "center", // ✅ CENTERING
+  }}
+>
+  <Box
+    component="img"
+    src={scheme_steps}
+    alt="Steps"
+    sx={{
+      width: { xs: "100%", sm: "90%", md: "80%", lg: "1018px" },
+      maxWidth: "100%",
+      height: "auto",
+    }}
+  />
+</Box>
+
     />
   </Box>
 </Box>

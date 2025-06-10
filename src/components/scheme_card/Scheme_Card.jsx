@@ -7,27 +7,66 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import image from "../../assets/images/22.png";
 import ButtonComponent from "../button/button.component";
+import Box from "@mui/material/Box";
 
-const Scheme_Card = () => {
+const Scheme_Card = ({ data, onJoin }) => {
+  console.log("Benefits:", data.benefits);
+  let benefitsArray = [];
+  let rulesArray = [];
+
+try {
+  if (typeof data.benefits === "string") {
+    benefitsArray = JSON.parse(data.benefits);
+  } else if (Array.isArray(data.benefits)) {
+    benefitsArray = data.benefits;
+  }
+} catch (err) {
+  console.error("Error parsing benefits:", err);
+}
+
+if (typeof data.rules === "string") {
+  try {
+    // Try to parse string as JSON
+    const parsed = JSON.parse(data.rules);
+    // Check if parsed is array, else fallback to empty array
+    rulesArray = Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    // Parsing failed — fallback to splitting by commas
+    rulesArray = data.rules.split(",").map((r) => r.trim());
+  }
+} else if (Array.isArray(data.rules)) {
+  rulesArray = data.rules;
+} else {
+  // If rules is undefined or not array/string, fallback empty array
+  rulesArray = [];
+}
+
   return (
-    <Card sx={{ maxWidth: 450, borderRadius: "10px" }}>
-      <CardMedia sx={{ height: 180 }} image={image} title="green iguana" />
+    <Card sx={{ maxWidth: 450, borderRadius: "10px", display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%" }}>
+      <CardMedia sx={{ height: 180 }} image={image} title="scheme image" />
+
       <CardContent>
         <Typography
           style={{
             color: "#A36E29",
             fontWeight: "700",
-            fontSize: "17px",
+            fontSize: "24px",
             fontFamily: "open sans",
           }}
         >
-          Schemes 1:
+          {data?.name || "Scheme"}
         </Typography>
-        <Typography
-          sx={{ fontWeight: "700", fontSize: "24px", fontFamily: "open sans" }}
+
+        {/* <Typography
+          sx={{
+            fontWeight: "700",
+            fontSize: "24px",
+            fontFamily: "open sans",
+          }}
         >
-          Turn Daily Savings into Timeless Treasures
-        </Typography>
+          {data?.description || "Turn Daily Savings into Timeless Treasures"}
+        </Typography> */}
+
         <ul
           style={{
             fontFamily: "open sans",
@@ -35,51 +74,85 @@ const Scheme_Card = () => {
             fontSize: "17px",
           }}
         >
-          <li>Save as little as ₹100/day—no limits, no restrictions!</li>
-          <br />
-          <li>Shop anytime with your savings—no waiting, no tenure</li>
-          <br />
+         {benefitsArray.map((point, i) => (
+          <li key={i} style={{ marginBottom: "8px" }}>
+         {point}</li>
+))}
 
-          <li>
-            Get 10% OFF on making charges for gold jewelry, diamond jewelry, and
-            silver articles.
-          </li>
-          <br />
-          <li>Prices based on the prevailing market rate at purchase</li>
+
         </ul>
+
+        {rulesArray.length > 0 && (
+  <>
+    <Typography
+      sx={{
+        fontWeight: "700",
+        fontSize: "18px",
+        marginTop: "16px",
+        fontFamily: "open sans",
+        color: "#A36E29",
+      }}
+    >
+      Rules
+    </Typography>
+
+    <ul
+      style={{
+        fontFamily: "open sans",
+        fontWeight: "600",
+        fontSize: "17px",
+      }}
+    >
+      {rulesArray.map((rule, i) => (
+        <li key={i} style={{ marginBottom: "6px" }}>
+          {rule}
+        </li>
+      ))}
+    </ul>
+  </>
+)}
+
       </CardContent>
-      <Card
+
+      <Box
         style={{
           textAlign: "center",
           backgroundColor: "#F9F5EC",
-          margin: "0px 15px",
-          boxShadow: "none",
-          padding: "15px 0px",
+          marginTop: "auto",
+          // boxShadow: "none",
+          padding: "16px",
         }}
       >
         <Typography>
           Join the{" "}
-          <strong style={{ color: "#A36E29" }}>SadāShrī Jewelkart</strong> Daily
-          Gold Savings
+          <strong style={{ color: "#A36E29" }}>SadāShrī Jewelkart</strong>{" "}
+          {data?.name || "Gold Savings"}
         </Typography>
         <Typography>Scheme Today</Typography>
         <Typography>
           <strong style={{ color: "#A36E29" }}>Save Now.</strong> Shine Forever
         </Typography>
-      </Card>
-      <CardActions
+      </Box>
+
+      <Box
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginLeft: "50px",
+          // marginLeft: "50px",
+          padding:"16px",
         }}
       >
+      
         <ButtonComponent
           buttonText={"Join Now"}
+          onClick={() => {
+            onJoin()
+          }}
           style={{
-            width: "386px",
-            height: "27px",
+            width: "100%",
+            maxWidth: "300px",
+            height: "40px",
             background: "linear-gradient(to right, #A36E29, #E0B872)",
             color: "#fff",
             fontWeight: "600",
@@ -90,11 +163,10 @@ const Scheme_Card = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            //   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-            //transition: "transform 0.2s ease, box-shadow 0.2s ease",
           }}
         />
-      </CardActions>
+       
+      </Box>
     </Card>
   );
 };
