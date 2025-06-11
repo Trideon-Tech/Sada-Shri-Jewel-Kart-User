@@ -43,6 +43,55 @@ const Schemes_form = () => {
       .catch((err) => console.error("Failed to fetch schemes:", err));
   }, []);
 
+  const handleSavings = async () => {
+    let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
+    if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
+      try {
+        const options = {
+          key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+          amount: amount * 100, // Razorpay expects amount in paise
+          currency: "INR",
+          name: "SadāShrī Jewelkart",
+          description: "SadāShrī Jewelkart Daily Gold Savings",
+          handler: async function (response) {
+            console.log(response);
+            const formData = new FormData();
+            formData.append("amount", amount);
+            formData.append("payment_id", response.razorpay_payment_id);
+
+            await axios.post(
+              `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/savings.php`,
+              formData,
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
+
+            toast.success("Payment successful!", generalToastStyle);
+            navigate("/my-account");
+          },
+          theme: {
+            color: "#A36E29",
+          },
+        };
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } catch (error) {
+        toast.error(
+          error.response?.data?.message || "Payment failed",
+          generalToastStyle
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      toast("Amount is less than minimum amount", generalToastStyle);
+    }
+  };
+
   const handlePayment = async () => {
     try {
       // Checking if amount entered is more than minimum amount
@@ -52,6 +101,7 @@ const Schemes_form = () => {
         // Creating Plan
         const formData = new FormData();
         formData.append("amount", amount);
+        formData.append("scheme", selectedPlan);
 
         let plan = await axios.post(
           `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/plan.php`,
@@ -527,7 +577,7 @@ const Schemes_form = () => {
                 ) : (
                   <ButtonComponent
                     buttonText={"Start Now"}
-                    onClick={handlePayment}
+                    onClick={selectedPlan == 3 ? handleSavings : handlePayment}
                     style={{
                       width: "250px",
                       height: "40px",
