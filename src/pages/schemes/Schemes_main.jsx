@@ -25,7 +25,7 @@ const Schemes_main = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.sadashrijewelkart.com/v1.0.0/user/schemes/all.php")
+      .get(`${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/all.php`)
       .then((response) => {
         setCard(response.data.response);
       })

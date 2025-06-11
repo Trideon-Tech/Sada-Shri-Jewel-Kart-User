@@ -1,108 +1,153 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import {
   Box,
+  Card,
   CardActions,
   CardContent,
+  InputAdornment,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import ringLogo from "../../assets/images/2 1.svg";
-import Navbar from "../../components/navbar/navbar.component";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { Card } from "@mui/material";
-import ButtonComponent from "../../components/button/button.component";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import ringLogo from "../../assets/images/2 1.svg";
 import scheme_steps from "../../assets/images/scheme_steps.png";
-import { useTheme, useMediaQuery } from "@mui/material";
-import { InputAdornment } from "@mui/material";
-
+import ButtonComponent from "../../components/button/button.component";
+import Navbar from "../../components/navbar/navbar.component";
+import { generalToastStyle } from "../../utils/toast.styles";
 
 const Schemes_form = () => {
-  const [selectedPlan, setSelectedPlan] = useState("");
   const [amount, setAmount] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-   const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const planId = searchParams[0].get("plan");
+  const [selectedPlan, setSelectedPlan] = useState(planId);
+  const [schemes, setSchemes] = useState([]);
 
-// added the function for local conn
-  const handleStartScheme = async () => {
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/start-scheme`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: 10000, 
-      }),
-    });
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/all.php`)
+      .then((response) => {
+        setSchemes(response.data.response);
+      })
+      .catch((err) => console.error("Failed to fetch schemes:", err));
+  }, []);
 
-    
+  const handlePayment = async () => {
+    try {
+      // Checking if amount entered is more than minimum amount
+      let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
+      if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
+        // Creating Plan
+        const formData = new FormData();
+        formData.append("amount", amount);
 
-    const data = await response.json();
-    console.log("Response:", data);
-    alert("Scheme started successfully!");
-  } catch (error) {
-    console.error("Error starting scheme:", error);
-    alert("Something went wrong. Please try again.");
-  }
-};
+        let plan = await axios.post(
+          `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/plan.php`,
+          formData
+        );
 
-const handlePayment = async () => {
-  
-  try {
-    // 1. Create order by calling PHP
-    const response = await fetch(`${process.env.REACT_APP_API_URL}Sada-Shri-Jewel-Kart-Backend/v1.0.0/scheme/create_order.php`, {
-      
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: Number(amount)}), // change 100 to your amount
-    });
+        let rzp_plan_id = plan.data.data.rzp_plan_id || plan.data.data.id;
 
-    const data = await response.json();
+        // Creating Subscription
+        const subFormData = new FormData();
+        subFormData.append("scheme", selectedPlan);
+        subFormData.append("plan", rzp_plan_id);
 
-    if (!data.order_id) throw new Error("Order not created");
+        let sub = await axios.post(
+          `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/subscribe.php`,
+          subFormData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        let subId = sub.data.data.subscription_id;
+        // Load Razorpay script dynamically
+        const loadRazorpayScript = () => {
+          return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+          });
+        };
 
-    // 2. Open Razorpay popup
-    const options = {
-      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-      amount: data.amount,
-      currency: data.currency,
-      name: "SadāShrī Jewelkart",
-      description: "Gold Scheme",
-      order_id: data.order_id,
-      handler: function (response) {
-        alert("Payment successful!");
-        console.log("Payment ID:", response.razorpay_payment_id);
-        console.log("Order ID:", response.razorpay_order_id);
-        console.log("Signature:", response.razorpay_signature);
+        // Initialize Razorpay after script loads
+        const initRazorpay = async () => {
+          const res = await loadRazorpayScript();
+          if (!res) {
+            alert("Razorpay SDK failed to load");
+            return;
+          }
 
-        // 🔄 Now you can send this to PHP again to save it (optional)
-      },
-    };
+          const options = {
+            key: process.env.REACT_APP_RAZORPAY_KEY,
+            subscription_id: subId,
+            name: "SadāShrī Jewelkart",
+            description: "Monthly Plan Subscription",
+            image: "https://sadashrijewelkart.com/logo.png",
+            handler: async function (response) {
+              console.log(response);
+              const formData = new FormData();
+              formData.append("scheme", selectedPlan);
+              formData.append("plan", rzp_plan_id);
+              formData.append(
+                "subscription_id",
+                response.razorpay_subscription_id
+              );
+              formData.append("signature", response.razorpay_signature);
+              formData.append(
+                "authorizing_payment_id",
+                response.razorpay_payment_id
+              );
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  } catch (error) {
-    alert("Something went wrong");
-    console.error(error);
-  }
-};
+              await axios.post(
+                `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/activate.php`,
+                formData,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              );
 
+              toast("Subscription successful", generalToastStyle);
+            },
+            theme: {
+              color: "#A36E29",
+            },
+          };
 
+          const rzp = new window.Razorpay(options);
+          rzp.open();
+        };
+
+        await initRazorpay();
+      } else {
+        toast("Amount is less than minimum amount", generalToastStyle);
+      }
+    } catch (error) {
+      alert("Something went wrong");
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <Box>
         <Navbar />
       </Box>
-
-
+      <ToastContainer />
 
       {isMobile ? (
         <div>
@@ -132,8 +177,8 @@ const handlePayment = async () => {
               <Typography
                 style={{
                   textAlign: "center",
-                  mt:{xs:0,lg:0},
-                  px:2,
+                  mt: { xs: 0, lg: 0 },
+                  px: 2,
                   fontFamily: "Open Sans",
                   fontWeight: 700,
                   fontSize: "28px",
@@ -192,42 +237,36 @@ const handlePayment = async () => {
               width: "90%",
               maxWidth: "360px",
               margin: "auto",
-              
+
               borderRadius: "12px",
               boxShadow: 3,
               position: "relative",
               top: "-100px",
               //margin:"0px 20px"
             }}
-           >
+          >
             <CardContent sx={{ textAlign: "center", pt: 3 }}>
               <FormControl fullWidth sx={{ mb: 3 }}>
-              
-               <Select
-               value={selectedPlan}
-               onChange={(e) => setSelectedPlan(e.target.value)}
-               displayEmpty
-               sx={{
-                borderRadius: "7px",
-                fontSize: "14px",
-                backgroundColor: "#f9f9f9",
-                }}>
-                
-           <MenuItem value="">
-           Turn Daily Savings into Timeless Treasures
-           </MenuItem>
-           <MenuItem value="plan1">  Plan 1  </MenuItem>
-           <MenuItem value="plan2">  Plan 2 </MenuItem>
-           <MenuItem value="plan3"> Plan 3 </MenuItem>
-           </Select>
-
+                <Select
+                  value={selectedPlan}
+                  onChange={(e) => setSelectedPlan(e.target.value)}
+                  displayEmpty
+                  sx={{
+                    borderRadius: "7px",
+                    fontSize: "14px",
+                    backgroundColor: "#f9f9f9",
+                  }}
+                >
+                  <MenuItem value="">
+                    Turn Daily Savings into Timeless Treasures
+                  </MenuItem>
+                  <MenuItem value="plan1"> Plan 1 </MenuItem>
+                  <MenuItem value="plan2"> Plan 2 </MenuItem>
+                  <MenuItem value="plan3"> Plan 3 </MenuItem>
+                </Select>
               </FormControl>
 
               <FormControl fullWidth sx={{ mb: 3 }}>
-              
-  
-  
-
                 <TextField
                   placeholder="Enter the amount you want"
                   value={amount}
@@ -302,7 +341,7 @@ const handlePayment = async () => {
           <Box
             sx={{
               position: "relative",
-              top:"-200px",
+              top: "-200px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -336,251 +375,221 @@ const handlePayment = async () => {
           </Box>
         </div>
       ) : (
-       <Box>
-  <Box
-  //card is 370px from the top
-    sx={{
-      // minHeight: "60vh",
-      height:"570px",
-      paddingY : 6,
-      backgroundColor: "#F9F5EC",
-      paddingTop: { xs: 2, md: 3 }, 
-      paddingBottom: 6, 
-      // position: "relative",
-      // padding: { xs: "24px", md: "0" },
-    }}
-  >
-    <Box
-      component="img"
-      src={ringLogo}
-      sx={{
-        width: { xs: "150px", sm: "200px", md: "250px", lg: "300px" },
-        position: "relative",
-        left: { xs: "0", sm: "20px", md: "50px", lg: "369px" },
-        margin: { xs: "0 auto", lg: "0" },
-        display: "block",
-      }}
-    />
-
-    <Box
-      sx={{
-        // position: { xs: "relative", lg: "absolute" },
-        // top: { xs: "20px", lg: "100px" },
-        // left: { xs: "0", lg: "531px" },
-        textAlign: "center",
-        // padding: { xs: "0 16px" },
-        // minHeight : "300px",
-        display : "flex",
-        alignItems :"center",
-        justifyContent :"center",
-        flexDirection : "column",
-        px :2,
-        mt:{ xs: 1, lg: 2},
-
-        
-      }}
-    >
-      <Typography
-        sx={{
-          fontFamily: "Open Sans",
-          fontWeight: "700",
-          fontSize: { xs: "24px", sm: "28px", md: "32px", lg: "36px" },
-        }}
-      >
-        Turn Daily Savings into
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Open Sans",
-          fontWeight: "700",
-          fontSize: { xs: "24px", sm: "28px", md: "32px", lg: "36px" },
-          color: "#A36E29",
-        }}
-      >
-        Timeless Treasures
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "Open Sans",
-          fontWeight: "600",
-          fontSize: { xs: "14px", sm: "15px", md: "17px" },
-          color: "#000000B2",
-          mt: 1,
-        }}
-      >
-        Join the SadāShrī Jewelkart Daily Gold Savings Scheme Today
-      </Typography>
-      <Typography sx={{ fontSize: { xs: "14px", sm: "15px" }, mt: 0.5 }}>
-        Save Now. Shine Forever.
-      </Typography>
-    </Box>
-  
-    <Card
-      sx={{
-        width: { xs: "100%", sm: "90%", md: "80%", lg: "710px" },
-        // height: "auto",
-        // position: { xs: "relative", lg: "absolute" },
-        // top: { xs: "40px", lg: "290px" },
-        // left: { xs: "0", lg: "401px" },
-        borderRadius: "12px",
-        marginTop : -8,
-        // margin: { xs: "24px auto 0", lg: 0 },
-        position:"relative",
-        zIndex:1,
-        p: { xs: 2, sm: 3 },
-        mx: "auto",
-      }}
-     >
-      <CardContent sx={{ textAlign: "center" }}>
-        <FormControl sx={{ width: "100%" }}>
-          <Select   value={selectedPlan}
-              onChange={(e) => setSelectedPlan(e.target.value)}
-                    sx={{ borderRadius: "7px" }}
-                    displayEmpty>
-            <MenuItem value="">
-              Turn Daily Savings into Timeless Treasures
-            </MenuItem>
-            <MenuItem>
-              Turn Daily Savings into Timeless Treasures
-            </MenuItem>
-            <MenuItem>
-              Turn Daily Savings into Timeless Treasures
-            </MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl sx={{ width: "100%", mt: 3 }}>
-          <TextField
-            placeholder="Enter the amount you want"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      fontSize: "22px",
-                      fontWeight: 400,
-                      color: "#000",
-                    }}
-                  >
-                    ₹
-                    <span
-                      style={{
-                        fontSize: "35px",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        color: "#000044",
-                        lineHeight: "1",
-                      }}
-                    >
-                      |
-                    </span>
-                  </Box>
-                </InputAdornment>
-              ),
+        <Box>
+          <Box
+            sx={{
+              height: "570px",
+              paddingY: 6,
+              backgroundColor: "#F9F5EC",
+              paddingTop: { xs: 2, md: 3 },
+              paddingBottom: 6,
             }}
-          />
-        </FormControl>
-      </CardContent>
+          >
+            <Box
+              component="img"
+              src={ringLogo}
+              sx={{
+                width: { xs: "150px", sm: "200px", md: "250px", lg: "300px" },
+                position: "relative",
+                left: { xs: "0", sm: "20px", md: "50px", lg: "369px" },
+                margin: { xs: "0 auto", lg: "0" },
+                display: "block",
+              }}
+            />
 
-      <CardActions
-        sx={{
-          mt: 2,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ButtonComponent
-          buttonText={"Start Now"}
-          onClick={handlePayment}
-          style={{
-            width: "250px",
-            height: "40px",
-            background: "linear-gradient(to right, #A36E29, #E0B872)",
-            color: "#fff",
-            fontWeight: "600",
-            fontSize: "16px",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        />
-      </CardActions>
+            <Box
+              sx={{
+                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                px: 2,
+                mt: { xs: 1, lg: 2 },
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "Open Sans",
+                  fontWeight: "700",
+                  fontSize: { xs: "24px", sm: "28px", md: "32px", lg: "36px" },
+                }}
+              >
+                Turn Daily Savings into
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: "Open Sans",
+                  fontWeight: "700",
+                  fontSize: { xs: "24px", sm: "28px", md: "32px", lg: "36px" },
+                  color: "#A36E29",
+                }}
+              >
+                Timeless Treasures
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: "Open Sans",
+                  fontWeight: "600",
+                  fontSize: { xs: "14px", sm: "15px", md: "17px" },
+                  color: "#000000B2",
+                  mt: 1,
+                }}
+              >
+                Join the SadāShrī Jewelkart Daily Gold Savings Scheme Today
+              </Typography>
+              <Typography
+                sx={{ fontSize: { xs: "14px", sm: "15px" }, mt: 0.5 }}
+              >
+                Save Now. Shine Forever.
+              </Typography>
+            </Box>
 
-      <CardContent
-        sx={{
-          mt: 2,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            fontFamily: "Open Sans",
-            fontWeight: "600",
-            fontSize: { xs: "12px", sm: "14px" },
-            textAlign: "center",
-          }}
-        >
-          * Missed an installment or wanna pay your installment?{" "}
-          <strong style={{ color: "#A36E29" }}>Pay Now</strong>
-        </Typography>
-      </CardContent>
-    </Card>
-  </Box>
+            <Card
+              sx={{
+                width: { xs: "100%", sm: "90%", md: "80%", lg: "710px" },
 
-  {/* Second Section (How does it work) */}
-  <Box
-    sx={{
-      // mt: { xs: "48px", lg: "170px" },
-      mt: { xs: "24px", lg: "80px" },
-      textAlign: "center",
-      px: { xs: 2, sm: 4 },
-    }}
-  >
-    <Typography
-      sx={{
-        fontFamily: "Open Sans",
-        fontWeight: "700",
-        fontSize: { xs: "24px", sm: "28px", lg: "32px" },
-        mb: 3,
-        
-      }}
-    >
-      How does it work?
-    </Typography>
+                borderRadius: "12px",
+                marginTop: -8,
+                position: "relative",
+                zIndex: 1,
+                p: { xs: 2, sm: 3 },
+                mx: "auto",
+              }}
+            >
+              <CardContent sx={{ textAlign: "center" }}>
+                <FormControl sx={{ width: "100%" }}>
+                  <Select
+                    value={selectedPlan}
+                    onChange={(e) => setSelectedPlan(e.target.value)}
+                    sx={{ borderRadius: "7px" }}
+                  >
+                    {schemes.map((scheme) => (
+                      <MenuItem key={scheme.id} value={scheme.id}>
+                        {scheme.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-    <Box
-  sx={{
-    mt: { xs: "48px", lg: "170px" },
-    textAlign: "center",
-    px: { xs: 2, sm: 4 },
-    display: "flex",
-    justifyContent: "center", // ✅ CENTERING
-  }}
->
-  <Box
-    component="img"
-    src={scheme_steps}
-    alt="Steps"
-    sx={{
-      width: { xs: "100%", sm: "90%", md: "80%", lg: "1018px" },
-      maxWidth: "100%",
-      height: "auto",
-    }}
-  />
-</Box>
+                <FormControl sx={{ width: "100%", mt: 3 }}>
+                  <TextField
+                    placeholder="Enter the amount you want"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              fontSize: "22px",
+                              fontWeight: 400,
+                              color: "#000",
+                            }}
+                          >
+                            ₹
+                          </Box>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </FormControl>
+              </CardContent>
 
-    />
-  </Box>
-</Box>
+              <CardActions
+                sx={{
+                  mt: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ButtonComponent
+                  buttonText={"Start Now"}
+                  onClick={handlePayment}
+                  style={{
+                    width: "250px",
+                    height: "40px",
+                    background: "linear-gradient(to right, #A36E29, #E0B872)",
+                    color: "#fff",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    border: "none",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
+              </CardActions>
 
+              <CardContent
+                sx={{
+                  mt: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "Open Sans",
+                    fontWeight: "600",
+                    fontSize: { xs: "12px", sm: "14px" },
+                    textAlign: "center",
+                  }}
+                >
+                  * Missed an installment or wanna pay your installment?{" "}
+                  <strong style={{ color: "#A36E29" }}>Pay Now</strong>
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+
+          {/* Second Section (How does it work) */}
+          <Box
+            sx={{
+              // mt: { xs: "48px", lg: "170px" },
+              mt: { xs: "24px", lg: "80px" },
+              textAlign: "center",
+              px: { xs: 2, sm: 4 },
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily: "Open Sans",
+                fontWeight: "700",
+                fontSize: { xs: "24px", sm: "28px", lg: "32px" },
+                mb: 3,
+              }}
+            >
+              How does it work?
+            </Typography>
+            <Box
+              sx={{
+                mt: { xs: "48px", lg: "170px" },
+                textAlign: "center",
+                px: { xs: 2, sm: 4 },
+                display: "flex",
+                justifyContent: "center", // ✅ CENTERING
+              }}
+            >
+              <Box
+                component="img"
+                src={scheme_steps}
+                alt="Steps"
+                sx={{
+                  width: { xs: "100%", sm: "90%", md: "80%", lg: "1018px" },
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
+              />
+            </Box>
+          </Box>
+        </Box>
       )}
     </>
   );
