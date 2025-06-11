@@ -3,6 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  CircularProgress,
   InputAdornment,
   TextField,
   Typography,
@@ -14,7 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ringLogo from "../../assets/images/2 1.svg";
 import scheme_steps from "../../assets/images/scheme_steps.png";
@@ -23,6 +24,7 @@ import Navbar from "../../components/navbar/navbar.component";
 import { generalToastStyle } from "../../utils/toast.styles";
 
 const Schemes_form = () => {
+  const navigate = useNavigate();
   const [amount, setAmount] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -30,6 +32,7 @@ const Schemes_form = () => {
   const planId = searchParams[0].get("plan");
   const [selectedPlan, setSelectedPlan] = useState(planId);
   const [schemes, setSchemes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -45,6 +48,7 @@ const Schemes_form = () => {
       // Checking if amount entered is more than minimum amount
       let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
       if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
+        setIsLoading(true);
         // Creating Plan
         const formData = new FormData();
         formData.append("amount", amount);
@@ -120,8 +124,9 @@ const Schemes_form = () => {
                   },
                 }
               );
-
+              setIsLoading(false);
               toast("Subscription successful", generalToastStyle);
+              navigate("/my-account");
             },
             theme: {
               color: "#A36E29",
@@ -506,24 +511,39 @@ const Schemes_form = () => {
                   alignItems: "center",
                 }}
               >
-                <ButtonComponent
-                  buttonText={"Start Now"}
-                  onClick={handlePayment}
-                  style={{
-                    width: "250px",
-                    height: "40px",
-                    background: "linear-gradient(to right, #A36E29, #E0B872)",
-                    color: "#fff",
-                    fontWeight: "600",
-                    fontSize: "16px",
-                    border: "none",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                />
+                {isLoading ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CircularProgress
+                      style={{ color: "#A36E29", marginRight: "10px" }}
+                    />
+                    <Typography>Processing...</Typography>
+                  </div>
+                ) : (
+                  <ButtonComponent
+                    buttonText={"Start Now"}
+                    onClick={handlePayment}
+                    style={{
+                      width: "250px",
+                      height: "40px",
+                      background: "linear-gradient(to right, #A36E29, #E0B872)",
+                      color: "#fff",
+                      fontWeight: "600",
+                      fontSize: "16px",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  />
+                )}
               </CardActions>
 
               <CardContent
