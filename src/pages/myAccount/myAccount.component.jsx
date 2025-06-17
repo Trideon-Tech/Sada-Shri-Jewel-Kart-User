@@ -12,9 +12,7 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import Navbar from "../../components/navbar/navbar.component";
-
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
 import Slide from "@mui/material/Slide";
 import axios from "axios";
 import { Link, Outlet, useNavigate } from "react-router-dom";
@@ -339,6 +337,22 @@ export default function MyAccount() {
                   Your Wallet
                 </Button>
               </Link>
+
+
+                <Link to={"/my-account/my-schemes"}>
+                <Button
+                  style={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "0.8rem",
+                    fontWeight: "600",
+                    color: "#353535",
+                    padding: 0,
+                    marginTop: "10px",
+                  }}
+                >
+                  My Schemes
+                </Button>
+              </Link>
               <Divider
                 style={{
                   width: "100%",
@@ -346,6 +360,14 @@ export default function MyAccount() {
                   marginBottom: "10%",
                 }}
               />
+              
+              {/* <Divider
+                style={{
+                  width: "100%",
+                  marginTop: "auto",
+                  marginBottom: "10%",
+                }}
+              /> */}
               <Button
                 style={{
                   fontFamily: '"Roboto", sans-serif',

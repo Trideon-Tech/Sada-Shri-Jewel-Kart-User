@@ -29,6 +29,7 @@ import Schemes_main from "./pages/schemes/Schemes_main";
 import Schemes_form from "./pages/schemes/Schemes_form";
 import Schemes_Redeem from "./pages/schemes/Schemes_Redeem";
 import Confirm from "./pages/Confirm"
+import MySchemes from "./pages/MySchemes";
 
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
               <Route path="orders" index element={<Orders />} />
               <Route path="wallet" index element={<Wallet />} />
               <Route path="address" element={<Address />} />
+              <Route path="my-schemes" element={<MySchemes />}/>
               <Route path="" element={<EditProfile />} />
             </Route>
             <Route path="/search-result" element={<SearchResult />} />

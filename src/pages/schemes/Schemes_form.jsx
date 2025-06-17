@@ -22,7 +22,7 @@ import scheme_steps from "../../assets/images/scheme_steps.png";
 import ButtonComponent from "../../components/button/button.component";
 import Navbar from "../../components/navbar/navbar.component";
 import { generalToastStyle } from "../../utils/toast.styles";
-
+import Background from "../../assets/images/22.png";
 const Schemes_form = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState("");
@@ -32,6 +32,7 @@ const Schemes_form = () => {
   const planId = searchParams[0].get("plan");
   const [selectedPlan, setSelectedPlan] = useState(planId);
   const [schemes, setSchemes] = useState([]);
+  const [benefits, setBenefits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -39,61 +40,100 @@ const Schemes_form = () => {
       .get(`${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/all.php`)
       .then((response) => {
         setSchemes(response.data.response);
+        if (planId) {
+        const selectedScheme = response.data.response.find(
+          (scheme) => scheme.id === planId
+        );
+
+        if (selectedScheme) {
+          const parsedBenefits = JSON.parse(selectedScheme.benefits);
+          setBenefits(parsedBenefits);
+        }
+      }
       })
       .catch((err) => console.error("Failed to fetch schemes:", err));
   }, []);
 
   const handleSavings = async () => {
-    let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
-    if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
-      try {
-        const options = {
-          key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-          amount: amount * 100, // Razorpay expects amount in paise
-          currency: "INR",
-          name: "SadāShrī Jewelkart",
-          description: "SadāShrī Jewelkart Daily Gold Savings",
-          handler: async function (response) {
-            console.log(response);
-            const formData = new FormData();
-            formData.append("amount", amount);
-            formData.append("payment_id", response.razorpay_payment_id);
+  let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
 
-            await axios.post(
-              `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/savings.php`,
-              formData,
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            );
+  if (!selectedScheme) {
+    toast("Selected scheme not found", generalToastStyle);
+    return;
+  }
 
-            toast.success("Payment successful!", generalToastStyle);
-            navigate("/my-account");
-          },
-          theme: {
-            color: "#A36E29",
-          },
-        };
+  if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
+    try {
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount: amount * 100,
+        currency: "INR",
+        name: "SadāShrī Jewelkart",
+        description: "SadāShrī Jewelkart Daily Gold Savings",
+        handler: async function (response) {
+          const formData = new FormData();
+          formData.append("amount", amount);
+          formData.append("payment_id", response.razorpay_payment_id);
 
-        const razorpay = new window.Razorpay(options);
-        razorpay.open();
-      } catch (error) {
-        toast.error(
-          error.response?.data?.message || "Payment failed",
-          generalToastStyle
-        );
-      } finally {
-        setIsLoading(false);
+          await axios.post(
+            `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/savings.php`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+
+          toast.success("Payment successful!", generalToastStyle);
+          navigate("/my-account");
+        },
+        theme: {
+          color: "#A36E29",
+        },
+      };
+
+      // ✅ Razorpay script load fix
+      const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+          const script = document.createElement("script");
+          script.src = "https://checkout.razorpay.com/v1/checkout.js";
+          script.onload = () => resolve(true);
+          script.onerror = () => resolve(false);
+          document.body.appendChild(script);
+        });
+      };
+
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        toast.error("Razorpay SDK failed to load", generalToastStyle);
+        return;
       }
-    } else {
-      toast("Amount is less than minimum amount", generalToastStyle);
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Payment failed",
+        generalToastStyle
+      );
+    } finally {
+      setIsLoading(false);
     }
-  };
+  } else {
+    toast("Amount is less than minimum amount", generalToastStyle);
+  }
+};
+
 
   const handlePayment = async () => {
     try {
+      //login check
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please log in to continue.");
+        return;
+      }
       // Checking if amount entered is more than minimum amount
       let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
       if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
@@ -223,7 +263,7 @@ const Schemes_form = () => {
               }}
             >
               <img
-                src={ringLogo}
+                src={Background}
                 alt=""
                 style={{ width: "150px", height: "150px", marginBottom: "5px" }}
               />
@@ -304,7 +344,20 @@ const Schemes_form = () => {
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <Select
                   value={selectedPlan}
-                  onChange={(e) => setSelectedPlan(e.target.value)}
+                  onChange={(e) => {
+  const planId = e.target.value;
+  setSelectedPlan(planId);
+
+  const selectedScheme = schemes.find((scheme) => scheme.id === planId);
+
+  if (selectedScheme) {
+    const parsedBenefits = JSON.parse(selectedScheme.benefits);
+    setBenefits(parsedBenefits);
+  } else {
+    setBenefits([]);
+  }
+}}
+
                   displayEmpty
                   sx={{
                     borderRadius: "7px",
@@ -395,6 +448,130 @@ const Schemes_form = () => {
           </Card>
           <Box
             sx={{
+              mt: { xs: 4, sm: 6 },
+              px: { xs: 2, sm: 4 },
+              display: "flex",
+
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "100%",
+                backgroundColor: "#fff",
+                boxShadow: 1,
+                borderRadius: "12px",
+                p: { xs: 3, sm: 4 },
+              }}
+            >
+              {/* Heading */}
+              <Typography
+                variant="h6"
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "700",
+                  mb: 3,
+                  fontSize: { xs: "24px", sm: "28px", md: "32px" },
+                  fontFamily: "Open Sans",
+                }}
+              >
+                Benefits of Our Scheme
+              </Typography>
+
+              {/* Plan Overview */}
+              <Typography sx={{ fontWeight: 600, mb: 1 }}>
+                Plan Overview:
+              </Typography>
+              <Typography sx={{ fontSize: "14px", mb: 2 }}>
+                The 11 month direct purchase plan allows customers to
+                systematically save and purchase gold jewellery, or silver
+                articles with extra added benefits
+              </Typography>
+
+              {/* Key Features */}
+              <Typography sx={{ fontWeight: 600, mb: 1 }}>
+                Key Features:
+              </Typography>
+              <Box
+                component="ul"
+                sx={{ pl: 2, fontSize: "14px", lineHeight: 1.8 }}
+              >
+                <li>
+                  ✅ Fixed monthly installments for 11 months (minimum ₹1,000
+                  per month).
+                </li>
+                <li>
+                  ✅ Gold & silver prices will be determined at the scheme’s
+                  closing time.
+                </li>
+                <li>
+                  ✅ Gold & Diamond Jewellery: Zero making charges and zero
+                  wastage.
+                </li>
+                <li>
+                  ✅ Silver Articles: Zero making charges, but wastage will be
+                  added as applicable.
+                </li>
+                <li>✅ GST will be applicable on purchases.</li>
+                <li>
+                  ✅ Flexible Installments: If an installment is missed, it will
+                  be postponed to the next month until all 11 installments are
+                  completed.
+                </li>
+              </Box>
+
+              {/* Feature Cards */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  justifyContent: "space-between",
+                  gap: 2,
+                  mt: 4,
+                }}
+              >
+                {[
+                  {
+                    title: "Zero Making Charges",
+                    desc: "On Gold, Silver and Diamond Jewelleries",
+                  },
+                  {
+                    title: "Zero Wastage",
+                    desc: "On Gold and Diamond Jewelleries",
+                  },
+                  {
+                    title: "Flexible Instalment",
+                    desc: "Missed installment shifts to next month automatically.",
+                  },
+                ].map((item, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      flex: 1,
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      p: 2,
+                      backgroundColor: "#fafafa",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontWeight: 600, fontSize: "16px", mb: 1 }}
+                    >
+                      {item.title}
+                    </Typography>
+                    <Typography sx={{ fontSize: "13px", color: "#555" }}>
+                      {item.desc}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
               position: "relative",
               top: "-200px",
               display: "flex",
@@ -433,41 +610,29 @@ const Schemes_form = () => {
         <Box>
           <Box
             sx={{
-              height: "570px",
-              paddingY: 6,
-              backgroundColor: "#F9F5EC",
-              paddingTop: { xs: 2, md: 3 },
-              paddingBottom: 6,
+              height: "600px",
+              backgroundImage: `url(${Background})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              px: { xs: 2, sm: 6, md: 10, lg: 16 },
             }}
           >
-            <Box
-              component="img"
-              src={ringLogo}
-              sx={{
-                width: { xs: "150px", sm: "200px", md: "250px", lg: "300px" },
-                position: "relative",
-                left: { xs: "0", sm: "20px", md: "50px", lg: "369px" },
-                margin: { xs: "0 auto", lg: "0" },
-                display: "block",
-              }}
-            />
-
+            {/* LEFT TEXT BLOCK */}
             <Box
               sx={{
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-                px: 2,
-                mt: { xs: 1, lg: 2 },
+                maxWidth: "480px",
+                color: "#000",
               }}
             >
               <Typography
                 sx={{
                   fontFamily: "Open Sans",
                   fontWeight: "700",
-                  fontSize: { xs: "24px", sm: "28px", md: "32px", lg: "36px" },
+                  fontSize: { xs: "24px", sm: "32px", md: "36px", lg: "40px" },
                 }}
               >
                 Turn Daily Savings into
@@ -476,8 +641,9 @@ const Schemes_form = () => {
                 sx={{
                   fontFamily: "Open Sans",
                   fontWeight: "700",
-                  fontSize: { xs: "24px", sm: "28px", md: "32px", lg: "36px" },
+                  fontSize: { xs: "24px", sm: "32px", md: "36px", lg: "40px" },
                   color: "#A36E29",
+                  mb: 2,
                 }}
               >
                 Timeless Treasures
@@ -486,139 +652,276 @@ const Schemes_form = () => {
                 sx={{
                   fontFamily: "Open Sans",
                   fontWeight: "600",
-                  fontSize: { xs: "14px", sm: "15px", md: "17px" },
+                  fontSize: "16px",
                   color: "#000000B2",
-                  mt: 1,
                 }}
               >
                 Join the SadāShrī Jewelkart Daily Gold Savings Scheme Today
               </Typography>
               <Typography
-                sx={{ fontSize: { xs: "14px", sm: "15px" }, mt: 0.5 }}
+                sx={{
+                  fontFamily: "Open Sans",
+                  fontWeight: "600",
+                  fontSize: "16px",
+                  color: "#000000B2",
+                }}
               >
                 Save Now. Shine Forever.
               </Typography>
             </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+              px: { xs: 2, sm: 4 },
+              mt: { xs: 6, md: 10 },
+              background:
+                "linear-gradient(to bottom,rgb(255, 253, 251),rgb(190, 148, 97))",
 
-            <Card
+              //background: "linear-gradient(to bottom, #f4e2d8, #e7c7a8)", // ✅ Move gradient here
+              py: { xs: 6, sm: 8 }, // ✅ Add padding for spacing
+              width: "100%", 
+            }}
+          >
+            <Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap", // Makes it responsive
+    
+    gap: { xs: 6, sm: 8, md: 12 },
+    mb: { xs: 4, sm: 6 }, // Space below this section
+  }}
+>
+  {/* Left Ring Logo */}
+  <Box
+    component="img"
+    src={ringLogo}
+    alt="Ring Logo Left"
+    sx={{
+       width: { xs: "180px", sm: "220px", md: "260px" },
+      height: "auto",
+    }}
+  />
+
+  {/* Form Card */}
+  <Card
+    sx={{
+      width: { xs: "90%", sm: "500px" }, // Responsive width
+      borderRadius: "12px",
+      boxShadow: 3,
+      backgroundColor: "#fff",
+      p: 3,
+    }}
+  >
+    <CardContent sx={{ textAlign: "center" }}>
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <Select
+          value={selectedPlan}
+          onChange={(e) => {
+  const planId = e.target.value;
+  setSelectedPlan(planId);
+
+  const selectedScheme = schemes.find((scheme) => scheme.id === planId);
+
+  if (selectedScheme) {
+    const parsedBenefits = JSON.parse(selectedScheme.benefits);
+    setBenefits(parsedBenefits);
+  } else {
+    setBenefits([]);
+  }
+}}
+
+          displayEmpty
+          sx={{
+            borderRadius: "8px",
+            backgroundColor: "#f9f9f9",
+            fontSize: "14px",
+          }}
+        >
+          <MenuItem value="">Select Plan</MenuItem>
+          {schemes.map((scheme) => (
+            <MenuItem key={scheme.id} value={scheme.id}>
+              {scheme.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <TextField
+          placeholder="Enter the amount you want"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Box sx={{ fontWeight: 500 }}>₹</Box>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </FormControl>
+
+      <ButtonComponent
+        buttonText={"Start Now"}
+        onClick={selectedPlan === "3" ? handleSavings : handlePayment}
+        style={{
+          width: "100%",
+          height: "50px",
+          background: "linear-gradient(to right, #A36E29, #E0B872)",
+          color: "#fff",
+          fontWeight: "600",
+          fontSize: "14px",
+          borderRadius: "6px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          padding: 0,
+        }}
+      />
+
+      <Typography
+        sx={{
+          mt: 2,
+          fontSize: "12px",
+          color: "#444",
+          fontFamily: "Open Sans",
+          fontWeight: 500,
+        }}
+      >
+        * Missed an installment or want to pay it?{" "}
+        <strong style={{ color: "#A36E29" }}>Pay Now</strong>
+      </Typography>
+    </CardContent>
+  </Card>
+
+  {/* Right Ring Logo */}
+  <Box
+    component="img"
+    src={ringLogo}
+    alt="Ring Logo Right"
+    sx={{
+       width: { xs: "180px", sm: "220px", md: "260px" },
+      height: "auto",
+    }}
+  />
+</Box>
+
+            <Box
               sx={{
-                width: { xs: "100%", sm: "90%", md: "80%", lg: "710px" },
+                mt: { xs: 4, sm: 6 },
+                px: { xs: 2, sm: 4 },
+                display: "flex",
 
-                borderRadius: "12px",
-                marginTop: -8,
-                position: "relative",
-                zIndex: 1,
-                p: { xs: 2, sm: 3 },
-                mx: "auto",
+                justifyContent: "center",
               }}
             >
-              <CardContent sx={{ textAlign: "center" }}>
-                <FormControl sx={{ width: "100%" }}>
-                  <Select
-                    value={selectedPlan}
-                    onChange={(e) => setSelectedPlan(e.target.value)}
-                    sx={{ borderRadius: "7px" }}
-                  >
-                    {schemes.map((scheme) => (
-                      <MenuItem key={scheme.id} value={scheme.id}>
-                        {scheme.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl sx={{ width: "100%", mt: 3 }}>
-                  <TextField
-                    placeholder="Enter the amount you want"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              fontSize: "22px",
-                              fontWeight: 400,
-                              color: "#000",
-                            }}
-                          >
-                            ₹
-                          </Box>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </FormControl>
-              </CardContent>
-
-              <CardActions
+              <Box
                 sx={{
-                  mt: 2,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  width: "100%",
+                  maxWidth: "1600px",
+                  backgroundColor: "#fff",
+                  boxShadow: 1,
+                  borderRadius: "12px",
+                  p: { xs: 3, sm: 4 },
                 }}
               >
-                {isLoading ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      style={{ color: "#A36E29", marginRight: "10px" }}
-                    />
-                    <Typography>Processing...</Typography>
-                  </div>
-                ) : (
-                  <ButtonComponent
-                    buttonText={"Start Now"}
-                    onClick={selectedPlan == 3 ? handleSavings : handlePayment}
-                    style={{
-                      width: "250px",
-                      height: "40px",
-                      background: "linear-gradient(to right, #A36E29, #E0B872)",
-                      color: "#fff",
-                      fontWeight: "600",
-                      fontSize: "16px",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  />
-                )}
-              </CardActions>
-
-              <CardContent
-                sx={{
-                  mt: 2,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                {/* Heading */}
                 <Typography
+                  variant="h6"
                   sx={{
-                    fontFamily: "Open Sans",
-                    fontWeight: "600",
-                    fontSize: { xs: "12px", sm: "14px" },
                     textAlign: "center",
+                    fontWeight: "700",
+                    mb: 3,
+                    fontSize: { xs: "24px", sm: "28px", md: "32px" },
+                    fontFamily: "Open Sans",
                   }}
                 >
-                  * Missed an installment or wanna pay your installment?{" "}
-                  <strong style={{ color: "#A36E29" }}>Pay Now</strong>
+                  Benefits of Our Scheme
                 </Typography>
-              </CardContent>
-            </Card>
-          </Box>
 
+                {/* Plan Overview */}
+                <Typography sx={{ fontWeight: 600, mb: 1 }}>
+                  Plan Overview:
+                </Typography>
+                <Typography sx={{ fontSize: "14px", mb: 2 }}>
+                  The 11 month direct purchase plan allows customers to
+                  systematically save and purchase gold jewellery, or silver
+                  articles with extra added benefits
+                </Typography>
+
+                {/* Key Features */}
+                <Typography sx={{ fontWeight: 600, mb: 1 }}>
+                  Key Features:
+                </Typography>
+                {benefits.length > 0 ? (
+  <Box component="ul" sx={{ pl: 2, fontSize: "14px", lineHeight: 1.8 }}>
+    {benefits.map((benefit, index) => (
+      <li key={index}>✅ {benefit}</li>
+    ))}
+  </Box>
+) : (
+  <Typography sx={{ fontSize: "14px" }}>
+    Select a plan to view its benefits.
+  </Typography>
+)}
+
+
+                {/* Feature Cards */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    justifyContent: "space-between",
+                    gap: 2,
+                    mt: 4,
+                  }}
+                >
+                  {[
+                    {
+                      title: "Zero Making Charges",
+                      desc: "On Gold, Silver and Diamond Jewelleries",
+                    },
+                    {
+                      title: "Zero Wastage",
+                      desc: "On Gold and Diamond Jewelleries",
+                    },
+                    {
+                      title: "Flexible Instalment",
+                      desc: "Missed installment shifts to next month automatically.",
+                    },
+                  ].map((item, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        flex: 1,
+                        border: "1px solid #ccc",
+                        borderRadius: "8px",
+                        p: 2,
+                        backgroundColor: "#fafafa",
+                        textAlign: "center",
+                      }}
+                    >
+                      <Typography
+                        sx={{ fontWeight: 600, fontSize: "16px", mb: 1 }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <Typography sx={{ fontSize: "13px", color: "#555" }}>
+                        {item.desc}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+          
           {/* Second Section (How does it work) */}
           <Box
             sx={{
@@ -640,7 +943,7 @@ const Schemes_form = () => {
             </Typography>
             <Box
               sx={{
-                mt: { xs: "48px", lg: "170px" },
+                mt: { xs: "48px", lg: "90px" },
                 textAlign: "center",
                 px: { xs: 2, sm: 4 },
                 display: "flex",
@@ -658,6 +961,7 @@ const Schemes_form = () => {
                 }}
               />
             </Box>
+          </Box>
           </Box>
         </Box>
       )}
