@@ -89,6 +89,7 @@ export default function PromotionImageList() {
                 borderRadius: "20px",
               }}
               src={process.env.PUBLIC_URL + "/assets/9.webp"}
+              onClick={() => navigate("/schemes")}
             />
           </Grid>
         </Grid>
