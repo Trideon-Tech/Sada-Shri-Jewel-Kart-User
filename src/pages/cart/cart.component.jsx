@@ -2,16 +2,13 @@ import { Close } from "@mui/icons-material";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalOverflow from "@mui/joy/ModalOverflow";
-import { LocalOffer } from "@mui/icons-material";
-import RedeemBox from "./Redeembox.component";
 import {
   Box,
+  Button,
   Card,
   Grid,
   TextField,
   useMediaQuery,
-  Button,
-  Typography,
 } from "@mui/material";
 import axios from "axios";
 import Lottie from "lottie-react";
@@ -23,6 +20,7 @@ import Navbar from "../../components/navbar/navbar.component";
 import CartItem from "./cartItem.component";
 import CartTotal from "./cartTotal.component";
 import emptyCartAnimation from "./empty_cart.json";
+import RedeemBox from "./Redeembox.component";
 
 const CouponCard = ({
   item,
@@ -151,7 +149,7 @@ const Cart = () => {
   const [couponList, setCouponList] = useState(couponList_dummy);
   const [selectedCouponId, setSelectedCouponId] = useState(null);
   const [selectedCouponCode, setSelectedCouponCode] = useState("");
-console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
+  console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
   const getWishListItemsNonAuth = async () => {
     const cartListExists = localStorage.getItem("cart_list");
     console.log(cartListExists, "cartListExists================");
@@ -445,19 +443,19 @@ console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
                       setSelectedCouponCode={setSelectedCouponCode}
                     />
 
-                    
-                    
-<Box sx={{ marginTop: "17rem" }}>
-
-
-<RedeemBox productId={cartItems[0]?.id} />
-
-
-</Box>
+                    <Box sx={{ marginTop: "18vh" }}>
+                      <RedeemBox
+                        productId={
+                          cartItems?.reduce(
+                            (max, item) =>
+                              item.price > max.price ? item : max,
+                            cartItems[0]
+                          )?.id
+                        }
+                      />
+                    </Box>
                   </Box>
-                  
                 </Grid>
-                
               </Grid>
             </Box>
           ) : (
@@ -602,20 +600,11 @@ console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
                         >
                           CHECKOUT
                         </Button>
-                  
-     
-<RedeemBox productId={cartItems[0]?.id} />
 
-
+                        <RedeemBox productId={cartItems[0]?.id} />
                       </Box>
-
-
                     </Grid>
-
-                    
                   </Box>
-
-                  
                 </Grid>
               </Box>
             </>

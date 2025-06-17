@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Button,
-  Typography,
   Dialog,
-  DialogTitle,
   DialogContent,
+  DialogTitle,
   IconButton,
   TextField,
+  Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const RedeemBox = ({ productId }) => {
   const [open, setOpen] = useState(false);
@@ -28,19 +29,17 @@ const RedeemBox = ({ productId }) => {
 
   useEffect(() => {
     if (open && productId) {
-      console.log("🔍 Fetching from:", `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`);
-
-      fetch(
-        `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
+      axios
+        .get(
+          `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          const data = response.data;
           console.log("🟢 Scheme API response:", data);
 
           if (data.success && data.response) {
@@ -56,59 +55,55 @@ const RedeemBox = ({ productId }) => {
     }
   }, [open, productId, jwtToken]);
 
-const handleRedeem = async () => {
-  const token = localStorage.getItem("token");
+  const handleRedeem = async () => {
+    const token = localStorage.getItem("token");
 
-  if (!token || !selectedScheme) return;
+    if (!token || !selectedScheme) return;
 
-  const formData = new FormData();
-  formData.append("scheme", selectedScheme.scheme);
-  formData.append("subscription", selectedScheme.id);
+    const formData = new FormData();
+    formData.append("scheme", selectedScheme.scheme);
+    formData.append("subscription", selectedScheme.id);
 
-  try {
-    // 1. Call redeem API
-    const res = await fetch(
-      "https://api.sadashrijewelkart.com/v1.0.0/user/schemes/redeem.php",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      }
-    );
-
-    const data = await res.json();
-
-    if (data.success === 1) {
-      // 2. Call active.php to refresh the list
-      const refreshed = await fetch(
-        "https://api.sadashrijewelkart.com/v1.0.0/user/schemes/active.php",
+    try {
+      // 1. Call redeem API
+      const res = await axios.post(
+        "https://api.sadashrijewelkart.com/v1.0.0/user/schemes/redeem.php",
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const refreshedData = await refreshed.json();
-      const filtered = (refreshedData.response || []).filter(
-  (scheme) => scheme.status === "ACTIVE"
-);
-setSchemes(filtered);
 
-      
-    } else {
-      alert(data.message || "Redemption failed.");
+      const data = res.data;
+
+      if (data.success === 1) {
+        // 2. Call active.php to refresh the list
+        const refreshed = await axios.get(
+          "https://api.sadashrijewelkart.com/v1.0.0/user/schemes/active.php",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const refreshedData = refreshed.data;
+        const filtered = (refreshedData.response || []).filter(
+          (scheme) => scheme.status === "ACTIVE"
+        );
+        setSchemes(filtered);
+      } else {
+        alert(data.message || "Redemption failed.");
+      }
+    } catch (err) {
+      console.error("❌ Redeem error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      // Close the confirm dialog either way
+      setConfirmDialogOpen(false);
     }
-  } catch (err) {
-    console.error("❌ Redeem error:", err);
-    alert("Something went wrong. Please try again.");
-  } finally {
-    // Close the confirm dialog either way
-    setConfirmDialogOpen(false);
-  }
-};
-
+  };
 
   return (
     <>
@@ -117,7 +112,6 @@ setSchemes(filtered);
           background: "linear-gradient(90deg, #c6943f 0%, #e0b255 100%)",
           borderRadius: "12px",
           padding: "1rem",
-          marginTop: "1.5rem",
           textAlign: "left",
           color: "white",
         }}
@@ -240,7 +234,9 @@ setSchemes(filtered);
                     <Typography sx={{ fontSize: "0.75rem", color: "gray" }}>
                       Start Date : {scheme.start_date?.split(" ")[0] || "N/A"}
                     </Typography>
-                    <Typography sx={{ fontWeight: "bold", fontSize: "0.85rem" }}>
+                    <Typography
+                      sx={{ fontWeight: "bold", fontSize: "0.85rem" }}
+                    >
                       ₹{" "}
                       {parseFloat(scheme.benefit) > 0
                         ? parseFloat(scheme.benefit).toLocaleString("en-IN")
@@ -256,7 +252,9 @@ setSchemes(filtered);
                       padding: "10px",
                     }}
                   >
-                    <Typography sx={{ fontSize: "0.7rem", color: "gray", mb: 1 }}>
+                    <Typography
+                      sx={{ fontSize: "0.7rem", color: "gray", mb: 1 }}
+                    >
                       View More
                     </Typography>
                     <Button
@@ -318,7 +316,7 @@ setSchemes(filtered);
             </Button>
             <Button
               variant="contained"
-              onClick= {handleRedeem}
+              onClick={handleRedeem}
               sx={{
                 background: "linear-gradient(to right, #a36e29, #e0b872)",
                 color: "#fff",
