@@ -151,7 +151,7 @@ const Cart = () => {
   const [couponList, setCouponList] = useState(couponList_dummy);
   const [selectedCouponId, setSelectedCouponId] = useState(null);
   const [selectedCouponCode, setSelectedCouponCode] = useState("");
-console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
+  console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
   const getWishListItemsNonAuth = async () => {
     const cartListExists = localStorage.getItem("cart_list");
     console.log(cartListExists, "cartListExists================");
@@ -445,19 +445,11 @@ console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
                       setSelectedCouponCode={setSelectedCouponCode}
                     />
 
-                    
-                    
-<Box sx={{ marginTop: "17rem" }}>
-
-
-<RedeemBox productId={cartItems[0]?.id} />
-
-
-</Box>
+                    <Box sx={{ marginTop: "17rem" }}>
+                      <RedeemBox productId={cartItems[0]?.id} />
+                    </Box>
                   </Box>
-                  
                 </Grid>
-                
               </Grid>
             </Box>
           ) : (
@@ -602,20 +594,11 @@ console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
                         >
                           CHECKOUT
                         </Button>
-                  
-     
-<RedeemBox productId={cartItems[0]?.id} />
 
-
+                        <RedeemBox productId={cartItems[0]?.id} />
                       </Box>
-
-
                     </Grid>
-
-                    
                   </Box>
-
-                  
                 </Grid>
               </Box>
             </>
