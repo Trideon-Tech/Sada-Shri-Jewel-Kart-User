@@ -39,6 +39,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import DiamondIcon from "@mui/icons-material/Diamond";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -46,7 +47,7 @@ import { WhatsappIcon, WhatsappShareButton } from "react-share";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { generalToastStyle } from "../../utils/toast.styles";
-
+import { ChevronRight, ChevronLeft } from "@mui/icons-material";
 import "./productdetail.styles.scss";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -65,6 +66,17 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Paper } from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import RedeemSchemeDialog from "./RedeemDialogInProdDesc";
+import GoldBrick from "../../assets/images/goldbricksvg.svg"
+import Diamond_icon from "../../assets/images/diamondsvg.svg"
+import promiseicon from "../../assets/images/promisesvg.svg"
+import IGIicon from "../../assets/images/IGI_SVG.svg"
+import GIAicon from "../../assets/images/GIA_SVG.svg"
+import BISicon from "../../assets/images/BIS_SVG.svg"
+import SGLicon from "../../assets/images/SGL_SVG.svg"
+import GSIicon from "../../assets/images/GSI_SVG.svg"
+
+
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -81,7 +93,7 @@ function ProductDetail() {
   const { product } = useParams();
   const navigate = useNavigate();
   const [menuItemName, hashId] = product.split("-");
-const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
+  const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
 
   const location = useLocation();
   const previousLocation = useRef(location.pathname);
@@ -357,6 +369,12 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
   const handleVariantCardClick = (productName, hash, menuItemName) => {
     navigate(`/item/${menuItemName}/${productName}-${hash}`);
     navigate(0);
+  };
+
+  const scrollVariants = (direction) => {
+    const container = document.getElementById("variant-scroll-box");
+    const scrollAmount = 160 * 4; // Scroll 4 cards
+    container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -2398,30 +2416,110 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                 </div>
 
                 <div
-  style={{
-    marginRight: "8vh", // 👈 This is the key fix
-    marginTop: "15px",
-  }}
->
-  <Button
-    variant="contained"
-    fullWidth
-    style={{
-      fontWeight: "bold",
-      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-      fontFamily: '"Roboto", sans-serif',
-      fontSize: "0.9rem",
-      textTransform: "none",
-      borderRadius: "8px",
-      padding: "12px 0",
-      transition: "all 0.3s ease",
-    }}
-    onClick={() => setRedeemDialogOpen(true)}
-  >
-    Redeem My Schemes Now
-  </Button>
-</div>
+                  style={{
+                    marginRight: "8vh",
+                    marginTop: "15px",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    style={{
+                      fontWeight: "bold",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "0.9rem",
+                      textTransform: "none",
+                      borderRadius: "8px",
+                      padding: "12px 0",
+                      transition: "all 0.3s ease",
+                    }}
+                    onClick={() => setRedeemDialogOpen(true)}
+                  >
+                    Redeem My Schemes Now
+                  </Button>
+                </div>
 
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: { xs: "0.9rem", md: "1rem" },
+                    marginTop: "30px",
+                    color: "#666",
+                  }}
+                >
+                  Locate Me
+                </Typography>
+
+                {/* Box 1 - Location Box */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "10px",
+                    backgroundColor: "white",
+                    border: "1px solid #e1e1e1",
+                    padding: "0 12px",
+                    height: "2.5rem",
+                    marginTop: "8px",
+                    marginBottom: "12px",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: "0.8rem",
+                    fontWeight: "bold",
+                    color: "#A36E29",
+                    marginRight: "8vh",
+                    cursor: "pointer",
+                  }}
+                  onClick={openLocationModal}
+                >
+                  <MyLocationIcon
+                    style={{ color: "#a36e29", marginRight: "8px" }}
+                  />
+                  <span
+                    style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {`${city}, ${state}, ${country}`}
+                  </span>
+                </div>
+
+                {/* Box 2 - Delivery Info */}
+                {currentPosition.length > 0 && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "10px",
+                      backgroundColor: "white",
+                      border: "1px solid #e1e1e1",
+                      padding: "0 12px",
+                      height: "2.5rem",
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "0.8rem",
+                      fontWeight: "500",
+                      color: "#444",
+                      marginBottom: "1.5rem",
+                      marginRight: "8vh",
+                    }}
+                  >
+                    <LocalShippingOutlined
+                      style={{ color: "#a36e29", marginRight: "8px" }}
+                    />
+                    <span
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {`Expected Delivery by ${eta}`}
+                    </span>
+                  </div>
+                )}
               </>
             ) : (
               <div
@@ -2460,11 +2558,14 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                 style={{
                   fontFamily: '"Roboto", sans-serif',
                   fontSize: "1rem",
-                  fontWeight: "600",
+                  fontWeight: 600,
                   marginBottom: "-8px",
                 }}
               >
-                Saving Schemes
+                <span style={{ color: "#a36e29", fontWeight: 700 }}>
+                  Save More
+                </span>{" "}
+                !! Join Schemes Now
               </Typography>
 
               <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -2473,479 +2574,163 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
               </Box>
             </Box>
 
-            {productDetail?.product_variants?.length > 0 && (
-              <Box
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "12px",
+                padding: "20px",
+                boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
+                marginTop: "24px",
+                marginRight: "8vh",
+              }}
+            >
+              <Typography
                 sx={{
-                  width: "80%",
-                  p: 3,
-                  border: "1px solid #e1e1e1",
-                  boxShadow: "0px 0px 5px 0px #a36e29",
-                  borderRadius: 2,
-                  marginTop: "20px",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  fontFamily: '"Roboto", sans-serif',
+                  marginBottom: "16px",
+                  marginLeft :"16px",
                 }}
               >
-                <Typography
-                  style={{
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                    marginBottom: "10px",
+                Select Variants
+              </Typography>
+
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "100%" }}
+              >
+                <IconButton
+                  onClick={() => {
+                    const container =
+                      document.getElementById("variant-scroll-box");
+                    const scrollAmount = (140 + 16) * 4;
+                    container.scrollBy({
+                      left: -scrollAmount,
+                      behavior: "smooth",
+                    });
+                  }}
+                    sx={{
+    padding: "4px", // smaller clickable area
+    marginLeft: "-12px", // pull it closer to edge
+  }}
+                >
+                  <ChevronLeft />
+                </IconButton>
+
+                <Box
+                  id="variant-scroll-box"
+                  sx={{
+                    display: "flex",
+                    overflowX: "auto",
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
+                    "&::-webkit-scrollbar": { display: "none" },
+                    gap: 2,
+                    flexGrow: 1,
+                    scrollBehavior: "smooth",
                   }}
                 >
-                  Select Variant
-                </Typography>
-                {productDetail?.product_variants?.length > 0 && (
-                  <Grid container spacing={2}>
-                    {productDetail?.product_variants?.findIndex(
-                      (item) => item.product_id === productDetail.id
-                    ) !== -1 && (
-                      <Grid item xs={12} sm={4}>
-                        <ButtonBase
-                          style={{ width: "100%" }}
-                          onClick={() =>
-                            handleVariantCardClick(
-                              productDetail.name,
-                              productDetail.hash,
-                              menuItemName
-                            )
-                          }
+                  {[productDetail, ...(productDetail?.product_variants || [])]
+                    .filter((item) => item?.id)
+                    .sort((a, b) => a.id - b.id)
+                    .map((item, index) => {
+                      const isActive = item.is_current_product_variant;
+                      const name =
+                        item.master_product_details?.name || item.name;
+                      const hash =
+                        item.master_product_details?.hash || item.hash;
+                      const price =
+                        item.price ||
+                        item?.customizations?.variants?.options?.[0]?.price ||
+                        0;
+
+                      return (
+                        <Box
+                          key={item.id || index}
+                          sx={{
+                            minWidth: "140px",
+                            flexShrink: 0,
+                          }}
                         >
-                          <Paper
-                            sx={{
-                              width: "100%",
-                              p: 2,
-                              textAlign: "center",
-                              borderRadius: 1,
-                              border: !productDetail.is_current_product_variant
-                                ? "1px solid #a36e29"
-                                : "1px solid #e1e1e1",
-                              boxShadow:
-                                !productDetail.is_current_product_variant
-                                  ? "0px 0px 5px 0px #a36e29"
-                                  : "0px 0px 5px 0px #e1e1e1",
-                            }}
-                          >
-                            {truncateText(productDetail.name, 9)}
-                            <Typography
-                              sx={{
-                                fontSize: "0.8rem",
-                                color: "#a36e29",
-                                fontWeight: "bold",
-                                marginTop: "5px",
-                              }}
-                            >
-                              ₹
-                              {parseFloat(
-                                productDetail?.customizations?.variants
-                                  ?.options[0]?.price
-                              ).toFixed(2)}
-                            </Typography>
-                          </Paper>
-                        </ButtonBase>
-                      </Grid>
-                    )}
-                    {productDetail?.product_variants
-                      ?.sort((a, b) => b.id - a.id) // Sort in descending order
-                      .map((item) => (
-                        <Grid item xs={12} sm={4} key={item}>
                           <ButtonBase
                             style={{ width: "100%" }}
                             onClick={() =>
-                              handleVariantCardClick(
-                                item.master_product_details.name,
-                                item.master_product_details.hash,
-                                menuItemName
-                              )
+                              handleVariantCardClick(name, hash, menuItemName)
                             }
                           >
                             <Paper
+                              elevation={isActive ? 4 : 1}
                               sx={{
                                 width: "100%",
-                                p: 2,
-                                textAlign: "center",
-                                borderRadius: 1,
-                                border: item.is_current_product_variant
-                                  ? "1px solid #a36e29"
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                padding: "16px",
+                                borderRadius: "12px",
+                                border: isActive
+                                  ? "2px solid #a36e29"
                                   : "1px solid #e1e1e1",
-                                boxShadow: item.is_current_product_variant
-                                  ? "0px 0px 5px 0px #a36e29"
-                                  : "0px 0px 5px 0px #e1e1e1",
                               }}
                             >
-                              {truncateText(item.name, 9)}
+                              <DiamondIcon
+                                sx={{
+                                  fontSize: 40,
+                                  color: "#a36e29",
+                                  marginBottom: "8px",
+                                }}
+                              />
                               <Typography
                                 sx={{
-                                  width: "100%",
-                                  fontSize: "0.8rem",
-                                  color: "#a36e29",
-                                  fontWeight: "bold",
-                                  marginTop: "5px",
+                                  fontSize: "0.85rem",
+                                  fontWeight: 500,
+                                  fontFamily: '"Roboto", sans-serif',
+                                  color: "#333",
+                                  textAlign: "center",
                                 }}
                               >
-                                ₹{item.price}
+                                {item.name}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: "1rem",
+                                  fontWeight: "bold",
+                                  fontFamily: '"Roboto", sans-serif',
+                                  color: "#a36e29",
+                                  marginTop: "4px",
+                                }}
+                              >
+                                ₹{Number(price).toLocaleString("en-IN")}
                               </Typography>
                             </Paper>
                           </ButtonBase>
-                        </Grid>
-                      ))}
-                  </Grid>
-                )}
+                        </Box>
+                      );
+                    })}
+                </Box>
+
+                <IconButton
+                  onClick={() => {
+                    const container =
+                      document.getElementById("variant-scroll-box");
+                    const scrollAmount = (140 + 16) * 4;
+                    container.scrollBy({
+                      left: scrollAmount,
+                      behavior: "smooth",
+                    });
+                  }}
+                    sx={{
+    padding: "4px",
+    marginRight: "-12px",
+  }}
+
+                >
+                  <ChevronRight />
+                </IconButton>
               </Box>
-            )}
-
-            <Box
-              sx={{
-                width: "80%",
-                p: 3,
-                border: "1px solid #e1e1e1",
-                boxShadow: "0px 0px 5px 0px #a36e29",
-                borderRadius: 2,
-                marginTop: "20px",
-              }}
-            >
-<div
-  style={{
-    marginTop: "0.5rem",
-    borderRadius: "10px",
-    padding: "10px 20px",              // ⬅️ less padding so it fits better
-    fontFamily: '"Roboto", sans-serif',
-    marginBottom: "1rem",
-    wordBreak: "break-word",           // ⬅️ BREAK LONG WORDS!
-    overflowWrap: "break-word",
-    maxWidth: "100%",                  // ⬅️ LIMIT width to container
-    boxSizing: "border-box",           // ⬅️ Count padding inside width
-  }}
->
-  <Typography
-    style={{
-      fontFamily: '"Roboto", sans-serif',
-      fontSize: "1rem",
-      fontWeight: "600",
-      marginBottom: "0.5rem",
-    }}
-  >
-    SadāShrī Jewelkart Promise:
-  </Typography>
-
-  <Typography
-    style={{
-      fontSize: "0.8rem",
-       color: "black",
-      lineHeight: "1.5",
-    }}
-  >
-    At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
-  </Typography>
-</div>
-
-
-<div
-  style={{
-    marginTop: "0.5rem",
-    borderRadius: "10px",
-    padding: "10px",
-    fontFamily: '"Roboto", sans-serif',
-    overflow: "hidden",       // ✅ Prevent children from overflowing
-  }}
->
-  <Grid
-    container
-    spacing={1}
-    sx={{
-      marginTop: "0.5rem",
-      marginBottom: "0.5rem",
-      display: "flex",
-      justifyContent: "space-between",
-    }}
-  >
-    {[17, 3, 2, 1].map((img, index) => (
-      <Grid
-        key={index}
-        item
-        xs={3}
-        sx={{
-          display: "flex",
-          justifyContent: "center", // ✅ Center the image inside
-          alignItems: "center",
-          cursor: "pointer",
-        }}
-        onClick={() =>
-          window.open(
-            [
-              "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
-              "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
-              "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
-              "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
-            ][index],
-            "_blank"
-          )
-        }
-      >
-        <img
-          src={process.env.PUBLIC_URL + `/assets/${img}.svg`}
-          alt={`Icon ${img}`}
-          style={{
-            maxWidth: "60px", // ✅ Use maxWidth and maxHeight instead of fixed sizes
-            maxHeight: "60px",
-            objectFit: "contain",
-          }}
-        />
-      </Grid>
-    ))}
-  </Grid>
-</div>
-
             </Box>
 
-            <Box
-              sx={{
-                width: "80%",
-                p: 3,
-                border: "1px solid #e1e1e1",
-                boxShadow: "0px 0px 5px 0px #a36e29",
-                borderRadius: 2,
-                marginTop: "20px",
-              }}
-            >
-              <div
-                style={{
-                  marginTop: "0.5rem",
-                  borderRadius: "10px",
-                  padding: "10px 10px",
-                  fontFamily: '"Roboto", sans-serif',
-                  width: "26.3rem",
-                }}
-              >
-                {/* Verify Product Credentials */}
 
-                <Typography
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "1rem",
-                    fontWeight: "bold",
-                    marginBottom: "2rem",
-                    marginTop: "0.5rem",
-                    paddingLeft: "1rem",
-                  }}
-                >
-                  Verify Product Credentials
-                </Typography>
-                <Grid
-                  container
-                  spacing={0.5}
-                  xs={11.3}
-                  sx={{
-                    display: "flex",
-                    marginTop: "10px",
-                    marginBottom: "20px",
-                    width: "100%",
-                  }}
-                >
-                  <Grid
-                    item
-                    xs={3}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      if (productDetail.IGI) {
-                        window.open(
-                          productDetail.IGI,
-                          "_blank",
-                          "noopener,noreferrer"
-                        );
-                      }
-                    }}
-                  >
-                    <img
-                      src={process.env.PUBLIC_URL + "/assets/14.svg"}
-                      alt="Delivery Icon"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={3}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      cursor: "pointer",
-                      padding: "10px",
-                    }}
-                    onClick={() => {
-                      if (productDetail.GIA) {
-                        window.open(
-                          productDetail.GIA,
-                          "_blank",
-                          "noopener,noreferrer"
-                        );
-                      }
-                    }}
-                  >
-                    <img
-                      src={process.env.PUBLIC_URL + "/assets/15.svg"}
-                      alt="Delivery Icon"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={3}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      cursor: "pointer",
-                      padding: "10px",
-                    }}
-                    onClick={() => {
-                      if (productDetail.BIS) {
-                        window.open(
-                          productDetail.BIS,
-                          "_blank",
-                          "noopener,noreferrer"
-                        );
-                      }
-                    }}
-                  >
-                    <img
-                      src={process.env.PUBLIC_URL + "/assets/4.svg"}
-                      alt="Delivery Icon"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={3}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      cursor: "pointer",
-                      padding: "10px",
-                    }}
-                    onClick={() => {
-                      if (productDetail.GSI) {
-                        window.open(
-                          productDetail.GSI,
-                          "_blank",
-                          "noopener,noreferrer"
-                        );
-                      }
-                    }}
-                  >
-                    <img
-                      src={process.env.PUBLIC_URL + "/assets/Frame 13.png"}
-                      alt="Delivery Icon"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={3}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      cursor: "pointer",
-                      padding: "10px",
-                    }}
-                    onClick={() => {
-                      if (productDetail.SGL) {
-                        window.open(
-                          productDetail.SGL,
-                          "_blank",
-                          "noopener,noreferrer"
-                        );
-                      }
-                    }}
-                  >
-                    <img
-                      src={process.env.PUBLIC_URL + "/assets/Frame 14.png"}
-                      alt="Delivery Icon"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </div>
-            </Box>
-
-            <Typography
-              sx={{
-                display: "flex",
-                alignItems: "start",
-                color: "#666",
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: "0.8rem",
-                fontWeight: "500",
-                marginTop: "30px",
-              }}
-            >
-              Locate Me
-            </Typography>
-            <div
-              style={{
-                height: "2.5rem",
-                backgroundColor: "white",
-                display: "flex",
-                justifyContent: "flex-start",
-                paddingLeft: "10px",
-                paddingRight: "10px",
-                marginTop: "5px",
-                alignItems: "center",
-                border: "2px solid #e1e1e1",
-                borderRadius: "10px",
-                marginBottom: "20px",
-                fontFamily: '"Roboto", sans-serif',
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-                color: "#A36E29",
-                marginRight: "8vh",
-              }}
-              onClick={openLocationModal}
-            >
-              {`${city}, ${state}, ${country}`}
-            </div>
-
-            {currentPosition.length > 0 ? (
-              <Typography
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <LocalShippingOutlined className="delivery-icon" />
-                <span
-                  style={{
-                    fontFamily: '"Roboto", sans-serif',
-                    fontSize: "0.8rem",
-                    fontWeight: "500",
-                    color: "grey",
-                    marginLeft: "10px",
-                  }}
-                >
-                  {`Free delivery by ${eta}`}
-                </span>
-              </Typography>
-            ) : null}
+{/* Product description box */}
 
             <div
               style={{
@@ -2958,7 +2743,8 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                 paddingBottom: "20px",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+<div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}>
+
                 <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                   Product Description
                 </div>
@@ -2995,7 +2781,7 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                 sx={{
                   marginTop: "20px",
                   borderRadius: "10px",
-                  boxShadow: "0px 0px 5px 0px #a36e29",
+               
                   border: "1px solid #e1e1e1",
                 }}
               >
@@ -3004,9 +2790,12 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
+                <Box display="flex" alignItems="center" gap={1}>
+                  <img src={GoldBrick} alt="gold" style={{ width: 20, height: 20 }} />
                   <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    Metal Details
+                    Gold Details
                   </Typography>
+                  </Box>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Grid container spacing={2} style={{ marginTop: "8px" }}>
@@ -3229,7 +3018,28 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                   </Grid>
                 </AccordionDetails>
               </Accordion>
+              <Accordion
+                sx={{
+                  marginTop: "20px",
+                  borderRadius: "10px",
+           
+                  border: "1px solid #e1e1e1",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                <Box display="flex" alignItems="center" gap={1}>
+                  <img src={Diamond_icon} alt="gold" style={{ width: 20, height: 20 }} />
+                  <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                    Diamond Details
+                  </Typography>
+                  </Box>
+                </AccordionSummary>
 
+              </Accordion>
               {productDetail.customizations?.variants?.options[0]?.stone_info
                 ?.stone_type && (
                 <Accordion
@@ -3432,6 +3242,209 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                 </Accordion>
               )}
             </div>
+
+
+
+
+            <Box
+              sx={{
+                width: "80%",
+                p: 3,
+                border: "1px solid #e1e1e1",
+                
+                borderRadius: 2,
+                marginTop: "20px",
+                 backgroundColor:"white",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: "0.5rem",
+                  borderRadius: "10px",
+                  padding: "10px 20px", //  less padding so it fits better
+                  fontFamily: '"Roboto", sans-serif',
+                  marginBottom: "1rem",
+                  wordBreak: "break-word", //  BREAK LONG WORDS!
+                  overflowWrap: "break-word",
+                  maxWidth: "100%", // LIMIT width to container
+                  boxSizing: "border-box", // Count padding inside width
+                 
+                }}
+              >
+<Box display="flex" alignItems="center" gap={1}>
+  <img
+    src={promiseicon}
+    alt="promiseicon"
+    style={{
+      width: 20,
+      height: 20,
+      position:"relative",
+      top: "-2px", 
+    }}
+  />
+  <Typography
+    style={{
+      fontFamily: '"Roboto", sans-serif',
+      fontSize: "1rem",
+      fontWeight: 600,
+      marginBottom: "0.5rem",
+    }}
+  >
+    SadāShrī Jewelkart Promise:
+  </Typography>
+</Box>
+
+                <Typography
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "black",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  At SadāShrī Jewelkart, we are committed to delivering timeless
+                  elegance and unmatched quality. Our promise is to offer
+                  authentic, certified jewelry and exceptional customer service,
+                  ensuring every purchase brings joy and trust. From carefully
+                  sourced gemstones to exquisite craftsmanship, we strive to
+                  make every moment precious for you.
+                </Typography>
+              </div>
+
+              <div
+                style={{
+                  marginTop: "0.5rem",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  fontFamily: '"Roboto", sans-serif',
+                  overflow: "hidden", // Prevent  overflowing
+                }}
+              >
+                <Grid
+                  container
+                  spacing={1}
+                  sx={{
+                    marginTop: "0.5rem",
+                    marginBottom: "0.5rem",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {[17, 3, 2, 1].map((img, index) => (
+                    <Grid
+                      key={index}
+                      item
+                      xs={3}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center", // Center the image inside
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        window.open(
+                          [
+                            "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                            "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                            "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                            "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                          ][index],
+                          "_blank"
+                        )
+                      }
+                    >
+                      <img
+                        src={process.env.PUBLIC_URL + `/assets/${img}.svg`}
+                        alt={`Icon ${img}`}
+                        style={{
+                          maxWidth: "60px", // Use maxWidth and maxHeight instead of fixed sizes
+                          maxHeight: "60px",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </div>
+            </Box>
+
+<Box
+  sx={{
+    backgroundColor: "#fff",
+    borderRadius: "12px",
+    padding: "20px",
+    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
+    marginTop: "24px",
+    marginRight: "8vh",
+  }}
+>
+  <Typography
+    sx={{
+      fontSize: "1rem",
+      fontWeight: "bold",
+      fontFamily: '"Roboto", sans-serif',
+      marginBottom: "12px",
+    }}
+  >
+    Certified By
+  </Typography>
+
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      gap: 3,
+      overflowX: "auto",
+      paddingY: 1,
+      paddingX: 1,
+      alignItems: "flex-start", // align to top
+      scrollbarWidth: "none",
+      msOverflowStyle: "none",
+      "&::-webkit-scrollbar": { display: "none" },
+    }}
+  >
+    {[
+      { key: "IGI", img: IGIicon },
+      { key: "GIA", img: GIAicon },
+      { key: "BIS", img: BISicon },
+      { key: "GSI", img: GSIicon },
+      { key: "SGL", img: SGLicon },
+    ].map(({ key, img, label }) => (
+      <Box
+        key={key}
+        onClick={() => {
+          if (productDetail?.[key]) {
+            window.open(
+              productDetail[key],
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }
+        }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          cursor: "pointer",
+        }}
+      >
+        <img
+          src={process.env.PUBLIC_URL + img}
+          alt={`${key} Icon`}
+          style={{
+            width: "60px",
+            height: "60px",
+            objectFit: "contain",
+            marginBottom: "4px",
+          }}
+        />
+        {/* optional label below image */}
+      </Box>
+    ))}
+  </Box>
+</Box>
+
+
+
           </Grid>
         </Grid>
 
@@ -3898,11 +3911,14 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                   style={{
                     fontFamily: '"Roboto", sans-serif',
                     fontSize: "1rem",
-                    fontWeight: "600",
+                    fontWeight: 600,
                     marginBottom: "-8px",
                   }}
                 >
-                  Saving Schemes
+                  <span style={{ color: "#a36e29", fontWeight: 700 }}>
+                    Save More
+                  </span>{" "}
+                  !! Join Schemes Now
                 </Typography>
 
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -3922,168 +3938,178 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                     boxShadow: "0px 0px 5px 0px #a36e29",
                   }}
                 >
-                  <Grid container spacing={2} style={{ display: "flex" }}>
-                    <Typography
-                      style={{
-                        fontSize: "1rem",
-                        fontWeight: "600",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      Select Variant
-                    </Typography>
-                    {productDetail?.product_variants?.length > 0 && (
-                      <Grid container spacing={2}>
-                        {productDetail?.product_variants?.map((item) => (
-                          <Grid
-                            item
-                            xs={6}
-                            sm={4}
-                            key={item}
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              flexDirection: "row",
-                            }}
-                          >
-                            <ButtonBase
-                              onClick={() =>
-                                handleVariantCardClick(
-                                  item.master_product_details.name,
-                                  item.master_product_details.hash,
-                                  menuItemName
-                                )
-                              }
-                            >
-                              <Paper
-                                sx={{
-                                  p: 2,
-                                  textAlign: "center",
-                                  borderRadius: 1,
-                                  border: item.is_current_product_variant
-                                    ? "1px solid #a36e29"
-                                    : "1px solid #e1e1e1",
-                                  boxShadow: item.is_current_product_variant
-                                    ? "0px 0px 5px 0px #a36e29"
-                                    : "0px 0px 5px 0px #e1e1e1",
-                                }}
-                              >
-                                {item.name}
-                                <Typography
-                                  sx={{
-                                    fontSize: "0.8rem",
-                                    color: "#a36e29",
-                                    fontWeight: "bold",
-                                    marginTop: "5px",
-                                  }}
-                                >
-                                  ₹{item.price}
-                                </Typography>
-                              </Paper>
-                            </ButtonBase>
-                          </Grid>
-                        ))}
-                        {productDetail?.product_variants?.length > 0 && (
-                          <Grid
-                            item
-                            xs={12}
-                            sm={4}
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              flexDirection: "row",
-                            }}
-                          >
-                            <ButtonBase
-                              onClick={() =>
-                                handleVariantCardClick(
-                                  productDetail?.master_product_details.name,
-                                  productDetail?.master_product_details.hash,
-                                  menuItemName
-                                )
-                              }
-                            >
-                              <Paper
-                                sx={{
-                                  p: 2,
-                                  textAlign: "center",
-                                  borderRadius: 1,
-                                  border: "1px solid #e1e1e1",
-                                  boxShadow: "0px 0px 5px 0px #e1e1e1",
-                                }}
-                              >
-                                {
-                                  productDetail?.product_variants[0]
-                                    ?.master_product_details.name
-                                }
-                                <Typography
-                                  sx={{
-                                    fontSize: "0.8rem",
-                                    color: "#a36e29",
-                                    fontWeight: "bold",
-                                    marginTop: "5px",
-                                  }}
-                                >
-                                  ₹
-                                  {
-                                    productDetail?.product_variants[0]
-                                      ?.master_product_details.price
-                                  }
-                                </Typography>
-                              </Paper>
-                            </ButtonBase>
-                          </Grid>
-                        )}
-                        {productDetail?.product_variants?.length > 0 && (
-                          <Grid
-                            item
-                            xs={12}
-                            sm={4}
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              flexDirection: "row",
-                            }}
-                          >
-                            <ButtonBase
-                              onClick={() =>
-                                handleVariantCardClick(
-                                  productDetail?.name,
-                                  productDetail?.hash,
-                                  menuItemName
-                                )
-                              }
-                            >
-                              <Paper
-                                sx={{
-                                  p: 2,
-                                  textAlign: "center",
-                                  borderRadius: 1,
-                                  border: "1px solid #e1e1e1",
-                                  boxShadow: "0px 0px 5px 0px #e1e1e1",
-                                }}
-                              >
-                                {productDetail?.product_variants[0]?.name}
-                                <Typography
-                                  sx={{
-                                    fontSize: "0.8rem",
-                                    color: "#a36e29",
-                                    fontWeight: "bold",
-                                    marginTop: "5px",
-                                  }}
-                                >
-                                  ₹{productDetail?.name}
-                                </Typography>
-                              </Paper>
-                            </ButtonBase>
-                          </Grid>
-                        )}
-                      </Grid>
-                    )}
-                  </Grid>
+<Typography
+  style={{
+    fontSize: "1rem",
+    fontWeight: "600",
+    marginBottom: "10px",
+  }}
+>
+  Select Variant
+</Typography>
+
+<Grid container spacing={1.5} style={{ display: "flex" }}>
+  {productDetail?.product_variants?.length > 0 &&
+    productDetail?.product_variants?.map((item) => (
+      <Grid
+        item
+        xs={6}
+        sm={3}
+        md={2.4}
+        key={item}
+        style={{
+          display: "flex",
+          // justifyContent: "center",
+          justifyContent:"flex-start",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <ButtonBase
+          onClick={() =>
+            handleVariantCardClick(
+              item.master_product_details.name,
+              item.master_product_details.hash,
+              menuItemName
+            )
+          }
+        >
+          <Paper
+            sx={{
+              p: 2,
+              textAlign: "center",
+              borderRadius: 1,
+              border: item.is_current_product_variant
+                ? "1px solid #a36e29"
+                : "1px solid #e1e1e1",
+              boxShadow: item.is_current_product_variant
+                ? "0px 0px 5px 0px #a36e29"
+                : "0px 0px 5px 0px #e1e1e1",
+              width: "100%",
+            }}
+          >
+            {item.name}
+            <Typography
+              sx={{
+                fontSize: "0.8rem",
+                color: "#a36e29",
+                fontWeight: "bold",
+                marginTop: "5px",
+              }}
+            >
+              ₹{item.price}
+            </Typography>
+          </Paper>
+        </ButtonBase>
+      </Grid>
+    ))}
+
+  {productDetail?.product_variants?.length > 0 && (
+    <Grid
+      item
+      xs={6}
+      sm={3}
+      md={2.4}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+      }}
+    >
+      <ButtonBase
+        onClick={() =>
+          handleVariantCardClick(
+            productDetail?.master_product_details.name,
+            productDetail?.master_product_details.hash,
+            menuItemName
+          )
+        }
+      >
+        <Paper
+          sx={{
+            p: 2,
+            textAlign: "center",
+            borderRadius: 1,
+            border: "1px solid #e1e1e1",
+            boxShadow: "0px 0px 5px 0px #e1e1e1",
+            width: "100%",
+          }}
+        >
+          {
+            productDetail?.product_variants[0]?.master_product_details
+              .name
+          }
+          <Typography
+            sx={{
+              fontSize: "0.8rem",
+              color: "#a36e29",
+              fontWeight: "bold",
+              marginTop: "5px",
+            }}
+          >
+            ₹
+            {
+              productDetail?.product_variants[0]?.master_product_details
+                .price
+            }
+          </Typography>
+        </Paper>
+      </ButtonBase>
+    </Grid>
+  )}
+
+  {productDetail?.product_variants?.length > 0 && (
+    <Grid
+      item
+      xs={6}
+      sm={3}
+      md={2.4}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+      }}
+    >
+      <ButtonBase
+        onClick={() =>
+          handleVariantCardClick(
+            productDetail?.name,
+            productDetail?.hash,
+            menuItemName
+          )
+        }
+      >
+        <Paper
+          sx={{
+            p: 2,
+            textAlign: "center",
+            borderRadius: 1,
+            border: "1px solid #e1e1e1",
+            boxShadow: "0px 0px 5px 0px #e1e1e1",
+            width: "100%",
+          }}
+        >
+          {productDetail?.product_variants[0]?.name}
+          <Typography
+            sx={{
+              fontSize: "0.8rem",
+              color: "#a36e29",
+              fontWeight: "bold",
+              marginTop: "5px",
+            }}
+          >
+            ₹ {productDetail?.name}
+          </Typography>
+        </Paper>
+      </ButtonBase>
+    </Grid>
+  )}
+</Grid>
+
+
+
                 </Box>
               )}
 
@@ -4097,101 +4123,102 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
                   boxShadow: "0px 0px 5px 0px #a36e29",
                 }}
               >
-<div
-  style={{
-    marginTop: "0.5rem",
-    borderRadius: "10px",
-    padding: "10px 20px",              // ⬅️ less padding so it fits better
-    fontFamily: '"Roboto", sans-serif',
-    marginBottom: "1rem",
-    backgroundColor: "#fff",
-    wordBreak: "break-word",           // ⬅️ BREAK LONG WORDS!
-    overflowWrap: "break-word",
-    maxWidth: "100%",                  // ⬅️ LIMIT width to container
-    boxSizing: "border-box",           // ⬅️ Count padding inside width
-  }}
->
-  <Typography
-    style={{
-      fontFamily: '"Roboto", sans-serif',
-      fontSize: "1rem",
-      fontWeight: "600",
-      marginBottom: "0.5rem",
-    }}
-  >
-    SadāShrī Jewelkart Promise:
-  </Typography>
+                <div
+                  style={{
+                    marginTop: "0.5rem",
+                    borderRadius: "10px",
+                    padding: "10px 20px",
+                    fontFamily: '"Roboto", sans-serif',
+                    marginBottom: "1rem",
+                    backgroundColor: "#fff",
+                    wordBreak: "break-word", // BREAK LONG WORDS!
+                    overflowWrap: "break-word",
+                    maxWidth: "100%",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: "600",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    SadāShrī Jewelkart Promise:
+                  </Typography>
 
-  <Typography
-    style={{
-      fontSize: "0.8rem",
-      color: "grey",
-      lineHeight: "1.5",
-    }}
-  >
-    At SadāShrī Jewelkart, we are committed to delivering timeless elegance and unmatched quality. Our promise is to offer authentic, certified jewelry and exceptional customer service, ensuring every purchase brings joy and trust. From carefully sourced gemstones to exquisite craftsmanship, we strive to make every moment precious for you.
-  </Typography>
-</div>
+                  <Typography
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "grey",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    At SadāShrī Jewelkart, we are committed to delivering
+                    timeless elegance and unmatched quality. Our promise is to
+                    offer authentic, certified jewelry and exceptional customer
+                    service, ensuring every purchase brings joy and trust. From
+                    carefully sourced gemstones to exquisite craftsmanship, we
+                    strive to make every moment precious for you.
+                  </Typography>
+                </div>
 
-
-<div
-  style={{
-    marginTop: "0.5rem",
-    borderRadius: "10px",
-    padding: "10px",
-    fontFamily: '"Roboto", sans-serif',
-    overflow: "hidden",       // ✅ Prevent children from overflowing
-  }}
->
-  <Grid
-    container
-    spacing={1}
-    sx={{
-      marginTop: "0.5rem",
-      marginBottom: "0.5rem",
-      display: "flex",
-      justifyContent: "space-between",
-    }}
-  >
-    {[17, 3, 2, 1].map((img, index) => (
-      <Grid
-        key={index}
-        item
-        xs={3}
-        sx={{
-          display: "flex",
-          justifyContent: "center", // ✅ Center the image inside
-          alignItems: "center",
-          cursor: "pointer",
-        }}
-        onClick={() =>
-          window.open(
-            [
-              "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
-              "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
-              "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
-              "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
-            ][index],
-            "_blank"
-          )
-        }
-      >
-        <img
-          src={process.env.PUBLIC_URL + `/assets/${img}.svg`}
-          alt={`Icon ${img}`}
-          style={{
-            maxWidth: "60px", // ✅ Use maxWidth and maxHeight instead of fixed sizes
-            maxHeight: "60px",
-            objectFit: "contain",
-          }}
-        />
-      </Grid>
-    ))}
-  </Grid>
-</div>
-
-               
-                
+                <div
+                  style={{
+                    marginTop: "0.5rem",
+                    borderRadius: "10px",
+                    padding: "10px",
+                    fontFamily: '"Roboto", sans-serif',
+                    overflow: "hidden", // Prevent  overflowing
+                  }}
+                >
+                  <Grid
+                    container
+                    spacing={1}
+                    sx={{
+                      marginTop: "0.5rem",
+                      marginBottom: "0.5rem",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {[17, 3, 2, 1].map((img, index) => (
+                      <Grid
+                        key={index}
+                        item
+                        xs={3}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center", // Center the image inside
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          window.open(
+                            [
+                              "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-jewelry-certification-and-quality-policy/",
+                              "https://blogs.sadashrijewelkart.com/lifetime-buy-back-exchange-and-15-day-return-policy/",
+                              "https://blogs.sadashrijewelkart.com/lifetime-buy-back-and-exchange-policy/",
+                              "https://blogs.sadashrijewelkart.com/sadashri-jewelkart-diamond-and-gemstone-certification-policy/",
+                            ][index],
+                            "_blank"
+                          )
+                        }
+                      >
+                        <img
+                          src={process.env.PUBLIC_URL + `/assets/${img}.svg`}
+                          alt={`Icon ${img}`}
+                          style={{
+                            maxWidth: "60px", // Use maxWidth and maxHeight instead of fixed sizes
+                            maxHeight: "60px",
+                            objectFit: "contain",
+                          }}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </div>
               </div>
               <div
                 style={{
@@ -5008,10 +5035,9 @@ const [redeemDialogOpen, setRedeemDialogOpen] = useState(false);
               >
                 <ArrowBackIcon />
                 <RedeemSchemeDialog
-  open={redeemDialogOpen}
-  onClose={() => setRedeemDialogOpen(false)}
-/>
-
+                  open={redeemDialogOpen}
+                  onClose={() => setRedeemDialogOpen(false)}
+                />
               </IconButton>
               <IconButton
                 className="scroll-btn right"

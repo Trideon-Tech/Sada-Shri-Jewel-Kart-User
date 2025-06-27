@@ -104,7 +104,7 @@ function App() {
             <Route path="/schemes" element={<Schemes_main />} />
             <Route path="/schemes/form" element={<Schemes_form />} />
             <Route path="/schemes/redeem" element={<Schemes_Redeem />} />
-            {/* <Route path="/src/pages/Confirm.jsx" element={<Confirm />}/> */}
+            <Route path="/src/pages/Confirm.jsx" element={<Confirm />}/>
           </Routes>
         </BrowserRouter>
       </RefreshProvider>
