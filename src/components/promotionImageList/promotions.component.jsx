@@ -89,7 +89,7 @@ export default function PromotionImageList() {
                 borderRadius: "20px",
               }}
               src={process.env.PUBLIC_URL + "/assets/9.webp"}
-              onClick={() => navigate("/schemes")}
+              onClick={() => navigate("/my-account/my-schemes")}
             />
           </Grid>
         </Grid>
@@ -126,37 +126,41 @@ export default function PromotionImageList() {
               }}
             >
               <img
-                style={{
-                  width: "100%",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  height: "32%",
-                  objectFit: "cover",
-                }}
-                src={process.env.PUBLIC_URL + "/assets/22.webp"}
-              />
+  style={{
+    width: "100%",
+    borderRadius: "20px",
+    cursor: "pointer",
+    height: "32%",
+    objectFit: "cover",
+  }}
+  src={process.env.PUBLIC_URL + "/assets/22.webp"}
+  onClick={() => navigate("/schemes/form?plan=1")}
+/>
 
-              <img
-                style={{
-                  width: "100%",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  height: "32%",
-                  objectFit: "cover",
-                }}
-                src={process.env.PUBLIC_URL + "/assets/23.webp"}
-              />
+<img
+  style={{
+    width: "100%",
+    borderRadius: "20px",
+    cursor: "pointer",
+    height: "32%",
+    objectFit: "cover",
+  }}
+  src={process.env.PUBLIC_URL + "/assets/23.webp"}
+  onClick={() => navigate("/schemes/form?plan=2")}
+/>
 
-              <img
-                style={{
-                  width: "100%",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  height: "32%",
-                  objectFit: "cover",
-                }}
-                src={process.env.PUBLIC_URL + "/assets/24.webp"}
-              />
+<img
+  style={{
+    width: "100%",
+    borderRadius: "20px",
+    cursor: "pointer",
+    height: "32%",
+    objectFit: "cover",
+  }}
+  src={process.env.PUBLIC_URL + "/assets/24.webp"}
+  onClick={() => navigate("/schemes/form?plan=3")}
+/>
+
             </Box>
           </Grid>
         </Grid>

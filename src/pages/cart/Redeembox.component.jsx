@@ -117,7 +117,7 @@ const RedeemBox = ({ productId }) => {
           background: "linear-gradient(90deg, #c6943f 0%, #e0b255 100%)",
           borderRadius: "12px",
           padding: "1rem",
-          marginTop: "1.5rem",
+          marginTop: "60px",
           textAlign: "left",
           color: "white",
         }}

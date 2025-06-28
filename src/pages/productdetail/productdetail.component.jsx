@@ -2436,7 +2436,7 @@ function ProductDetail() {
                     }}
                     onClick={() => setRedeemDialogOpen(true)}
                   >
-                    Redeem My Schemes Now
+                    Redeem My Schemes
                   </Button>
                 </div>
 
@@ -5037,6 +5037,7 @@ function ProductDetail() {
                 <RedeemSchemeDialog
                   open={redeemDialogOpen}
                   onClose={() => setRedeemDialogOpen(false)}
+                  productDetail = {productDetail}
                 />
               </IconButton>
               <IconButton

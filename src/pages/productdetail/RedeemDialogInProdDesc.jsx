@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
   Box,
@@ -13,7 +12,96 @@ import {
   Paper,
 } from "@mui/material";
 
-const RedeemSchemeDialog = ({ open, onClose }) => {
+const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
+  const [benefitAmount, setBenefitAmount] = useState(0);
+  const [rates, setRates] = useState({});
+  const [metalAmount, setMetalAmount] = useState(0);
+  const [stoneAmount, setStoneAmount] = useState(0);
+  const [makingCharges, setMakingCharges] = useState(0);
+  const [gstAmount, setGstAmount] = useState(0);
+  const [gstPerc, setGstPerc] = useState(0);
+  const [hallmarkCharge, setHallmarkCharge] = useState(0);
+  const [rodiumCharge, setRodiumCharge] = useState(0);
+
+  const productId = productDetail?.id || 583;
+  const jwtToken = localStorage.getItem("token");
+
+  const metalInfo = productDetail?.customizations?.variants?.options?.[0]?.metal_info || {};
+  const stoneInfo = productDetail?.customizations?.variants?.options?.[0]?.stone_info || {};
+console.log("🧪 Rate for", metalInfo.quality, "=", rates[metalInfo.quality]);
+console.log("📦 Metal Info:", metalInfo);
+
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/v1.0.0/user/landing.php`)
+      .then((res) => res.json())
+      .then((data) => {
+        setRates(data?.response?.jewellery_inventory || {});
+      })
+      .catch((err) => {
+        console.error("Failed to fetch rates", err);
+        setRates({});
+      });
+  }, []);
+
+  useEffect(() => {
+    if (open && productId) {
+      fetch(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.response?.length > 0) {
+            const benefit = parseFloat(data.response[0].benefit || "0");
+            setBenefitAmount(benefit);
+          } else {
+            setBenefitAmount(0);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to fetch benefit amount", err);
+          setBenefitAmount(0);
+        });
+    }
+  }, [open, productId, jwtToken]);
+
+  useEffect(() => {
+    if (!metalInfo || !rates || !metalInfo.quality) return;
+
+    const rate = rates[metalInfo.quality] || 0;
+    const grossWt = parseFloat(metalInfo.gross_wt || 0);
+    const stoneWt = parseFloat(metalInfo.stone_wt || 0);
+    const netWeight = grossWt - stoneWt;
+    const wastagePerc = parseFloat(metalInfo.wastage_prec || 0);
+    const wastageWeight = netWeight * (wastagePerc / 100);
+    const netWeightAfterWastage = netWeight + wastageWeight;
+
+    const baseMetalAmount = netWeightAfterWastage * rate;
+    const makingChargeValue = parseFloat(metalInfo.making_charge_value || 0);
+    const makingChargeAmount = (baseMetalAmount * makingChargeValue) / 100;
+    const hallmark = parseFloat(metalInfo.hallmark_charge || 0);
+    const rodium = parseFloat(metalInfo.rodium_charge || 0);
+    const stoneAmt = parseFloat(metalInfo.stone_amount || 0);
+    const gstPercent = parseFloat(metalInfo.gst_perc || 0);
+
+    const gstBase =
+      baseMetalAmount + makingChargeAmount + hallmark + rodium + stoneAmt;
+    const gstFinal = (gstBase * gstPercent) / 100;
+
+    setMetalAmount(baseMetalAmount);
+    setStoneAmount(stoneAmt);
+    setMakingCharges(makingChargeAmount);
+    setHallmarkCharge(hallmark);
+    setRodiumCharge(rodium);
+    setGstAmount(gstFinal);
+    setGstPerc(gstPercent);
+  }, [metalInfo, rates]);
+
   const schemes = [
     { id: "SCH001", name: "Scheme Name", value: "₹80000", disabled: false },
     { id: "SCH002", name: "Scheme Name", value: "Save ₹800", disabled: true },
@@ -22,12 +110,10 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box p={2}>
-        {/* Title */}
         <Typography variant="h6" align="center" fontWeight="bold" gutterBottom>
           Redeem My Schemes
         </Typography>
 
-        {/* Product Info Row */}
         <Box
           display="flex"
           justifyContent="space-between"
@@ -48,9 +134,7 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
 
         <DialogContent>
           <Grid container spacing={2}>
-            {/* Left Section - Schemes */}
             <Grid item xs={12} md={6}>
-              {/* Add Code */}
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -75,7 +159,6 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
                 </Button>
               </Box>
 
-              {/* Scheme Cards */}
               {schemes.map((scheme, index) => (
                 <Box
                   key={index}
@@ -87,7 +170,6 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
                     boxShadow: 1,
                   }}
                 >
-                  {/* Left Vertical Tag */}
                   <Box
                     sx={{
                       width: "50px",
@@ -112,7 +194,6 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
                     </Typography>
                   </Box>
 
-                  {/* Right Content Block */}
                   <Box
                     sx={{
                       flex: 1,
@@ -140,7 +221,9 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
                         mt={1}
                         fontWeight="bold"
                         sx={{
-                          color: scheme.disabled ? "text.secondary" : "#b27900",
+                          color: scheme.disabled
+                            ? "text.secondary"
+                            : "#b27900",
                         }}
                       >
                         {scheme.value}
@@ -183,30 +266,69 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
                   Price Breakout Details
                 </Typography>
                 <Divider />
-                {[
-                  "Metal Amount",
-                  "Stone Amount",
-                  "Making Charges",
-                  "GST (18%)",
-                  "Schemes Discount",
-                ].map((label, i) => (
-                  <Box
-                    key={i}
-                    display="flex"
-                    justifyContent="space-between"
-                    my={1}
-                  >
-                    <Typography>{label}</Typography>
-                    <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
-                      ₹ 80,000
-                    </Typography>
-                  </Box>
-                ))}
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>Metal Amount</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    ₹ {metalAmount.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>Stone Amount</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    ₹ {stoneAmount.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>Making Charges</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    ₹ {makingCharges.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>Hallmark Charge</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    ₹ {hallmarkCharge.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>Rodium Charge</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    ₹ {rodiumCharge.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>GST ({gstPerc}%)</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    ₹ {gstAmount.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" my={1}>
+                  <Typography>Schemes Discount</Typography>
+                  <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
+                    - ₹ {benefitAmount.toLocaleString("en-IN")}
+                  </Typography>
+                </Box>
+
                 <Divider />
                 <Box display="flex" justifyContent="space-between" mt={2}>
                   <Typography fontWeight="bold">Total Amount</Typography>
                   <Typography fontWeight="bold" sx={{ color: "#a36e29" }}>
-                    ₹ 4,00,000
+                    ₹ {(
+                      metalAmount +
+                      stoneAmount +
+                      makingCharges +
+                      hallmarkCharge +
+                      rodiumCharge +
+                      gstAmount -
+                      benefitAmount
+                    ).toLocaleString("en-IN")}
                   </Typography>
                 </Box>
               </Paper>
@@ -214,7 +336,6 @@ const RedeemSchemeDialog = ({ open, onClose }) => {
           </Grid>
         </DialogContent>
 
-        {/* Bottom CTA */}
         <DialogActions sx={{ justifyContent: "flex-end", px: 3, pb: 2 }}>
           <Button
             onClick={onClose}
