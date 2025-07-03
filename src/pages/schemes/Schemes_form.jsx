@@ -23,8 +23,8 @@ import ButtonComponent from "../../components/button/button.component";
 import Navbar from "../../components/navbar/navbar.component";
 import { generalToastStyle } from "../../utils/toast.styles";
 import Background1 from "../../assets/images/22.png";
-import Background2 from "../../assets/images/23.png";
-import Background3 from "../../assets/images/24.png";
+// import Background2 from "../../assets/images/23.png";
+// import Background3 from "../../assets/images/24.png";
 
 const Schemes_form = () => {
   const navigate = useNavigate();
@@ -35,8 +35,8 @@ const Schemes_form = () => {
   const planId = searchParams[0].get("plan");
   const heroBackgrounds = {
   1: Background1,
-  2: Background2,
-  3: Background3,
+  2: Background1,
+  3: Background1,
 };
 
 const heroImage = heroBackgrounds[parseInt(planId)] || Background1;

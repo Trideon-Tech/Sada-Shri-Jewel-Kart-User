@@ -66,16 +66,14 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Paper } from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import RedeemSchemeDialog from "./RedeemDialogInProdDesc";
-import GoldBrick from "../../assets/images/goldbricksvg.svg"
-import Diamond_icon from "../../assets/images/diamondsvg.svg"
-import promiseicon from "../../assets/images/promisesvg.svg"
-import IGIicon from "../../assets/images/IGI_SVG.svg"
-import GIAicon from "../../assets/images/GIA_SVG.svg"
-import BISicon from "../../assets/images/BIS_SVG.svg"
-import SGLicon from "../../assets/images/SGL_SVG.svg"
-import GSIicon from "../../assets/images/GSI_SVG.svg"
-
-
+import GoldBrick from "../../assets/images/goldbricksvg.svg";
+import Diamond_icon from "../../assets/images/diamondsvg.svg";
+import promiseicon from "../../assets/images/promisesvg.svg";
+import IGIicon from "../../assets/images/IGI_SVG.svg";
+import GIAicon from "../../assets/images/GIA_SVG.svg";
+import BISicon from "../../assets/images/BIS_SVG.svg";
+import SGLicon from "../../assets/images/SGL_SVG.svg";
+import GSIicon from "../../assets/images/GSI_SVG.svg";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -108,6 +106,7 @@ function ProductDetail() {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
+  const [schemeDiscountAmount, setSchemeDiscountAmount] = useState(0);
 
   const [pincode, setPincode] = useState("");
   const [locationModalOpen, setLocationModalOpen] = useState();
@@ -1799,6 +1798,27 @@ function ProductDetail() {
                       - ₹{parseInt(discountAmount || 0)}
                     </Typography>
                   </Box>
+ 
+ <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+  <Typography
+    style={{
+      fontFamily: '"Roboto", sans-serif',
+      fontSize: mediaQuery ? "0.8rem" : "0.85rem",
+      color: "gray",
+    }}
+  >
+    Scheme Discount
+  </Typography>
+  <Typography
+    style={{
+      fontFamily: '"Roboto", sans-serif',
+      fontSize: mediaQuery ? "0.8rem" : "0.85rem",
+      color: "#2e7d32",
+    }}
+  >
+    - ₹{schemeDiscountAmount}
+  </Typography>
+</Box>
 
                   <Divider sx={{ my: 1 }} />
 
@@ -1826,7 +1846,8 @@ function ProductDetail() {
                         (productDetail.customizations?.variants?.options[0]
                           ?.price || 0) -
                         (coinsIsRedeemed ? coinsRedeem : 0) -
-                        (discountAmount || 0)
+                        (discountAmount || 0) -
+                        (schemeDiscountAmount || 0)
                       ).toFixed(2)}
                     </Typography>
                   </Box>
@@ -2590,7 +2611,7 @@ function ProductDetail() {
                   fontWeight: "bold",
                   fontFamily: '"Roboto", sans-serif',
                   marginBottom: "16px",
-                  marginLeft :"16px",
+                  marginLeft: "16px",
                 }}
               >
                 Select Variants
@@ -2609,10 +2630,10 @@ function ProductDetail() {
                       behavior: "smooth",
                     });
                   }}
-                    sx={{
-    padding: "4px", // smaller clickable area
-    marginLeft: "-12px", // pull it closer to edge
-  }}
+                  sx={{
+                    padding: "4px", // smaller clickable area
+                    marginLeft: "-12px", // pull it closer to edge
+                  }}
                 >
                   <ChevronLeft />
                 </IconButton>
@@ -2718,19 +2739,17 @@ function ProductDetail() {
                       behavior: "smooth",
                     });
                   }}
-                    sx={{
-    padding: "4px",
-    marginRight: "-12px",
-  }}
-
+                  sx={{
+                    padding: "4px",
+                    marginRight: "-12px",
+                  }}
                 >
                   <ChevronRight />
                 </IconButton>
               </Box>
             </Box>
 
-
-{/* Product description box */}
+            {/* Product description box */}
 
             <div
               style={{
@@ -2743,8 +2762,13 @@ function ProductDetail() {
                 paddingBottom: "20px",
               }}
             >
-<div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}>
-
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "8px",
+                }}
+              >
                 <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                   Product Description
                 </div>
@@ -2781,7 +2805,7 @@ function ProductDetail() {
                 sx={{
                   marginTop: "20px",
                   borderRadius: "10px",
-               
+
                   border: "1px solid #e1e1e1",
                 }}
               >
@@ -2790,11 +2814,17 @@ function ProductDetail() {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                <Box display="flex" alignItems="center" gap={1}>
-                  <img src={GoldBrick} alt="gold" style={{ width: 20, height: 20 }} />
-                  <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    Gold Details
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <img
+                      src={GoldBrick}
+                      alt="gold"
+                      style={{ width: 20, height: 20 }}
+                    />
+                    <Typography
+                      style={{ fontSize: "1rem", fontWeight: "bold" }}
+                    >
+                      Gold Details
+                    </Typography>
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -3022,7 +3052,7 @@ function ProductDetail() {
                 sx={{
                   marginTop: "20px",
                   borderRadius: "10px",
-           
+
                   border: "1px solid #e1e1e1",
                 }}
               >
@@ -3031,14 +3061,19 @@ function ProductDetail() {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                <Box display="flex" alignItems="center" gap={1}>
-                  <img src={Diamond_icon} alt="gold" style={{ width: 20, height: 20 }} />
-                  <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    Diamond Details
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <img
+                      src={Diamond_icon}
+                      alt="gold"
+                      style={{ width: 20, height: 20 }}
+                    />
+                    <Typography
+                      style={{ fontSize: "1rem", fontWeight: "bold" }}
+                    >
+                      Diamond Details
+                    </Typography>
                   </Box>
                 </AccordionSummary>
-
               </Accordion>
               {productDetail.customizations?.variants?.options[0]?.stone_info
                 ?.stone_type && (
@@ -3243,18 +3278,15 @@ function ProductDetail() {
               )}
             </div>
 
-
-
-
             <Box
               sx={{
                 width: "80%",
                 p: 3,
                 border: "1px solid #e1e1e1",
-                
+
                 borderRadius: 2,
                 marginTop: "20px",
-                 backgroundColor:"white",
+                backgroundColor: "white",
               }}
             >
               <div
@@ -3268,31 +3300,30 @@ function ProductDetail() {
                   overflowWrap: "break-word",
                   maxWidth: "100%", // LIMIT width to container
                   boxSizing: "border-box", // Count padding inside width
-                 
                 }}
               >
-<Box display="flex" alignItems="center" gap={1}>
-  <img
-    src={promiseicon}
-    alt="promiseicon"
-    style={{
-      width: 20,
-      height: 20,
-      position:"relative",
-      top: "-2px", 
-    }}
-  />
-  <Typography
-    style={{
-      fontFamily: '"Roboto", sans-serif',
-      fontSize: "1rem",
-      fontWeight: 600,
-      marginBottom: "0.5rem",
-    }}
-  >
-    SadāShrī Jewelkart Promise:
-  </Typography>
-</Box>
+                <Box display="flex" alignItems="center" gap={1}>
+                  <img
+                    src={promiseicon}
+                    alt="promiseicon"
+                    style={{
+                      width: 20,
+                      height: 20,
+                      position: "relative",
+                      top: "-2px",
+                    }}
+                  />
+                  <Typography
+                    style={{
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "1rem",
+                      fontWeight: 600,
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    SadāShrī Jewelkart Promise:
+                  </Typography>
+                </Box>
 
                 <Typography
                   style={{
@@ -3367,84 +3398,81 @@ function ProductDetail() {
               </div>
             </Box>
 
-<Box
-  sx={{
-    backgroundColor: "#fff",
-    borderRadius: "12px",
-    padding: "20px",
-    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
-    marginTop: "24px",
-    marginRight: "8vh",
-  }}
->
-  <Typography
-    sx={{
-      fontSize: "1rem",
-      fontWeight: "bold",
-      fontFamily: '"Roboto", sans-serif',
-      marginBottom: "12px",
-    }}
-  >
-    Certified By
-  </Typography>
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "12px",
+                padding: "20px",
+                boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.05)",
+                marginTop: "24px",
+                marginRight: "8vh",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  fontFamily: '"Roboto", sans-serif',
+                  marginBottom: "12px",
+                }}
+              >
+                Certified By
+              </Typography>
 
-  <Box
-    sx={{
-      display: "flex",
-      flexDirection: "row",
-      gap: 3,
-      overflowX: "auto",
-      paddingY: 1,
-      paddingX: 1,
-      alignItems: "flex-start", // align to top
-      scrollbarWidth: "none",
-      msOverflowStyle: "none",
-      "&::-webkit-scrollbar": { display: "none" },
-    }}
-  >
-    {[
-      { key: "IGI", img: IGIicon },
-      { key: "GIA", img: GIAicon },
-      { key: "BIS", img: BISicon },
-      { key: "GSI", img: GSIicon },
-      { key: "SGL", img: SGLicon },
-    ].map(({ key, img, label }) => (
-      <Box
-        key={key}
-        onClick={() => {
-          if (productDetail?.[key]) {
-            window.open(
-              productDetail[key],
-              "_blank",
-              "noopener,noreferrer"
-            );
-          }
-        }}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          cursor: "pointer",
-        }}
-      >
-        <img
-          src={process.env.PUBLIC_URL + img}
-          alt={`${key} Icon`}
-          style={{
-            width: "60px",
-            height: "60px",
-            objectFit: "contain",
-            marginBottom: "4px",
-          }}
-        />
-        {/* optional label below image */}
-      </Box>
-    ))}
-  </Box>
-</Box>
-
-
-
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 3,
+                  overflowX: "auto",
+                  paddingY: 1,
+                  paddingX: 1,
+                  alignItems: "flex-start", // align to top
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                  "&::-webkit-scrollbar": { display: "none" },
+                }}
+              >
+                {[
+                  { key: "IGI", img: IGIicon },
+                  { key: "GIA", img: GIAicon },
+                  { key: "BIS", img: BISicon },
+                  { key: "GSI", img: GSIicon },
+                  { key: "SGL", img: SGLicon },
+                ].map(({ key, img, label }) => (
+                  <Box
+                    key={key}
+                    onClick={() => {
+                      if (productDetail?.[key]) {
+                        window.open(
+                          productDetail[key],
+                          "_blank",
+                          "noopener,noreferrer"
+                        );
+                      }
+                    }}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <img
+                      src={process.env.PUBLIC_URL + img}
+                      alt={`${key} Icon`}
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        objectFit: "contain",
+                        marginBottom: "4px",
+                      }}
+                    />
+                    {/* optional label below image */}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
           </Grid>
         </Grid>
 
@@ -3938,178 +3966,175 @@ function ProductDetail() {
                     boxShadow: "0px 0px 5px 0px #a36e29",
                   }}
                 >
-<Typography
-  style={{
-    fontSize: "1rem",
-    fontWeight: "600",
-    marginBottom: "10px",
-  }}
->
-  Select Variant
-</Typography>
+                  <Typography
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: "600",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    Select Variant
+                  </Typography>
 
-<Grid container spacing={1.5} style={{ display: "flex" }}>
-  {productDetail?.product_variants?.length > 0 &&
-    productDetail?.product_variants?.map((item) => (
-      <Grid
-        item
-        xs={6}
-        sm={3}
-        md={2.4}
-        key={item}
-        style={{
-          display: "flex",
-          // justifyContent: "center",
-          justifyContent:"flex-start",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <ButtonBase
-          onClick={() =>
-            handleVariantCardClick(
-              item.master_product_details.name,
-              item.master_product_details.hash,
-              menuItemName
-            )
-          }
-        >
-          <Paper
-            sx={{
-              p: 2,
-              textAlign: "center",
-              borderRadius: 1,
-              border: item.is_current_product_variant
-                ? "1px solid #a36e29"
-                : "1px solid #e1e1e1",
-              boxShadow: item.is_current_product_variant
-                ? "0px 0px 5px 0px #a36e29"
-                : "0px 0px 5px 0px #e1e1e1",
-              width: "100%",
-            }}
-          >
-            {item.name}
-            <Typography
-              sx={{
-                fontSize: "0.8rem",
-                color: "#a36e29",
-                fontWeight: "bold",
-                marginTop: "5px",
-              }}
-            >
-              ₹{item.price}
-            </Typography>
-          </Paper>
-        </ButtonBase>
-      </Grid>
-    ))}
+                  <Grid container spacing={1.5} style={{ display: "flex" }}>
+                    {productDetail?.product_variants?.length > 0 &&
+                      productDetail?.product_variants?.map((item) => (
+                        <Grid
+                          item
+                          xs={6}
+                          sm={3}
+                          md={2.4}
+                          key={item}
+                          style={{
+                            display: "flex",
+                            // justifyContent: "center",
+                            justifyContent: "flex-start",
+                            alignItems: "center",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <ButtonBase
+                            onClick={() =>
+                              handleVariantCardClick(
+                                item.master_product_details.name,
+                                item.master_product_details.hash,
+                                menuItemName
+                              )
+                            }
+                          >
+                            <Paper
+                              sx={{
+                                p: 2,
+                                textAlign: "center",
+                                borderRadius: 1,
+                                border: item.is_current_product_variant
+                                  ? "1px solid #a36e29"
+                                  : "1px solid #e1e1e1",
+                                boxShadow: item.is_current_product_variant
+                                  ? "0px 0px 5px 0px #a36e29"
+                                  : "0px 0px 5px 0px #e1e1e1",
+                                width: "100%",
+                              }}
+                            >
+                              {item.name}
+                              <Typography
+                                sx={{
+                                  fontSize: "0.8rem",
+                                  color: "#a36e29",
+                                  fontWeight: "bold",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                ₹{item.price}
+                              </Typography>
+                            </Paper>
+                          </ButtonBase>
+                        </Grid>
+                      ))}
 
-  {productDetail?.product_variants?.length > 0 && (
-    <Grid
-      item
-      xs={6}
-      sm={3}
-      md={2.4}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-      }}
-    >
-      <ButtonBase
-        onClick={() =>
-          handleVariantCardClick(
-            productDetail?.master_product_details.name,
-            productDetail?.master_product_details.hash,
-            menuItemName
-          )
-        }
-      >
-        <Paper
-          sx={{
-            p: 2,
-            textAlign: "center",
-            borderRadius: 1,
-            border: "1px solid #e1e1e1",
-            boxShadow: "0px 0px 5px 0px #e1e1e1",
-            width: "100%",
-          }}
-        >
-          {
-            productDetail?.product_variants[0]?.master_product_details
-              .name
-          }
-          <Typography
-            sx={{
-              fontSize: "0.8rem",
-              color: "#a36e29",
-              fontWeight: "bold",
-              marginTop: "5px",
-            }}
-          >
-            ₹
-            {
-              productDetail?.product_variants[0]?.master_product_details
-                .price
-            }
-          </Typography>
-        </Paper>
-      </ButtonBase>
-    </Grid>
-  )}
+                    {productDetail?.product_variants?.length > 0 && (
+                      <Grid
+                        item
+                        xs={6}
+                        sm={3}
+                        md={2.4}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <ButtonBase
+                          onClick={() =>
+                            handleVariantCardClick(
+                              productDetail?.master_product_details.name,
+                              productDetail?.master_product_details.hash,
+                              menuItemName
+                            )
+                          }
+                        >
+                          <Paper
+                            sx={{
+                              p: 2,
+                              textAlign: "center",
+                              borderRadius: 1,
+                              border: "1px solid #e1e1e1",
+                              boxShadow: "0px 0px 5px 0px #e1e1e1",
+                              width: "100%",
+                            }}
+                          >
+                            {
+                              productDetail?.product_variants[0]
+                                ?.master_product_details.name
+                            }
+                            <Typography
+                              sx={{
+                                fontSize: "0.8rem",
+                                color: "#a36e29",
+                                fontWeight: "bold",
+                                marginTop: "5px",
+                              }}
+                            >
+                              ₹
+                              {
+                                productDetail?.product_variants[0]
+                                  ?.master_product_details.price
+                              }
+                            </Typography>
+                          </Paper>
+                        </ButtonBase>
+                      </Grid>
+                    )}
 
-  {productDetail?.product_variants?.length > 0 && (
-    <Grid
-      item
-      xs={6}
-      sm={3}
-      md={2.4}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-      }}
-    >
-      <ButtonBase
-        onClick={() =>
-          handleVariantCardClick(
-            productDetail?.name,
-            productDetail?.hash,
-            menuItemName
-          )
-        }
-      >
-        <Paper
-          sx={{
-            p: 2,
-            textAlign: "center",
-            borderRadius: 1,
-            border: "1px solid #e1e1e1",
-            boxShadow: "0px 0px 5px 0px #e1e1e1",
-            width: "100%",
-          }}
-        >
-          {productDetail?.product_variants[0]?.name}
-          <Typography
-            sx={{
-              fontSize: "0.8rem",
-              color: "#a36e29",
-              fontWeight: "bold",
-              marginTop: "5px",
-            }}
-          >
-            ₹ {productDetail?.name}
-          </Typography>
-        </Paper>
-      </ButtonBase>
-    </Grid>
-  )}
-</Grid>
-
-
-
+                    {productDetail?.product_variants?.length > 0 && (
+                      <Grid
+                        item
+                        xs={6}
+                        sm={3}
+                        md={2.4}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <ButtonBase
+                          onClick={() =>
+                            handleVariantCardClick(
+                              productDetail?.name,
+                              productDetail?.hash,
+                              menuItemName
+                            )
+                          }
+                        >
+                          <Paper
+                            sx={{
+                              p: 2,
+                              textAlign: "center",
+                              borderRadius: 1,
+                              border: "1px solid #e1e1e1",
+                              boxShadow: "0px 0px 5px 0px #e1e1e1",
+                              width: "100%",
+                            }}
+                          >
+                            {productDetail?.product_variants[0]?.name}
+                            <Typography
+                              sx={{
+                                fontSize: "0.8rem",
+                                color: "#a36e29",
+                                fontWeight: "bold",
+                                marginTop: "5px",
+                              }}
+                            >
+                              ₹ {productDetail?.name}
+                            </Typography>
+                          </Paper>
+                        </ButtonBase>
+                      </Grid>
+                    )}
+                  </Grid>
                 </Box>
               )}
 
@@ -5037,7 +5062,9 @@ function ProductDetail() {
                 <RedeemSchemeDialog
                   open={redeemDialogOpen}
                   onClose={() => setRedeemDialogOpen(false)}
-                  productDetail = {productDetail}
+                  productDetail={productDetail}
+                    setDrawerOpen={setDrawerOpen}
+                    setSchemeDiscountAmount={setSchemeDiscountAmount}
                 />
               </IconButton>
               <IconButton

@@ -125,6 +125,7 @@ export default function PromotionImageList() {
                 justifyContent: "space-between",
               }}
             >
+            
               <img
   style={{
     width: "100%",

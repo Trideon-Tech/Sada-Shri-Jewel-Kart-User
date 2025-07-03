@@ -5,12 +5,27 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import image from "../../assets/images/22.png";
+import image2 from "../../assets/images/23.png";
+import image3 from "../../assets/images/24.png";
 import ButtonComponent from "../button/button.component";
 
 const Scheme_Card = ({ data, onJoin }) => {
-  console.log("Benefits:", data.benefits);
+  console.log("Scheme Plan:", data);
   let benefitsArray = [];
   let rulesArray = [];
+
+  const getImageForScheme = (id) => {
+    switch (id) {
+      case "1":
+        return image;
+      case "2":
+        return image2;
+      case "3":
+        return image3;
+      default:
+        return image;
+    }
+  };
 
   try {
     if (typeof data.benefits === "string") {
@@ -46,7 +61,11 @@ const Scheme_Card = ({ data, onJoin }) => {
         height: "100%",
       }}
     >
-      <CardMedia sx={{ height: 180 }} image={image} title="scheme image" />
+      <CardMedia
+        sx={{ height: 180 }}
+        image={getImageForScheme(data?.id)}
+        title="scheme image"
+      />
 
       <CardContent>
         <Typography
@@ -110,7 +129,6 @@ const Scheme_Card = ({ data, onJoin }) => {
           textAlign: "center",
           backgroundColor: "#F9F5EC",
           marginTop: "auto",
-          // boxShadow: "none",
           padding: "16px",
         }}
       >
@@ -130,7 +148,6 @@ const Scheme_Card = ({ data, onJoin }) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          // marginLeft: "50px",
           padding: "16px",
         }}
       >
