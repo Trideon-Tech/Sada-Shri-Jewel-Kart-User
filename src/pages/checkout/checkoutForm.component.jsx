@@ -225,6 +225,9 @@ const CheckoutForm = ({ cartItems }) => {
         formData.append("payment_method", "UPI");
         formData.append("wallet_amount", queryParams.get("coins"));
         formData.append("coupon_id", queryParams.get("discount"));
+        if(queryParams.get("schemeId")){
+          formData.append("scheme_id", queryParams.get("schemeId"));
+        }
         axios
           .post(
             `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/payment.php`,
@@ -272,6 +275,9 @@ const CheckoutForm = ({ cartItems }) => {
     formData.append("payment_status", "pending");
     formData.append("coupon_id", queryParams.get("discount"));
     formData.append("wallet_amount", queryParams.get("coins"));
+    if(queryParams.get("schemeId")){
+      formData.append("scheme_id", queryParams.get("schemeId"));
+    }
     const orderList = cartItems?.map((item) => {
       return {
         product_id: parseInt(item.id),

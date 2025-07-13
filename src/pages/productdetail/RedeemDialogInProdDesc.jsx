@@ -11,8 +11,93 @@ import {
   TextField,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+};
+
+const handlePayment = async (order) => {
+  const res = await loadRazorpayScript();
+
+  if (!res) {
+    alert("Razorpay SDK failed to load. Are you online?");
+    return;
+  }
+
+  const options = {
+    key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+    amount: order.amount_due,
+    currency: order.currency,
+    name: "SadaShri Jewel Kart",
+    description: "Order Payment",
+    order_id: order.id,
+    handler: async function (response) {
+      try {
+        const token = localStorage.getItem("token");
+        const paymentPayload = {
+          type: "payment_success",
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature,
+          order_id: order.id,
+          payment_method: "razorpay",
+          wallet_amount: 0,
+          coupon_id: null,
+        };
+
+        const params = new URLSearchParams();
+        for (const key in paymentPayload) {
+          params.append(key, paymentPayload[key]);
+        }
+
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_URL}/v1.0.0/user/orders.php`,
+          params,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+
+        if (data.success) {
+          alert("Payment successful and verified!");
+          // Close the dialog or perform any other UI updates
+        } else {
+          alert("Payment verification failed.");
+        }
+      } catch (err) {
+        console.error("Payment verification error", err);
+        alert("Payment verification failed.");
+      }
+    },
+    prefill: {
+      name: "",
+      email: "",
+      contact: "",
+    },
+    theme: {
+      color: "#a36e29",
+    },
+  };
+
+  const paymentObject = new window.Razorpay(options);
+  paymentObject.open();
+};
 
 const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
   const [rates, setRates] = useState({});
@@ -26,6 +111,7 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
   const [schemes, setSchemes] = useState([]);
   const [redeemedSchemes, setRedeemedSchemes] = useState([]);
 
+  const navigate = useNavigate();
   const productId = productDetail?.id || 583;
   const jwtToken = localStorage.getItem("token");
 
@@ -132,6 +218,26 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
     setGstPerc(gstPercent);
   }, [metalInfo, rates]);
 
+  const buyNow = async () => {
+    const userId = localStorage.getItem("user_id")
+      ? localStorage.getItem("user_id")
+      : -1;
+
+    if (userId !== -1) {
+      navigate(
+        `/checkout?action=buy-now&prod=${productDetail?.name}&hash=${
+          productDetail?.hash
+        }&customization=${
+          productDetail?.customizations?.variants?.options[0]?.id || -1
+        }&discount=${0}&coins=${0}&schemeId=${redeemedSchemes.length > 0 ? redeemedSchemes[0].id : null}`
+      );
+    } else {
+      navigate(
+        `/signin?redirect_to=/item/${productDetail?.category}/${productDetail?.name}-${productDetail?.hash}`
+      );
+    }
+  };
+
   const totalAmount =
     metalAmount +
     stoneAmount +
@@ -164,11 +270,11 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
               ₹{" "}
               {Number(
                 metalAmount +
-                  stoneAmount +
-                  makingCharges +
-                  hallmarkCharge +
-                  rodiumCharge +
-                  gstAmount
+                stoneAmount +
+                makingCharges +
+                hallmarkCharge +
+                rodiumCharge +
+                gstAmount
               ).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
             </strong>
           </Typography>
@@ -364,57 +470,70 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
           </Button>
           <Button
             variant="contained"
-            onClick={async () => {
-              try {
-                const token = localStorage.getItem("token");
-                const userId = localStorage.getItem("user_id");
+            // onClick={async () => {
+            //   try {
+            //     const token = localStorage.getItem("token");
+            //     const userId = localStorage.getItem("user_id");
 
-                if (!token || !userId) {
-                  alert("Please log in to place the order.");
-                  return;
-                }
+            //     if (!token || !userId) {
+            //       alert("Please log in to place the order.");
+            //       return;
+            //     }
 
-                const orderPayload = {
-                  type: "place_order",
-                  user_id: userId,
-                  discount: totalBenefitAmount.toFixed(2),
-                  amount: totalAmount.toFixed(2),
-                  sub_total_amount: (totalAmount + totalBenefitAmount).toFixed(
-                    2
-                  ),
-                  products: [
-                    {
-                      product_id: productDetail?.id,
-                      customization_id:
-                        productDetail?.customizations?.id || null,
-                      quantity: 1,
-                      customizations_requested: null,
-                    },
-                  ],
-                };
+            //     // Prepare ordered products array
+            //     const orderedProducts = [
+            //       {
+            //         product_id: productDetail?.id,
+            //         customization_id:
+            //           productDetail?.customizations?.variants?.options[0]?.id || -1,
+            //         quantity: 1,
+            //         customizations_requested: null,
+            //       },
+            //     ];
 
-                const { data } = await axios.post(
-                  `http://localhost:64159/v1.0.0/user/orders.php`,
-                  orderPayload,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                      "Content-Type": "application/json",
-                    },
-                  }
-                );
+            //     // Prepare order request payload matching backend expectations
+            //     const orderPayload = {
+            //       type: "order_request",
+            //       currency: "INR",
+            //       receipt: `receipt_${Date.now()}`,
+            //       user_address_id: null, // TODO: set user address id if available
+            //       payment_status: "created",
+            //       coupon_id: null,
+            //       wallet_amount: 0,
+            //       ordered_products: JSON.stringify(orderedProducts),
+            //       scheme_id: redeemedSchemes.length > 0 ? redeemedSchemes[0].id : null,
+            //       scheme_amount: totalBenefitAmount.toFixed(2),
+            //     };
 
-                if (data.success) {
-                  alert("Order placed successfully!");
-                  onClose();
-                } else {
-                  alert("Failed to place the order.");
-                }
-              } catch (err) {
-                console.error("Order submission failed", err);
-                alert("Something went wrong. Please try again.");
-              }
-            }}
+            //     const params = new URLSearchParams();
+            //     for (const key in orderPayload) {
+            //       params.append(key, orderPayload[key]);
+            //     }
+
+            //     const { data } = await axios.post(
+            //       `${process.env.REACT_APP_API_URL}/v1.0.0/user/products/payment.php`,
+            //       params,
+            //       {
+            //         headers: {
+            //           Authorization: `Bearer ${token}`,
+            //           "Content-Type": "application/x-www-form-urlencoded",
+            //         },
+            //       }
+            //     );
+
+
+            //     if (data.success) {
+            //       // Call Razorpay payment flow with order details
+            //       await handlePayment(data.response);
+            //     } else {
+            //       alert("Failed to place the order.");
+            //     }
+            //   } catch (err) {
+            //     console.error("Order submission failed", err);
+            //     alert("Something went wrong. Please try again.");
+            //   }
+            // }}
+            onClick={buyNow}
             sx={{
               background: "linear-gradient(to right, #d4a76a, #a36e29)",
               color: "white",

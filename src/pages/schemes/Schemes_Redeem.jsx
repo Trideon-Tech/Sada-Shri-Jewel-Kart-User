@@ -559,29 +559,6 @@ const Schemes_Redeem = ({ onClose }) => {
                   </Typography>
                 </Box>
 
-                {/* Redeem Now Button */}
-                {/* <Box sx={{ position: "relative", top: "25px", left: "180px" }}>
-                  <ButtonComponent
-                    buttonText={"Redeem Now"}
-                    style={{
-                      width: "158px",
-                      height: "27px",
-                      background: "linear-gradient(to right, #A36E29, #E0B872)",
-                      color: "#fff",
-                      fontWeight: "600",
-                      fontSize: "16px",
-                      border: "none",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      position: "relative",
-                      top: "-8px",
-                    }}
-                  />
-                </Box> */}
-
                 {/* Cancel Button */}
                 <Box sx={{ position: "relative", top: "27px", left: "350px" }}>
                   <Button
