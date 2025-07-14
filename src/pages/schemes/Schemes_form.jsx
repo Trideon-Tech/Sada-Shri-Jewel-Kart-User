@@ -18,12 +18,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ringLogo from "../../assets/images/2 1.svg";
-import Background from "../../assets/images/22.png";
+import Background1 from "../../assets/images/22.png";
 import scheme_steps from "../../assets/images/scheme_steps.png";
 import ButtonComponent from "../../components/button/button.component";
 import Navbar from "../../components/navbar/navbar.component";
 import { generalToastStyle } from "../../utils/toast.styles";
-import Background1 from "../../assets/images/22.png";
 // import Background2 from "../../assets/images/23.png";
 // import Background3 from "../../assets/images/24.png";
 
@@ -35,12 +34,12 @@ const Schemes_form = () => {
   const searchParams = useSearchParams();
   const planId = searchParams[0].get("plan");
   const heroBackgrounds = {
-  1: Background1,
-  2: Background1,
-  3: Background1,
-};
+    1: Background1,
+    2: Background1,
+    3: Background1,
+  };
 
-const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
+  const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
 
   const [selectedPlan, setSelectedPlan] = useState(planId);
   const [schemes, setSchemes] = useState([]);
@@ -122,7 +121,6 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
 
               toast.success("Payment successful!", generalToastStyle);
               navigate("/my-account");
-              
             } catch (error) {
               toast.error("Failed to process payment", generalToastStyle);
             }
@@ -136,39 +134,37 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
           },
         };
 
-      // ✅ Razorpay script load fix
-      const loadRazorpayScript = () => {
-        return new Promise((resolve) => {
-          const script = document.createElement("script");
-          script.src = "https://checkout.razorpay.com/v1/checkout.js";
-          script.onload = () => resolve(true);
-          script.onerror = () => resolve(false);
-          document.body.appendChild(script);
-        });
-      };
+        // ✅ Razorpay script load fix
+        const loadRazorpayScript1 = () => {
+          return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+          });
+        };
 
-      const loaded = await loadRazorpayScript();
-      if (!loaded) {
-        toast.error("Razorpay SDK failed to load", generalToastStyle);
-        return;
+        const loaded1 = await loadRazorpayScript1();
+        if (!loaded1) {
+          toast.error("Razorpay SDK failed to load", generalToastStyle);
+          return;
+        }
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+      } catch (error) {
+        toast.error(
+          error.response?.data?.message || "Payment failed",
+          generalToastStyle
+        );
+      } finally {
+        setIsLoading(false);
       }
-
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Payment failed",
-        generalToastStyle
-      );
-    } finally {
-      setIsLoading(false);
+    } else {
+      toast("Amount is less than minimum amount", generalToastStyle);
     }
-  } else {
-    toast("Amount is less than minimum amount", generalToastStyle);
-  }
-};
-
-
+  };
 
   const handlePayment = async () => {
     try {
@@ -659,9 +655,9 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
             sx={{
               height: "600px",
               backgroundImage: `url(${heroImage})`,
-                  backgroundSize: "cover",         // This scales the image to cover the box
-    backgroundPosition: "center",    // This centers the image
-    backgroundRepeat: "no-repeat", 
+              backgroundSize: "cover", // This scales the image to cover the box
+              backgroundPosition: "center", // This centers the image
+              backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",

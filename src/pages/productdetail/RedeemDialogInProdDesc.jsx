@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogActions,
   Box,
-  Typography,
-  Grid,
-  Divider,
   Button,
-  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Divider,
+  Grid,
   Paper,
+  Typography,
 } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -125,10 +124,10 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
     }
   };
 
-  const totalBenefitAmount = redeemedSchemes.reduce(
+  const totalBenefitAmount = Number(redeemedSchemes.reduce(
     (acc, curr) => acc + (curr.raw_benefit || 0),
     0
-  );
+  ).toFixed(2));
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/v1.0.0/user/landing.php`)
@@ -189,25 +188,26 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
   useEffect(() => {
     if (!metalInfo || !rates || !metalInfo.quality) return;
 
-    const rate = rates[metalInfo.quality] || 0;
-    const grossWt = parseFloat(metalInfo.gross_wt || 0);
-    const stoneWt = parseFloat(metalInfo.stone_wt || 0);
-    const netWeight = grossWt - stoneWt;
-    const wastagePerc = parseFloat(metalInfo.wastage_prec || 0);
-    const wastageWeight = netWeight * (wastagePerc / 100);
-    const netWeightAfterWastage = netWeight + wastageWeight;
+    const rate = Number((rates[metalInfo.quality] || 0).toFixed(2));
+    const grossWt = Number((parseFloat(metalInfo.gross_wt || 0)).toFixed(2));
+    const stoneWt = Number((parseFloat(metalInfo.stone_wt || 0)).toFixed(2));
+    const netWeight = Number((grossWt - stoneWt).toFixed(2));
+    const wastagePerc = Number((parseFloat(metalInfo.wastage_prec || 0)).toFixed(2));
+    const wastageWeight = Number((netWeight * (wastagePerc / 100)).toFixed(2));
+    const netWeightAfterWastage = Number((netWeight + wastageWeight).toFixed(2));
 
-    const baseMetalAmount = netWeightAfterWastage * rate;
-    const makingChargeValue = parseFloat(metalInfo.making_charge_value || 0);
-    const makingChargeAmount = (baseMetalAmount * makingChargeValue) / 100;
-    const hallmark = parseFloat(metalInfo.hallmark_charge || 0);
-    const rodium = parseFloat(metalInfo.rodium_charge || 0);
-    const stoneAmt = parseFloat(metalInfo.stone_amount || 0);
-    const gstPercent = parseFloat(metalInfo.gst_perc || 0);
+    const baseMetalAmount = Number((netWeightAfterWastage * rate).toFixed(2));
+    const makingChargeValue = Number((parseFloat(metalInfo.making_charge_value || 0)).toFixed(2));
+    const makingChargeAmount = Number(((baseMetalAmount * makingChargeValue) / 100).toFixed(2));
+    const hallmark = Number((parseFloat(metalInfo.hallmark_charge || 0)).toFixed(2));
+    const rodium = Number((parseFloat(metalInfo.rodium_charge || 0)).toFixed(2));
+    const stoneAmt = Number((parseFloat(metalInfo.stone_amount || 0)).toFixed(2));
+    const gstPercent = Number((parseFloat(metalInfo.gst_perc || 0)).toFixed(2));
 
-    const gstBase =
-      baseMetalAmount + makingChargeAmount + hallmark + rodium + stoneAmt;
-    const gstFinal = (gstBase * gstPercent) / 100;
+    const gstBase = Number((
+      baseMetalAmount + makingChargeAmount + hallmark + rodium + stoneAmt
+    ).toFixed(2));
+    const gstFinal = Number(((gstBase * gstPercent) / 100).toFixed(2));
 
     setMetalAmount(baseMetalAmount);
     setStoneAmount(stoneAmt);
@@ -229,7 +229,9 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
           productDetail?.hash
         }&customization=${
           productDetail?.customizations?.variants?.options[0]?.id || -1
-        }&discount=${0}&coins=${0}&schemeId=${redeemedSchemes.length > 0 ? redeemedSchemes[0].id : null}`
+        }&discount=${0}&coins=${0}&schemeId=${
+          redeemedSchemes.length > 0 ? redeemedSchemes[0].id : null
+        }`
       );
     } else {
       navigate(
@@ -238,14 +240,15 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
     }
   };
 
-  const totalAmount =
+  const totalAmount = Number((
     metalAmount +
     stoneAmount +
     makingCharges +
     hallmarkCharge +
     rodiumCharge +
     gstAmount -
-    totalBenefitAmount;
+    totalBenefitAmount
+  ).toFixed(2));
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -270,11 +273,11 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
               ₹{" "}
               {Number(
                 metalAmount +
-                stoneAmount +
-                makingCharges +
-                hallmarkCharge +
-                rodiumCharge +
-                gstAmount
+                  stoneAmount +
+                  makingCharges +
+                  hallmarkCharge +
+                  rodiumCharge +
+                  gstAmount
               ).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
             </strong>
           </Typography>
@@ -292,27 +295,6 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                mb={2}
-              >
-                <TextField
-                  fullWidth
-                  size="small"
-                  placeholder="Add existing scheme code"
-                  variant="outlined"
-                />
-                <Button
-                  sx={{ ml: 2 }}
-                  variant="text"
-                  style={{ color: "#a36e29", fontWeight: 500 }}
-                >
-                  Redeem
-                </Button>
-              </Box>
-
               {schemes.map((scheme, index) => {
                 const isRedeemed = redeemedSchemes.find(
                   (s) => s.id === scheme.id
@@ -347,10 +329,9 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        Scheme ID
+                        Scheme ID - {scheme.id}
                       </Typography>
                     </Box>
-
                     <Box
                       sx={{
                         flex: 1,
@@ -375,12 +356,6 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
                         </Typography>
                       </Box>
                       <Box>
-                        <Typography
-                          fontSize="0.85rem"
-                          sx={{ color: "#a36e29", mb: 1, cursor: "pointer" }}
-                        >
-                          View More
-                        </Typography>
                         {isRedeemed ? (
                           <Typography
                             fontSize="0.85rem"
@@ -520,7 +495,6 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
             //         },
             //       }
             //     );
-
 
             //     if (data.success) {
             //       // Call Razorpay payment flow with order details
