@@ -29,17 +29,22 @@ const RedeemBox = ({ productId }) => {
 
   useEffect(() => {
     if (open && productId) {
-      axios
-        .get(
-          `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${jwtToken}`,
-            },
-          }
-        )
-        .then((response) => {
-          const data = response.data;
+      console.log(
+        "🔍 Fetching from:",
+        `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`
+      );
+
+      fetch(
+        `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
           console.log("🟢 Scheme API response:", data);
 
           if (data.success && data.response) {
@@ -66,21 +71,22 @@ const RedeemBox = ({ productId }) => {
 
     try {
       // 1. Call redeem API
-      const res = await axios.post(
+      const res = await fetch(
         "https://api.sadashrijewelkart.com/v1.0.0/user/schemes/redeem.php",
-        formData,
         {
+          method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          body: formData,
         }
       );
 
-      const data = res.data;
+      const data = await res.json();
 
       if (data.success === 1) {
         // 2. Call active.php to refresh the list
-        const refreshed = await axios.get(
+        const refreshed = await fetch(
           "https://api.sadashrijewelkart.com/v1.0.0/user/schemes/active.php",
           {
             headers: {
@@ -88,7 +94,7 @@ const RedeemBox = ({ productId }) => {
             },
           }
         );
-        const refreshedData = refreshed.data;
+        const refreshedData = await refreshed.json();
         const filtered = (refreshedData.response || []).filter(
           (scheme) => scheme.status === "ACTIVE"
         );
@@ -112,6 +118,7 @@ const RedeemBox = ({ productId }) => {
           background: "linear-gradient(90deg, #c6943f 0%, #e0b255 100%)",
           borderRadius: "12px",
           padding: "1rem",
+          marginTop: "60px",
           textAlign: "left",
           color: "white",
         }}

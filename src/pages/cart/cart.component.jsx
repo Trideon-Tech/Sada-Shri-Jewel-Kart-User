@@ -150,6 +150,7 @@ const Cart = () => {
   const [selectedCouponId, setSelectedCouponId] = useState(null);
   const [selectedCouponCode, setSelectedCouponCode] = useState("");
   console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
+  console.log(" productId sent to RedeemBox:", cartItems[0]?.id);
   const getWishListItemsNonAuth = async () => {
     const cartListExists = localStorage.getItem("cart_list");
     console.log(cartListExists, "cartListExists================");
@@ -277,7 +278,7 @@ const Cart = () => {
   };
 
   return (
-    <div style={{ width: "100vw", height: "100vh", overflowX: "none" }}>
+    <div style={{ width: "100vw", minheight: "100vh", overflowX: "hidden" }}>
       <Navbar />
       <Modal
         open={modalOpen}
@@ -391,7 +392,7 @@ const Cart = () => {
       <div
         style={{
           display: matches ? "block" : "none",
-          height: "calc(100vh - 6rem - 8px)",
+          minHeight:"100vh",
         }}
       >
         <Box
@@ -443,16 +444,8 @@ const Cart = () => {
                       setSelectedCouponCode={setSelectedCouponCode}
                     />
 
-                    <Box sx={{ marginTop: "18vh" }}>
-                      <RedeemBox
-                        productId={
-                          cartItems?.reduce(
-                            (max, item) =>
-                              item.price > max.price ? item : max,
-                            cartItems[0]
-                          )?.id
-                        }
-                      />
+                    <Box sx={{ marginTop: "17rem" }}>
+                      <RedeemBox productId={cartItems[0]?.id} />
                     </Box>
                   </Box>
                 </Grid>
@@ -521,10 +514,11 @@ const Cart = () => {
         <Box
           style={{
             width: "100%",
-            height: "100%",
+            minheight: "100vh",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",
+            overflow: "visible",
             alignItems: "center",
             backgroundColor:
               cartItems?.length > 0 ? "rgba(163,110,41,0.08)" : "white",
@@ -555,57 +549,47 @@ const Cart = () => {
                   width: "90%",
                 }}
               >
-                <Grid item xs={matches ? 4 : 12}>
-                  <Box
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: "12px",
-                      padding: "1.5rem",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    <Grid item xs={matches ? 4 : 12}>
-                      <Box
-                        sx={{
-                          backgroundColor: "#fff",
-                          borderRadius: "12px",
-                          padding: "1.5rem",
-                          boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-                        }}
-                      >
-                        <CartTotal
-                          selectedCouponCode={selectedCouponCode}
-                          selectedCouponId={selectedCouponId}
-                          items={cartItems}
-                          openModal={setModalOpen}
-                          couponData={
-                            couponList.filter(
-                              (item) => item.id === selectedCouponId
-                            )[0]
-                          }
-                          couponList={couponList}
-                          setSelectedCouponId={setSelectedCouponId}
-                          setSelectedCouponCode={setSelectedCouponCode}
-                        />
-                        <Button
-                          fullWidth
-                          variant="contained"
-                          sx={{
-                            background:
-                              "linear-gradient(to right, #d4a76a, #a36e29)",
-                            borderRadius: "8px",
-                            fontWeight: "bold",
-                            mt: 2,
-                          }}
-                        >
-                          CHECKOUT
-                        </Button>
+<Grid item xs={matches ? 4 : 12}>
+  <Box
+    sx={{
+      backgroundColor: "#fff",
+      borderRadius: "12px",
+      padding: "1.5rem",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+    }}
+  >
+    <CartTotal
+      selectedCouponCode={selectedCouponCode}
+      selectedCouponId={selectedCouponId}
+      items={cartItems}
+      openModal={setModalOpen}
+      couponData={
+        couponList.filter(
+          (item) => item.id === selectedCouponId
+        )[0]
+      }
+      couponList={couponList}
+      setSelectedCouponId={setSelectedCouponId}
+      setSelectedCouponCode={setSelectedCouponCode}
+    />
 
-                        <RedeemBox productId={cartItems[0]?.id} />
-                      </Box>
-                    </Grid>
-                  </Box>
-                </Grid>
+    <Button
+      fullWidth
+      variant="contained"
+      sx={{
+        background: "linear-gradient(to right, #d4a76a, #a36e29)",
+        borderRadius: "8px",
+        fontWeight: "bold",
+        mt: 2,
+      }}
+    >
+      CHECKOUT
+    </Button>
+
+    <RedeemBox productId={cartItems[0]?.id} />
+  </Box>
+</Grid>
+
               </Box>
             </>
           ) : (
