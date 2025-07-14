@@ -19,6 +19,8 @@ export default function CartTotal({ items, coinValueDiscount }) {
   const [discountValue, setDiscountValue] = useState(0);
   const [discountName, setDiscountName] = useState(0);
   const [coinsApplied, setCoinsApplied] = useState(false);
+  const [schemeDiscount, setSchemeDiscount] = useState(0);
+  const [schemeName, setSchemeName] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -57,11 +59,57 @@ export default function CartTotal({ items, coinValueDiscount }) {
             }
           }
         }
+
+        // Fetch scheme benefits if schemeId is present
+        const schemeId = queryParams.get("schemeId");
+        if (schemeId) {
+          try {
+            // Get product ID - handle both cart and buy-now scenarios
+            let productId = 0;
+            if (items && items.length > 0) {
+              // For buy-now: items[0] has the product data directly
+              // For cart: items[0] has cart_id and product data
+              productId = items[0]?.id || items[0]?.product_id || 0;
+            }
+
+            console.log("🔍 Scheme Debug:", { schemeId, productId, items: items[0] });
+
+            if (productId) {
+              const schemeResponse = await axios.get(
+                `https://api.sadashrijewelkart.com/v1.0.0/user/schemes/benefits.php?product=${productId}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+
+              console.log("🔍 Scheme API Response:", schemeResponse.data);
+
+              if (schemeResponse.data.success && Array.isArray(schemeResponse.data.response)) {
+                const schemeData = schemeResponse.data.response.find(
+                  (scheme) => scheme.scheme === schemeId || scheme.scheme_details?.id === parseInt(schemeId)
+                );
+
+                console.log("🔍 Found Scheme Data:", schemeData);
+
+                if (schemeData) {
+                  const benefit = parseFloat(schemeData.benefit || "0");
+                  setSchemeDiscount(benefit);
+                  setSchemeName(schemeData.scheme_details?.name || "Scheme");
+                  console.log("🔍 Set Scheme Discount:", { benefit, name: schemeData.scheme_details?.name });
+                }
+              }
+            }
+          } catch (schemeErr) {
+            console.log("fetching scheme benefits failed ", schemeErr);
+          }
+        }
       } catch (err) {
         console.log("fetching coupons failed ", err);
       }
     })();
-  }, [queryParams, discountValue, coinsApplied]);
+  }, [queryParams, discountValue, coinsApplied, items]);
 
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -191,6 +239,36 @@ export default function CartTotal({ items, coinValueDiscount }) {
             </Typography>
           </Box>
         ) : null}
+        {schemeDiscount > 0 ? (
+          <Box
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "1%",
+              color: "gray",
+            }}
+          >
+            <Typography
+              style={{
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+              }}
+            >
+              Scheme Discount ({schemeName}):
+            </Typography>
+            <Typography
+              style={{
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+                color: "#2e7d32",
+              }}
+            >
+              - ₹ {Number(schemeDiscount).toLocaleString()}
+            </Typography>
+          </Box>
+        ) : null}
         <Box
           style={{
             width: "100%",
@@ -221,7 +299,8 @@ export default function CartTotal({ items, coinValueDiscount }) {
             {(
               Number(totalPrice) -
               discountValue -
-              (coinsApplied ? coinsApplied : 0)
+              (coinsApplied ? coinsApplied : 0) -
+              schemeDiscount
             ).toLocaleString()}
           </Typography>
         </Box>
