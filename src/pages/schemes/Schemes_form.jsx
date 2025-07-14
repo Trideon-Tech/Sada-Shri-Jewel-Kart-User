@@ -18,6 +18,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ringLogo from "../../assets/images/2 1.svg";
+import Background from "../../assets/images/22.png";
 import scheme_steps from "../../assets/images/scheme_steps.png";
 import ButtonComponent from "../../components/button/button.component";
 import Navbar from "../../components/navbar/navbar.component";
@@ -52,57 +53,88 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
       .then((response) => {
         setSchemes(response.data.response);
         if (planId) {
-        const selectedScheme = response.data.response.find(
-          (scheme) => scheme.id === planId
-        );
+          const selectedScheme = response.data.response.find(
+            (scheme) => scheme.id === planId
+          );
 
-        if (selectedScheme) {
-          const parsedBenefits = JSON.parse(selectedScheme.benefits);
-          setBenefits(parsedBenefits);
+          if (selectedScheme) {
+            const parsedBenefits = JSON.parse(selectedScheme.benefits);
+            setBenefits(parsedBenefits);
+          }
         }
-      }
       })
       .catch((err) => console.error("Failed to fetch schemes:", err));
   }, []);
 
   const handleSavings = async () => {
-  let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
+    let selectedScheme = schemes.find((scheme) => scheme.id === selectedPlan);
 
-  if (!selectedScheme) {
-    toast("Selected scheme not found", generalToastStyle);
-    return;
-  }
+    if (!selectedScheme) {
+      toast("Selected scheme not found", generalToastStyle);
+      return;
+    }
 
-  if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
-    try {
-      const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        amount: amount * 100,
-        currency: "INR",
-        name: "SadāShrī Jewelkart",
-        description: "SadāShrī Jewelkart Daily Gold Savings",
-        handler: async function (response) {
-          const formData = new FormData();
-          formData.append("amount", amount);
-          formData.append("payment_id", response.razorpay_payment_id);
-
-          await axios.post(
-            `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/savings.php`,
-            formData,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
+    if (parseFloat(amount) >= parseFloat(selectedScheme.min_amount)) {
+      try {
+        // Load Razorpay script first
+        const loadRazorpayScript = () => {
+          return new Promise((resolve) => {
+            if (window.Razorpay) {
+              resolve(true);
+              return;
             }
-          );
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+          });
+        };
 
-          toast.success("Payment successful!", generalToastStyle);
-          navigate("/my-account");
-        },
-        theme: {
-          color: "#A36E29",
-        },
-      };
+        const loaded = await loadRazorpayScript();
+        if (!loaded) {
+          toast.error("Razorpay SDK failed to load", generalToastStyle);
+          return;
+        }
+
+        // Initialize Razorpay after script is loaded
+        const options = {
+          key: process.env.REACT_APP_RAZORPAY_KEY,
+          amount: amount * 100,
+          currency: "INR",
+          name: "SadāShrī Jewelkart",
+          description: "SadāShrī Jewelkart Daily Gold Savings",
+          handler: async function (response) {
+            try {
+              const formData = new FormData();
+              formData.append("amount", amount);
+              formData.append("payment_id", response.razorpay_payment_id);
+
+              await axios.post(
+                `${process.env.REACT_APP_API_URL}v1.0.0/user/schemes/savings.php`,
+                formData,
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              );
+
+              toast.success("Payment successful!", generalToastStyle);
+              navigate("/my-account");
+              
+            } catch (error) {
+              toast.error("Failed to process payment", generalToastStyle);
+            }
+          },
+          prefill: {
+            email: localStorage.getItem("email") || "",
+            contact: localStorage.getItem("phone") || "",
+          },
+          theme: {
+            color: "#A36E29",
+          },
+        };
 
       // ✅ Razorpay script load fix
       const loadRazorpayScript = () => {
@@ -357,19 +389,22 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
                 <Select
                   value={selectedPlan}
                   onChange={(e) => {
-  const planId = e.target.value;
-  setSelectedPlan(planId);
+                    const planId = e.target.value;
+                    setSelectedPlan(planId);
 
-  const selectedScheme = schemes.find((scheme) => scheme.id === planId);
+                    const selectedScheme = schemes.find(
+                      (scheme) => scheme.id === planId
+                    );
 
-  if (selectedScheme) {
-    const parsedBenefits = JSON.parse(selectedScheme.benefits);
-    setBenefits(parsedBenefits);
-  } else {
-    setBenefits([]);
-  }
-}}
-
+                    if (selectedScheme) {
+                      const parsedBenefits = JSON.parse(
+                        selectedScheme.benefits
+                      );
+                      setBenefits(parsedBenefits);
+                    } else {
+                      setBenefits([]);
+                    }
+                  }}
                   displayEmpty
                   sx={{
                     borderRadius: "7px",
@@ -698,135 +733,160 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
 
               //background: "linear-gradient(to bottom, #f4e2d8, #e7c7a8)", // ✅ Move gradient here
               py: { xs: 6, sm: 8 }, // ✅ Add padding for spacing
-              width: "100%", 
+              width: "100%",
             }}
           >
             <Box
-  sx={{
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexWrap: "wrap", // Makes it responsive
-    
-    gap: { xs: 6, sm: 8, md: 12 },
-    mb: { xs: 4, sm: 6 }, // Space below this section
-  }}
->
-  {/* Left Ring Logo */}
-  <Box
-    component="img"
-    src={ringLogo}
-    alt="Ring Logo Left"
-    sx={{
-       width: { xs: "180px", sm: "220px", md: "260px" },
-      height: "auto",
-    }}
-  />
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexWrap: "wrap", // Makes it responsive
 
-  {/* Form Card */}
-  <Card
-    sx={{
-      width: { xs: "90%", sm: "500px" }, // Responsive width
-      borderRadius: "12px",
-      boxShadow: 3,
-      backgroundColor: "#fff",
-      p: 3,
-    }}
-  >
-    <CardContent sx={{ textAlign: "center" }}>
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <Select
-          value={selectedPlan}
-          onChange={(e) => {
-  const planId = e.target.value;
-  setSelectedPlan(planId);
+                gap: { xs: 6, sm: 8, md: 12 },
+                mb: { xs: 4, sm: 6 }, // Space below this section
+              }}
+            >
+              {/* Left Ring Logo */}
+              <Box
+                component="img"
+                src={ringLogo}
+                alt="Ring Logo Left"
+                sx={{
+                  width: { xs: "180px", sm: "220px", md: "260px" },
+                  height: "auto",
+                }}
+              />
 
-  const selectedScheme = schemes.find((scheme) => scheme.id === planId);
+              {/* Form Card */}
+              <Card
+                sx={{
+                  width: { xs: "90%", sm: "500px" }, // Responsive width
+                  borderRadius: "12px",
+                  boxShadow: 3,
+                  backgroundColor: "#fff",
+                  p: 3,
+                }}
+              >
+                <CardContent sx={{ textAlign: "center" }}>
+                  <FormControl fullWidth sx={{ mb: 2 }}>
+                    <Select
+                      value={selectedPlan}
+                      onChange={(e) => {
+                        const planId = e.target.value;
+                        setSelectedPlan(planId);
 
-  if (selectedScheme) {
-    const parsedBenefits = JSON.parse(selectedScheme.benefits);
-    setBenefits(parsedBenefits);
-  } else {
-    setBenefits([]);
-  }
-}}
+                        const selectedScheme = schemes.find(
+                          (scheme) => scheme.id === planId
+                        );
 
-          displayEmpty
-          sx={{
-            borderRadius: "8px",
-            backgroundColor: "#f9f9f9",
-            fontSize: "14px",
-          }}
-        >
-          <MenuItem value="">Select Plan</MenuItem>
-          {schemes.map((scheme) => (
-            <MenuItem key={scheme.id} value={scheme.id}>
-              {scheme.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+                        if (selectedScheme) {
+                          const parsedBenefits = JSON.parse(
+                            selectedScheme.benefits
+                          );
+                          setBenefits(parsedBenefits);
+                        } else {
+                          setBenefits([]);
+                        }
+                      }}
+                      displayEmpty
+                      sx={{
+                        borderRadius: "8px",
+                        backgroundColor: "#f9f9f9",
+                        fontSize: "14px",
+                      }}
+                    >
+                      <MenuItem value="">Select Plan</MenuItem>
+                      {schemes.map((scheme) => (
+                        <MenuItem key={scheme.id} value={scheme.id}>
+                          {scheme.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
 
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <TextField
-          placeholder="Enter the amount you want"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Box sx={{ fontWeight: 500 }}>₹</Box>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </FormControl>
+                  <FormControl fullWidth sx={{ mb: 2 }}>
+                    <TextField
+                      placeholder="Enter the amount you want"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Box sx={{ fontWeight: 500 }}>₹</Box>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </FormControl>
 
-      <ButtonComponent
-        buttonText={"Start Now"}
-        onClick={selectedPlan === "3" ? handleSavings : handlePayment}
-        style={{
-          width: "100%",
-          height: "50px",
-          background: "linear-gradient(to right, #A36E29, #E0B872)",
-          color: "#fff",
-          fontWeight: "600",
-          fontSize: "14px",
-          borderRadius: "6px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: 0,
-        }}
-      />
+                  {isLoading ? (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 1,
+                      }}
+                    >
+                      <CircularProgress
+                        sx={{
+                          color: "#A36E29",
+                          marginTop: "10px",
+                        }}
+                      />
+                      <Typography>Processing...</Typography>
+                    </Box>
+                  ) : (
+                    <ButtonComponent
+                      buttonText={"Start Now"}
+                      onClick={
+                        selectedPlan === "3" ? handleSavings : handlePayment
+                      }
+                      style={{
+                        width: "100%",
+                        height: "50px",
+                        background:
+                          "linear-gradient(to right, #A36E29, #E0B872)",
+                        color: "#fff",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                        borderRadius: "6px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        padding: 0,
+                      }}
+                    />
+                  )}
 
-      <Typography
-        sx={{
-          mt: 2,
-          fontSize: "12px",
-          color: "#444",
-          fontFamily: "Open Sans",
-          fontWeight: 500,
-        }}
-      >
-        * Missed an installment or want to pay it?{" "}
-        <strong style={{ color: "#A36E29" }}>Pay Now</strong>
-      </Typography>
-    </CardContent>
-  </Card>
+                  <Typography
+                    sx={{
+                      mt: 2,
+                      fontSize: "12px",
+                      color: "#444",
+                      fontFamily: "Open Sans",
+                      fontWeight: 500,
+                    }}
+                  >
+                    * Missed an installment or want to pay it?{" "}
+                    <strong style={{ color: "#A36E29" }}>Pay Now</strong>
+                  </Typography>
+                </CardContent>
+              </Card>
 
-  {/* Right Ring Logo */}
-  <Box
-    component="img"
-    src={ringLogo}
-    alt="Ring Logo Right"
-    sx={{
-       width: { xs: "180px", sm: "220px", md: "260px" },
-      height: "auto",
-    }}
-  />
-</Box>
+              {/* Right Ring Logo */}
+              <Box
+                component="img"
+                src={ringLogo}
+                alt="Ring Logo Right"
+                sx={{
+                  width: { xs: "180px", sm: "220px", md: "260px" },
+                  height: "auto",
+                }}
+              />
+            </Box>
 
             <Box
               sx={{
@@ -876,17 +936,19 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
                   Key Features:
                 </Typography>
                 {benefits.length > 0 ? (
-  <Box component="ul" sx={{ pl: 2, fontSize: "14px", lineHeight: 1.8 }}>
-    {benefits.map((benefit, index) => (
-      <li key={index}>✅ {benefit}</li>
-    ))}
-  </Box>
-) : (
-  <Typography sx={{ fontSize: "14px" }}>
-    Select a plan to view its benefits.
-  </Typography>
-)}
-
+                  <Box
+                    component="ul"
+                    sx={{ pl: 2, fontSize: "14px", lineHeight: 1.8 }}
+                  >
+                    {benefits.map((benefit, index) => (
+                      <li key={index}>✅ {benefit}</li>
+                    ))}
+                  </Box>
+                ) : (
+                  <Typography sx={{ fontSize: "14px" }}>
+                    Select a plan to view its benefits.
+                  </Typography>
+                )}
 
                 {/* Feature Cards */}
                 <Box
@@ -936,47 +998,47 @@ const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
                 </Box>
               </Box>
             </Box>
-          
-          {/* Second Section (How does it work) */}
-          <Box
-            sx={{
-              // mt: { xs: "48px", lg: "170px" },
-              mt: { xs: "24px", lg: "80px" },
-              textAlign: "center",
-              px: { xs: 2, sm: 4 },
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: "Open Sans",
-                fontWeight: "700",
-                fontSize: { xs: "24px", sm: "28px", lg: "32px" },
-                mb: 3,
-              }}
-            >
-              How does it work?
-            </Typography>
+
+            {/* Second Section (How does it work) */}
             <Box
               sx={{
-                mt: { xs: "48px", lg: "90px" },
+                // mt: { xs: "48px", lg: "170px" },
+                mt: { xs: "24px", lg: "80px" },
                 textAlign: "center",
                 px: { xs: 2, sm: 4 },
-                display: "flex",
-                justifyContent: "center", // ✅ CENTERING
               }}
             >
-              <Box
-                component="img"
-                src={scheme_steps}
-                alt="Steps"
+              <Typography
                 sx={{
-                  width: { xs: "100%", sm: "90%", md: "80%", lg: "1018px" },
-                  maxWidth: "100%",
-                  height: "auto",
+                  fontFamily: "Open Sans",
+                  fontWeight: "700",
+                  fontSize: { xs: "24px", sm: "28px", lg: "32px" },
+                  mb: 3,
                 }}
-              />
+              >
+                How does it work?
+              </Typography>
+              <Box
+                sx={{
+                  mt: { xs: "48px", lg: "90px" },
+                  textAlign: "center",
+                  px: { xs: 2, sm: 4 },
+                  display: "flex",
+                  justifyContent: "center", // ✅ CENTERING
+                }}
+              >
+                <Box
+                  component="img"
+                  src={scheme_steps}
+                  alt="Steps"
+                  sx={{
+                    width: { xs: "100%", sm: "90%", md: "80%", lg: "1018px" },
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
           </Box>
         </Box>
       )}

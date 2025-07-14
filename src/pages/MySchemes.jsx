@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Tab, tabClasses, TabList, Tabs } from "@mui/joy";
 import {
   Box,
-  Typography,
   Button,
-  Avatar,
-  Divider,
   CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Typography,
 } from "@mui/material";
-import { Tabs, TabList, Tab, tabClasses } from "@mui/joy";
 import axios from "axios";
-import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import SchemesDialog from "./SchemesDialog";
+import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { generalToastStyle } from "../utils/toast.styles";
+import SchemesDialog from "./SchemesDialog";
+
 function MySchemes() {
   const [selectedTab, setSelectedTab] = useState(1);
   const [activeSchemes, setActiveSchemes] = useState([]);
@@ -25,6 +27,8 @@ function MySchemes() {
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [redeemConfirmOpen, setRedeemConfirmOpen] = useState(false);
   const [redeemScheme, setRedeemScheme] = useState(null);
+  const [code, setCode] = useState("");
+  const [showCode, setShowCode] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -75,7 +79,6 @@ function MySchemes() {
 
   const handleRedeem = async () => {
     const token = localStorage.getItem("token");
-    console.log("🔐 Redeem token:", token);
     if (!token) {
       alert("⚠️ You're not logged in.");
       return;
@@ -97,14 +100,12 @@ function MySchemes() {
 
       const data = response?.data;
       if (data?.success === 1) {
-        // alert("🎉 Scheme redeemed successfully!");
         toast.success(" Scheme redeemed successfully! 🎉", generalToastStyle);
 
         setActiveSchemes((prev) =>
           prev.filter((s) => s.id !== redeemScheme.id)
         );
 
-        // Clone the scheme and mark as cancelled
         const updatedScheme = { ...redeemScheme, status: "cancelled" };
 
         setOldSchemes((prev) => [...prev, updatedScheme]);
@@ -130,22 +131,19 @@ function MySchemes() {
         }}
       >
         {/* Left Section */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Avatar sx={{ width: 50, height: 50 }} />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <Box>
-            <Typography fontWeight="bold" fontSize="1rem">
-              Scheme: {scheme.scheme_details?.name || "N/A"}
-            </Typography>
-
             <Typography
-              fontSize="0.8rem"
-              color="text.primary"
-              sx={{ cursor: "pointer", textDecoration: "underline" }}
-              onClick={() => {
-                setSelectedScheme(scheme);
-                setOpenDialog(true);
+              fontWeight="bold"
+              fontSize="1rem"
+              style={{
+                width: "20vw",
               }}
             >
+              {scheme.scheme_details?.name || "N/A"}
+            </Typography>
+
+            <Typography fontSize="0.8rem" color="text.primary">
               Subscription ID: {scheme.id}
             </Typography>
           </Box>
@@ -154,14 +152,18 @@ function MySchemes() {
         {/* Middle Section */}
         <Box>
           <Typography fontWeight="bold" fontSize="1rem">
-            Start: {scheme.start_date.split(" ")[0]}
+            Started On: {scheme.start_date.split(" ")[0]}
           </Typography>
-          <Typography fontSize="0.8rem" color="text.secondary">
-            Ends: {scheme.exp_closure_date.split(" ")[0]}
-          </Typography>
-          <Typography fontSize="0.8rem" color="text.secondary">
-            Plan ID: {scheme.plan}
-          </Typography>
+          {scheme.scheme !== "3" && (
+            <Typography fontSize="0.8rem" color="text.secondary">
+              Ends: {scheme.exp_closure_date.split(" ")[0]}
+            </Typography>
+          )}
+          {scheme.scheme !== "3" && (
+            <Typography fontSize="0.8rem" color="text.secondary">
+              Plan ID: {scheme.plan}
+            </Typography>
+          )}
         </Box>
 
         {/* Right Section */}
@@ -188,22 +190,46 @@ function MySchemes() {
             </Button>
           ) : (
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
-                borderColor: "#a36e29",
-                color: "#a36e29",
+                background: "linear-gradient(to right, #a36e29, #c89444)",
+                color: "white",
                 textTransform: "none",
                 borderRadius: "5px",
                 padding: "5px 15px",
                 "&:hover": {
-                  borderColor: "#a36e29",
-                  backgroundColor: "#f7f7f7",
+                  background: "linear-gradient(to right, #a36e29, #a36e29)",
                 },
               }}
+              onClick={() => {
+                setCode(scheme.redemption_details.code);
+                setShowCode(true);
+              }}
             >
-              View
+              View Code
             </Button>
           )}
+          <Button
+            variant="outlined"
+            sx={{
+              borderColor: "#a36e29",
+              color: "#a36e29",
+              textTransform: "none",
+              borderRadius: "5px",
+              padding: "5px 15px",
+              marginLeft: "20px",
+              "&:hover": {
+                borderColor: "#a36e29",
+                backgroundColor: "#f7f7f7",
+              },
+            }}
+            onClick={() => {
+              setSelectedScheme(scheme);
+              setOpenDialog(true);
+            }}
+          >
+            View Transactions
+          </Button>
         </Box>
       </Box>
       <Divider />
@@ -364,6 +390,59 @@ function MySchemes() {
         </DialogContent>
       </Dialog>
       <ToastContainer />
+
+      <Dialog open={showCode} onClose={() => setShowCode(false)}>
+        <DialogTitle>Scheme Code</DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2,
+              my: 2,
+            }}
+          >
+            <Typography variant="h4" align="center">
+              {code}
+            </Typography>
+            <Button
+              onClick={() => {
+                navigator.clipboard.writeText(code);
+                toast.success("Code copied to clipboard!", generalToastStyle);
+              }}
+              sx={{
+                minWidth: "auto",
+                p: 1,
+                "&:hover": {
+                  backgroundColor: "rgba(163, 110, 41, 0.1)",
+                },
+              }}
+            >
+              <ContentCopyIcon sx={{ color: "#a36e29" }} />
+            </Button>
+          </Box>
+          <Box mt={2} display="flex" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              onClick={() => setShowCode(false)}
+              sx={{
+                background: "linear-gradient(to right, #a36e29, #e0b872)",
+                color: "#fff",
+                fontWeight: 600,
+                textTransform: "none",
+                borderRadius: "6px",
+                padding: "6px 18px",
+                "&:hover": {
+                  background: "linear-gradient(to right, #a36e29, #a36e29)",
+                },
+              }}
+            >
+              Close
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

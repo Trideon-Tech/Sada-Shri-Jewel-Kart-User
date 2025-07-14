@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Button,
-  Typography,
   Dialog,
-  DialogTitle,
   DialogContent,
+  DialogTitle,
   IconButton,
   TextField,
+  Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const RedeemBox = ({ productId }) => {
   const [open, setOpen] = useState(false);
