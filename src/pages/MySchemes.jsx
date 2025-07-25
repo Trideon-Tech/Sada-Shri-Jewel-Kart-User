@@ -176,6 +176,7 @@ function MySchemes() {
                 setRedeemConfirmOpen(true);
               }}
               sx={{
+                display: "none",
                 background: "linear-gradient(to right, #a36e29, #c89444)",
                 color: "white",
                 textTransform: "none",

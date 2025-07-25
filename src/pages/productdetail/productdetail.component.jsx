@@ -147,6 +147,7 @@ function ProductDetail() {
     localStorage.getItem("default_country") || ""
   );
   const [variantMenuItem, setMenuItem] = useState(productDetail?.name);
+  const [locationStatus, setLocationStatus] = useState("");
 
   useEffect(() => {
     console.log("productDetail", productDetail);
@@ -185,6 +186,38 @@ function ProductDetail() {
   useEffect(() => {
     previousLocation.current = location.pathname;
   }, [location]);
+
+  useEffect(() => {
+    if (!city || !state || !country) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            // Use a free reverse geocoding API (e.g., OpenStreetMap Nominatim)
+            try {
+              const res = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+              );
+              const data = await res.json();
+              const address = data.address || {};
+              // You may need to adjust these keys based on the API response
+              setCity(address.city || address.town || address.village || "");
+              setState(address.state || "");
+              setCountry(address.country || "");
+              setLocationStatus("");
+            } catch (e) {
+              setLocationStatus("Could not fetch location details. Please try again.");
+            }
+          },
+          (error) => {
+            setLocationStatus("Location permission denied. Please enable location to autofill.");
+          }
+        );
+      } else {
+        setLocationStatus("Geolocation is not supported by your browser.");
+      }
+    }
+  }, []);
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -2504,9 +2537,14 @@ function ProductDetail() {
                       textOverflow: "ellipsis",
                     }}
                   >
-                    {`${city}, ${state}, ${country}`}
+                    {city || state || country ? `${city}, ${state}, ${country}` : "Click to set location"}
                   </span>
                 </div>
+                {locationStatus && (
+                  <div style={{ color: '#a36e29', fontSize: '0.8rem', marginTop: 4 }}>
+                    {locationStatus}
+                  </div>
+                )}
 
                 {/* Box 2 - Delivery Info */}
                 {currentPosition.length > 0 && (
@@ -4469,6 +4507,11 @@ function ProductDetail() {
                   >
                     {`${city}, ${state}, ${country}`}
                   </div>
+                  {locationStatus && (
+                    <div style={{ color: '#a36e29', fontSize: '0.8rem', marginTop: 4 }}>
+                      {locationStatus}
+                    </div>
+                  )}
                   {currentPosition.length > 0 ? (
                     <Typography className="delivery-info">
                       <LocalShippingOutlined className="delivery-icon" />
@@ -5045,42 +5088,14 @@ function ProductDetail() {
                   />
                 ))}
               </div>
-              <IconButton
-                className="scroll-btn left"
-                style={{
-                  // position: "absolute",
-                  left: "5px", // Adjust this value to control overlap
-                  height: "max-content",
-                  zIndex: 1,
-                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  color: "white",
-                  margin: "1rem",
-                }}
-                onClick={() => scroll(-1)}
-              >
-                <ArrowBackIcon />
-                <RedeemSchemeDialog
+              
+              <RedeemSchemeDialog
                   open={redeemDialogOpen}
                   onClose={() => setRedeemDialogOpen(false)}
                   productDetail={productDetail}
                     setDrawerOpen={setDrawerOpen}
                     setSchemeDiscountAmount={setSchemeDiscountAmount}
                 />
-              </IconButton>
-              <IconButton
-                className="scroll-btn right"
-                style={{
-                  // position: "absolute",
-                  right: "5px", // Adjust this value to control overlap
-                  height: "max-content",
-                  zIndex: 1,
-                  background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                  color: "white",
-                }}
-                onClick={() => scroll(1)}
-              >
-                <ArrowForwardIcon />
-              </IconButton>
             </div>
           </div>
         )}

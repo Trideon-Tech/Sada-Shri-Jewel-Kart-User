@@ -361,7 +361,7 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
                             fontSize="0.85rem"
                             sx={{ color: "gray", fontWeight: 500 }}
                           >
-                            Redeemed
+                            Applied
                           </Typography>
                         ) : (
                           <Button
@@ -369,7 +369,7 @@ const RedeemSchemeDialog = ({ open, onClose, productDetail }) => {
                             sx={{ color: "#a36e29", fontWeight: 500 }}
                             onClick={() => handleRedeemScheme(scheme)}
                           >
-                            Redeem
+                            Apply
                           </Button>
                         )}
                       </Box>

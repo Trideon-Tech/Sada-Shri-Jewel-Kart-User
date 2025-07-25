@@ -523,14 +523,14 @@ const Schemes_form = () => {
               </Typography>
 
               {/* Plan Overview */}
-              <Typography sx={{ fontWeight: 600, mb: 1 }}>
+              {/* <Typography sx={{ fontWeight: 600, mb: 1 }}>
                 Plan Overview:
               </Typography>
               <Typography sx={{ fontSize: "14px", mb: 2 }}>
                 The 11 month direct purchase plan allows customers to
                 systematically save and purchase gold jewellery, or silver
                 articles with extra added benefits
-              </Typography>
+              </Typography> */}
 
               {/* Key Features */}
               <Typography sx={{ fontWeight: 600, mb: 1 }}>
@@ -918,14 +918,14 @@ const Schemes_form = () => {
                 </Typography>
 
                 {/* Plan Overview */}
-                <Typography sx={{ fontWeight: 600, mb: 1 }}>
+                {/* <Typography sx={{ fontWeight: 600, mb: 1 }}>
                   Plan Overview:
                 </Typography>
                 <Typography sx={{ fontSize: "14px", mb: 2 }}>
                   The 11 month direct purchase plan allows customers to
                   systematically save and purchase gold jewellery, or silver
                   articles with extra added benefits
-                </Typography>
+                </Typography> */}
 
                 {/* Key Features */}
                 <Typography sx={{ fontWeight: 600, mb: 1 }}>

@@ -51,6 +51,7 @@ const OverAllRating = ({ openModal, rating, reviewsCount, enableWrite }) => {
             fontSize: "1rem",
             marginTop: "10px",
             marginBottom: "10px",
+            display: "none",
           }}
           onClick={() => openModal(true)}
         >
