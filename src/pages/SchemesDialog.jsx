@@ -89,6 +89,9 @@ function SchemesDialog({ open, onClose, scheme }) {
           <Typography fontWeight="bold" color="text.primary" mb={1}>
             Scheme Summary
           </Typography>
+          <Typography fontSize="0.8rem" color="text.secondary" sx={{ fontStyle: 'italic', mb: 2 }}>
+            *Only 1 type of metal can be redeemed
+          </Typography>
           
           {/* Show Total Accumulation and Months Pending below summary when no metal accumulation */}
           {(!scheme?.redemption_details?.accumulated_metal || scheme.redemption_details.accumulated_metal === "[]") && (
@@ -125,12 +128,24 @@ function SchemesDialog({ open, onClose, scheme }) {
                         </Box>
                       </Box>
                       <Box component="tbody">
-                        {Object.entries(metal).map(([k, v]) => (
-                          <Box component="tr" key={k}>
-                            <Box component="td" sx={{ p: 1, border: '1px solid #e0cfa0', width: '50%' }}>{k}</Box>
-                            <Box component="td" sx={{ p: 1, border: '1px solid #e0cfa0', width: '50%' }}>{Number(v).toFixed(3)}</Box>
-                          </Box>
-                        ))}
+                        {Object.entries(metal).map(([k, v]) => {
+                          // Map metal keys to user-friendly names
+                          const metalNameMap = {
+                            'gold24': 'Gold | 24KT',
+                            'gold22': 'Gold | 22KT',
+                            'gold18': 'Gold | 18KT',
+                            'gold14': 'Gold | 14KT',
+                            'silver': 'Silver'
+                          };
+                          return (
+                            <Box component="tr" key={k}>
+                              <Box component="td" sx={{ p: 1, border: '1px solid #e0cfa0', width: '50%' }}>
+                                {metalNameMap[k] || k}
+                              </Box>
+                              <Box component="td" sx={{ p: 1, border: '1px solid #e0cfa0', width: '50%' }}>{Number(v).toFixed(3)}</Box>
+                            </Box>
+                          );
+                        })}
                       </Box>
                     </Box>
                   );
