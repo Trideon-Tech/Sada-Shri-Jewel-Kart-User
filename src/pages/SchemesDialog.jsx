@@ -89,6 +89,21 @@ function SchemesDialog({ open, onClose, scheme }) {
           <Typography fontWeight="bold" color="text.primary" mb={1}>
             Scheme Summary
           </Typography>
+          
+          {/* Show Total Accumulation and Months Pending below summary when no metal accumulation */}
+          {(!scheme?.redemption_details?.accumulated_metal || scheme.redemption_details.accumulated_metal === "[]") && (
+            <Box mt={2}>
+              <Typography fontSize="0.95rem" color="text.secondary">
+                <b>Total Accumulation:</b> {formatAmount(scheme?.total_paid || 0)}
+              </Typography>
+              {scheme?.scheme_details?.duration && (
+                <Typography fontSize="0.95rem" color="text.secondary">
+                  <b>Months Pending:</b> {Number(scheme.scheme_details.duration) - Number(scheme.installments_paid)}
+                </Typography>
+              )}
+            </Box>
+          )}
+          
           {/* Accumulated Metal */}
           {scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" && (
             <Box mt={1}>
@@ -144,12 +159,16 @@ function SchemesDialog({ open, onClose, scheme }) {
             }}
           >
             <Box display="flex" fontWeight="bold" mb={1}>
-              <Box width="16.6%">Transaction ID</Box>
-              <Box width="16.6%">Start Date</Box>
-              <Box width="16.6%">Amount</Box>
-              <Box width="16.6%">Status</Box>
-              <Box width="16.6%">Total Accumulation</Box>
-              <Box width="16.6%">Months Pending</Box>
+              <Box width={scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" ? "16.6%" : "25%"}>Transaction ID</Box>
+              <Box width={scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" ? "16.6%" : "25%"}>Start Date</Box>
+              <Box width={scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" ? "16.6%" : "25%"}>Amount</Box>
+              <Box width={scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" ? "16.6%" : "25%"}>Status</Box>
+              {scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" && (
+                <>
+                  <Box width="16.6%">Total Accumulation</Box>
+                  <Box width="16.6%">Months Pending</Box>
+                </>
+              )}
             </Box>
 
             {transactions.map((txn, index) => (
@@ -157,7 +176,7 @@ function SchemesDialog({ open, onClose, scheme }) {
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(6, 1fr)",
+        gridTemplateColumns: scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" ? "repeat(6, 1fr)" : "repeat(4, 1fr)",
         p: "10px 0",
         alignItems: "center",
       }}
@@ -175,12 +194,16 @@ function SchemesDialog({ open, onClose, scheme }) {
       >
         ● {txn.status.charAt(0).toUpperCase() + txn.status.slice(1)}
       </Typography>
-      <Typography fontSize="0.9rem">
-        {formatAmount(scheme?.total_paid || 0)}
-      </Typography>
-      <Typography fontSize="0.9rem">
-        {scheme?.scheme_details?.duration ? (Number(scheme.scheme_details.duration) - Number(scheme.installments_paid)) : 'N/A'}
-      </Typography>
+      {scheme?.redemption_details?.accumulated_metal && scheme.redemption_details.accumulated_metal !== "[]" && (
+        <>
+          <Typography fontSize="0.9rem">
+            {formatAmount(scheme?.total_paid || 0)}
+          </Typography>
+          <Typography fontSize="0.9rem">
+            {scheme?.scheme_details?.duration ? (Number(scheme.scheme_details.duration) - Number(scheme.installments_paid)) : 'N/A'}
+          </Typography>
+        </>
+      )}
     </Box>
     {index < transactions.length - 1 && <Divider />}
   </React.Fragment>
