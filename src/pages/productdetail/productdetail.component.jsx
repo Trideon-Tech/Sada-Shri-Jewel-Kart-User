@@ -233,10 +233,19 @@ function ProductDetail() {
               const data = await res.json();
               const address = data.address || {};
               // You may need to adjust these keys based on the API response
-              setCity(address.city || address.town || address.village || "");
-              setState(address.state || "");
-              setCountry(address.country || "");
+              const detectedCity = address.city || address.town || address.village || "";
+              const detectedState = address.state || "";
+              const detectedCountry = address.country || "";
+              
+              setCity(detectedCity);
+              setState(detectedState);
+              setCountry(detectedCountry);
               setLocationStatus("");
+              
+              // Store pincode in localStorage for automatic ETA fetch
+              if (address.postcode) {
+                localStorage.setItem("default_pincode", address.postcode);
+              }
             } catch (e) {
               setLocationStatus("Could not fetch location details. Please try again.");
             }
@@ -250,6 +259,40 @@ function ProductDetail() {
       }
     }
   }, []);
+
+  // Separate useEffect to get ETA when product details are loaded
+  useEffect(() => {
+    if (city && state && country && productDetail?.id && !eta) {
+      const getETAForLocation = async () => {
+        try {
+          // Try to get pincode from localStorage or use a default
+          const pincode = localStorage.getItem("default_pincode") || "";
+          
+          // Use the same API as the existing getETA function
+          const etaRes = await axios.get(
+            `${process.env.REACT_APP_API_URL}/v1.0.0/user/sequel.php?type=estimated_date&pincode=${pincode}&product_id=${productDetail.id}`
+          );
+          
+          if (etaRes.data.response.data.estimated_delivery) {
+            setETA(formatDate(etaRes.data.response.data.estimated_delivery));
+            setCurrentPosition([1, 2]); // Same as existing getETA function
+          }
+        } catch (etaError) {
+          console.error("Failed to get ETA:", etaError);
+        }
+      };
+      
+      getETAForLocation();
+    }
+  }, [city, state, country, productDetail?.id, eta]);
+
+  // Trigger ETA fetch when pincode is available and product is loaded
+  useEffect(() => {
+    const pincode = localStorage.getItem("default_pincode");
+    if (pincode && productDetail?.id && !eta) {
+      getETA(pincode, productDetail.id);
+    }
+  }, [productDetail?.id, eta]);
 
   const addToCartHandler = () => {
     const token = localStorage.getItem("token");
@@ -2581,7 +2624,7 @@ function ProductDetail() {
                 )}
 
                 {/* Box 2 - Delivery Info */}
-                {currentPosition.length > 0 && (
+                {(currentPosition.length > 0 || eta) && (
                   <div
                     style={{
                       display: "flex",
