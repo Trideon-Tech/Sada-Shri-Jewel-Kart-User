@@ -107,6 +107,8 @@ function ProductDetail() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
   const [schemeDiscountAmount, setSchemeDiscountAmount] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasActiveSchemes, setHasActiveSchemes] = useState(false);
 
   const [pincode, setPincode] = useState("");
   const [locationModalOpen, setLocationModalOpen] = useState();
@@ -186,6 +188,36 @@ function ProductDetail() {
   useEffect(() => {
     previousLocation.current = location.pathname;
   }, [location]);
+
+  // Check login status and active schemes
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+
+    if (token) {
+      // Check for active schemes
+      fetch("https://api.sadashrijewelkart.com/v1.0.0/user/schemes/active.php", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data?.success === 1 && Array.isArray(data.response)) {
+            const activeSchemes = data.response.filter((s) => s.status === "ACTIVE");
+            setHasActiveSchemes(activeSchemes.length > 0);
+          } else {
+            setHasActiveSchemes(false);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to fetch active schemes", err);
+          setHasActiveSchemes(false);
+        });
+    } else {
+      setHasActiveSchemes(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!city || !state || !country) {
@@ -2475,23 +2507,25 @@ function ProductDetail() {
                     marginTop: "15px",
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    style={{
-                      fontWeight: "bold",
-                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                      fontFamily: '"Roboto", sans-serif',
-                      fontSize: "0.9rem",
-                      textTransform: "none",
-                      borderRadius: "8px",
-                      padding: "12px 0",
-                      transition: "all 0.3s ease",
-                    }}
-                    onClick={() => setRedeemDialogOpen(true)}
-                  >
-                    Redeem My Schemes
-                  </Button>
+                  {isLoggedIn && hasActiveSchemes && (
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        fontWeight: "bold",
+                        background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                        fontFamily: '"Roboto", sans-serif',
+                        fontSize: "0.9rem",
+                        textTransform: "none",
+                        borderRadius: "8px",
+                        padding: "12px 0",
+                        transition: "all 0.3s ease",
+                      }}
+                      onClick={() => setRedeemDialogOpen(true)}
+                    >
+                      Redeem My Schemes
+                    </Button>
+                  )}
                 </div>
 
                 <Typography
