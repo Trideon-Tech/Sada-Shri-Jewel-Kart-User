@@ -115,6 +115,7 @@ const RedeemBox = ({ productId }) => {
     <>
       <Box
         sx={{
+          display: "none",
           background: "linear-gradient(90deg, #c6943f 0%, #e0b255 100%)",
           borderRadius: "12px",
           padding: "1rem",
