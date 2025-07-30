@@ -293,30 +293,18 @@ const Schemes_form = () => {
                 "linear-gradient(to bottom ,rgb(231, 223, 213),rgb(234, 210, 167))",
             }}
           >
-            <div
-              style={{
-                position: "relative",
-                top: "120px",
-
-                display: "flex",
-                justifyContent: "end",
-              }}
-            >
-              <img
-                src={Background1}
-                alt=""
-                style={{ width: "150px", height: "150px", marginBottom: "5px" }}
-              />
-            </div>
-            <Box sx={{ position: "relative", top: "" }}>
+            <Box sx={{ position: "relative", top: "80px", px: 2, pt: 25, pb: 2 }}>
               <Typography
                 style={{
                   textAlign: "center",
-                  mt: { xs: 0, lg: 0 },
+                  mt: { xs: 2, lg: 0 },
                   px: 2,
                   fontFamily: "Open Sans",
                   fontWeight: 700,
                   fontSize: "28px",
+                  wordBreak: "break-word",
+                  lineHeight: "1.2",
+                  marginBottom: "20px",
                 }}
               >
                 Turn Daily Savings into{" "}
@@ -333,10 +321,12 @@ const Schemes_form = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   position: "relative",
-                  top: "7px",
+                  top: "20px",
                   fontFamily: "Open Sans",
                   fontWeight: 700,
                   fontSize: "16px",
+                  px: 2,
+                  marginTop: "10px",
                 }}
               >
                 <div
@@ -345,7 +335,9 @@ const Schemes_form = () => {
                     fontWeight: 600,
                     fontSize: "16px",
                     opacity: "80%",
-                    // wordBreak: "break-word", // Allows breaking long words
+                    textAlign: "center",
+                    wordBreak: "break-word",
+                    lineHeight: "1.3",
                   }}
                 >
                   Join the{" "}
@@ -360,6 +352,9 @@ const Schemes_form = () => {
                     fontWeight: 600,
                     fontSize: "16px",
                     opacity: "80%",
+                    textAlign: "center",
+                    wordBreak: "break-word",
+                    lineHeight: "1.3",
                   }}
                 >
                   Scheme Today! Save Now. Shine Forever.
@@ -370,14 +365,12 @@ const Schemes_form = () => {
           <Card
             sx={{
               width: "90%",
-              maxWidth: "360px",
-              margin: "auto",
-
+              maxWidth: "320px",
+              margin: "0 auto",
               borderRadius: "12px",
               boxShadow: 3,
               position: "relative",
-              top: "-100px",
-              //margin:"0px 20px"
+              top: "-80px",
             }}
           >
             <CardContent sx={{ textAlign: "center", pt: 3 }}>
@@ -401,6 +394,7 @@ const Schemes_form = () => {
                       setBenefits([]);
                     }
                   }}
+                  disabled
                   displayEmpty
                   sx={{
                     borderRadius: "7px",
@@ -408,12 +402,12 @@ const Schemes_form = () => {
                     backgroundColor: "#f9f9f9",
                   }}
                 >
-                  <MenuItem value="">
-                    Turn Daily Savings into Timeless Treasures
-                  </MenuItem>
-                  <MenuItem value="plan1"> Plan 1 </MenuItem>
-                  <MenuItem value="plan2"> Plan 2 </MenuItem>
-                  <MenuItem value="plan3"> Plan 3 </MenuItem>
+                  <MenuItem value="">Select Plan</MenuItem>
+                  {schemes.map((scheme) => (
+                    <MenuItem key={scheme.id} value={scheme.id}>
+                      {scheme.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
 
@@ -471,6 +465,7 @@ const Schemes_form = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  margin: "0 auto",
                 }}
               />
             </CardActions>
@@ -491,21 +486,21 @@ const Schemes_form = () => {
           </Card>
           <Box
             sx={{
-              mt: { xs: 4, sm: 6 },
+              mt: { xs: 8, sm: 6 },
               px: { xs: 2, sm: 4 },
               display: "flex",
-
               justifyContent: "center",
             }}
           >
             <Box
               sx={{
-                width: "100%",
-                maxWidth: "100%",
+                width: "95%",
+                maxWidth: "95%",
                 backgroundColor: "#fff",
                 boxShadow: 1,
                 borderRadius: "12px",
-                p: { xs: 3, sm: 4 },
+                p: { xs: 2, sm: 4 },
+                mx: "auto",
               }}
             >
               {/* Heading */}
@@ -616,11 +611,12 @@ const Schemes_form = () => {
           <Box
             sx={{
               position: "relative",
-              top: "-200px",
+              top: "-100px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              padding: { xs: "30px 16px", sm: "40px 24px" },
+              padding: { xs: "60px 16px", sm: "40px 24px" },
+              mt: { xs: 8, sm: 0 },
             }}
           >
             <Typography
@@ -679,6 +675,7 @@ const Schemes_form = () => {
                   fontFamily: "Open Sans",
                   fontWeight: "700",
                   fontSize: { xs: "24px", sm: "32px", md: "36px", lg: "40px" },
+                  top: "1000px",
                 }}
               >
                 Turn Daily Savings into
@@ -785,6 +782,7 @@ const Schemes_form = () => {
                           setBenefits([]);
                         }
                       }}
+                      disabled
                       displayEmpty
                       sx={{
                         borderRadius: "8px",
@@ -822,6 +820,7 @@ const Schemes_form = () => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        justifyContent: "center",
                         gap: 1,
                       }}
                     >
