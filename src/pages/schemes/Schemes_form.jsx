@@ -19,12 +19,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ringLogo from "../../assets/images/2 1.svg";
 import Background1 from "../../assets/images/22.png";
-import scheme_steps from "../../assets/images/scheme_steps.png";
+import Background2 from "../../assets/images/23.png";
+import Background3 from "../../assets/images/24.png";
 import ButtonComponent from "../../components/button/button.component";
 import Navbar from "../../components/navbar/navbar.component";
 import { generalToastStyle } from "../../utils/toast.styles";
-// import Background2 from "../../assets/images/23.png";
-// import Background3 from "../../assets/images/24.png";
 
 const Schemes_form = () => {
   const navigate = useNavigate();
@@ -35,8 +34,8 @@ const Schemes_form = () => {
   const planId = searchParams[0].get("plan");
   const heroBackgrounds = {
     1: Background1,
-    2: Background1,
-    3: Background1,
+    2: Background2,
+    3: Background3,
   };
 
   const heroImage = heroBackgrounds[parseInt(planId)] || Background1;
@@ -286,81 +285,22 @@ const Schemes_form = () => {
 
       {isMobile ? (
         <div>
-          <div
-            style={{
-              height: "70vh",
-              background:
-                "linear-gradient(to bottom ,rgb(231, 223, 213),rgb(234, 210, 167))",
-            }}
-          >
-            <Box sx={{ position: "relative", top: "80px", px: 2, pt: 25, pb: 2 }}>
-              <Typography
-                style={{
-                  textAlign: "center",
-                  mt: { xs: 2, lg: 0 },
-                  px: 2,
-                  fontFamily: "Open Sans",
-                  fontWeight: 700,
-                  fontSize: "28px",
-                  wordBreak: "break-word",
-                  lineHeight: "1.2",
-                  marginBottom: "20px",
-                }}
-              >
-                Turn Daily Savings into{" "}
-                <strong style={{ color: "#A36E29" }}>
-                  {" "}
-                  Timeless Treasures
-                </strong>
-              </Typography>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  position: "relative",
-                  top: "20px",
-                  fontFamily: "Open Sans",
-                  fontWeight: 700,
-                  fontSize: "16px",
-                  px: 2,
-                  marginTop: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "Open Sans",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    opacity: "80%",
-                    textAlign: "center",
-                    wordBreak: "break-word",
-                    lineHeight: "1.3",
-                  }}
-                >
-                  Join the{" "}
-                  <strong style={{ color: "#000000", opacity: "80%" }}>
-                    SadāShrī Jewelkart
-                  </strong>{" "}
-                  Daily Gold Savings{" "}
-                </div>
-                <div
-                  style={{
-                    fontFamily: "Open Sans",
-                    fontWeight: 600,
-                    fontSize: "16px",
-                    opacity: "80%",
-                    textAlign: "center",
-                    wordBreak: "break-word",
-                    lineHeight: "1.3",
-                  }}
-                >
-                  Scheme Today! Save Now. Shine Forever.
-                </div>
-              </div>
-            </Box>
+          <div style={{ width: "100%", overflow: "hidden", marginTop: "20vh" }}>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/${
+                planId === "1"
+                  ? "24.webp"
+                  : planId === "2"
+                  ? "23.webp"
+                  : "22.webp"
+              }`}
+              alt="Scheme Background"
+              style={{
+                width: "100%",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
           </div>
           <Card
             sx={{
@@ -370,7 +310,7 @@ const Schemes_form = () => {
               borderRadius: "12px",
               boxShadow: 3,
               position: "relative",
-              top: "-80px",
+              marginTop: "20px",
             }}
           >
             <CardContent sx={{ textAlign: "center", pt: 3 }}>
@@ -531,33 +471,20 @@ const Schemes_form = () => {
               <Typography sx={{ fontWeight: 600, mb: 1 }}>
                 Key Features:
               </Typography>
-              <Box
-                component="ul"
-                sx={{ pl: 2, fontSize: "14px", lineHeight: 1.8 }}
-              >
-                <li>
-                  ✅ Fixed monthly installments for 11 months (minimum ₹1,000
-                  per month).
-                </li>
-                <li>
-                  ✅ Gold & silver prices will be determined at the scheme’s
-                  closing time.
-                </li>
-                <li>
-                  ✅ Gold & Diamond Jewellery: Zero making charges and zero
-                  wastage.
-                </li>
-                <li>
-                  ✅ Silver Articles: Zero making charges, but wastage will be
-                  added as applicable.
-                </li>
-                <li>✅ GST will be applicable on purchases.</li>
-                <li>
-                  ✅ Flexible Installments: If an installment is missed, it will
-                  be postponed to the next month until all 11 installments are
-                  completed.
-                </li>
-              </Box>
+              {benefits.length > 0 ? (
+                  <Box
+                    component="ul"
+                    sx={{ pl: 2, fontSize: "14px", lineHeight: 1.8 }}
+                  >
+                    {benefits.map((benefit, index) => (
+                      <li key={index}>✅ {benefit}</li>
+                    ))}
+                  </Box>
+                ) : (
+                  <Typography sx={{ fontSize: "14px" }}>
+                    Select a plan to view its benefits.
+                  </Typography>
+                )}
 
               {/* Feature Cards */}
               <Box
@@ -608,7 +535,7 @@ const Schemes_form = () => {
             </Box>
           </Box>
 
-          <Box
+          {/* <Box
             sx={{
               position: "relative",
               top: "-100px",
@@ -643,76 +570,30 @@ const Schemes_form = () => {
                 objectFit: "contain",
               }}
             />
-          </Box>
+          </Box> */}
         </div>
       ) : (
         <Box>
-          <Box
-            sx={{
-              height: "600px",
-              backgroundImage: `url(${heroImage})`,
-              backgroundSize: "cover", // This scales the image to cover the box
-              backgroundPosition: "center", // This centers the image
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              px: { xs: 2, sm: 6, md: 10, lg: 16 },
-            }}
+          <div
+            style={{ width: "100%", overflow: "hidden", marginTop: "100px" }}
           >
-            {/* LEFT TEXT BLOCK */}
-            <Box
-              sx={{
-                maxWidth: "480px",
-                color: "#000",
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/${
+                planId === "1"
+                  ? "24.webp"
+                  : planId === "2"
+                  ? "23.webp"
+                  : "22.webp"
+              }`}
+              alt="Scheme Background"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                display: "block",
               }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontWeight: "700",
-                  fontSize: { xs: "24px", sm: "32px", md: "36px", lg: "40px" },
-                  top: "1000px",
-                }}
-              >
-                Turn Daily Savings into
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontWeight: "700",
-                  fontSize: { xs: "24px", sm: "32px", md: "36px", lg: "40px" },
-                  color: "#A36E29",
-                  mb: 2,
-                }}
-              >
-                Timeless Treasures
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontWeight: "600",
-                  fontSize: "16px",
-                  color: "#000000B2",
-                }}
-              >
-                Join the SadāShrī Jewelkart Daily Gold Savings Scheme Today
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontWeight: "600",
-                  fontSize: "16px",
-                  color: "#000000B2",
-                }}
-              >
-                Save Now. Shine Forever.
-              </Typography>
-            </Box>
-          </Box>
+            />
+          </div>
           <Box
             sx={{
               display: "flex",
@@ -995,7 +876,7 @@ const Schemes_form = () => {
             </Box>
 
             {/* Second Section (How does it work) */}
-            <Box
+            {/* <Box
               sx={{
                 // mt: { xs: "48px", lg: "170px" },
                 mt: { xs: "24px", lg: "80px" },
@@ -1033,7 +914,7 @@ const Schemes_form = () => {
                   }}
                 />
               </Box>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       )}

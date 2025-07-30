@@ -125,43 +125,41 @@ export default function PromotionImageList() {
                 justifyContent: "space-between",
               }}
             >
-            
               <img
-  style={{
-    width: "100%",
-    borderRadius: "20px",
-    cursor: "pointer",
-    height: "32%",
-    objectFit: "cover",
-  }}
-  src={process.env.PUBLIC_URL + "/assets/22.webp"}
-  onClick={() => navigate("/schemes/form?plan=1")}
-/>
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  height: "32%",
+                  objectFit: "cover",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/22.webp"}
+                onClick={() => navigate("/schemes/form?plan=3")}
+              />
 
-<img
-  style={{
-    width: "100%",
-    borderRadius: "20px",
-    cursor: "pointer",
-    height: "32%",
-    objectFit: "cover",
-  }}
-  src={process.env.PUBLIC_URL + "/assets/23.webp"}
-  onClick={() => navigate("/schemes/form?plan=2")}
-/>
+              <img
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  height: "32%",
+                  objectFit: "cover",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/23.webp"}
+                onClick={() => navigate("/schemes/form?plan=2")}
+              />
 
-<img
-  style={{
-    width: "100%",
-    borderRadius: "20px",
-    cursor: "pointer",
-    height: "32%",
-    objectFit: "cover",
-  }}
-  src={process.env.PUBLIC_URL + "/assets/24.webp"}
-  onClick={() => navigate("/schemes/form?plan=3")}
-/>
-
+              <img
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  height: "32%",
+                  objectFit: "cover",
+                }}
+                src={process.env.PUBLIC_URL + "/assets/24.webp"}
+                onClick={() => navigate("/schemes/form?plan=1")}
+              />
             </Box>
           </Grid>
         </Grid>
