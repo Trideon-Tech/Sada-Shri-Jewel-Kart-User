@@ -1,6 +1,8 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Tab, tabClasses, TabList, Tabs } from "@mui/joy";
 import {
+  BottomNavigation,
+  BottomNavigationAction,
   Box,
   Button,
   CircularProgress,
@@ -11,8 +13,6 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  BottomNavigation,
-  BottomNavigationAction,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -130,232 +130,203 @@ function MySchemes() {
   };
 
   const renderSchemeCard = (scheme, isActive = false) => (
-    console.log('scheme', scheme),
-    <Box key={scheme.id}>
-      {isMobile ? (
-        // Mobile Layout
-        <Box sx={{ padding: "16px" }}>
-          {/* Scheme Name */}
-          <Typography
-            fontWeight="bold"
-            fontSize="1.1rem"
-            sx={{ mb: 1, wordBreak: "break-word" }}
-          >
-            {scheme.scheme_details?.name || "N/A"}
-          </Typography>
-
-          {/* Subscription ID */}
-          <Typography fontSize="0.8rem" color="text.primary" sx={{ mb: 1 }}>
-            Subscription ID: {scheme.id}
-          </Typography>
-
-          {/* Dates */}
-          <Typography fontWeight="bold" fontSize="0.9rem" sx={{ mb: 0.5 }}>
-            Started On: {scheme.start_date.split(" ")[0]}
-          </Typography>
-          {scheme.scheme !== "3" && (
-            <Typography fontSize="0.8rem" color="text.secondary" sx={{ mb: 0.5 }}>
-              Ends: {scheme.exp_closure_date.split(" ")[0]}
-            </Typography>
-          )}
-          {scheme.scheme !== "3" && (
-            <Typography fontSize="0.8rem" color="text.secondary" sx={{ mb: 2 }}>
-              Plan ID: {scheme.plan}
-            </Typography>
-          )}
-
-          {/* Buttons */}
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            {isActive ? (
-              <Button
-                variant="contained"
-                onClick={() => {
-                  setRedeemScheme(scheme);
-                  setRedeemConfirmOpen(true);
-                }}
-                sx={{
-                  background: "linear-gradient(to right, #a36e29, #c89444)",
-                  color: "white",
-                  textTransform: "none",
-                  borderRadius: "5px",
-                  padding: "8px 16px",
-                  "&:hover": {
-                    background: "linear-gradient(to right, #a36e29, #a36e29)",
-                  },
-                }}
-              >
-                Redeem
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                sx={{
-                  background: "linear-gradient(to right, #a36e29, #c89444)",
-                  color: "white",
-                  textTransform: "none",
-                  borderRadius: "5px",
-                  padding: "8px 16px",
-                  "&:hover": {
-                    background: "linear-gradient(to right, #a36e29, #a36e29)",
-                  },
-                }}
-                onClick={() => {
-                  setCode(scheme.redemption_details.code);
-                  setShowCode(true);
-                }}
-              >
-                View Code
-              </Button>
-            )}
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: "#a36e29",
-                color: "#a36e29",
-                textTransform: "none",
-                borderRadius: "5px",
-                padding: "8px 16px",
-                "&:hover": {
-                  borderColor: "#a36e29",
-                  backgroundColor: "#f7f7f7",
-                },
-              }}
-              onClick={() => {
-                setSelectedScheme(scheme);
-                setOpenDialog(true);
-              }}
-            >
-              View Transactions
-            </Button>
-          </Box>
-        </Box>
-      ) : (
-        // Desktop Layout
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "16px",
-          }}
-        >
-        {/* Left Section */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-          <Box>
+    console.log("scheme", scheme),
+    (
+      <Box key={scheme.id}>
+        {isMobile ? (
+          // Mobile Layout
+          <Box sx={{ padding: "16px" }}>
+            {/* Scheme Name */}
             <Typography
               fontWeight="bold"
-              fontSize="1rem"
-              style={{
-                width: "20vw",
-              }}
+              fontSize="1.1rem"
+              sx={{ mb: 1, wordBreak: "break-word" }}
             >
               {scheme.scheme_details?.name || "N/A"}
             </Typography>
 
-            <Typography fontSize="0.8rem" color="text.primary">
+            {/* Subscription ID */}
+            <Typography fontSize="0.8rem" color="text.primary" sx={{ mb: 1 }}>
               Subscription ID: {scheme.id}
             </Typography>
+
+            {/* Dates */}
+            <Typography fontWeight="bold" fontSize="0.9rem" sx={{ mb: 0.5 }}>
+              Started On: {scheme.start_date.split(" ")[0]}
+            </Typography>
+            {scheme.scheme !== "3" && (
+              <Typography
+                fontSize="0.8rem"
+                color="text.secondary"
+                sx={{ mb: 0.5 }}
+              >
+                Ends: {scheme.exp_closure_date.split(" ")[0]}
+              </Typography>
+            )}
+            {scheme.scheme !== "3" && (
+              <Typography
+                fontSize="0.8rem"
+                color="text.secondary"
+                sx={{ mb: 2 }}
+              >
+                Plan ID: {scheme.plan}
+              </Typography>
+            )}
+
+            {/* Buttons */}
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderColor: "#a36e29",
+                  color: "#a36e29",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  padding: "8px 16px",
+                  "&:hover": {
+                    borderColor: "#a36e29",
+                    backgroundColor: "#f7f7f7",
+                  },
+                }}
+                onClick={() => {
+                  setSelectedScheme(scheme);
+                  setOpenDialog(true);
+                }}
+              >
+                View Transactions
+              </Button>
+            </Box>
           </Box>
-        </Box>
-
-        {/* Middle Section */}
-        <Box>
-          <Typography fontWeight="bold" fontSize="1rem">
-            Started On: {scheme.start_date.split(" ")[0]}
-          </Typography>
-          {scheme.scheme !== "3" && (
-            <Typography fontSize="0.8rem" color="text.secondary">
-              Ends: {scheme.exp_closure_date.split(" ")[0]}
-            </Typography>
-          )}
-          {scheme.scheme !== "3" && (
-            <Typography fontSize="0.8rem" color="text.secondary">
-              Plan ID: {scheme.plan}
-            </Typography>
-          )}
-        </Box>
-
-        {/* Right Section */}
-        <Box>
-          {isActive ? (
-            <Button
-              variant="contained"
-              onClick={() => {
-                setRedeemScheme(scheme);
-                setRedeemConfirmOpen(true);
-              }}
-              sx={{
-                display: "none",
-                background: "linear-gradient(to right, #a36e29, #c89444)",
-                color: "white",
-                textTransform: "none",
-                borderRadius: "5px",
-                padding: "5px 15px",
-                "&:hover": {
-                  background: "linear-gradient(to right, #a36e29, #a36e29)",
-                },
-              }}
-            >
-              Redeem
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              sx={{
-                display: "none",
-                background: "linear-gradient(to right, #a36e29, #c89444)",
-                color: "white",
-                textTransform: "none",
-                borderRadius: "5px",
-                padding: "5px 15px",
-                "&:hover": {
-                  background: "linear-gradient(to right, #a36e29, #a36e29)",
-                },
-              }}
-              onClick={() => {
-                setCode(scheme.redemption_details.code);
-                setShowCode(true);
-              }}
-            >
-              View Code
-            </Button>
-          )}
-          <Button
-            variant="outlined"
+        ) : (
+          // Desktop Layout
+          <Box
             sx={{
-              borderColor: "#a36e29",
-              color: "#a36e29",
-              textTransform: "none",
-              borderRadius: "5px",
-              padding: "5px 15px",
-              marginLeft: "20px",
-              "&:hover": {
-                borderColor: "#a36e29",
-                backgroundColor: "#f7f7f7",
-              },
-            }}
-            onClick={() => {
-              setSelectedScheme(scheme);
-              setOpenDialog(true);
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "16px",
             }}
           >
-            View Transactions
-          </Button>
-        </Box>
+            {/* Left Section */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <Box>
+                <Typography
+                  fontWeight="bold"
+                  fontSize="1rem"
+                  style={{
+                    width: "20vw",
+                  }}
+                >
+                  {scheme.scheme_details?.name || "N/A"}
+                </Typography>
+
+                <Typography fontSize="0.8rem" color="text.primary">
+                  Subscription ID: {scheme.id}
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Middle Section */}
+            <Box>
+              <Typography fontWeight="bold" fontSize="1rem">
+                Started On: {scheme.start_date.split(" ")[0]}
+              </Typography>
+              {scheme.scheme !== "3" && (
+                <Typography fontSize="0.8rem" color="text.secondary">
+                  Ends: {scheme.exp_closure_date.split(" ")[0]}
+                </Typography>
+              )}
+              {scheme.scheme !== "3" && (
+                <Typography fontSize="0.8rem" color="text.secondary">
+                  Plan ID: {scheme.plan}
+                </Typography>
+              )}
+            </Box>
+
+            {/* Right Section */}
+            <Box>
+              {isActive ? (
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setRedeemScheme(scheme);
+                    setRedeemConfirmOpen(true);
+                  }}
+                  sx={{
+                    display: "none",
+                    background: "linear-gradient(to right, #a36e29, #c89444)",
+                    color: "white",
+                    textTransform: "none",
+                    borderRadius: "5px",
+                    padding: "5px 15px",
+                    "&:hover": {
+                      background: "linear-gradient(to right, #a36e29, #a36e29)",
+                    },
+                  }}
+                >
+                  Redeem
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{
+                    display: "none",
+                    background: "linear-gradient(to right, #a36e29, #c89444)",
+                    color: "white",
+                    textTransform: "none",
+                    borderRadius: "5px",
+                    padding: "5px 15px",
+                    "&:hover": {
+                      background: "linear-gradient(to right, #a36e29, #a36e29)",
+                    },
+                  }}
+                  onClick={() => {
+                    setCode(scheme.redemption_details.code);
+                    setShowCode(true);
+                  }}
+                >
+                  View Code
+                </Button>
+              )}
+              <Button
+                variant="outlined"
+                sx={{
+                  borderColor: "#a36e29",
+                  color: "#a36e29",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  padding: "5px 15px",
+                  marginLeft: "20px",
+                  "&:hover": {
+                    borderColor: "#a36e29",
+                    backgroundColor: "#f7f7f7",
+                  },
+                }}
+                onClick={() => {
+                  setSelectedScheme(scheme);
+                  setOpenDialog(true);
+                }}
+              >
+                View Transactions
+              </Button>
+            </Box>
+          </Box>
+        )}
+        <Divider />
       </Box>
-      )}
-      <Divider />
-    </Box>
+    )
   );
 
   return (
     <>
-      <Box sx={{ 
-        width: isMobile ? "95%" : "70%", 
-        margin: "50px auto 0 auto", 
-        textAlign: "left",
-        px: isMobile ? 2 : 0
-      }}>
+      <Box
+        sx={{
+          width: isMobile ? "95%" : "70%",
+          margin: "50px auto 0 auto",
+          textAlign: "left",
+          px: isMobile ? 2 : 0,
+        }}
+      >
         <Typography
           sx={{
             fontFamily: '"Roboto", sans-serif',
@@ -419,7 +390,7 @@ function MySchemes() {
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
                     maxHeight: isMobile ? "65vh" : "70vh",
-                    overflowY: "auto"
+                    overflowY: "auto",
                   }}
                 >
                   {oldSchemes.length === 0 ? (
@@ -441,7 +412,7 @@ function MySchemes() {
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
                     maxHeight: isMobile ? "65vh" : "70vh",
-                    overflowY: "auto"
+                    overflowY: "auto",
                   }}
                 >
                   {activeSchemes.length === 0 ? (

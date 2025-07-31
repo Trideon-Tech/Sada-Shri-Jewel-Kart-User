@@ -1,17 +1,16 @@
-import React from "react";
 import {
   Box,
   Button,
-  Container,
-  Typography,
   Card,
   Divider,
+  Typography
 } from "@mui/material";
-import Navbar from "../../components/navbar/navbar.component";
+import React from "react";
 import ButtonComponent from "../../components/button/button.component";
+import Navbar from "../../components/navbar/navbar.component";
 // import { BorderBottom, Translate } from "@mui/icons-material"; // These imports are not used, can be removed.
-import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"; // For the 'X' icon
+import { IconButton } from "@mui/material";
 const Schemes_Redeem = ({ onClose }) => {
   const transactions = [
     {
