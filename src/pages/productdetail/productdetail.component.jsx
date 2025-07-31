@@ -3499,7 +3499,7 @@ function ProductDetail() {
                       }
                     >
                       <img
-                        src={process.env.PUBLIC_URL + `/assets/${img}.svg`}
+                        src={process.env.PUBLIC_URL + `/assets/${img}.png`}
                         alt={`Icon ${img}`}
                         style={{
                           maxWidth: "60px", // Use maxWidth and maxHeight instead of fixed sizes
@@ -4347,7 +4347,7 @@ function ProductDetail() {
                         }
                       >
                         <img
-                          src={process.env.PUBLIC_URL + `/assets/${img}.svg`}
+                          src={process.env.PUBLIC_URL + `/assets/${img}.png`}
                           alt={`Icon ${img}`}
                           style={{
                             maxWidth: "60px", // Use maxWidth and maxHeight instead of fixed sizes

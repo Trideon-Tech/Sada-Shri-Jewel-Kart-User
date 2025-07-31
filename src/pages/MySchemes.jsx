@@ -319,14 +319,15 @@ function MySchemes() {
 
   return (
     <>
-      <Box
-        sx={{
-          width: isMobile ? "95%" : "70%",
-          margin: "50px auto 0 auto",
-          textAlign: "left",
-          px: isMobile ? 2 : 0,
-        }}
-      >
+              <Box
+          sx={{
+            width: isMobile ? "95%" : "70%",
+            margin: "50px auto 20px auto",
+            textAlign: "left",
+            px: isMobile ? 2 : 0,
+            pb: isMobile ? "80px" : "100px", // Increased bottom padding for desktop to avoid clipping
+          }}
+        >
         <Typography
           sx={{
             fontFamily: '"Roboto", sans-serif',
@@ -389,8 +390,10 @@ function MySchemes() {
                     border: "1px solid #e0e0e0",
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-                    maxHeight: isMobile ? "60vh" : "70vh",
+                    maxHeight: isMobile ? "60vh" : "55vh", // Increased height for desktop old schemes
                     overflowY: "auto",
+                    mb: isMobile ? "0" : "40px", // Add bottom margin for desktop old schemes
+                    pb: isMobile ? "0" : "20px", // Add padding bottom for desktop old schemes
                   }}
                 >
                   {oldSchemes.length === 0 ? (
@@ -411,8 +414,10 @@ function MySchemes() {
                     border: "1px solid #e0e0e0",
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-                    maxHeight: isMobile ? "60vh" : "70vh",
+                    maxHeight: isMobile ? "60vh" : "55vh", // Same height as old schemes for consistency
                     overflowY: "auto",
+                    mb: isMobile ? "0" : "40px", // Same margin as old schemes for consistency
+                    pb: isMobile ? "0" : "20px", // Same padding as old schemes for consistency
                   }}
                 >
                   {activeSchemes.length === 0 ? (
