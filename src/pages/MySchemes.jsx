@@ -9,16 +9,25 @@ import {
   DialogTitle,
   Divider,
   Typography,
+  useMediaQuery,
+  useTheme,
+  BottomNavigation,
+  BottomNavigationAction,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { generalToastStyle } from "../utils/toast.styles";
 import SchemesDialog from "./SchemesDialog";
 
 function MySchemes() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery("(max-width: 600px)");
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState(1);
+  const [navValue, setNavValue] = useState(0);
   const [activeSchemes, setActiveSchemes] = useState([]);
   const [oldSchemes, setOldSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -121,15 +130,115 @@ function MySchemes() {
   };
 
   const renderSchemeCard = (scheme, isActive = false) => (
+    console.log('scheme', scheme),
     <Box key={scheme.id}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "16px",
-        }}
-      >
+      {isMobile ? (
+        // Mobile Layout
+        <Box sx={{ padding: "16px" }}>
+          {/* Scheme Name */}
+          <Typography
+            fontWeight="bold"
+            fontSize="1.1rem"
+            sx={{ mb: 1, wordBreak: "break-word" }}
+          >
+            {scheme.scheme_details?.name || "N/A"}
+          </Typography>
+
+          {/* Subscription ID */}
+          <Typography fontSize="0.8rem" color="text.primary" sx={{ mb: 1 }}>
+            Subscription ID: {scheme.id}
+          </Typography>
+
+          {/* Dates */}
+          <Typography fontWeight="bold" fontSize="0.9rem" sx={{ mb: 0.5 }}>
+            Started On: {scheme.start_date.split(" ")[0]}
+          </Typography>
+          {scheme.scheme !== "3" && (
+            <Typography fontSize="0.8rem" color="text.secondary" sx={{ mb: 0.5 }}>
+              Ends: {scheme.exp_closure_date.split(" ")[0]}
+            </Typography>
+          )}
+          {scheme.scheme !== "3" && (
+            <Typography fontSize="0.8rem" color="text.secondary" sx={{ mb: 2 }}>
+              Plan ID: {scheme.plan}
+            </Typography>
+          )}
+
+          {/* Buttons */}
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            {isActive ? (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setRedeemScheme(scheme);
+                  setRedeemConfirmOpen(true);
+                }}
+                sx={{
+                  background: "linear-gradient(to right, #a36e29, #c89444)",
+                  color: "white",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  padding: "8px 16px",
+                  "&:hover": {
+                    background: "linear-gradient(to right, #a36e29, #a36e29)",
+                  },
+                }}
+              >
+                Redeem
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  background: "linear-gradient(to right, #a36e29, #c89444)",
+                  color: "white",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  padding: "8px 16px",
+                  "&:hover": {
+                    background: "linear-gradient(to right, #a36e29, #a36e29)",
+                  },
+                }}
+                onClick={() => {
+                  setCode(scheme.redemption_details.code);
+                  setShowCode(true);
+                }}
+              >
+                View Code
+              </Button>
+            )}
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: "#a36e29",
+                color: "#a36e29",
+                textTransform: "none",
+                borderRadius: "5px",
+                padding: "8px 16px",
+                "&:hover": {
+                  borderColor: "#a36e29",
+                  backgroundColor: "#f7f7f7",
+                },
+              }}
+              onClick={() => {
+                setSelectedScheme(scheme);
+                setOpenDialog(true);
+              }}
+            >
+              View Transactions
+            </Button>
+          </Box>
+        </Box>
+      ) : (
+        // Desktop Layout
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "16px",
+          }}
+        >
         {/* Left Section */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <Box>
@@ -234,18 +343,26 @@ function MySchemes() {
           </Button>
         </Box>
       </Box>
+      )}
       <Divider />
     </Box>
   );
 
   return (
     <>
-      <Box sx={{ width: "70%", margin: "50px auto 0 auto", textAlign: "left" }}>
+      <Box sx={{ 
+        width: isMobile ? "95%" : "70%", 
+        margin: "50px auto 0 auto", 
+        textAlign: "left",
+        px: isMobile ? 2 : 0
+      }}>
         <Typography
           sx={{
             fontFamily: '"Roboto", sans-serif',
-            fontSize: "1.8rem",
+            fontSize: isMobile ? "1.5rem" : "1.8rem",
             fontWeight: "bold",
+            textAlign: isMobile ? "center" : "left",
+            mb: isMobile ? 2 : 0,
           }}
         >
           My Schemes
@@ -255,7 +372,7 @@ function MySchemes() {
           aria-label="tabs"
           value={selectedTab}
           onChange={(event, newValue) => setSelectedTab(newValue)}
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: isMobile ? "16px" : "20px" }}
         >
           <TabList
             sx={{
@@ -276,6 +393,7 @@ function MySchemes() {
                 color: "#a36e29",
                 fontWeight: "bold",
               },
+              marginTop: isMobile ? "1rem" : "10px",
             }}
           >
             <Tab disableIndicator>Old Schemes</Tab>
@@ -300,6 +418,8 @@ function MySchemes() {
                     border: "1px solid #e0e0e0",
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+                    maxHeight: isMobile ? "65vh" : "70vh",
+                    overflowY: "auto"
                   }}
                 >
                   {oldSchemes.length === 0 ? (
@@ -320,6 +440,8 @@ function MySchemes() {
                     border: "1px solid #e0e0e0",
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+                    maxHeight: isMobile ? "65vh" : "70vh",
+                    overflowY: "auto"
                   }}
                 >
                   {activeSchemes.length === 0 ? (
@@ -445,6 +567,85 @@ function MySchemes() {
           </Box>
         </DialogContent>
       </Dialog>
+
+      {/* Bottom Navigation - Only show on mobile */}
+      {isMobile && (
+        <BottomNavigation
+          showLabels
+          style={{
+            background: "rgba(163,110,41)",
+            border: "1px solid #a36e29",
+            borderRadius: "50px",
+            height: "40px",
+            width: "95%",
+            position: "fixed",
+            bottom: 20,
+            zIndex: 1000,
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+          sx={{
+            "& .MuiBottomNavigationAction-root": {
+              minWidth: "auto",
+              padding: "6px 4px",
+            },
+          }}
+        >
+          <BottomNavigationAction
+            label="Profile"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account")}
+          />
+          <BottomNavigationAction
+            label="Orders"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/orders")}
+          />
+          <BottomNavigationAction
+            label="Address"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/address")}
+          />
+          <BottomNavigationAction
+            label="Wallet"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/wallet")}
+          />
+          <BottomNavigationAction
+            label="Schemes"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+                fontWeight: "600",
+                color: "white",
+                textDecoration: "underline",
+              },
+            }}
+            onClick={() => navigate("/my-account/my-schemes")}
+          />
+        </BottomNavigation>
+      )}
     </>
   );
 }

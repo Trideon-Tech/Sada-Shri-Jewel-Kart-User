@@ -94,11 +94,11 @@ export default function CarouselScheme({ onSchemeClick }) {
     return (
         <div style={{ 
             position: 'relative',
-            width: {
-                xs: "100%", // width for extra-small devices (phones)
-                sm: "100%", // width for small devices (tablets)
-                md: "98%", // width for medium and larger devices
-            },
+                width: {
+                    xs: "100%", // width for extra-small devices (phones)
+                    sm: "100%", // width for small devices (tablets)
+                    md: "98%", // width for medium and larger devices
+                },
             margin: "auto"
         }}>
             <div 

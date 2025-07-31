@@ -738,10 +738,16 @@ const Orders = () => {
             border: "1px solid #a36e29",
             borderRadius: "50px",
             height: "40px",
-            width: "90%", // Added width
+            width: "95%", // Added width
             position: "fixed", // Changed to fixed
             bottom: 20, // Added bottom spacing
             zIndex: 1000, // Added z-index
+          }}
+          sx={{
+            "& .MuiBottomNavigationAction-root": {
+              minWidth: "auto",
+              padding: "6px 4px",
+            },
           }}
         >
           <BottomNavigationAction
@@ -786,6 +792,16 @@ const Orders = () => {
               },
             }}
             onClick={() => navigate("/my-account/wallet")}
+          />
+          <BottomNavigationAction
+            label="Schemes"
+            sx={{
+              "& .MuiBottomNavigationAction-label": {
+                fontFamily: '"Roboto", sans-serif',
+                fontSize: "0.8rem",
+              },
+            }}
+            onClick={() => navigate("/my-account/my-schemes")}
           />
         </BottomNavigation>
       ) : null}

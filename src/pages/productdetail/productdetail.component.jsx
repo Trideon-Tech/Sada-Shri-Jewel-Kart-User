@@ -2551,23 +2551,23 @@ function ProductDetail() {
                   }}
                 >
                   {isLoggedIn && hasActiveSchemes && (
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      style={{
-                        fontWeight: "bold",
-                        background: "linear-gradient(to right, #d4a76a, #a36e29)",
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: "0.9rem",
-                        textTransform: "none",
-                        borderRadius: "8px",
-                        padding: "12px 0",
-                        transition: "all 0.3s ease",
-                      }}
-                      onClick={() => setRedeemDialogOpen(true)}
-                    >
-                      Redeem My Schemes
-                    </Button>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    style={{
+                      fontWeight: "bold",
+                      background: "linear-gradient(to right, #d4a76a, #a36e29)",
+                      fontFamily: '"Roboto", sans-serif',
+                      fontSize: "0.9rem",
+                      textTransform: "none",
+                      borderRadius: "8px",
+                      padding: "12px 0",
+                      transition: "all 0.3s ease",
+                    }}
+                    onClick={() => setRedeemDialogOpen(true)}
+                  >
+                    Redeem My Schemes
+                  </Button>
                   )}
                 </div>
 
@@ -5166,7 +5166,7 @@ function ProductDetail() {
                 ))}
               </div>
               
-              <RedeemSchemeDialog
+                <RedeemSchemeDialog
                   open={redeemDialogOpen}
                   onClose={() => setRedeemDialogOpen(false)}
                   productDetail={productDetail}
