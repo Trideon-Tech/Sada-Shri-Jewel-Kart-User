@@ -389,7 +389,7 @@ function MySchemes() {
                     border: "1px solid #e0e0e0",
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-                    maxHeight: isMobile ? "65vh" : "70vh",
+                    maxHeight: isMobile ? "60vh" : "70vh",
                     overflowY: "auto",
                   }}
                 >
@@ -411,7 +411,7 @@ function MySchemes() {
                     border: "1px solid #e0e0e0",
                     borderRadius: "8px",
                     boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-                    maxHeight: isMobile ? "65vh" : "70vh",
+                    maxHeight: isMobile ? "60vh" : "70vh",
                     overflowY: "auto",
                   }}
                 >

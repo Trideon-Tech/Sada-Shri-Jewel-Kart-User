@@ -392,7 +392,7 @@ const Schemes_form = () => {
             <CardActions sx={{ justifyContent: "center", mb: 2 }}>
               <ButtonComponent
                 buttonText={"Start Now"}
-                onClick={handlePayment}
+                onClick={selectedPlan === "3" ? handleSavings : handlePayment}
                 style={{
                   width: "180px",
                   height: "36px",
